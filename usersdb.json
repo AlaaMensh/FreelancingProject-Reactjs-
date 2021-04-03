@@ -1,0 +1,28 @@
+{
+    "users":[
+        {
+            "id":1,
+            "email":"alaa@gmail.com",
+            "password": "1254",
+            "user_type":"p"
+        },
+        {
+            "id":2,
+            "email":"Mona@gmail.com",
+            "password": "1254",
+            "user_type":"p"
+        },
+        {
+            "id":3,
+            "email":"Ahmed@gmail.com",
+            "password": "1254",
+            "user_type":"p"
+        },
+        {
+            "id":4,
+            "email":"ali@gmail.com",
+            "password": "1254",
+            "user_type":"p"
+        }
+    ]
+}
