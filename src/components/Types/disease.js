@@ -60,34 +60,34 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Allergy extends Component {
+class Disease extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      allergyList : [],
+      diseaseList : [],
       typeId:0,
       openModal1:false,
       openModal2:false,
       TypeObj : {},
       name:"",
-      description :""  
-      
+      code:"",
+      abbreviation:""  
 
           }
         }
         
         getTypeByID = async(id) => {
-          console.log("heeereeeee" , id);
-          let response = await fetch(`http://localhost:2400/allergy/${id}`);
+          console.log("id" , id);
+          let response = await fetch(`http://localhost:2400/disease/${id}`);
           var payload = await response.json();
           console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
           this.setState({
             TypeObj:payload
           })
         }
-        getAllergyTypesList = (allergyList) =>{
-        for(var type in allergyList){
+        getDiseaseListTypesList = (diseaseList) =>{
+        for(var type in diseaseList){
             console.log("type: ", type.name);
         }
     }
@@ -106,7 +106,7 @@ class Allergy extends Component {
       this.setState({openModal2 : false})
     };
     handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/allergy/${id}`)
+        await axios.delete(`http://localhost:2400/disease/${id}`)
         .then(res => {
           console.log(res);
           console.log(res.data);
@@ -116,10 +116,10 @@ class Allergy extends Component {
          
     }
    async componentDidMount(){
-     axios.get(' http://localhost:2400/allergy').then(async resp => {
+     axios.get(' http://localhost:2400/disease').then(async resp => {
         // return resp.data;
          this.setState({
-            allergyList : resp.data
+          diseaseList : resp.data
         })
         console.log("dkdkkdkdkd:   ",resp.data);    
   });
@@ -130,18 +130,22 @@ class Allergy extends Component {
       var obj = {
         id:this.state.TypeObj.id,
         name: this.state.name,
-        description : this.state.description,
+        code: this.state.name,
+        abbreviation : this.state.abbreviation,
       }
       if(!obj.name){
         obj.name = this.state.TypeObj.name
       }
-      if(!obj.description){
-        obj.description = this.state.TypeObj.description
+      if(!obj.code){
+        obj.code = this.state.TypeObj.code
+      }
+      if(!obj.abbreviation){
+        obj.abbreviation = this.state.TypeObj.abbreviation
       }
 
 
       console.log("type: ", obj);
-      axios.put(`http://localhost:2400/allergy/${id}` , obj)
+      axios.put(`http://localhost:2400/disease/${id}` , obj)
          .then(res => {
            console.log(res);
            console.log(res.data);
@@ -159,8 +163,8 @@ class Allergy extends Component {
             <div style={{ height: 400, width: '100%' }}>
                <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
               { field: 'name', headerName: 'Name', width: 200 },
-              { field: 'description', headerName: 'description', width: 400 },
-              // { field: <button>Hi</button>, headerName: 'description', width: 400 },
+              {filed: 'code', headerName: 'code', width: 200},
+              { field: 'abbreviation', headerName: 'abbreviation', width: 400 },
               {
                 field: 'Actions',
                 headerName: 'Actions',
@@ -220,11 +224,12 @@ class Allergy extends Component {
     handleAdding = () =>{
       var obj = {
         name: this.state.name,
-        description : this.state.description,
+        code: this.state.code,
+        abbreviation : this.state.abbreviation,
       }
 
       console.log("type: ", obj);
-      axios.post(`http://localhost:2400/allergy`,  obj )
+      axios.post(`http://localhost:2400/disease`,  obj )
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -278,15 +283,33 @@ class Allergy extends Component {
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
+                name="code"
                 // label="description"
                 type="text"
-                id="description"
+                id="code"
                 autoComplete="current-password"
-                placeholder={this.state.TypeObj.description}
+                placeholder={this.state.TypeObj.code}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  this.setState({code : event.target.value});
+                }}
+                
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="abbreviation"
+                // label="description"
+                type="text"
+                id="abbreviation"
+                autoComplete="current-password"
+                placeholder={this.state.TypeObj.code}
+                onChange = {(event) =>{
+                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
+                  this.setState({abbreviation : event.target.value});
                 }}
                 
               />
@@ -303,8 +326,7 @@ class Allergy extends Component {
               
               
               this.handleUpdate();
-              // console.log("user: " , obj);
-              // handleSignup()
+             
             }}
           >
             Edit
@@ -312,9 +334,7 @@ class Allergy extends Component {
           
         </form>
       </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
+      {}
     </Container>
 </Modal>
 
@@ -362,19 +382,37 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
-                label="description"
+                name="code"
+                label="code"
                 type="text"
-                id="description"
+                id="code"
                 autoComplete="current-password"
                 // placeholder={this.state.TypeObj.description}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  this.setState({code : event.target.value});
                 }}
                 
               />
             </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="abbreviation"
+                label="abbreviation"
+                type="text"
+                id="abbreviation"
+                autoComplete="current-password"
+                // placeholder={this.state.TypeObj.description}
+                onChange = {(event) =>{
+                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
+                  this.setState({abbreviation : event.target.value});
+                }}
+                
+              />
+            </Grid> 
            
           </Grid>
           <Button
@@ -385,8 +423,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
-              // console.log("user: " , obj);
-              // handleSignup()
+           
             }}
           >
             Add
@@ -405,4 +442,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Allergy); 
+export default withStyles(useStyles)(Disease); 
