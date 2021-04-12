@@ -67,6 +67,10 @@ export default function Signup() {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
+  }).then(()=>{
+    console.log("it is inserted");
+  }).catch(()=>{
+    console.log("errror")
   })
 
 
@@ -226,6 +230,9 @@ export default function Signup() {
             <Grid item>
               <Link href="#" variant="body2">
                 Already have an account? Sign in
+              </Link>
+              <Link href="#" variant="body2">
+                Forgot Password
               </Link>
             </Grid>
           </Grid>
