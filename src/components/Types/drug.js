@@ -60,18 +60,21 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Allergy extends Component {
+class Drug extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      allergyList : [],
+      drugList : [],
       typeId:0,
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      name:"",
-      description :""  
+      genric_name: "",
+      trade_name:"",
+      form:"",
+      dose:"",
+      family :""  
       
 
           }
@@ -79,15 +82,15 @@ class Allergy extends Component {
         
         getTypeByID = async(id) => {
           console.log("heeereeeee" , id);
-          let response = await fetch(`http://localhost:2400/allergy/${id}`);
+          let response = await fetch(`http://localhost:2400/drug/${id}`);
           var payload = await response.json();
           console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
           this.setState({
             TypeObj:payload
           })
         }
-        getAllergyTypesList = (allergyList) =>{
-        for(var type in allergyList){
+        getDrugTypesList = (drugList) =>{
+        for(var type in drugList){
             console.log("type: ", type.name);
         }
     }
@@ -106,7 +109,7 @@ class Allergy extends Component {
       this.setState({openModal2 : false})
     };
     handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/allergy/${id}`)
+        await axios.delete(`http://localhost:2400/drug/${id}`)
         .then(res => {
           console.log(res);
           console.log(res.data);
@@ -116,7 +119,7 @@ class Allergy extends Component {
          
     }
    async componentDidMount(){
-     axios.get(' http://localhost:2400/allergy').then(async resp => {
+     axios.get(' http://localhost:2400/drug').then(async resp => {
         // return resp.data;
          this.setState({
             allergyList : resp.data
@@ -129,19 +132,30 @@ class Allergy extends Component {
     handleUpdate = ()=>{
       var obj = {
         id:this.state.TypeObj.id,
-        name: this.state.name,
-        description : this.state.description,
+        genric_name: this.state.name,
+        trade_name: this.state.trade_name,
+        form: this.state.form,
+        dose: this.state.dose,
+        family : this.state.family,
       }
-      if(!obj.name){
-        obj.name = this.state.TypeObj.name
+      if(!obj.genric_name){
+        obj.genric_name = this.state.TypeObj.genric_name
       }
-      if(!obj.description){
-        obj.description = this.state.TypeObj.description
+      if(!obj.trade_name){
+        obj.trade_name = this.state.TypeObj.trade_name
       }
-
+      if(!obj.form){
+        obj.form = this.state.TypeObj.form
+      }
+      if(!obj.dose){
+        obj.dose = this.state.TypeObj.dose
+      }
+      if(!obj.family){
+        obj.family = this.state.TypeObj.family
+      }
 
       console.log("type: ", obj);
-      axios.put(`http://localhost:2400/allergy/${id}` , obj)
+      axios.put(`http://localhost:2400/drug/${id}` , obj)
          .then(res => {
            console.log(res);
            console.log(res.data);
@@ -158,8 +172,11 @@ class Allergy extends Component {
         <div>
             <div style={{ height: 400, width: '100%' }}>
                <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-              { field: 'name', headerName: 'Name', width: 200 },
-              { field: 'description', headerName: 'description', width: 400 },
+               { field: 'genric_name', headerName: 'Genric_Name', width: 200 },
+              { field: 'trade_name', headerName: 'Trade_Name', width: 200 },
+              { field: 'form', headerName: 'form', width: 400 },
+              { field: 'dose', headerName: 'dose', width: 200 },
+              { field: 'family', headerName: 'family', width: 200 },
               // { field: <button>Hi</button>, headerName: 'description', width: 400 },
               {
                 field: 'Actions',
@@ -219,12 +236,15 @@ class Allergy extends Component {
     }
     handleAdding = () =>{
       var obj = {
-        name: this.state.name,
-        description : this.state.description,
+        genric_name: this.state.genric_name,
+        trade_name: this.state.trade_name,
+        form: this.state.form,
+        dose: this.state.dose,
+        family : this.state.family,
       }
 
       console.log("type: ", obj);
-      axios.post(`http://localhost:2400/allergy`,  obj )
+      axios.post(`http://localhost:2400/drug`,  obj )
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -262,14 +282,14 @@ class Allergy extends Component {
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
+                id="genric_name"
                 // label="Name"
-                name="name" 
+                name="genric_name" 
                 type="text"
-                autoComplete="Name"
+                autoComplete="Genric_Name"
                 placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({name : event.target.value});
+                  this.setState({genric_name : event.target.value});
                 }}
               />
             </Grid>
@@ -278,11 +298,58 @@ class Allergy extends Component {
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
-                // label="description"
+                id="trade_name"
+                // label="Name"
+                name="trade_name" 
                 type="text"
-                id="description"
-                autoComplete="current-password"
+                autoComplete="Trade_Name"
+                placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({trade_name : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="form"
+                // label="Name"
+                name="form" 
+                type="text"
+                autoComplete="Form"
+                placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({trade_name : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="dose"
+                // label="Name"
+                name="dose" 
+                type="text"
+                autoComplete="Dose"
+                placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({dose : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="family"
+                type="text"
+                id="family"
+                autoComplete="family"
                 placeholder={this.state.TypeObj.description}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
@@ -346,14 +413,14 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                label="Name"
-                name="name" 
+                id="genric_name"
+                label="Genric_Name"
+                name="genric_name" 
                 type="text"
-                autoComplete="Name"
+                autoComplete="Genric_Name"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({name : event.target.value});
+                  this.setState({genric_name : event.target.value});
                 }}
               />
             </Grid>
@@ -362,11 +429,59 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
-                label="description"
+                id="trade_name"
+                label="Trade_Name"
+                name="trade_name" 
                 type="text"
-                id="description"
-                autoComplete="current-password"
+                autoComplete="Trade_Name"
+                // placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({trade_name : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="form"
+                label="Form"
+                name="form" 
+                type="text"
+                autoComplete="Form"
+                // placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({form : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="dose"
+                label="Dose"
+                name="dose" 
+                type="text"
+                autoComplete="Dose"
+                // placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({dose : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                name="family"
+                label="family"
+                type="text"
+                id="family"
+                autoComplete="family"
                 // placeholder={this.state.TypeObj.description}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
@@ -405,4 +520,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Allergy); 
+export default withStyles(useStyles)(Drug); 
