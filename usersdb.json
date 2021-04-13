@@ -1,105 +1,24 @@
 {
-  "users": [
+  "allergy": [
     {
-      "id": 1,
-      "email": "alaa@gmail.com",
-      "password": "1254",
-      "user_type": "p"
+      "id": 14,
+      "name": "ddddd",
+      "description": "fffffff"
     },
     {
-      "id": 2,
-      "email": "Mona@gmail.com",
-      "password": "1254",
-      "user_type": "p"
-    },
-    {
-      "id": 3,
-      "email": "Ahmed@gmail.com",
-      "password": "1254",
-      "user_type": "p"
-    },
-    {
-      "id": 4,
-      "email": "ali@gmail.com",
-      "password": "1254",
-      "user_type": "p"
-    },
-    {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "userName": "asd",
-      "password": "12",
-      "email": "12222",
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
-      "userName": "asd",
-      "password": "12",
-      "email": "12222",
-      "id": 9
-    },
-    {
-      "userName": "asdeeeee",
-      "password": "127777",
-      "email": "12222ppp",
-      "id": 10
-    },
-    {
-      "userName": "asdeeeee",
-      "password": "127777",
-      "email": "12222ppp",
-      "id": 11
-    },
-    {
-      "userName": "asdeeeee",
-      "password": "127777",
-      "email": "12222ppp",
-      "id": 12
-    },
-    {
-      "userName": "asdeeeee",
-      "password": "",
-      "email": "12222ppp",
-      "id": 13
-    },
-    {
-      "id": 14
-    },
-    {
+      "name": "Alaaaaaaaaa",
+      "description": "ssssss",
       "id": 15
     },
     {
-      "{\"userName\":\"asdsdf\",\"password\":\"1111\",\"email\":\"alaamenshawy464@gmail.com\"}": "",
+      "name": "ssss",
+      "description": "vvbvvvv",
       "id": 16
     },
     {
-      "{\"userName\":\"asdsdf\",\"password\":\"1111\",\"email\":\"alaamenshawy464@gmail.com\"}": "",
+      "name": "llkdlkjdlkjf",
+      "description": "sssss",
       "id": 17
-    },
-    {
-      "userName": "asdsdf",
-      "password": "1111",
-      "email": "alaamenshawy464@gmail.com",
-      "id": 18
-    },
-    {
-      "userName": "as",
-      "password": "1244",
-      "email": "ahmed_mensh00@yahoo.com",
-      "id": 19
-    },
-    {
-      "userName": "asallaaa",
-      "password": "1244",
-      "email": "ahmed_mensh00@yahoo.com",
-      "id": 20
     }
   ]
 }
