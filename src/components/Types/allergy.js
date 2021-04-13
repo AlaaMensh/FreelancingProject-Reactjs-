@@ -52,6 +52,13 @@ const useStyles = (theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  input2 :{
+    height:"10px"
+  },
+  iconPlus:{
+    margin: "auto",
+    textAlign:"center"
+  }
 });
 
 
@@ -116,10 +123,7 @@ class Allergy extends Component {
       allergyList: this.state.allergyList.filter(row => row.id !== id)
      })
     }
-    refresh = async()=>{
-      // this.setState({ allergyList: [...this.state.allergyList] })
-      this.getData()
-    }
+ 
     handleDelete= async(id)=>{
         await axios.delete(`http://localhost:2400/allergy/${id}`)
         .then(res => {
@@ -153,6 +157,7 @@ class Allergy extends Component {
            console.log(res);
            console.log(res.data);
          })
+         this.getData()
     }
 
     componentDidUpdate(){
@@ -179,12 +184,12 @@ class Allergy extends Component {
                       variant="contained"
                       color="primary"
                       size="small"
+                     
                       style={{ marginLeft: 16 }}
                       onClick={()=>{
                         this.handleopenModal1();
                         this.getTypeByID(params.row.id);
-                        this.refresh();
-
+                        this.getData()
                       }
                         
                       }
@@ -269,6 +274,7 @@ class Allergy extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -285,6 +291,7 @@ class Allergy extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -327,10 +334,10 @@ class Allergy extends Component {
     </Container>
 </Modal>
 
-<Fab color="primary" aria-label="add" >
-  <AddIcon  onClick = {()=>{
+<Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
   this.handleopenModal2()
-}}/>
+}} >
+  <AddIcon  />
 </Fab>
 <Modal
 key="1"
@@ -352,6 +359,7 @@ key="1"
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -368,6 +376,7 @@ key="1"
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
