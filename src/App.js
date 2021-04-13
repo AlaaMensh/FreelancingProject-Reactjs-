@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
 import Allergy from './components/Types/allergy';
 import Navbar from './components/Navbar';
+import DashBoard from "./pages/DashBoard"
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
       <Route exact path="/forgetPasswordCode" component={ForgotPasswordCode}></Route>
       <Route exact path="/allergy" component={Allergy}></Route>
-      <Route exact path="/DashBoard" component={Navbar}></Route>
+      <Route exact path="/DashBoard" component={DashBoard}></Route>
     </Switch>
    </div>
    <div>

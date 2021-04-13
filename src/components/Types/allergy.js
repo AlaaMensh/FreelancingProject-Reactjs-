@@ -60,26 +60,6 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-  // const useStyles = makeStyles((theme) => ({
-//   paper: {
-//     marginTop: theme.spacing(8),
-//     display: 'flex',
-//     flexDirection: 'column',
-//     alignItems: 'center',
-//   },
-//   avatar: {
-//     margin: theme.spacing(1),
-//     backgroundColor: theme.palette.secondary.main,
-//   },
-//   form: {
-//     width: '100%', // Fix IE 11 issue.
-//     marginTop: theme.spacing(3),
-//   },
-//   submit: {
-//     margin: theme.spacing(3, 0, 2),
-//   },
-// }))
-// const classes = useStyles()
 class Allergy extends Component {
   constructor(props) {
     super(props);
@@ -92,8 +72,6 @@ class Allergy extends Component {
       TypeObj : {},
       name:"",
       description :""  
-      
-
           }
         }
         
@@ -121,10 +99,27 @@ class Allergy extends Component {
     handleopenModal2 = () => {
       this.setState({openModal2 : true})
     };
+    getData = async()=>{
+      await axios.get(' http://localhost:2400/allergy').then(async resp => {
+        // return resp.data;
+         this.setState({
+            allergyList : resp.data
+        })
+      })
+    }
   
      handleCloseModal2 = () => {
       this.setState({openModal2 : false})
     };
+    refreshAfterDeletion = (id)=>{
+     this.setState({
+      allergyList: this.state.allergyList.filter(row => row.id !== id)
+     })
+    }
+    refresh = async()=>{
+      // this.setState({ allergyList: [...this.state.allergyList] })
+      this.getData()
+    }
     handleDelete= async(id)=>{
         await axios.delete(`http://localhost:2400/allergy/${id}`)
         .then(res => {
@@ -136,15 +131,7 @@ class Allergy extends Component {
          
     }
    async componentDidMount(){
-     axios.get(' http://localhost:2400/allergy').then(async resp => {
-        // return resp.data;
-         this.setState({
-            allergyList : resp.data
-        })
-        console.log("dkdkkdkdkd:   ",resp.data);    
-  });
-
-  
+      this.getData()
     }
     handleUpdate = ()=>{
       var obj = {
@@ -196,6 +183,7 @@ class Allergy extends Component {
                       onClick={()=>{
                         this.handleopenModal1();
                         this.getTypeByID(params.row.id);
+                        this.refresh();
 
                       }
                         
@@ -212,6 +200,7 @@ class Allergy extends Component {
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
                         this.handleDelete(params.row.id);
+                        this.refreshAfterDeletion(params.row.id);
                       }}
                     >
                       delete
@@ -249,6 +238,7 @@ class Allergy extends Component {
         console.log(res);
         console.log(res.data);
       })
+      this.getData();
     }
 
 
@@ -323,6 +313,7 @@ class Allergy extends Component {
               
               
               this.handleUpdate();
+              this.getData();
               // console.log("user: " , obj);
               // handleSignup()
             }}
@@ -405,6 +396,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
+              this.getData();
               // console.log("user: " , obj);
               // handleSignup()
             }}
