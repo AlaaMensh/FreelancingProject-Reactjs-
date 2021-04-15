@@ -11,11 +11,19 @@ import Container from '@material-ui/core/Container';
 import  { useState } from 'react';
 import form  from '@material-ui/pickers';
 const useStyles = makeStyles((theme) => ({
+  marginTopp:{
+    marginTop: theme.spacing(11),
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    
+    backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+    padding:"1em",
+    borderRadius:"1em"
+
   },
   avatar: {
     margin: theme.spacing(1),
@@ -24,10 +32,12 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+
 }));
 
 export default function Signup() {
@@ -78,8 +88,9 @@ export default function Signup() {
 
 }
 return (
-  <Container component="main" maxWidth="xs">
-    {/* <CssBaseline /> */}
+  <Grid container direction="row"
+  justify="center"
+  alignItems="center" className={classes.borderedDiv}>      
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
@@ -254,17 +265,20 @@ return (
           }}
         >
           Sign Up
-        </Button>
-        <Grid container justify="flex-end">
-          <Grid item>
-            <Link href="#" variant="body2">
-              Already have an account? Sign in
-            </Link>
-          </Grid>
-        </Grid>
-      </form>
-    </div>
-    {}
-  </Container>
+          </Button>
+                    <Grid container justify="flex-end">
+                      <Grid item>
+                        <Link href="#" variant="body2">
+                          Already have an account? Sign in
+                        </Link>
+                        <Link href="#" variant="body2">
+                          Forgot Password
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </div>
+  </Grid>
+  
 );
 }
