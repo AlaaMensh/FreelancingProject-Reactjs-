@@ -1,105 +1,73 @@
 {
-  "users": [
+  "allergy": [
     {
-      "id": 1,
-      "email": "alaa@gmail.com",
-      "password": "1254",
-      "user_type": "p"
+      "id": 6,
+      "name": "alaaElmenshawy",
+      "description": "uuuuuhnnnnnnnn"
     },
     {
-      "id": 2,
-      "email": "Mona@gmail.com",
-      "password": "1254",
-      "user_type": "p"
-    },
-    {
-      "id": 3,
-      "email": "Ahmed@gmail.com",
-      "password": "1254",
-      "user_type": "p"
-    },
-    {
-      "id": 4,
-      "email": "ali@gmail.com",
-      "password": "1254",
-      "user_type": "p"
-    },
-    {
-      "id": 5
-    },
-    {
-      "id": 6
-    },
-    {
-      "userName": "asd",
-      "password": "12",
-      "email": "12222",
-      "id": 7
-    },
-    {
-      "id": 8
-    },
-    {
-      "userName": "asd",
-      "password": "12",
-      "email": "12222",
+      "name": "alaaElmenshawy",
+      "description": "kjlkjlkjlkj",
       "id": 9
     },
     {
-      "userName": "asdeeeee",
-      "password": "127777",
-      "email": "12222ppp",
+      "name": "aaddcccc",
+      "description": "sssss",
       "id": 10
+    }
+  ],
+  "appointements": [
+    {
+      "id": "1",
+      "patientName": "ccccccc",
+      "reason": "aaaaaaaaaaaaaaaaaa",
+      "date": "25-10-2020",
+      "time": "02:30",
+      "duration": "20"
     },
     {
-      "userName": "asdeeeee",
-      "password": "127777",
-      "email": "12222ppp",
-      "id": 11
+      "id": "2",
+      "patientName": "Mohamed",
+      "reason": "lkjdlkjldjlfdflkdlfjdkljfldkjf",
+      "date": "25-10-2020",
+      "time": "02:30",
+      "FD": "Giza Hospital",
+      "duration": "20"
     },
     {
-      "userName": "asdeeeee",
-      "password": "127777",
-      "email": "12222ppp",
-      "id": 12
+      "id": "3",
+      "patientName": "ahmed",
+      "reason": "lkjdlkjldjlfdflkdlfjdkljfldkjf",
+      "date": "25-10-2020",
+      "time": "02:30",
+      "FD": "Giza Hospital",
+      "duration": "20"
     },
     {
-      "userName": "asdeeeee",
-      "password": "",
-      "email": "12222ppp",
-      "id": 13
+      "id": "4",
+      "patientName": "alaa",
+      "reason": "lkjdlkjldjlfdflkdlfjdkljfldkjf",
+      "date": "25-10-2020",
+      "time": "02:30",
+      "FD": "Giza Hospital",
+      "duration": "20"
     },
     {
-      "id": 14
+      "patientName": "alaa",
+      "reason": "akjdkjlkdjfkldf",
+      "date": "2021-04-13",
+      "time": "17:27",
+      "duration": "20",
+      "id": "H_s1tRe"
     },
     {
-      "id": 15
-    },
-    {
-      "{\"userName\":\"asdsdf\",\"password\":\"1111\",\"email\":\"alaamenshawy464@gmail.com\"}": "",
-      "id": 16
-    },
-    {
-      "{\"userName\":\"asdsdf\",\"password\":\"1111\",\"email\":\"alaamenshawy464@gmail.com\"}": "",
-      "id": 17
-    },
-    {
-      "userName": "asdsdf",
-      "password": "1111",
-      "email": "alaamenshawy464@gmail.com",
-      "id": 18
-    },
-    {
-      "userName": "as",
-      "password": "1244",
-      "email": "ahmed_mensh00@yahoo.com",
-      "id": 19
-    },
-    {
-      "userName": "asallaaa",
-      "password": "1244",
-      "email": "ahmed_mensh00@yahoo.com",
-      "id": 20
+      "patientName": "ccccccc",
+      "reason": "aaaaaaaaaaaaaaaaaa",
+      "date": "2021-04-15",
+      "time": "15:04",
+      "duration": "20",
+      "FD": "Giza Hospital",
+      "id": "oTIRCzH"
     }
   ]
 }
