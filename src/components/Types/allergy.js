@@ -30,6 +30,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import "./types.css";
+// import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = (theme) => ({
   paper: {
@@ -51,6 +53,8 @@ const useStyles = (theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    fontSize:"1.1em",
+    fontFamily:"Dosis"
   },
   input2 :{
     height:"10px"
@@ -58,6 +62,17 @@ const useStyles = (theme) => ({
   iconPlus:{
     margin: "auto",
     textAlign:"center"
+    // float:"right",
+  },
+  button: {
+    margin: theme.spacing(1),
+    fontFamily: 'Roboto Slab'
+  },
+  deleteButton: {
+    backgroundColor:"#c94c4c"
+  },
+  editButton: {
+    backgroundColor:"#c94c4c"
   }
 });
 
@@ -83,12 +98,67 @@ class Allergy extends Component {
         }
         
         getTypeByID = async(id) => {
-          console.log("heeereeeee" , id);
-          let response = await fetch(`http://localhost:2400/allergy/${id}`);
-          var payload = await response.json();
-          console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
-          this.setState({
-            TypeObj:payload
+          console.log("dkkdkdkdkdkdkdkdkdk:    ")
+        //   console.log("id : " , id);
+        //   var details = {
+        //     id:id
+        //   }
+        //   var formBody = [];
+        //   // var encodedKey = encodeURIComponent("id").toString();
+
+        //   // var encodedValue = encodeURIComponent(details["id"]);
+        //   // formBody.push(encodedKey + "=" + encodedValue);
+        //   for (var property in details) {
+        //     var encodedKey = encodeURIComponent(property);
+        //     var encodedValue = encodeURIComponent(details[property]);
+        //     formBody.push(encodedKey + "=" + encodedValue);
+        //   }
+        //   formBody = formBody.join("&");
+
+        //   console.log("heeereeeee" ,  formBody);
+        //   // let response = await fetch(`http://localhost:3000/allergy/getById` ,{body: id});
+        //   // var payload = await response.json();
+        //   // console.log( "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
+        //   // this.setState({
+        //   //   TypeObj:payload
+        //   // })
+        //  await fetch(`http://localhost:3000/allergy/getById`, {
+        //     method: 'GET',
+        //     headers: {
+        //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        //     },
+        //     body: formBody
+        //   }).then((resp)=>{
+        //     console.log("it is inserted");
+        //     this.setState({
+        //     TypeObj:resp.data
+        //   })
+        //   }).catch(()=>{
+        //     console.log("error gettingj")
+        //   })
+          var details = {
+            id:id
+          }
+          var formBody = [];
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+          // formBody = formBody.join("&");
+          
+          fetch(`http://localhost:3000/allergy/getById`, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: formBody
+          }).then((resp)=>{
+            console.log("Getting: " , resp.data);
+            this.setState({
+              TypeObj:resp.data.json()
+            })
+          }).catch(()=>{
+            console.log("errror")
           })
         }
         getAllergyTypesList = (allergyList) =>{
@@ -107,12 +177,16 @@ class Allergy extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      await axios.get(' http://localhost:2400/allergy').then(async resp => {
+      // await axios.get(' http://localhost:2400/allergy').then(async resp => {
+      await axios.get('http://localhost:3000/allergy/getAllergy').then(async resp => {
         // return resp.data;
          this.setState({
             allergyList : resp.data
         })
+        console.log("resp.data: " , resp.data);
+      
       })
+      
     }
   
      handleCloseModal2 = () => {
@@ -125,12 +199,34 @@ class Allergy extends Component {
     }
  
     handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/allergy/${id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-        .catch(err=>{console.log("nooooo")})
+      var details = {
+        id:id
+      }
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      // formBody = formBody.join("&");
+      
+      fetch('http://localhost:3000/allergy/deleteAllergy', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is deleted");
+      }).catch(()=>{
+        console.log("errror")
+      })
+        // await axios.delete(`http://localhost:2400/allergy/deleteAllergy/${id}`)
+        // .then(res => {
+        //   console.log(res);
+        //   console.log(res.data);
+        // })
+        // .catch(err=>{console.log("nooooo")})
 
          
     }
@@ -138,25 +234,46 @@ class Allergy extends Component {
       this.getData()
     }
     handleUpdate = ()=>{
-      var obj = {
+
+      var details = {
         id:this.state.TypeObj.id,
         name: this.state.name,
         description : this.state.description,
       }
-      if(!obj.name){
-        obj.name = this.state.TypeObj.name
-      }
-      if(!obj.description){
-        obj.description = this.state.TypeObj.description
-      }
 
 
-      console.log("type: ", obj);
-      axios.put(`http://localhost:2400/allergy/${id}` , obj)
-         .then(res => {
-           console.log(res);
-           console.log(res.data);
-         })
+      if(!details.name){
+        details.name = this.state.TypeObj.name
+      }
+      if(!details.description){
+        details.description = this.state.TypeObj.description
+      }
+
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+
+      // console.log("add: ", obj);
+      // axios.put(`http://localhost:3000/allergy/addAllergy` , obj)
+      //    .then(res => {
+      //      console.log(res);
+      //      console.log(res.data);
+      //    })
+      fetch('http://localhost:3000/allergy/updateAllergy', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
+      })
          this.getData()
     }
 
@@ -167,40 +284,56 @@ class Allergy extends Component {
 
     rendering = () =>{
         return(
-        <div>
-            <div style={{ height: 400, width: '100%' }}>
-               <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
+          <div className="container gridDataContent mt-5"> 
+          <div className="row">
+            <div className="col-2 text-center py-3 rounded px-4 header">
+                <span className="">Ellergy Types</span>
+            </div>
+            <div className="col-10 overflow-hidden ">
+                <div className="row justify-content-lg-start">
+
+                </div>
+            </div>
+          </div>
+            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
+                 { field: 'id', headerName: 'id', width: 70 },
               { field: 'name', headerName: 'Name', width: 200 },
-              { field: 'description', headerName: 'description', width: 400 },
+              { field: 'description', headerName: 'description', width: 500 },
               // { field: <button>Hi</button>, headerName: 'description', width: 400 },
-              {
+              { 
                 field: 'Actions',
                 headerName: 'Actions',
-                width: 550,
+                width: 250,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="default"
                       size="small"
+                      className={this.props.classes.button}
+                      startIcon={<EditIcon />}
                      
                       style={{ marginLeft: 16 }}
                       onClick={()=>{
                         this.handleopenModal1();
+                        console.log("lsssssssssssssssssssssssssssssssssssss")
                         this.getTypeByID(params.row.id);
                         this.getData()
                       }
                         
                       }
                     >
-                      edit
+                       Edit
+                      
                     </Button>
-                    
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="secondary"
                       size="small"
+                      className={this.props.classes.button , this.props.classes.deleteButton}
+                      startIcon={<EditIcon />}
                       style={{ marginLeft: 16 }}
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
@@ -212,7 +345,7 @@ class Allergy extends Component {
                     </Button>
                   </strong>
                 ),
-              },]} pageSize={5}
+              }]} pageSize={5}
                 checkboxSelection  onRowSelected={async (row) => {
                   // this.handleDelete(row.data.id);
                   // document.getElementById("hide").hidden = true;
@@ -227,21 +360,51 @@ class Allergy extends Component {
                       // this.settypeID(row.row.id);
                       this.setState({typeId : row.row.id});
                   }} />
-            </div>  
-        </div>
+            </div> 
+              <div className="row mt-4">
+                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                          this.handleopenModal2()
+                        }} >
+                          <AddIcon  />
+                        </Fab> 
+                      </div>
+                    </div>
+        
         )
     }
     handleAdding = () =>{
-      var obj = {
+      var details = {
         name: this.state.name,
         description : this.state.description,
       }
 
-      console.log("type: ", obj);
-      axios.post(`http://localhost:2400/allergy`,  obj )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
+      // console.log("type: ", obj);
+      // axios.post(`http://localhost:3000/allergy/addAllergy`,  obj )
+      // .then(res => {
+      //   console.log(res);
+      //   console.log(res.data);
+      // })
+      console.log("detilaas : " , details)
+
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      console.log("formging:     " , formBody)
+      
+      fetch('http://localhost:3000/allergy/addAllergy', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
       })
       this.getData();
     }
@@ -251,11 +414,10 @@ class Allergy extends Component {
       const { classes } = this.props;
         
   return (
-    <div>
+    <div className="hero">
         {this.rendering()}
 
 <Modal
-
   open={this.state.openModal1}
   onClose={this.handleClose}
   aria-labelledby="simple-modal-title"
@@ -323,22 +485,21 @@ class Allergy extends Component {
               // handleSignup()
             }}
           >
+           
             Edit
           </Button>
           
         </form>
+
       </div>
       {/* <Box mt={5}>
         <Copyright />
       </Box> */}
+ 
     </Container>
 </Modal>
 
-<Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
-  this.handleopenModal2()
-}} >
-  <AddIcon  />
-</Fab>
+
 <Modal
 key="1"
   open={this.state.openModal2}
@@ -397,9 +558,9 @@ key="1"
           </Grid>
           <Button
             type="button"
-            fullWidth
             variant="contained"
             color="primary"
+            fullWidth
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();

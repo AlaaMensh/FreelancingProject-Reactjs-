@@ -20,11 +20,20 @@ import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
+  marginTopp:{
+    marginTop: theme.spacing(11),
+    // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    
+    backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+    padding:"1em",
+    borderRadius:"1em"
+
   },
   avatar: {
     margin: theme.spacing(1),
@@ -33,10 +42,12 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+
 }));
 
 export default function Signup() {
@@ -49,7 +60,7 @@ export default function Signup() {
 
     var details = {
       'userName':username,
-      'password': pass,
+      'Password': pass,
       'Email': email
   };
   
@@ -60,7 +71,7 @@ export default function Signup() {
     formBody.push(encodedKey + "=" + encodedValue);
   }
   formBody = formBody.join("&");
-  
+  console.log("formBodu : " , formBody)
   fetch('http://localhost:3000/authenticate/signup', {
     method: 'POST',
     headers: {
@@ -148,99 +159,107 @@ export default function Signup() {
   
   }
   return (
-    <Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="UserName"
-                name="userName"
-                autoComplete="username"
-                onChange = {(event) =>{
-                  setUsername(event.target.value);
-                  console.log("yyyyys" , username);
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange = {(event) =>{
-                  setPass(event.target.value);
-                  console.log("password" , pass);
-                }}
-                
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="email"
-                label="Email"
-                type="email"
-                id="email"
-                // autoComplete="current-password"
-                onChange = {(event) =>{
-                  setEmail(event.target.value);
-                  console.log("email" , email);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={()=>{
-              // var obj = {
-              //   userName:username,
-              //   password:pass,
-              //   email:email,
-              // }
-              // console.log("user: " , obj);
-              handleSignup()
-            }}
-          >
-            Sign Up
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
-              <Link href="#" variant="body2">
-                Forgot Password
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
-      </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
-    </Container>
+    <Grid container direction="row"
+    justify="center"
+    alignItems="center" className={classes.borderedDiv}>
+          
+            <Grid container xs={6} sm={4} spacing={1}>
+ 
+  <div className={classes.paper}>
+                  <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Sign up
+                  </Typography>
+                  <form className={classes.form} noValidate>
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          id="username"
+                          label="UserName"
+                          name="userName"
+                          autoComplete="username"
+                          onChange = {(event) =>{
+                            setUsername(event.target.value);
+                            console.log("yyyyys" , username);
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          name="password"
+                          label="Password"
+                          type="password"
+                          id="password"
+                          autoComplete="current-password"
+                          onChange = {(event) =>{
+                            setPass(event.target.value);
+                            console.log("password" , pass);
+                          }}
+                          
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          variant="outlined"
+                          required
+                          fullWidth
+                          name="email"
+                          label="Email"
+                          type="email"
+                          id="email"
+                          // autoComplete="current-password"
+                          onChange = {(event) =>{
+                            setEmail(event.target.value);
+                            console.log("email" , email);
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Button
+                      type="button"
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                      onClick={()=>{
+                        // var obj = {
+                        //   userName:username,
+                        //   password:pass,
+                        //   email:email,
+                        // }
+                        // console.log("user: " , obj);
+                        handleSignup()
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                    <Grid container justify="flex-end">
+                      <Grid item>
+                        <Link href="#" variant="body2">
+                          Already have an account? Sign in
+                        </Link>
+                        <Link href="#" variant="body2">
+                          Forgot Password
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </div>
+  </Grid>
+  {/* <Grid container item xs={4} className={classes.marginTopp} spacing={0} style={{width:"100%" ,height:"auto"  }} >
+                      
+  </Grid> */}
+ 
+</Grid>
+  
+   
   );
 }
