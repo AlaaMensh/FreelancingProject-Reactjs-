@@ -52,6 +52,13 @@ const useStyles = (theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  input2 :{
+    height:"10px"
+  },
+  iconPlus:{
+    margin: "auto",
+    textAlign:"center"
+  }
 });
 
 
@@ -60,37 +67,34 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Drug extends Component {
+class FD_chemist extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      drugList : [],
+      fd_chemistList : [],
       typeId:0,
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      genric_name: "",
-      trade_name:"",
-      form:"",
-      dose:"",
-      family :""  
-      
-
+      username:"",
+      name: "",
+      email :"",
+      phone: ""  
           }
         }
         
         getTypeByID = async(id) => {
           console.log("heeereeeee" , id);
-          let response = await fetch(`http://localhost:2400/drug/${id}`);
+          let response = await fetch(`http://localhost:2400/fd_chemist/${id}`);
           var payload = await response.json();
           console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
           this.setState({
             TypeObj:payload
           })
         }
-        getDrugTypesList = (drugList) =>{
-        for(var type in drugList){
+        getFD_chemistTypesList = (fd_chemist) =>{
+        for(var type in fd_chemistList){
             console.log("type: ", type.name);
         }
     }
@@ -104,12 +108,26 @@ class Drug extends Component {
     handleopenModal2 = () => {
       this.setState({openModal2 : true})
     };
+    getData = async()=>{
+      await axios.get(' http://localhost:2400/fd_chemist').then(async resp => {
+        // return resp.data;
+         this.setState({
+            fd_chemistList : resp.data
+        })
+      })
+    }
   
      handleCloseModal2 = () => {
       this.setState({openModal2 : false})
     };
+    refreshAfterDeletion = (id)=>{
+     this.setState({
+        fd_chemistList: this.state.fd_chemistList.filter(row => row.id !== id)
+     })
+    }
+ 
     handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/drug/${id}`)
+        await axios.delete(`http://localhost:2400/fd_chemist/${id}`)
         .then(res => {
           console.log(res);
           console.log(res.data);
@@ -119,47 +137,38 @@ class Drug extends Component {
          
     }
    async componentDidMount(){
-     axios.get('http://localhost:2400/drug').then(async resp => {
-        // return resp.data;
-         this.setState({
-            allergyList : resp.data
-        })
-        console.log("dkdkkdkdkd:   ",resp.data);    
-  });
-
-  
+      this.getData()
     }
     handleUpdate = ()=>{
       var obj = {
         id:this.state.TypeObj.id,
-        genric_name: this.state.name,
-        trade_name: this.state.trade_name,
-        form: this.state.form,
-        dose: this.state.dose,
-        family : this.state.family,
+        username: this.state.username,
+        name: this.state.name,
+        email : this.state.email,
+        phone : this.state.phone,
       }
-      if(!obj.genric_name){
-        obj.genric_name = this.state.TypeObj.genric_name
+      if(!obj.username){
+        obj.username = this.state.TypeObj.username
       }
-      if(!obj.trade_name){
-        obj.trade_name = this.state.TypeObj.trade_name
+      if(!obj.name){
+        obj.name = this.state.TypeObj.name
       }
-      if(!obj.form){
-        obj.form = this.state.TypeObj.form
+      if(!obj.email){
+        obj.email = this.state.TypeObj.email
       }
-      if(!obj.dose){
-        obj.dose = this.state.TypeObj.dose
-      }
-      if(!obj.family){
-        obj.family = this.state.TypeObj.family
+      if(!obj.phone){
+        obj.phone = this.state.TypeObj.phone
       }
 
+
+
       console.log("type: ", obj);
-      axios.put(`http://localhost:2400/drug/${id}` , obj)
+      axios.put(`http://localhost:2400/fd_chemist/${id}` , obj)
          .then(res => {
            console.log(res);
            console.log(res.data);
          })
+         this.getData()
     }
 
     componentDidUpdate(){
@@ -172,13 +181,10 @@ class Drug extends Component {
         <div>
             <div style={{ height: 400, width: '100%' }}>
                <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-               { field: 'genric_name', headerName: 'Genric_Name', width: 200 },
-              { field: 'trade_name', headerName: 'Trade_Name', width: 200 },
-              { field: 'form', headerName: 'form', width: 400 },
-              { field: 'dose', headerName: 'dose', width: 200 },
-              { field: 'family', headerName: 'family', width: 200 },
-              // { field: <button>Hi</button>, headerName: 'description', width: 400 },
-              {
+              { field: 'username', headerName: 'UserName', width: 200 },
+              { field: 'name', headerName: 'Name', width: 200 },
+              { field: 'email', headerName: 'Email', width: 400 },
+              { field: 'phone', headerName: 'Phone', width: 200 },              {
                 field: 'Actions',
                 headerName: 'Actions',
                 width: 550,
@@ -189,11 +195,12 @@ class Drug extends Component {
                       variant="contained"
                       color="primary"
                       size="small"
+                     
                       style={{ marginLeft: 16 }}
                       onClick={()=>{
                         this.handleopenModal1();
                         this.getTypeByID(params.row.id);
-
+                        this.getData()
                       }
                         
                       }
@@ -209,6 +216,7 @@ class Drug extends Component {
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
                         this.handleDelete(params.row.id);
+                        this.refreshAfterDeletion(params.row.id);
                       }}
                     >
                       delete
@@ -217,17 +225,12 @@ class Drug extends Component {
                 ),
               },]} pageSize={5}
                 checkboxSelection  onRowSelected={async (row) => {
-                  // this.handleDelete(row.data.id);
-                  // document.getElementById("hide").hidden = true;
-                   
                   console.log("yes" , this.state.typeId);
                   }} getRowId ={(row) =>{
-                      // console.log("id: " , row.id);
                   }}
                   onRowClick = {(row)=>{
                       console.log("yyyys" , row);
                       id = row.row.id;
-                      // this.settypeID(row.row.id);
                       this.setState({typeId : row.row.id});
                   }} />
             </div>  
@@ -236,19 +239,20 @@ class Drug extends Component {
     }
     handleAdding = () =>{
       var obj = {
-        genric_name: this.state.genric_name,
-        trade_name: this.state.trade_name,
-        form: this.state.form,
-        dose: this.state.dose,
-        family : this.state.family,
+        username: this.state.username,
+        name: this.state.name,
+        email : this.state.email,
+        phone : this.state.phone,
+
       }
 
       console.log("type: ", obj);
-      axios.post(`http://localhost:2400/drug`,  obj )
+      axios.post(`http://localhost:2400/fd_chemist`,  obj )
       .then(res => {
         console.log(res);
         console.log(res.data);
       })
+      this.getData();
     }
 
 
@@ -279,81 +283,69 @@ class Drug extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="genric_name"
+                id="username"
                 // label="Name"
-                name="genric_name" 
+                name="username" 
                 type="text"
-                autoComplete="Genric_Name"
-                placeholder={this.state.TypeObj.name}
+                autoComplete="UserName"
+                placeholder={this.state.TypeObj.username}
                 onChange = {(event) =>{
-                  this.setState({genric_name : event.target.value});
+                  this.setState({username : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="trade_name"
-                // label="Name"
-                name="trade_name" 
+                id="name"
+                name="name" 
                 type="text"
-                autoComplete="Trade_Name"
+                autoComplete="Name"
                 placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({trade_name : event.target.value});
+                  this.setState({name : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="form"
-                // label="Name"
-                name="form" 
+                name="email"
+                // label="description"
                 type="text"
-                autoComplete="Form"
-                placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({trade_name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="dose"
-                // label="Name"
-                name="dose" 
-                type="text"
-                autoComplete="Dose"
-                placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({dose : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="family"
-                type="text"
-                id="family"
-                autoComplete="family"
-                placeholder={this.state.TypeObj.description}
+                id="email"
+                autoComplete="email"
+                placeholder={this.state.TypeObj.email}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  this.setState({email : event.target.value});
+                }}
+                
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="phone"
+                type="text"
+                id="phone"
+                autoComplete="phone"
+                placeholder={this.state.TypeObj.phone}
+                onChange = {(event) =>{
+                  this.setState({phone : event.target.value});
                 }}
                 
               />
@@ -367,11 +359,9 @@ class Drug extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              
-              
               this.handleUpdate();
-              // console.log("user: " , obj);
-              // handleSignup()
+              this.getData();
+              
             }}
           >
             Edit
@@ -383,12 +373,12 @@ class Drug extends Component {
         <Copyright />
       </Box> */}
     </Container>
-</Modal>
+  </Modal>
 
-<Fab color="primary" aria-label="add" >
-  <AddIcon  onClick = {()=>{
+<Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
   this.handleopenModal2()
-}}/>
+}} >
+  <AddIcon  />
 </Fab>
 <Modal
 key="1"
@@ -410,82 +400,65 @@ key="1"
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="genric_name"
-                label="Genric_Name"
-                name="genric_name" 
+                id="username"
+                label="UserName"
+                name="username" 
                 type="text"
-                autoComplete="Genric_Name"
-                // placeholder={this.state.TypeObj.name}
+                autoComplete="UserName"
                 onChange = {(event) =>{
-                  this.setState({genric_name : event.target.value});
+                  this.setState({username : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="trade_name"
-                label="Trade_Name"
-                name="trade_name" 
+                id="name"
+                label="Name"
+                name="name" 
                 type="text"
-                autoComplete="Trade_Name"
-                // placeholder={this.state.TypeObj.name}
+                autoComplete="Name"
                 onChange = {(event) =>{
-                  this.setState({trade_name : event.target.value});
+                  this.setState({name : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="form"
-                label="Form"
-                name="form" 
+                name="email"
+                label="email"
                 type="text"
-                autoComplete="Form"
-                // placeholder={this.state.TypeObj.name}
+                id="email"
+                autoComplete="email"
                 onChange = {(event) =>{
-                  this.setState({form : event.target.value});
+                  this.setState({email : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="dose"
-                label="Dose"
-                name="dose" 
+                name="phone"
+                label="phone"
                 type="text"
-                autoComplete="Dose"
-                // placeholder={this.state.TypeObj.name}
+                id="phone"
+                autoComplete="phone"
                 onChange = {(event) =>{
-                  this.setState({dose : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="family"
-                label="family"
-                type="text"
-                id="family"
-                autoComplete="family"
-                // placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  this.setState({phone : event.target.value});
                 }}
                 
               />
@@ -500,8 +473,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
-              // console.log("user: " , obj);
-              // handleSignup()
+              this.getData();
             }}
           >
             Add
@@ -520,4 +492,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Drug); 
+export default withStyles(useStyles)(FD_chemist); 
