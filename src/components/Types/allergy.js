@@ -286,7 +286,7 @@ class Allergy extends Component {
         return(
           <div className="container gridDataContent mt-5"> 
           <div className="row">
-            <div className="col-2 text-center py-3 rounded px-4 header">
+            <div className="col-auto px-2 py-2 text-center rounded  header">
                 <span className="">Ellergy Types</span>
             </div>
             <div className="col-10 overflow-hidden ">

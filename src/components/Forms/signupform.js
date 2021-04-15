@@ -18,10 +18,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import LockIcon from '@material-ui/icons/Lock';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import "./form.css";
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
     marginTop: theme.spacing(11),
+    backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
@@ -29,15 +35,21 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    
-    backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+    backgroundColor:"#e7f0f4",
+    border:"1px solid #fff",
+    boxShadow:"4px 3px 16px 1px #fff",
+    // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
     padding:"1em",
     borderRadius:"1em"
 
   },
+  iconsColor:{
+    color:"#385968"
+  },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor:"#385968"
+    // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -46,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor:"#385968",
   },
 
 }));
@@ -78,94 +91,24 @@ export default function Signup() {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
-  }).then(()=>{
-    console.log("it is inserted");
+  }).then((resp)=>{
+    if(resp.ok){
+      console.log("it is inserted" , resp);
+    }
+    else{
+      console.log("errror" );
+    }
   }).catch(()=>{
     console.log("errror")
   })
 
 
-//     const params = new URLSearchParams()
-// params.append('userName', username);
-// params.append('password', pass);
-// params.append('Email', email);
-// // params.append('description', 'birthdate=25-12-1989&favourite=coding%20coding%20and%20coding&company=Nextzy%20Technologies&website=http://www.akexorcist.com/')
-// // params.append('awesome', true)
-// const config = {
-//   headers: {
-//     'Content-Type': 'application/x-www-form-urlencoded'
-//   }
-// }
-
-// const url = "localhost:3000/authenticate/signup";
-// axios.post(url, params, config)
-//   .then((result) => {
-//     console.log("result:         ",result);
-//     // Do somthing
-//   })
-//   .catch((err) => {
-//     // Do somthing
-//   })
-
-
-
-
-
-  //   // console.log("lllllllllllllllllllll");
-  //   var formData = new FormData();
-  //   formData.append("userName", username);
-  //   formData.append("Email", email);
-  //   formData.append("Password", pass);
-
-  //   for(var pair of formData.entries()) {
-  //     console.log(pair);
-  //  }
-  //   var obj = {
-  //         userName:username,
-  //         password:pass,
-  //         email:email,
-  //       }
-  //     var json = JSON.stringify(obj);
-  //    const url = "localhost:3000/authenticate/signup";
-  //   //  const url = "  http://localhost:2400/users";
-
-  //     // const url = "https://still-bayou-18877.herokuapp.com/";
-  //     // try{
-  //     //   axios({
-  //     //     method: 'post',
-  //     //     url: url,
-  //     //     data: obj
-  //     // })
-  //     // .then(function (response) {
-  //     //     console.log(response);
-  //     // })
-  //     // .catch(function (error) {
-  //     //     console.log(error);
-  //     // });
-
-  //     // }catch(e){
-  //     //   console.log("something wrong....")
-  //     // }
-  //     // const response = await fetch(url, {
-  //     //   method: 'POST', // *GET, POST, PUT, DELETE, etc.
-  //     //   mode:'cors',
-  //     //   // redirect: 'follow', // manual, *follow, error
-  //     //   referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  //     //   body: json // body data type must match "Content-Type" header
-  //     // }).then(data => {
-  //     //   console.log(data); // JSON data parsed by `data.json()` call
-  //     // });
-
   
   }
   return (
-    <Grid container direction="row"
-    justify="center"
-    alignItems="center" className={classes.borderedDiv}>
-          
-            <Grid container xs={6} sm={4} spacing={1}>
- 
-  <div className={classes.paper}>
+      <div className="form-hero row " >
+            <Container component="main" maxWidth="xs" >
+    <div className={classes.paper}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                   </Avatar>
@@ -179,6 +122,7 @@ export default function Signup() {
                           variant="outlined"
                           required
                           fullWidth
+                          size="small"
                           id="username"
                           label="UserName"
                           name="userName"
@@ -187,13 +131,22 @@ export default function Signup() {
                             setUsername(event.target.value);
                             console.log("yyyyys" , username);
                           }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <AccountCircle className={classes.iconsColor} />
+                              </InputAdornment>
+                            ),
+                          }}
                         />
+                        
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
                           variant="outlined"
                           required
                           fullWidth
+                          size="small"
                           name="password"
                           label="Password"
                           type="password"
@@ -203,6 +156,13 @@ export default function Signup() {
                             setPass(event.target.value);
                             console.log("password" , pass);
                           }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <LockIcon className={classes.iconsColor} />
+                              </InputAdornment>
+                            ),
+                          }}
                           
                         />
                       </Grid>
@@ -211,6 +171,7 @@ export default function Signup() {
                           variant="outlined"
                           required
                           fullWidth
+                          size="small"
                           name="email"
                           label="Email"
                           type="email"
@@ -220,6 +181,13 @@ export default function Signup() {
                             setEmail(event.target.value);
                             console.log("email" , email);
                           }}
+                          InputProps={{
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <MailOutlineIcon  className={classes.iconsColor}/>
+                              </InputAdornment>
+                            ),
+                          }}
                         />
                       </Grid>
                     </Grid>
@@ -227,7 +195,7 @@ export default function Signup() {
                       type="button"
                       fullWidth
                       variant="contained"
-                      color="primary"
+                      // color="primary"
                       className={classes.submit}
                       onClick={()=>{
                         // var obj = {
@@ -246,20 +214,16 @@ export default function Signup() {
                         <Link href="#" variant="body2">
                           Already have an account? Sign in
                         </Link>
-                        <Link href="#" variant="body2">
+                        {/* <Link href="#" variant="body2">
                           Forgot Password
-                        </Link>
+                        </Link> */}
                       </Grid>
                     </Grid>
                   </form>
                 </div>
-  </Grid>
-  {/* <Grid container item xs={4} className={classes.marginTopp} spacing={0} style={{width:"100%" ,height:"auto"  }} >
-                      
-  </Grid> */}
- 
-</Grid>
-  
+       
+      </Container>
+      </div>
    
   );
 }

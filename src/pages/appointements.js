@@ -216,20 +216,18 @@ class Appointement extends Component {
 
     rendering = () =>{
         return(
-        <div>
-            <div>
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                            <KeyboardDatePicker
-                            label="Material Date Picker"
-                            // value={selectedDate}
-                            format="MM/dd/yyyy"
-                            onChange={this.handleDateChange}
-                            />
-                        </MuiPickersUtilsProvider>
-                        
+        <div className="mt-5"  >
+            <div className="row justify-content-center">
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <KeyboardDatePicker
+                      label="Material Date Picker"
+                      // value={selectedDate}
+                      format="MM/dd/yyyy"
+                      onChange={this.handleDateChange}
+                      />
+                  </MuiPickersUtilsProvider>
             </div>
-            <div style={{ height: 400, width: '100%' }}>
-    
+            <div className="mt-5" style = {{height: 400, width: '100%' }}>
                <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 70 },
               { field: 'patientName', headerName: 'patientName', width: 150 },
               { field: 'reason', headerName: 'Reason', width: 300 },
@@ -320,7 +318,7 @@ class Appointement extends Component {
       const { classes } = this.props;
         
   return (
-    <div>
+    <div className ="container">
         {this.rendering()}
 
 <Modal

@@ -14,20 +14,20 @@ import Error from './pages/error';
 function App() {
   return (
     <Router >
-      <div className="container--fluid ">
-        <div className="row">
+      <div className="roo container--fluid" >
+        <div className="row" style ={{height : "100%"}}>
         <Switch>
-      <Route exact path="/" component={SignupForm}></Route>
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
       <Route exact path="/forgetPasswordCode" component={ForgotPasswordCode}></Route>
       <Route exact path="/allergy" component={Allergy}></Route>
       <Route exact path="/appointement" component={Appointement}></Route>
       {/* <Route exact path="/drug" component={Drug}></Route> */}
       <Route exact path="/DashBoard" component={DashBoard}></Route>
+      <Route exact path="/" component={SignupForm}></Route>
       <Route exact path="**" component={Error}></Route>
     </Switch>
         </div>
-        <div className="row">
+        <div className="row aaaaa" style={{height :"100%"}}>
           
         </div>
       </div>
