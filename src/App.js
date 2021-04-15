@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
 import Allergy from './components/Types/allergy';
 import Navbar from './components/Navbar';
-import drug from './components/Types/drug';
+import Drug from './components/Types/drug';
 
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
       <Route exact path="/forgetPasswordCode" component={ForgotPasswordCode}></Route>
       <Route exact path="/allergy" component={Allergy}></Route>
-      <Route exact path="/drug" component={drug}></Route>
+      <Route exact path="/drug" component={Drug}></Route>
       <Route exact path="/DashBoard" component={Navbar}></Route>
     </Switch>
    </div>
