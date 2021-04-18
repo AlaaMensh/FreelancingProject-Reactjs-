@@ -19,23 +19,43 @@ import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+  marginTopp:{
+    marginTop: theme.spacing(11),
+    backgroundColor :"yellow"
+    // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    backgroundColor:"#e7f0f4",
+    border:"1px solid #fff",
+    boxShadow:"4px 3px 16px 1px #fff",
+    // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+    padding:"1em",
+    borderRadius:"1em"
+
+  },
+  iconsColor:{
+    color:"#385968"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor:"#385968"
+    // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(3),
+
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor:"#385968",
   },
+
+
 }));
 
 export default function Private_Login_Form() {
@@ -47,19 +67,22 @@ export default function Private_Login_Form() {
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <div className="row align-items-center justify-content-center" style={{
+      padding:"0" , margin:"0" , height:"100%"}} >
+    <Container component="main" maxWidth="xs" >
       {/* <CssBaseline /> */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+         Private Login
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+              size="small"
                 variant="outlined"
                 required
                 fullWidth
@@ -75,6 +98,7 @@ export default function Private_Login_Form() {
             </Grid>
             <Grid item xs={12}>
               <TextField
+              size="small"
                 variant="outlined"
                 required
                 fullWidth
@@ -91,7 +115,7 @@ export default function Private_Login_Form() {
             </Grid>
             <Grid item xs={12}>
             <InputLabel htmlFor="select">Role</InputLabel>
-          <NativeSelect id="select" onChange ={(event)=>{
+          <NativeSelect fullWidth id="select" onChange ={(event)=>{
             setRole(event.target.value);
             console.log("Role" , role);
           }}>
@@ -99,7 +123,7 @@ export default function Private_Login_Form() {
         <option value="admin">Admin</option>
       </NativeSelect>
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={6}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" id="isAdmin" onChange={()=>{
                   var checkbox_isAdmin = document.getElementById("isAdmin");
@@ -116,7 +140,7 @@ export default function Private_Login_Form() {
                 label="isAdmin"
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" id="defaultCheck" onChange={()=>{
                   var checkbox_defaultCheck = document.getElementById("defaultCheck");
@@ -133,7 +157,7 @@ export default function Private_Login_Form() {
                  />}
                 label="default Check"
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Button
             type="button"
@@ -152,13 +176,13 @@ export default function Private_Login_Form() {
               console.log("user: " , obj)
             }}
           >
-            Sign Up
+            Login
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
               <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+                 have not an account? Sign up
+                               </Link>
             </Grid>
           </Grid>
         </form>
@@ -166,6 +190,7 @@ export default function Private_Login_Form() {
       {/* <Box mt={5}>
         <Copyright />
       </Box> */}
-    </Container>
+  </Container>
+      </div>
   );
 }

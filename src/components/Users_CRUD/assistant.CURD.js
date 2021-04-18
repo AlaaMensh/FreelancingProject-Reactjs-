@@ -30,6 +30,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import "./types.css";
+// import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = (theme) => ({
   paper: {
@@ -51,6 +53,8 @@ const useStyles = (theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    fontSize:"1.1em",
+    fontFamily:"Dosis"
   },
   input2 :{
     height:"10px"
@@ -58,6 +62,17 @@ const useStyles = (theme) => ({
   iconPlus:{
     margin: "auto",
     textAlign:"center"
+    // float:"right",
+  },
+  button: {
+    margin: theme.spacing(1),
+    fontFamily: 'Roboto Slab'
+  },
+  deleteButton: {
+    backgroundColor:"#c94c4c"
+  },
+  editButton: {
+    backgroundColor:"#c94c4c"
   }
 });
 
@@ -86,15 +101,31 @@ class Assistant extends Component {
         
         getTypeByID = async(id) => {
           console.log("heeereeeee" , id);
-          let response = await fetch(`http://localhost:2400/assistant/${id}`);
-          var payload = await response.json();
-          console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
-          this.setState({
-            TypeObj:payload
+          // let response = await fetch(`http://localhost:3000/assistant/getAssistant`);
+          var details = {
+            id:id
+          }
+          var formBody = [];
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+          
+          fetch(`http://localhost:3000/assistant/getAssistant/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            }
+            // body: formBody
+          }).then((result)=>{
+            console.log("Getting: " , result);
+          }).catch((e)=>{
+            console.log("error here erroer idkdkdkdkdk" , e)
           })
         }
         getAssistantTypesList = (assistqntList) =>{
-        for(var type in assistantList){
+        for(var type in this.state.assistantList){
             console.log("type: ", type.name);
         }
     }
@@ -109,11 +140,12 @@ class Assistant extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      await axios.get(' http://localhost:2400/assistant').then(async resp => {
+      await axios.get(' http://localhost:3000/assistant/getAll').then(async resp => {
         // return resp.data;
          this.setState({
             assistantList : resp.data
         })
+        console.log("resp.data: " , resp.data);
       })
     }
   
@@ -127,47 +159,77 @@ class Assistant extends Component {
     }
  
     handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/assistant/${id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-        .catch(err=>{console.log("nooooo")})
-
+      var details = {
+        id:id
+      }
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      // formBody = formBody.join("&");
+      
+      fetch('http://localhost:3000/assistant/deleteAssistant', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is deleted");
+      }).catch(()=>{
+        console.log("errror")
+      })
+      
          
     }
    async componentDidMount(){
       this.getData()
     }
     handleUpdate = ()=>{
-      var obj = {
+      var details = {
         id:this.state.TypeObj.id,
         username: this.state.username,
         name: this.state.name,
         email : this.state.email,
         phone : this.state.phone,
       }
-      if(!obj.username){
-        obj.username = this.state.TypeObj.username
+      if(!details.username){
+        details.username = this.state.TypeObj.username
       }
-      if(!obj.name){
-        obj.name = this.state.TypeObj.name
+      if(!details.name){
+        details.name = this.state.TypeObj.name
       }
-      if(!obj.email){
-        obj.email = this.state.TypeObj.email
+      if(!details.email){
+        details.email = this.state.TypeObj.email
       }
-      if(!obj.phone){
-        obj.phone = this.state.TypeObj.phone
+      if(!details.phone){
+        details.phone = this.state.TypeObj.phone
       }
 
 
 
-      console.log("type: ", obj);
-      axios.put(`http://localhost:2400/assistant/${id}` , obj)
-         .then(res => {
-           console.log(res);
-           console.log(res.data);
-         })
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+
+   
+      fetch('http://localhost:3000/allergy/updateAssistant', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
+      })
          this.getData()
     }
 
@@ -178,40 +240,56 @@ class Assistant extends Component {
 
     rendering = () =>{
         return(
-        <div>
-            <div style={{ height: 400, width: '100%' }}>
-               <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-              { field: 'username', headerName: 'UserName', width: 200 },
-              { field: 'name', headerName: 'Name', width: 400 },
-              { field: 'email', headerName: 'Email', width: 400 },
-              { field: 'phone', headerName: 'Phone', width: 200 },              {
-                field: 'Actions',
+          <div className="container gridDataContent mt-5"> 
+          <div className="row">
+            <div className="col-auto px-2 py-2 text-center rounded  header">
+                <span className="">Assistant Data</span>
+            </div>
+            <div className="col-10 overflow-hidden ">
+                <div className="row justify-content-lg-start">
+
+                </div>
+            </div>
+          </div>
+            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.assistantList} columns={[
+              { field: 'firstName', headerName: 'firstName', width: 200 },
+              { field: 'lastName', headerName: 'lastName', width: 200 },
+              { field: 'Email', headerName: 'Email', width: 200 },              
+              { field: 'phone', headerName: 'Phone', width: 200 },              
+              { field: 'userName', headerName: 'username', width: 100 },              
+                {field: 'Actions',  
                 headerName: 'Actions',
                 width: 550,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
                     <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                     
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        this.handleopenModal1();
-                        this.getTypeByID(params.row.id);
-                        this.getData()
-                      }
-                        
-                      }
-                    >
-                      edit
+                    variant="contained"
+                    color="default"
+                    size="small"
+                    className={this.props.classes.button}
+                    startIcon={<EditIcon />}
+                   
+                    style={{ marginLeft: 16 }}
+                    onClick={()=>{
+                      this.handleopenModal1();
+                      console.log("lsssssssssssssssssssssssssssssssssssss")
+                      this.getTypeByID(params.row.id);
+                      this.getData()
+                    }
+                      
+                    }
+                  >
+                     Edit
                     </Button>
                     
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="secondary"
                       size="small"
+                      className={this.props.classes.button , this.props.classes.deleteButton}
+                      startIcon={<EditIcon />}
                       style={{ marginLeft: 16 }}
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
@@ -238,19 +316,39 @@ class Assistant extends Component {
         )
     }
     handleAdding = () =>{
-      var obj = {
-        username: this.state.username,
-        name: this.state.name,
-        email : this.state.email,
-        phone : this.state.phone,
+      var details = {
+        firstName: this.state.username,
+        lastName: this.state.name,
+        Email : this.state.email,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
 
       }
 
-      console.log("type: ", obj);
-      axios.post(`http://localhost:2400/assistant`,  obj )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
+      // console.log("type: ", obj);
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      console.log("formging:     " , formBody)
+      
+      fetch('http://localhost:3000/allergy/addAssisrant', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
       })
       this.getData();
     }
@@ -260,7 +358,7 @@ class Assistant extends Component {
       const { classes } = this.props;
         
   return (
-    <div>
+    <div className="hero">
         {this.rendering()}
 
 <Modal
@@ -375,11 +473,11 @@ class Assistant extends Component {
     </Container>
 </Modal>
 
-<Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
+{/* <Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
   this.handleopenModal2()
 }} >
   <AddIcon  />
-</Fab>
+</Fab> */}
 <Modal
 key="1"
   open={this.state.openModal2}

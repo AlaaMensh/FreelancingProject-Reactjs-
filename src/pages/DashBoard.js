@@ -3,11 +3,15 @@ import Navbar from '../components/Navbar';
 import {useEffect , useState} from "react"
 
 
-const DashBoard = () => {
+const DashBoard = (props) => {
+    const useEffect = ()=>{
+        console.log("lllllddddd:     ", props)
+    }
     const [ appBarList , setAppBarList] = useState(["index1" , "index2" , "index3" , "index4"]);
-    const [ role , setRole] = useState("Doctor");
+    // const [ role , setRole] = useState("Doctor");
     const [ isLogin , setisLogin] = useState(false);
-    const [ dropDownFunctions , setdropDownFunctions] = useState(["lolo1" , "lolo2" ,"lolo3"]);
+    const [ dropDownFunctions , setdropDownFunctions] = useState(["Dr.DahshBoard" 
+                    , "appointments" ,"activityLog" ,"trash"]);
     // var appBarList = ["Alaa" , "Ahmed" , "Mohamed" , "lol"];
     const MainFunctions = [
         {text: "New Doctor Appointement" , role :"doctor"},
@@ -29,7 +33,7 @@ const DashBoard = () => {
     return (  
         <div>
             <Navbar name = "alaa" appBarList= {appBarList} 
-                                  role= {role}
+                                //   role= {role}
                                   dropDownFunctions= {dropDownFunctions}
                                   isLogin = {isLogin} 
                                   MainFunctions ={MainFunctions} 

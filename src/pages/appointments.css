@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
  	.MuiDataGrid-colCell {
-         /* background-color: #6692a8; */
+        background-color: white;
          text-align: center;
          
      }
@@ -10,8 +10,17 @@
          font-size: 1.5em;
      }
      .MuiDataGrid-colCellTitle{
+        background-color: white;
          font-size: 1.3em;
          font-family: 'Roboto Slab', serif;
+     }
+ 
+    .MuiDataGrid-colCellWrapper{
+        background-color: white;
+    }
+    .MuiDataGrid-colCellCheckbox{
+         background-color: white;
+
      }
      .MuiDataGrid-colCellTitle{
         /* background-color: yellow; */
@@ -28,7 +37,7 @@
             /* background-color: yellowgreen; */
     }
      .MuiDataGrid-window{
-         /* background-color: brown; */
+         background-color: white;
          width: 100%;
         }
         

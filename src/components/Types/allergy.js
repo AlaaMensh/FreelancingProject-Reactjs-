@@ -241,7 +241,6 @@ class Allergy extends Component {
         description : this.state.description,
       }
 
-
       if(!details.name){
         details.name = this.state.TypeObj.name
       }
@@ -300,7 +299,7 @@ class Allergy extends Component {
                  { field: 'id', headerName: 'id', width: 70 },
               { field: 'name', headerName: 'Name', width: 200 },
               { field: 'description', headerName: 'description', width: 500 },
-              // { field: <button>Hi</button>, headerName: 'description', width: 400 },
+            
               { 
                 field: 'Actions',
                 headerName: 'Actions',
@@ -347,17 +346,15 @@ class Allergy extends Component {
                 ),
               }]} pageSize={5}
                 checkboxSelection  onRowSelected={async (row) => {
-                  // this.handleDelete(row.data.id);
-                  // document.getElementById("hide").hidden = true;
+                  
                    
                   console.log("yes" , this.state.typeId);
                   }} getRowId ={(row) =>{
-                      // console.log("id: " , row.id);
+                      
                   }}
                   onRowClick = {(row)=>{
                       console.log("yyyys" , row);
                       id = row.row.id;
-                      // this.settypeID(row.row.id);
                       this.setState({typeId : row.row.id});
                   }} />
             </div> 

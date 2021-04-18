@@ -26,12 +26,12 @@ import "./form.css";
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    marginTop: theme.spacing(11),
-    backgroundColor :"yellow"
+    // marginTop: theme.spacing(11),
+    // backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -92,13 +92,11 @@ export default function Signup() {
     },
     body: formBody
   }).then((resp)=>{
-    if(resp.ok){
-      console.log("it is inserted" , resp);
-    }
-    else{
-      console.log("errror" );
-    }
-  }).catch(()=>{
+    resp.json().then((result)=>{console.log("result:   " , result.message)})
+    // resp.json();
+    
+  })
+  .catch(()=>{
     console.log("errror")
   })
 
@@ -106,8 +104,9 @@ export default function Signup() {
   
   }
   return (
-      <div className="form-hero row " >
-            <Container component="main" maxWidth="xs" >
+    <div className="row align-items-center justify-content-center" style={{
+      padding:"0" , margin:"0" , height:"100%"}} >
+            <Container component="main" maxWidth="xs" style={{height:"100% !important"}}  >
     <div className={classes.paper}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
@@ -198,12 +197,7 @@ export default function Signup() {
                       // color="primary"
                       className={classes.submit}
                       onClick={()=>{
-                        // var obj = {
-                        //   userName:username,
-                        //   password:pass,
-                        //   email:email,
-                        // }
-                        // console.log("user: " , obj);
+                   
                         handleSignup()
                       }}
                     >
@@ -214,9 +208,7 @@ export default function Signup() {
                         <Link href="#" variant="body2">
                           Already have an account? Sign in
                         </Link>
-                        {/* <Link href="#" variant="body2">
-                          Forgot Password
-                        </Link> */}
+            
                       </Grid>
                     </Grid>
                   </form>

@@ -30,6 +30,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import "./types.css";
+// import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = (theme) => ({
   paper: {
@@ -51,8 +53,29 @@ const useStyles = (theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    fontSize:"1.1em",
+    fontFamily:"Dosis"
   },
+  input2 :{
+    height:"10px"
+  },
+  iconPlus:{
+    margin: "auto",
+    textAlign:"center"
+    // float:"right",
+  },
+  button: {
+    margin: theme.spacing(1),
+    fontFamily: 'Roboto Slab'
+  },
+  deleteButton: {
+    backgroundColor:"#c94c4c"
+  },
+  editButton: {
+    backgroundColor:"#c94c4c"
+  }
 });
+
 
 
 
@@ -80,11 +103,29 @@ class LPR extends Component {
         
         getTypeByID = async(id) => {
           console.log("heeereeeee" , id);
-          let response = await fetch(`http://localhost:2400/lpr/${id}`);
-          var payload = await response.json();
-          console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
-          this.setState({
-            TypeObj:payload
+          var details = {
+            id:id
+          }
+          var formBody = [];
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+          // formBody = formBody.join("&");
+          
+          fetch(`http://localhost:3000/lpr/getById`, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: formBody
+          }).then((resp)=>{
+            console.log("Getting: " , resp.data);
+            this.setState({
+              TypeObj:resp.data.json()
+            })
+          }).catch(()=>{
+            console.log("errror")
           })
         }
         getLPRTypesList = (lprList) =>{
@@ -106,53 +147,93 @@ class LPR extends Component {
      handleCloseModal2 = () => {
       this.setState({openModal2 : false})
     };
-    handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/lpr/${id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
+    getData = async()=>{
+      await axios.get('http://localhost:3000/lpr/getLpr').then(async resp => {
+         this.setState({
+            lprList : resp.data
         })
-        .catch(err=>{console.log("nooooo")})
-
+        console.log("resp.data: " , resp.data);
+      
+      })
+      
+    }
+  
+     handleCloseModal2 = () => {
+      this.setState({openModal2 : false})
+    };
+    refreshAfterDeletion = (id)=>{
+     this.setState({
+      lprList: this.state.lprList.filter(row => row.id !== id)
+     })
+    }
+ 
+    handleDelete= async(id)=>{
+      var details = {
+        id:id
+      }
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      // formBody = formBody.join("&");
+      
+      fetch('http://localhost:3000/lpr/deleteLpr', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is deleted");
+      }).catch(()=>{
+        console.log("errror")
+      })
+     
          
     }
    async componentDidMount(){
-     axios.get(' http://localhost:2400/lpr').then(async resp => {
-        // return resp.data;
-         this.setState({
-           lprList : resp.data
-        })
-        console.log("dkdkkdkdkd:   ",resp.data);    
-  });
-
-  
+      this.getData()
+    
     }
     handleUpdate = ()=>{
-      var obj = {
+      var details = {
         id:this.state.TypeObj.id,
         name: this.state.name,
         abbreviation: this.abbreviation,
         description : this.state.description,
       }
-      if(!obj.abbreviation){
-        obj.abbreviation= this.state.TypeObj.abbreviation
+      if(!details.abbreviation){
+        details.abbreviation= this.state.TypeObj.abbreviation
       }
-      if(!obj.name){
-        obj.name = this.state.TypeObj.name
+      if(!details.name){
+        details.name = this.state.TypeObj.name
       }
-      if(!obj.description){
-        obj.description = this.state.TypeObj.description
+      if(!details.description){
+        details.description = this.state.TypeObj.description
       }
 
-
-      console.log("type: ", obj);
-      axios.put(`http://localhost:2400/lpr/${id}` , obj)
-         .then(res => {
-           console.log(res);
-           console.log(res.data);
-         })
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      fetch('http://localhost:3000/lpr/updateLpr', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
+      })
+         this.getData()
     }
-
     componentDidUpdate(){
         console.log("hhhhhhh")
         this.rendering();
@@ -160,9 +241,19 @@ class LPR extends Component {
 
     rendering = () =>{
         return(
-        <div>
-            <div style={{ height: 400, width: '100%' }}>
-               <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
+          <div className="container gridDataContent mt-5"> 
+          <div className="row">
+            <div className="col-2 text-center py-3 rounded px-4 header">
+                <span className="">Ellergy Types</span>
+            </div>
+            <div className="col-10 overflow-hidden ">
+                <div className="row justify-content-lg-start">
+
+                </div>
+            </div>
+          </div>
+            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
                 { field: 'abbreviation', headerName: 'Abbreviation', width: 400 },
               { field: 'name', headerName: 'Name', width: 200 },
               { field: 'description', headerName: 'Description', width: 400 },
@@ -174,30 +265,38 @@ class LPR extends Component {
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
+                   
                     <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        this.handleopenModal1();
-                        this.getTypeByID(params.row.id);
-
-                      }
-                        
-                      }
-                    >
-                      edit
+                            variant="contained"
+                            color="default"
+                            size="small"
+                            className={this.props.classes.button}
+                            startIcon={<EditIcon />}
+                           
+                            style={{ marginLeft: 16 }}
+                            onClick={()=>{
+                              this.handleopenModal1();
+                              console.log("lsssssssssssssssssssssssssssssssssssss")
+                              this.getTypeByID(params.row.id);
+                              this.getData()
+                            }
+                              
+                            }
+                          >
+                             Edit
                     </Button>
                     
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="secondary"
                       size="small"
+                      className={this.props.classes.button , this.props.classes.deleteButton}
+                      startIcon={<EditIcon />}
                       style={{ marginLeft: 16 }}
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
                         this.handleDelete(params.row.id);
+                        this.refreshAfterDeletion(params.row.id);
                       }}
                     >
                       delete
@@ -220,28 +319,47 @@ class LPR extends Component {
                       this.setState({typeId : row.row.id});
                   }} />
             </div>  
-        </div>
+            <div className="row mt-4">
+                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                          this.handleopenModal2()
+                        }} >
+                          <AddIcon  />
+                        </Fab> 
+                      </div>
+                    </div>
+        
         )
     }
     handleAdding = () =>{
-      var obj = {
+      var details = {
         abbreviation: this.state.abbreviation,
         name: this.state.name,
         description : this.state.description,
       }
-
-      console.log("type: ", obj);
-      axios.post(`http://localhost:2400/lpr`,  obj )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      console.log("formging:     " , formBody)
+      
+      fetch('http://localhost:3000/lpr/addLpr', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
       })
+      this.getData();
     }
-
-
     render() { 
       const { classes } = this.props;
-        
   return (
     <div>
         {this.rendering()}
@@ -266,6 +384,7 @@ class LPR extends Component {
           <Grid container spacing={2}>
           <Grid item xs={12}>
               <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -282,6 +401,7 @@ class LPR extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -298,17 +418,16 @@ class LPR extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
                 name="description"
-                // label="description"
                 type="text"
                 id="description"
                 autoComplete="current-password"
                 placeholder={this.state.TypeObj.description}
                 onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
                   this.setState({description : event.target.value});
                 }}
                 
@@ -323,11 +442,9 @@ class LPR extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              
-              
               this.handleUpdate();
-              // console.log("user: " , obj);
-              // handleSignup()
+              this.getData();
+
             }}
           >
             Edit
@@ -335,9 +452,7 @@ class LPR extends Component {
           
         </form>
       </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
+      {}
     </Container>
 </Modal>
 
@@ -366,6 +481,7 @@ key="1"
           <Grid container spacing={2}>
           <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -382,6 +498,7 @@ key="1"
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -398,6 +515,7 @@ key="1"
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -406,9 +524,7 @@ key="1"
                 type="text"
                 id="description"
                 autoComplete="current-password"
-                // placeholder={this.state.TypeObj.description}
                 onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
                   this.setState({description : event.target.value});
                 }}
                 
@@ -424,8 +540,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
-              // console.log("user: " , obj);
-              // handleSignup()
+              this.getData();
             }}
           >
             Add
@@ -433,9 +548,7 @@ key="1"
           
         </form>
       </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
+      {}
     </Container>
 </Modal>
     </div>

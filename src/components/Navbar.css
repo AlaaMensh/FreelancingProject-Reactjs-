@@ -1,6 +1,6 @@
 .appBar{
     background-color: #648695;
-    padding: 0.4em ;
+    padding: 0.4em  ;
 }
 .login-logout-btn{
     background-color: transparent;
@@ -13,4 +13,7 @@
 }
 .bg-button{
     background-color: yellow;
+}
+.MuiCardContent-root {
+    padding: 5px;
 }

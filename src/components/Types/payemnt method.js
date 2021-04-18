@@ -30,6 +30,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import "./types.css";
+// import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = (theme) => ({
   paper: {
@@ -51,7 +53,27 @@ const useStyles = (theme) => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    fontSize:"1.1em",
+    fontFamily:"Dosis"
   },
+  input2 :{
+    height:"10px"
+  },
+  iconPlus:{
+    margin: "auto",
+    textAlign:"center"
+    // float:"right",
+  },
+  button: {
+    margin: theme.spacing(1),
+    fontFamily: 'Roboto Slab'
+  },
+  deleteButton: {
+    backgroundColor:"#c94c4c"
+  },
+  editButton: {
+    backgroundColor:"#c94c4c"
+  }
 });
 
 
@@ -79,11 +101,29 @@ class Payemnt_method extends Component {
         
         getTypeByID = async(id) => {
           console.log("id" , id);
-          let response = await fetch(`http://localhost:2400/payemnt_method/${id}`);
-          var payload = await response.json();
-          console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
-          this.setState({
-            TypeObj:payload
+          var details = {
+            id:id
+          }
+          var formBody = [];
+          for (var property in details) {
+            var encodedKey = encodeURIComponent(property);
+            var encodedValue = encodeURIComponent(details[property]);
+            formBody.push(encodedKey + "=" + encodedValue);
+          }
+          // formBody = formBody.join("&");
+          
+          fetch(`http://localhost:3000/payemnt_method/getById`, {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+            },
+            body: formBody
+          }).then((resp)=>{
+            console.log("Getting: " , resp.data);
+            this.setState({
+              TypeObj:resp.data.json()
+            })
+          }).catch(()=>{
+            console.log("errror")
           })
         }
         getPayemnt_methodListTypesList = (payemnt_methodList) =>{
@@ -105,52 +145,93 @@ class Payemnt_method extends Component {
      handleCloseModal2 = () => {
       this.setState({openModal2 : false})
     };
-    handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/payemnt_methodList/${id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-        .catch(err=>{console.log("nooooo")})
-
-         
-    }
-   async componentDidMount(){
-     axios.get(' http://localhost:2400/payemnt_methodList').then(async resp => {
-        // return resp.data;
+    getData = async()=>{
+      await axios.get('http://localhost:3000/allergy/getPaymnt_method').then(async resp => {
          this.setState({
-          diseaseList : resp.data
+            allergyList : resp.data
         })
-        console.log("dkdkkdkdkd:   ",resp.data);    
-  });
-
+        console.log("resp.data: " , resp.data);
+      
+      })
+      
+    }
+  
+     handleCloseModal2 = () => {
+      this.setState({openModal2 : false})
+    };
+    refreshAfterDeletion = (id)=>{
+     this.setState({
+      peyment_methodList: this.state.payment_methodList.filter(row => row.id !== id)
+     })
+    }
+ 
+    handleDelete= async(id)=>{
+      var details = {
+        id:id
+      }
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      // formBody = formBody.join("&");
+      
+      fetch('http://localhost:3000/Payemnt_method/deletePayemnt_method', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is deleted");
+      }).catch(()=>{
+        console.log("errror")
+      })
   
     }
+   async componentDidMount(){
+      this.getData()
+    }
+  
+
     handleUpdate = ()=>{
-      var obj = {
+      var details = {
         id:this.state.TypeObj.id,
         id: this.state.id,
         type: this.state.type,
         description : this.state.description ,
         abbreviation : this.state.abbreviation,
       }
-      if(!obj.id){
-        obj.id = this.state.TypeObj.id
+      if(!details.id){
+        details.id = this.state.TypeObj.id
       }
-      if(!obj.code){
-        obj.type = this.state.TypeObj.type
+      if(!details.code){
+        details.type = this.state.TypeObj.type
       }
-      if(!obj.description ){
-        obj.description  = this.state.TypeObj.description 
+      if(!details.description ){
+        details.description  = this.state.TypeObj.description 
       }
 
-
-      console.log("type: ", obj);
-      axios.put(`http://localhost:2400/payemnt_method/${id}` , obj)
-         .then(res => {
-           console.log(res);
-           console.log(res.data);
-         })
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      fetch('http://localhost:3000/payemnt_method/updatePayemnt_method', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
+      })
+         this.getData()
     }
 
     componentDidUpdate(){
@@ -160,10 +241,20 @@ class Payemnt_method extends Component {
 
     rendering = () =>{
         return(
-        <div>
-            <div style={{ height: 400, width: '100%' }}>
-               <DataGrid rows={this.state.allergyList} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-              { field: 'id', headerName: 'id', width: 200 },
+          <div className="container gridDataContent mt-5"> 
+          <div className="row">
+            <div className="col-2 text-center py-3 rounded px-4 header">
+                <span className="">Ellergy Types</span>
+            </div>
+            <div className="col-10 overflow-hidden ">
+                <div className="row justify-content-lg-start">
+
+                </div>
+            </div>
+          </div>
+            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
+              { field: 'id', headerName: 'id', width: 100 },
               {filed: 'type', headerName: 'type', width: 200},
               { field: 'description ', headerName: 'description ', width: 400 },
               {
@@ -174,29 +265,36 @@ class Payemnt_method extends Component {
                   <strong>
                     {/* {params.value.getFullYear()} */}
                     <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        this.handleopenModal1();
-                        this.getTypeByID(params.row.id);
-
-                      }
-                        
-                      }
-                    >
-                      edit
+                     variant="contained"
+                     color="default"
+                     size="small"
+                     className={this.props.classes.button}
+                     startIcon={<EditIcon />}
+                    
+                     style={{ marginLeft: 16 }}
+                     onClick={()=>{
+                       this.handleopenModal1();
+                       console.log("lsssssssssssssssssssssssssssssssssssss")
+                       this.getTypeByID(params.row.id);
+                       this.getData()
+                     }
+                       
+                     }
+                   >
+                      Edit
                     </Button>
                     
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="secondary"
                       size="small"
+                      className={this.props.classes.button , this.props.classes.deleteButton}
+                      startIcon={<EditIcon />}
                       style={{ marginLeft: 16 }}
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
                         this.handleDelete(params.row.id);
+                        this.refreshAfterDeletion(params.row.id);
                       }}
                     >
                       delete
@@ -219,22 +317,45 @@ class Payemnt_method extends Component {
                       this.setState({typeId : row.row.id});
                   }} />
             </div>  
-        </div>
+            <div className="row mt-4">
+                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                          this.handleopenModal2()
+                        }} >
+                          <AddIcon  />
+                        </Fab> 
+                      </div>
+                    </div>
+        
         )
     }
     handleAdding = () =>{
-      var obj = {
+      var details = {
         id: this.state.id,
         type: this.state.type,
         description  : this.state.description ,
       }
 
-      console.log("type: ", obj);
-      axios.post(`http://localhost:2400/payemnt_method`,  obj )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      console.log("formging:     " , formBody)
+      
+      fetch('http://localhost:3000/Payemnt_method/addPayemnt_method', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is inserted");
+      }).catch(()=>{
+        console.log("errror")
       })
+      this.getData();
     }
 
 
@@ -265,6 +386,7 @@ class Payemnt_method extends Component {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -281,6 +403,7 @@ class Payemnt_method extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -298,6 +421,7 @@ class Payemnt_method extends Component {
             </Grid>
             <Grid item xs={12}>
               <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -323,10 +447,9 @@ class Payemnt_method extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              
-              
               this.handleUpdate();
-             
+              this.getData();
+
             }}
           >
             Edit
@@ -363,6 +486,7 @@ key="1"
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -379,6 +503,7 @@ key="1"
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -397,6 +522,7 @@ key="1"
             </Grid>
             <Grid item xs={12}>
               <TextField
+                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
@@ -423,6 +549,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
+              this.getData();
            
             }}
           >
@@ -431,9 +558,7 @@ key="1"
           
         </form>
       </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
+      
     </Container>
 </Modal>
     </div>

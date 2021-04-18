@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import Select from '@material-ui/core/Select';
+import { useDispatch } from 'react-redux'
+
 
 import React from 'react';
 import clsx from 'clsx';
@@ -38,9 +40,24 @@ import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import DashBoard from "../pages/DashBoard"
+import Appointement from '../pages/appointements';
+import DashBoardComp from "./dashboardComp";
+import { BrowserRouter } from 'react-router-dom';
+import Signup from './Forms/signupform';
+import {useRoutes} from 'hookrouter';
+// import DashBoardComp from "./dashboardComp";
 // import Navbar from './Navbar';
+// import DashBoard from './../pages/DashBoard';
+import { useState } from 'react';
+import LoginForm from './Forms/loginform';
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux"; 
+import {handleChangeOpen,setChangeOpen } from "../actions";
+import { useSelector } from 'react-redux'
 
-const drawerWidth = 300;
+const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
       
     }),
     backgroundColor: "#648695",
-    padding: "0.4em",
+    // padding: "0.4em",
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -112,62 +129,118 @@ const useStyles = makeStyles((theme) => ({
   },
   },
   cardStyle:{
-    width:"100%",
-    height:"100%",
-    borderRadius:"1em"
+    width:"90%",
+    height:"auto",
+    borderRadius:"1em",
+    padding:"1em"
     // display:"flex",
     // backgroundColor:"yellow"
   },
   media: {
     height: 50,
     margin:"1em",
-    padding:"3em 2em"
+    padding:"3em 1em"
   },
   cardContentHeight:{
-    height: 60,
+    height: 80,
+    // backgroundColor:"yellow"
   },
   button:{  
 
   },
   learnMoreBtn:{
-    padding:"1em 2em",
+    padding:"0.5em 2em",
     backgroundColor:"transparent",
     border:"2px solid #9fb8c3",
     boxShadow:"2px 2px 9px #bcb4b4",
     '&:hover': {
       backgroundColor: '#9fb8c3',
   },
+  },
+  GridSpacing:{
+    // padding: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(1),
+    },
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(4),
+    },
+    [theme.breakpoints.up('lg')]: {
+      margin: theme.spacing(1),
+    },
   }
   
     
 }));
 
-const Navbar = ({name , appBarList ,role , dropDownFunctions ,isLogin , MainFunctions}) => {
+const Navbar = ({match}) => {
   const history = useHistory();
   const [spacing, setSpacing] = React.useState(2);
-  const [logged, setlogged] = React.useState(isLogin);
+  const [logged, setlogged] = React.useState(false);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const routess = [  
+    { path: '/', component: DashBoard },  
+    { path: '/com', component: DashBoardComp },  
+    // { path: '/employee',  component: employee },  
+    // { path: '/addemployee',  component: addemployee },  
+    // { path: '/profile',  component: profile },  
+    // { path: '/editemployee/:id', exact: true,  component: editemployee }, 
+    // { component:notfound }
+];  
+  
+const [ appBarList , setAppBarList] = useState(["index1" , "index2" , "index3" , "index4"]);
+const [ role , setRole] = useState("Doctor");
+const [ isLogin , setisLogin] = useState(false);
+const [ dropDownFunctions , setdropDownFunctions] = useState(["Dr.DahshBoard" 
+                , "appointments" ,"activityLog" ,"trash"]);
+// var appBarList = ["Alaa" , "Ahmed" , "Mohamed" , "lol"];
+const MainFunctions = [
+    {text: "New Doctor Appointement" , role :"doctor"},
+    {text: "New patient registration" , role :"doctor"},
+    {text: "EMR Electronic Medical Records" , role :"doctor"},
+    {text: "Lap Information System" , role :"doctor"},
+    {text: "Rediology information system" , role :"doctor"},
+    {text: "Path information system " , role :"doctor"},
+    {text: "Electronic proception ERX" , role :"doctor"},
+    {text: "Document Manegment" , role :"doctor"},
+    {text: "System Admin" , role :"doctor"},
+    // {text: "New Doctor Appointement" , role :"doctor"},
+]
+
+const dispatch = useDispatch();
+  const routes = {
+    '/': () => <DashBoard />,
+    '/com': () => <DashBoardComp  />,
+    // '/products': () => <ProductOverview props={yourProps} />,
+    // '/products/:id': ({id}) => <ProductDetails id={id} />
+};
   
 
 
   useEffect(()=>{
-    console.log("‘hello’" , name , appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
+    // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
     // setTimeout( ()=>{ alert(‘hello’); }, 2000);
  });
  
   const handleDrawerOpen = () => {
     setOpen(true);
+    setChangeOpen(true);
+    dispatch({ type: 'setOpen', payload: true })
+    // console.log("message :" , msg);
   };
   
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setChangeOpen(false);
+    dispatch({ type: 'setOpen', payload: false })
   };
-  
+
 
   return (
+   
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -210,17 +283,38 @@ const Navbar = ({name , appBarList ,role , dropDownFunctions ,isLogin , MainFunc
         {/* <InputLabel htmlFor="age-native-simple">Age</InputLabel> */}
         <Select
           native
-          style ={{marginLeft : "1.4em" , width:"8em" }}
-          // value={state.age}
-          // onChange={handleChange}
-          // inputProps={{
+          style = {{marginLeft : "1.4em" , width:"10em", textAlign:"center" }}
+          className = "bg-light rounded"
+          // value = {state.age}
+          // onChange = {handleChange}
+          // inputProps = {{
           //   name: 'age',
           //   id: 'age-native-simple',
           // }}
         >
         {
           dropDownFunctions.map((item)=>{
-            return(<option value={item}>{item}</option>)
+            return(<option  onClick= {()=>{
+           
+                   switch(item){
+                     case "Dr.DahshBoard":{
+                      console.log("yes")
+                      history.push({
+                        pathname: match.path,
+                        state: { }
+                      });
+                      break;
+                     }
+                      
+                     case "appointments":
+                      history.push({
+                        pathname: match.path+"/appoint",
+                        state: {}
+                      });
+                      break;
+                   }
+            }}
+               value={item}>{item}</option>)
           })
         }
         {/* <Select
@@ -276,65 +370,101 @@ const Navbar = ({name , appBarList ,role , dropDownFunctions ,isLogin , MainFunc
           ))}
         </List>
       </Drawer>
-      <main
-        className={clsx(classes.content, {
-          [classes.contentShift]: open,
-        })}
-      >
-        {/* <img className="mt-5" src="images/img1.svg" /> */}
-        <div className={classes.drawerHeader} />
-        <Typography >
-        <Grid container justify="center" spacing={4}>
-          {MainFunctions.map(value => (
-        <Grid key={value} item xs={12} sm={3}>
-        <Card className={classes.cardStyle}>
-        {/* <Card > */}
-         <CardMedia
-          className={classes.media}
-          style={{padding:"3em"}}
-          image="images/img1.svg"
-          title="Contemplative Reptile"
-        />
-        <CardContent className={classes.cardContentHeight}>
-          <Typography color="" className="text-center text-secondary" gutterBottom>
-            {value.text}
-          </Typography>
-        </CardContent>
-        <CardActions className="row justify-content-center ">
-          <Button className={classes.learnMoreBtn} size="small" 
-          onClick={()=>{
-            if(value.role === "doctor" && value.text === "New Doctor Appointement"){
-              history.push("/appointement");
-            }
-            if(value.role==="patient" && value.text ==="New patient Registration"){
-              history.push("/");
-            }
-            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-            //   history.push("/");
-            // }
-            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-            //   history.push("/");
-            // }
-            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-            //   history.push("/");
-            // }
-            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-            //   history.push("/");
-            // }
-            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-            //   history.push("/");
-            // }
-          }}>Learn More</Button>
-        </CardActions>
-      </Card>
-            </Grid>
-          ))}
-        </Grid>
-
-        </Typography>
       
-      </main>
+      <Switch> 
+      <Route exact path={match.path+"/appoint"}  component={Appointement}/> 
+      <Route exact path={match.path}  component={DashBoardComp}/> 
+      <Route exact path={match.path+"/com"} component={Signup}/>
+      <Route exact path={match.path+"/login"} component={LoginForm}/>
+
+      
+      </Switch>
+      
+      {/* routes */}
+      {/* <h1 className="mt-5">dddd</h1> */}
+           {/* <main
+className={clsx(classes.content, {
+  [classes.contentShift]: open,
+})}
+>
+
+<div className={classes.drawerHeader} />
+<Typography className="row">
+<Grid container justify="center" className="ml-2 " spacing = {4}>
+  {MainFunctions.map(value => (
+<Grid key={value} item xs={12} sm={4} md={3} >
+<Card className={classes.cardStyle}>
+
+ <CardMedia
+  className={classes.media}
+  style={{padding:"3em"}}
+  image="images/img1.svg"
+  title="Contemplative Reptile"
+/>
+<CardContent className={classes.cardContentHeight}>
+  <Typography color="" className="text-center text-secondary" gutterBottom>
+    {value.text}
+  </Typography>
+</CardContent>
+<CardActions className="row justify-content-center ">
+  <Button className={classes.learnMoreBtn} size="small" 
+  onClick={()=>{
+    if(value.role === "doctor" && value.text === "New Doctor Appointement"){
+      history.push("/appointement");
+    }
+    if(value.role==="patient" && value.text ==="New patient Registration"){
+      history.push("/");
+    }
+    // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+    //   history.push("/");
+    // }
+    // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+    //   history.push("/");
+    // }
+    // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+    //   history.push("/");
+    // }
+    // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+    //   history.push("/");
+    // }
+    // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+    //   history.push("/");
+    // }
+  }}>Learn More</Button>
+</CardActions>
+</Card>
+    </Grid>
+  ))}
+</Grid>
+
+</Typography>
+
+</main> */}
     </div>
+ 
+          
   );
 }
-export default Navbar
+const mapactiontoprops = (disptch) =>{
+  return bindActionCreators({setChangeOpen } ,disptch);
+}
+const mapstatetoprops = (state) =>{
+  console.log("lllllllllllllll",state);
+  return {msg : state.Drawer}
+}
+
+export default connect(mapstatetoprops , mapactiontoprops)(Navbar);
+
+
+{/* <Switch>
+{/* <Route path="/">
+  <Signup />
+</Route>
+<Route path="/com">
+  <DashBoardComp/>
+</Route> 
+ <Route exact path="/singup" component={Signup}></Route>
+<Route exact path="/com" component={DashBoardComp}></Route>
+{/* <Route exact path="/PathologistSignup" component={PathologistSignup}></Route> 
+
+</Switch> */}

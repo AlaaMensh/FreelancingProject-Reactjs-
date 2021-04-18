@@ -40,6 +40,7 @@ import {
   KeyboardDatePicker,
   KeyboardTimePicker
 } from '@material-ui/pickers';  
+import "./appointments.css"
 
 const useStyles = (theme) => ({
   paper: {
@@ -96,7 +97,10 @@ class Appointement extends Component {
       time :"",
       duration : "" ,
       FD : "",
-      userID : "" 
+      userID : 1 ,
+      date:"",
+      startTime:"",
+      endTime:""
           }
         }
         
@@ -125,13 +129,42 @@ class Appointement extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      await axios.get('http://localhost:2400/appointements').then(async resp => {
-        // return resp.data;
-         this.setState({
-            appointements : resp.data
-        })
-        // console.log('appointements : ') 
-      })
+      console.log("hhhhhhhoekehgogg      ");
+      // await axios.get('http://localhost:3000/appointment/getById').then(async resp => {
+      //   // return resp.data;
+      //    this.setState({
+      //       appointements : resp.data
+      //   })
+      //   // console.log('appointements : ') 
+      // })
+      var details = {
+        'date':this.state.date,
+        'drFDId': this.state.userID
+    };
+    
+    var formBody = [];
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log("formBodu : " , formBody)
+    await fetch(`http://localhost:3000/appointment/getById`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body:formBody
+    }) .then(response => response.json())
+    .then(
+      data => {
+        this.setState({appointements : data})
+      }
+    )
+    .catch((e)=>{
+      console.log("errror" ,e)
+    })
     }
   
      handleCloseModal2 = () => {
@@ -139,22 +172,42 @@ class Appointement extends Component {
     };
     refreshAfterDeletion = (id)=>{
      this.setState({
-      allergyList: this.state.allergyList.filter(row => row.id !== id)
+      appointements: this.state.appointements.filter(row => row.id !== id)
      })
     }
  
     handleDelete= async(id)=>{
-        await axios.delete(`http://localhost:2400/allergy/${id}`)
-        .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-        .catch(err=>{console.log("nooooo")})
+      var details = {
+        id:id
+      }
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      fetch("http://localhost:3000/appointment/deleteAppointment", {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then(()=>{
+        console.log("it is deleted");
+      }).catch(()=>{
+        console.log("errror")
+      })
+        // await axios.delete(`http://localhost:3000/appointment/deleteAppointment`)
+        // .then(res => {
+        //   console.log(res);
+        //   console.log(res.data);
+        // })
+        // .catch(err=>{console.log("nooooo")})
 
          
     }
    async componentDidMount(){
-      this.getData()
+      // this.getData()
     }
     handleUpdate = ()=>{
       var obj = {
@@ -201,17 +254,16 @@ class Appointement extends Component {
         var date = new Date(str),
           mnth = ("0" + (date.getMonth() + 1)).slice(-2),
           day = ("0" + date.getDate()).slice(-2);
+          var d = [date.getFullYear(), mnth, day].join("-");
+          this.setState({date : d});
         console.log([date.getFullYear(), mnth, day].join("-"));
       }
       
-     handleDateChange = (date) => {
+     handleDateChange = async(date) => {
         console.log("kkkkkk: ",date);
-        this.convert(date);
-        // var todayTime = new Date();
-        // var month = format(date .getMonth() + 1);
-        // var day = format(date.getDate());
-        // var year = format(date .getFullYear());
-        // setSelectedDate(date);
+       await this.convert(date);
+        this.getData();
+       
       }
 
     rendering = () =>{
@@ -228,12 +280,13 @@ class Appointement extends Component {
                   </MuiPickersUtilsProvider>
             </div>
             <div className="mt-5" style = {{height: 400, width: '100%' }}>
-               <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 70 },
+             <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 20 },
               { field: 'patientName', headerName: 'patientName', width: 150 },
               { field: 'reason', headerName: 'Reason', width: 300 },
-              { field: 'date', headerName: 'Date', width: 150 },
-              { field: 'time', headerName: 'Time', width: 100 },
-              { field: 'FD', headerName: 'FD', width: 200 },
+              { field: 'startDate', headerName: 'startTime', width: 150 },
+              { field: 'endDate', headerName: 'endTime', width: 150 },
+              // { field: 'drFDId', headerName: 'drFDId', width: 200 },
+              { field: 'date', headerName: 'date', width: 200 },
               // { field: <button>Hi</button>, headerName: 'description', width: 400 },
               {
                 field: 'Actions',
@@ -246,7 +299,7 @@ class Appointement extends Component {
                       variant="contained"
                       color="primary"
                       size="small"
-                     
+                    
                       style={{ marginLeft: 16 }}
                       onClick={()=>{
                         this.handleopenModal1();
@@ -265,9 +318,9 @@ class Appointement extends Component {
                       size="small"
                       style={{ marginLeft: 16 }}
                       onClick={async ()=>{
-                         console.log("delete function: " , params.row.id);
-                        // this.handleDelete(params.row.id);
-                        // this.refreshAfterDeletion(params.row.id);
+                        console.log("delete function: " , params.row.id);
+                        this.handleDelete(params.row.id);
+                        this.refreshAfterDeletion(params.row.id);
                       }}
                     >
                       delete
@@ -278,7 +331,7 @@ class Appointement extends Component {
                 checkboxSelection  onRowSelected={async (row) => {
                   // this.handleDelete(row.data.id);
                   // document.getElementById("hide").hidden = true;
-                   
+                  
                   console.log("yes" , this.state.typeId);
                   }} getRowId ={(row) =>{
                       // console.log("id: " , row.id);
@@ -288,28 +341,58 @@ class Appointement extends Component {
                       id = row.row.id;
                       // this.settypeID(row.row.id);
                       this.setState({typeId : row.row.id});
-                  }} />
+    }} />
             </div>  
         </div>
         )
     }
-    handleAdding = () => {
-      var obj = {
+    handleAdding = async() => {
+      var details = {
         patientName: this.state.patientName,
         reason : this.state.reason,
-        date : this.state.date,
-        time: this.state.time,
+        startTime : this.state.startTime,
+        date: this.state.date,
         duration : this.state.duration,
-        FD : this.state.FD
+        drFDId : this.state.userID
         // reason : this.state.reason,
       }
+      console.log("details:  ", details)
+    //   var details = {
+    //     'date':this.state.date,
+    //     'drFDId': this.state.userID
+    // };
+    
+    var formBody = [];
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log("formBodu : " , formBody)
+    await fetch(`http://localhost:3000/appointment/addApointment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body:formBody
+    }) .then(response => response.json())
+    .then(
+      data => {
+        console.log("dataaaaaaaaaaaaaaa: " , data)
+        // this.setState({appointements : data})
+      }
+    )
+    .catch((e)=>{
+      console.log("errror" ,e)
+    })
 
-      console.log("type: ", obj);
-      axios.post(`http://localhost:2400/appointements`,  obj )
-      .then(res => {
-        console.log(res);
-        console.log(res.data);
-      })
+      // console.log("type: ", obj);
+      // axios.post(`http://localhost:3000/appointment/addApointment`, obj )
+      // .then(res => {
+      //   console.log(res);
+      //   console.log(res.data);
+      // })
       this.getData();
     }
 
@@ -401,9 +484,10 @@ class Appointement extends Component {
                 name="time" 
                 type="text"
                 autoComplete="Time"
-                placeholder={this.state.TypeObj.time}
+                // placeholder={this.state.TypeObj.time}
                 onChange = {(event) =>{
-                  this.setState({time : event.target.value});
+                  console.log("time: ", event.target.value)
+                  this.setState({startTime : event.target.value});
                 }}
               />
             </Grid>
@@ -418,7 +502,7 @@ class Appointement extends Component {
                 name="fd" 
                 type="text"
                 autoComplete="fd"
-                placeholder={this.state.TypeObj.FD}
+                // placeholder={this.state.TypeObj.FD}
                 onChange = {(event) =>{
                   this.setState({FD : event.target.value});
                 }}
@@ -435,7 +519,7 @@ class Appointement extends Component {
                 type="text"
                 id="duration"
                 autoComplete="current-password"
-                placeholder={this.state.TypeObj.duration}
+                // placeholder={this.state.TypeObj.duration}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
                   this.setState({duration : event.target.value});
@@ -538,6 +622,7 @@ key="1"
                 // autoComplete="Name"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
+                  console.log(event.target.value)
                   this.setState({date : event.target.value});
                 }}
               />
@@ -555,7 +640,8 @@ key="1"
                 autoComplete="time"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                    this.setState({time : event.target.value});
+                    console.log("kkkkkkkkkkkkkkkkkkkk:  ",event.target.value);
+                    this.setState({startTime : event.target.value});
                   }}
               />
             </Grid>
@@ -602,7 +688,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
-              this.getData();
+              // this.getData();
               // console.log("user: " , obj);
               // handleSignup()
             }}
@@ -624,3 +710,4 @@ key="1"
 }
  
 export default withStyles(useStyles)(Appointement); 
+
