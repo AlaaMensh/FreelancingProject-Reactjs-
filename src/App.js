@@ -25,9 +25,9 @@ import PathologistSignUp from './components/Forms/singUpPathologist';
 // import PathologySignup from './components/Forms/pathologist_signup';
 import DoctorFDSignUp from './components/Forms/signUpDoctorFD';
 import RadioFDSignUp from './components/Forms/signUpRadioFD';
-import Assistant from './components/Users_CRUD/assistant.CURD';
-import Chimest from './components/Users_CRUD/chemist_CRUD';
-import Doctors from './components/Users_CRUD/Doctors_CRUD';
+import Assistant from './components/Users_CRUD/Assistant';
+import Chimest from './components/Users_CRUD/Chemist';
+import Doctors from './components/Users_CRUD/Doctor';
 import Pathologist from './components/Users_CRUD/pathologist_CURD';
 import Nurse from './components/Users_CRUD/nurse_CRUD';
 import Radiogist from './components/Users_CRUD/radiogist_CURD';
@@ -36,6 +36,7 @@ import {applyMiddleware , createStore } from "redux";
 import {Provider} from "react-redux";
 import promiseMW from "redux-promise"
 import reducers from "./reducers";
+import Doctor from './components/Users_CRUD/Doctor';
 // import AssistantSignup from './components/Forms/AssistantSignup';
 // import Navbar from './components/Navbar';
 
@@ -69,6 +70,8 @@ function App() {
       {/* <Route exact path="/Assistant" component={Assistant}></Route> */}
       <Route exact path="/Assistant" component={Assistant}></Route>
       <Route exact path="/chimest" component={Chimest}></Route>
+      <Route exact path="/doctor" component={Doctor}></Route>
+      {/* <Route exact path="/doctorFD" component={}></Route> */}
       
       <Route exact path="/SignupRadioFD" component={RadioFDSignUp}></Route>
       <Route exact path="/SignupPathologyFD" component={PathologyFDSignUp}></Route>

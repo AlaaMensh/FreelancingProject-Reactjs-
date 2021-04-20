@@ -35,7 +35,7 @@ import "./types.css";
 
 const useStyles = (theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -92,10 +92,17 @@ class Assistant extends Component {
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      username:"",
-      name: "",
+      
+      userName:"",
+      firstName: "",
+      lastName :"",
+      password :"",
       email :"",
-      phone: ""  
+      phone :"",
+      address: "" ,
+      date: "" ,
+      degree: "" ,
+      
           }
         }
         
@@ -112,13 +119,18 @@ class Assistant extends Component {
             formBody.push(encodedKey + "=" + encodedValue);
           }
           
-          fetch(`http://localhost:3000/assistant/getAssistant/${id}`, {
-            method: 'GET',
+          fetch(`http://localhost:3000/assistant/getAssistant`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-            // body: formBody
+            },
+            body: formBody
           }).then((result)=>{
+            result.json().then((data)=>{
+              console.log("data: " , data[0])
+              this.setState({TypeObj : data[0]})
+
+            })
             console.log("Getting: " , result);
           }).catch((e)=>{
             console.log("error here erroer idkdkdkdkdk" , e)
@@ -140,12 +152,16 @@ class Assistant extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      await axios.get(' http://localhost:3000/assistant/getAll').then(async resp => {
+      await axios.get('http://localhost:3000/assistant/getAll').then(async resp => {
         // return resp.data;
+        // resp.json().then((data)=>{
+        //   console.log("data:  " , data);
+        // })
+        console.log("resp.data: " , resp.data);
+
          this.setState({
             assistantList : resp.data
         })
-        console.log("resp.data: " , resp.data);
       })
     }
   
@@ -190,25 +206,43 @@ class Assistant extends Component {
     handleUpdate = ()=>{
       var details = {
         id:this.state.TypeObj.id,
-        username: this.state.username,
-        name: this.state.name,
-        email : this.state.email,
-        phone : this.state.phone,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        userName: this.state.userName,
+        password : this.state.password,
+        phone: this.state.phone,
+        address: this.state.address,
+        degree: this.state.degree,
+        date : this.state.date,
+        Email : this.state.email,
       }
-      if(!details.username){
-        details.username = this.state.TypeObj.username
+      if(!details.firstName){
+        details.firstName = this.state.TypeObj.firstName
       }
-      if(!details.name){
-        details.name = this.state.TypeObj.name
+      if(!details.lastName){
+        details.lastName = this.state.TypeObj.lastName
       }
-      if(!details.email){
-        details.email = this.state.TypeObj.email
+      if(!details.userName){
+        details.userName = this.state.TypeObj.userName
+      }
+      if(!details.password){
+        details.password = this.state.TypeObj.password
       }
       if(!details.phone){
         details.phone = this.state.TypeObj.phone
       }
-
-
+      if(!details.address){
+        details.address = this.state.TypeObj.address
+      }
+      if(!details.degree){
+        details.degree = this.state.TypeObj.degree
+      }
+      if(!details.date){
+        details.date = this.state.TypeObj.date
+      }
+      if(!details.email){
+        details.email = this.state.TypeObj.Email
+      }
 
       var formBody = [];
       for (var property in details) {
@@ -218,8 +252,8 @@ class Assistant extends Component {
       }
       formBody = formBody.join("&");
 
-   
-      fetch('http://localhost:3000/allergy/updateAssistant', {
+   console.log("form :    "  , formBody);
+      fetch('http://localhost:3000/assistant/updateAssistant', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -230,7 +264,7 @@ class Assistant extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-         this.getData()
+        //  this.getData()
     }
 
     componentDidUpdate(){
@@ -255,9 +289,10 @@ class Assistant extends Component {
                <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.assistantList} columns={[
               { field: 'firstName', headerName: 'firstName', width: 200 },
               { field: 'lastName', headerName: 'lastName', width: 200 },
-              { field: 'Email', headerName: 'Email', width: 200 },              
-              { field: 'phone', headerName: 'Phone', width: 200 },              
-              { field: 'userName', headerName: 'username', width: 100 },              
+              { field: 'userName', headerName: 'username', width: 200 },              
+              { field: 'Email', headerName: 'Email', width: 200 },                            
+              { field: 'phone', headerName: 'Phone', width: 200 },                    
+              { field: 'address', headerName: 'Address', width: 200 },              
                 {field: 'Actions',  
                 headerName: 'Actions',
                 width: 550,
@@ -379,76 +414,162 @@ class Assistant extends Component {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
+                id="firstName"
                 // label="Name"
-                name="username" 
+                name="firstName" 
                 type="text"
-                autoComplete="UserName"
-                placeholder={this.state.TypeObj.username}
+                autoComplete="firstName"
+                placeholder={this.state.TypeObj.firstName}
+                // placeholder="hhel"
                 onChange = {(event) =>{
-                  this.setState({username : event.target.value});
+                  this.setState({firstName : event.target.value});
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                name="name" 
+                id="lastName"
+                // label="lastName"
+                name="lastName" 
                 type="text"
-                autoComplete="Name"
-                placeholder={this.state.TypeObj.name}
+                autoComplete="lastName"
+                placeholder={this.state.TypeObj.lastName}
+                // defaultValue={this.state.TypeObj.lastName}
                 onChange = {(event) =>{
-                  this.setState({name : event.target.value});
+                  this.setState({lastName : event.target.value});
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="email"
-                // label="description"
+                id="userName"
+                // label="Name"
+                name="userName" 
                 type="text"
-                id="email"
-                autoComplete="email"
-                placeholder={this.state.TypeObj.email}
+                autoComplete="userName"
+                placeholder={this.state.TypeObj.userName}
                 onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
+                  this.setState({userName : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                // label="Name"
+                name="email" 
+                type="text"
+                autoComplete="Email"
+                placeholder={this.state.TypeObj.Email}
+                onChange = {(event) =>{
                   this.setState({email : event.target.value});
                 }}
-                
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="phone"
-                type="text"
                 id="phone"
-                autoComplete="phone"
+                name="phone" 
+                type="text"
+                autoComplete="Phone"
                 placeholder={this.state.TypeObj.phone}
                 onChange = {(event) =>{
                   this.setState({phone : event.target.value});
                 }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="address"
+                // label="description"
+                type="text"
+                id="address"
+                autoComplete="address"
+                placeholder={this.state.TypeObj.address}
+                onChange = {(event) =>{
+                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
+                  this.setState({address : event.target.value});
+                }}
                 
               />
             </Grid>
-           
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                type="text"
+                id="password"
+                autoComplete="password"
+                placeholder={this.state.TypeObj.password}
+                onChange = {(event) =>{
+                  this.setState({password : event.target.value});
+                }}
+                
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="date"
+                type="date"
+                id="date"
+                autoComplete="date"
+                placeholder={this.state.TypeObj.date}
+                onChange = {(event) =>{
+                  this.setState({date : event.target.value});
+                }}
+                
+              />
+            </Grid>  
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="degree"
+                type="text"
+                id="degree"
+                autoComplete="degree"
+                placeholder={this.state.TypeObj.degree}
+                onChange = {(event) =>{
+                  this.setState({degree : event.target.value});
+                }}
+                
+              />
+            </Grid>  
           </Grid>
           <Button
             type="button"

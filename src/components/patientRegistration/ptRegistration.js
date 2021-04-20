@@ -116,6 +116,8 @@ export default function HorizontalLabelPositionBelowStepper() {
            phone , "email : " ,
             email , "Family History : " , familyHistoryList
             ,"Allergy  : " , allergyList)
+            var result=JSON.stringify(familyHistoryList);  
+            var json =  JSON.parse(result); 
             var details = {
             firstName:firstName,
             lastName:lastName,
@@ -132,6 +134,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             onGoingProblems : onGoingProblemList,
             
           }
+          console.log("formBody:  " , formBody)
 
             var formBody = [];
             for (var property in details) {
@@ -141,6 +144,27 @@ export default function HorizontalLabelPositionBelowStepper() {
             }
             formBody = formBody.join("&");
             console.log("formBody:  " , formBody)
+
+            fetch('http://localhost:3000/pt/addpt', {
+              method: 'POST',
+               headers: {
+                 'Content-Type': 'application/json'
+               },
+              body: JSON.stringify(details)
+            }).then(()=>{
+              console.log("it is inserted");
+            }).catch(()=>{
+              console.log("errror")
+            })
+            // axios({
+            //   method: 'post',
+            //   url: 'http://localhost:3000/pt/addpt',
+            //   data: formBody,
+            //   headers: {
+            //     'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+            //   }
+            // })
+            
     }
 const getFirstName  = (name) =>{
     // console.log("fiffffff:   " , name);
