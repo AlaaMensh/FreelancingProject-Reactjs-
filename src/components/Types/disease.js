@@ -31,6 +31,7 @@ import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
+var object  = {}
 const useStyles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -108,15 +109,20 @@ class Disease extends Component {
             var encodedValue = encodeURIComponent(details[property]);
             formBody.push(encodedKey + "=" + encodedValue);
           }          
-          fetch(`http://localhost:3000/allergy/getById`, {
+          fetch(`http://localhost:3000/diseases/getById`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             body: formBody
           }).then((resp)=>{
-            console.log("Getting: " , resp.data);
-            this.setState({
-              TypeObj:resp.data.json()
+            console.log("Getting: " , resp);
+            resp.json().then((data)=>{
+              console.log("ddddddddddddddddd;  " , data[0])
+              this.setState({
+                TypeObj:data[0]
+              })
+              object = data
             })
           }).catch(()=>{
             console.log("errror")
@@ -215,7 +221,8 @@ class Disease extends Component {
       }
       formBody = formBody.join("&");
 
-      fetch('http://localhost:3000/disease/updateDisease', {
+      console.log("formBody : " , formBody)
+      fetch('http://localhost:3000/diseases/updateDiseases', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -428,7 +435,7 @@ class Disease extends Component {
                 type="text"
                 id="abbreviation"
                 autoComplete="current-password"
-                placeholder={this.state.TypeObj.code}
+                placeholder={this.state.TypeObj.abbreviation}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
                   this.setState({abbreviation : event.target.value});

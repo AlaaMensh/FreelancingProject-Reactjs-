@@ -67,8 +67,7 @@ export default function Private_Login_Form() {
   const classes = useStyles();
 
   return (
-    <div className="row align-items-center justify-content-center" style={{
-      padding:"0" , margin:"0" , height:"100%"}} >
+    <div className="form-hero row" >
     <Container component="main" maxWidth="xs" >
       {/* <CssBaseline /> */}
       <div className={classes.paper}>

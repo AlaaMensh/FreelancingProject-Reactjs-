@@ -33,6 +33,7 @@ import AddIcon from '@material-ui/icons/Add';
 import "./types.css";
 // import EditIcon from '@material-ui/icons/Edit';
 
+var object  = {}
 const useStyles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -148,14 +149,19 @@ class Allergy extends Component {
           // formBody = formBody.join("&");
           
           fetch(`http://localhost:3000/allergy/getById`, {
+            method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             body: formBody
           }).then((resp)=>{
-            console.log("Getting: " , resp.data);
-            this.setState({
-              TypeObj:resp.data.json()
+            console.log("Getting: " , resp);
+            resp.json().then((data)=>{
+              console.log("ddddddddddddddddd;  " , data[0])
+              this.setState({
+                TypeObj:data[0]
+              })
+              object = data
             })
           }).catch(()=>{
             console.log("errror")
@@ -262,6 +268,7 @@ class Allergy extends Component {
       //      console.log(res);
       //      console.log(res.data);
       //    })
+      console.log("formBody: ", formBody)
       fetch('http://localhost:3000/allergy/updateAllergy', {
         method: 'PUT',
         headers: {
@@ -444,6 +451,7 @@ class Allergy extends Component {
                 autoComplete="Name"
                 placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
+                  console.log("kkkk;   ", this.state.TypeObj.name)
                   this.setState({name : event.target.value});
                 }}
               />

@@ -45,7 +45,7 @@ import DashBoard from "../pages/DashBoard"
 import Appointement from '../pages/appointements';
 import DashBoardComp from "./dashboardComp";
 import { BrowserRouter } from 'react-router-dom';
-import Signup from './Forms/signupform';
+import Signup from './Forms/signUpForm';
 import {useRoutes} from 'hookrouter';
 // import DashBoardComp from "./dashboardComp";
 // import Navbar from './Navbar';

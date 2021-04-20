@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   iconsColor:{
     color:"#385968"
   },
-  avatar: {
+  avatar: { 
     margin: theme.spacing(1),
     backgroundColor:"#385968"
     // backgroundColor: theme.palette.secondary.main,
@@ -106,8 +106,7 @@ export default function LoginForm() {
   
   }
   return (
-    <div className="row align-items-center justify-content-center" style={{
-      padding:"0" , margin:"0" , height:"100%"}} >
+      <div className="form-hero row" >
             <Container component="main" maxWidth="xs" >
     <div className={classes.paper}>
                   <Avatar className={classes.avatar}>

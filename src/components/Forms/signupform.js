@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
 
   },
   submit: {
@@ -92,7 +92,12 @@ export default function Signup() {
     },
     body: formBody
   }).then((resp)=>{
-    resp.json().then((result)=>{console.log("result:   " , result.message)})
+    resp.json().then((msg)=>{
+      console.log("successfully addedd....." , msg.message);
+      if(msg.message === "1 record inserted"){
+        console.log("yes");
+      }
+    });
     // resp.json();
     
   })
@@ -104,7 +109,7 @@ export default function Signup() {
   
   }
   return (
-    <div className="row align-items-center justify-content-center" style={{
+    <div className="row align-items-center justify-content-cente" style={{
       padding:"0" , margin:"0" , height:"100%"}} >
             <Container component="main" maxWidth="xs" style={{height:"100% !important"}}  >
     <div className={classes.paper}>
@@ -197,7 +202,12 @@ export default function Signup() {
                       // color="primary"
                       className={classes.submit}
                       onClick={()=>{
-                   
+                        // var obj = {
+                        //   userName:username,
+                        //   password:pass,
+                        //   email:email,
+                        // }
+                        // console.log("user: " , obj);
                         handleSignup()
                       }}
                     >
@@ -208,7 +218,9 @@ export default function Signup() {
                         <Link href="#" variant="body2">
                           Already have an account? Sign in
                         </Link>
-            
+                        {/* <Link href="#" variant="body2">
+                          Forgot Password
+                        </Link> */}
                       </Grid>
                     </Grid>
                   </form>
