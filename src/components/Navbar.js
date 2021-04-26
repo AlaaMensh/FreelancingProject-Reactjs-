@@ -4,8 +4,6 @@ import Button from '@material-ui/core/Button';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import Select from '@material-ui/core/Select';
-import { useDispatch } from 'react-redux'
-
 
 import React from 'react';
 import clsx from 'clsx';
@@ -44,20 +42,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DashBoard from "../pages/DashBoard"
 import Appointement from '../pages/appointements';
 import DashBoardComp from "./dashboardComp";
-import { BrowserRouter } from 'react-router-dom';
-import Signup from './Forms/signUpForm';
-import {useRoutes} from 'hookrouter';
-// import DashBoardComp from "./dashboardComp";
 // import Navbar from './Navbar';
-// import DashBoard from './../pages/DashBoard';
-import { useState } from 'react';
-import LoginForm from './Forms/loginform';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux"; 
-import {handleChangeOpen,setChangeOpen } from "../actions";
-import { useSelector } from 'react-redux'
 
-const drawerWidth = 250;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -139,11 +126,10 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 50,
     margin:"1em",
-    padding:"3em 1em"
+    padding:"3em 2em"
   },
   cardContentHeight:{
-    height: 80,
-    // backgroundColor:"yellow"
+    height: 60,
   },
   button:{  
 
@@ -173,74 +159,33 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-const Navbar = ({match}) => {
+const Navbar = ({name , appBarList ,role , dropDownFunctions ,isLogin , MainFunctions}) => {
   const history = useHistory();
   const [spacing, setSpacing] = React.useState(2);
-  const [logged, setlogged] = React.useState(false);
+  const [logged, setlogged] = React.useState(isLogin);
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const routess = [  
-    { path: '/', component: DashBoard },  
-    { path: '/com', component: DashBoardComp },  
-    // { path: '/employee',  component: employee },  
-    // { path: '/addemployee',  component: addemployee },  
-    // { path: '/profile',  component: profile },  
-    // { path: '/editemployee/:id', exact: true,  component: editemployee }, 
-    // { component:notfound }
-];  
-  
-const [ appBarList , setAppBarList] = useState(["index1" , "index2" , "index3" , "index4"]);
-const [ role , setRole] = useState("Doctor");
-const [ isLogin , setisLogin] = useState(false);
-const [ dropDownFunctions , setdropDownFunctions] = useState(["Dr.DahshBoard" 
-                , "appointments" ,"activityLog" ,"trash"]);
-// var appBarList = ["Alaa" , "Ahmed" , "Mohamed" , "lol"];
-const MainFunctions = [
-    {text: "New Doctor Appointement" , role :"doctor"},
-    {text: "New patient registration" , role :"doctor"},
-    {text: "EMR Electronic Medical Records" , role :"doctor"},
-    {text: "Lap Information System" , role :"doctor"},
-    {text: "Rediology information system" , role :"doctor"},
-    {text: "Path information system " , role :"doctor"},
-    {text: "Electronic proception ERX" , role :"doctor"},
-    {text: "Document Manegment" , role :"doctor"},
-    {text: "System Admin" , role :"doctor"},
-    // {text: "New Doctor Appointement" , role :"doctor"},
-]
-
-const dispatch = useDispatch();
-  const routes = {
-    '/': () => <DashBoard />,
-    '/com': () => <DashBoardComp  />,
-    // '/products': () => <ProductOverview props={yourProps} />,
-    // '/products/:id': ({id}) => <ProductDetails id={id} />
-};
   
 
 
   useEffect(()=>{
-    // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
+    console.log("‘hello’" , name , appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
     // setTimeout( ()=>{ alert(‘hello’); }, 2000);
  });
  
   const handleDrawerOpen = () => {
     setOpen(true);
-    setChangeOpen(true);
-    dispatch({ type: 'setOpen', payload: true })
-    // console.log("message :" , msg);
   };
   
 
   const handleDrawerClose = () => {
     setOpen(false);
-    setChangeOpen(false);
-    dispatch({ type: 'setOpen', payload: false })
   };
-
+  
 
   return (
-   
+    
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -283,35 +228,32 @@ const dispatch = useDispatch();
         {/* <InputLabel htmlFor="age-native-simple">Age</InputLabel> */}
         <Select
           native
-          style = {{marginLeft : "1.4em" , width:"10em", textAlign:"center" }}
-          className = "bg-light rounded"
-          // value = {state.age}
-          // onChange = {handleChange}
-          // inputProps = {{
+          style ={{marginLeft : "1.4em" , width:"10em" }}
+          // value={state.age}
+          // onChange={handleChange}
+          // inputProps={{
           //   name: 'age',
           //   id: 'age-native-simple',
           // }}
         >
         {
           dropDownFunctions.map((item)=>{
-            return(<option  onClick= {()=>{
+            return(<option onClick= {()=>{
            
                    switch(item){
                      case "Dr.DahshBoard":{
                       console.log("yes")
                       history.push({
-                        pathname: match.path,
-                        state: { }
+                        pathname: '/dashBoard',
+                        state: { role: "doctor" }
                       });
-                      break;
                      }
                       
                      case "appointments":
                       history.push({
-                        pathname: match.path+"/appoint",
+                        pathname: '/appointement',
                         state: {}
                       });
-                      break;
                    }
             }}
                value={item}>{item}</option>)
@@ -370,19 +312,8 @@ const dispatch = useDispatch();
           ))}
         </List>
       </Drawer>
-      
-      <Switch> 
-      <Route exact path={match.path+"/appoint"}  component={Appointement}/> 
-      <Route exact path={match.path}  component={DashBoardComp}/> 
-      <Route exact path={match.path+"/com"} component={Signup}/>
-      <Route exact path={match.path+"/login"} component={LoginForm}/>
-
-      
-      </Switch>
-      
-      {/* routes */}
       {/* <h1 className="mt-5">dddd</h1> */}
-           {/* <main
+           <main
 className={clsx(classes.content, {
   [classes.contentShift]: open,
 })}
@@ -439,32 +370,10 @@ className={clsx(classes.content, {
 
 </Typography>
 
-</main> */}
+</main>
     </div>
- 
           
   );
 }
-const mapactiontoprops = (disptch) =>{
-  return bindActionCreators({setChangeOpen } ,disptch);
-}
-const mapstatetoprops = (state) =>{
-  console.log("lllllllllllllll",state);
-  return {msg : state.Drawer}
-}
+export default Navbar;
 
-export default connect(mapstatetoprops , mapactiontoprops)(Navbar);
-
-
-{/* <Switch>
-{/* <Route path="/">
-  <Signup />
-</Route>
-<Route path="/com">
-  <DashBoardComp/>
-</Route> 
- <Route exact path="/singup" component={Signup}></Route>
-<Route exact path="/com" component={DashBoardComp}></Route>
-{/* <Route exact path="/PathologistSignup" component={PathologistSignup}></Route> 
-
-</Switch> */}

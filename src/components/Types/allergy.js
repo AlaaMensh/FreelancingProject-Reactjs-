@@ -186,7 +186,7 @@ class Allergy extends Component {
       // await axios.get(' http://localhost:2400/allergy').then(async resp => {
       await axios.get('http://localhost:3000/allergy/getAllergy').then(async resp => {
         // return resp.data;
-         this.setState({  
+         this.setState({
             allergyList : resp.data
         })
         console.log("resp.data: " , resp.data);

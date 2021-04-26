@@ -18,15 +18,14 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
-
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    // marginTop: theme.spacing(11),
-    // backgroundColor :"yellow"
+    marginTop: theme.spacing(11),
+    backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    // marginTop: theme.spacing(4),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -61,28 +60,34 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function PathologyFDSignUp() {
+export default function RadiogistSignup() {
+  const [firstname, setFrestname] = useState();
+  const [secondName, setSecondName] = useState();
+  const [lastName, setlastName] = useState();
+  const [ birthdate, setBirthdate] = useState();
+  const [ degree, setDegree] = useState();
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
-  const [establishmentName, setestablishmentName] = useState();
-  const [contactLab, setcontactLab] = useState();
   const classes = useStyles();
-
+  
   const handleSignup = async()=>{
 
     var details = {
-      'userName':username,
-      'password': pass,
-      'email': email,
-      'address': address,
-      'phone' : phone,
-      'establishment': establishmentName,
-      'contactperson' : contactLab
+      'firstName':firstname,
+       'lastName': lastName, 
+       'Date': birthdate,
+       'degree' : degree,
+       'userName': username,
+        'password': pass,
+        'Email': email,
+        'phone' : phone,
+        'address': address,
     
   };
+  
   
   var formBody = [];
   for (var property in details) {
@@ -92,7 +97,7 @@ export default function PathologyFDSignUp() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/pFrontDisk/addPerson', {
+  fetch('http://localhost:3000/radiogist/addRadiogist', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -103,23 +108,109 @@ export default function PathologyFDSignUp() {
   }).catch(()=>{
     console.log("errror")
   })
-  }
+
+}
 return (
-  <div className="row align-items-center justify-content-center" style={{
-    padding:"0" , margin:"0" , height:"100%"}} >
-          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
+  <div className="form-hero row" style={{height :"100%"}} >
+            <Container component="main" maxWidth="xs" >
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-      ADD Pathology FD
-      </Typography>
-      <form className={classes.form} noValidate>
-        <Grid container spacing={2}>
+                  <Typography className={classes.backgroundHeader}>
+                  <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Add Radiogist
+                  </Typography>
+                  </Typography>
+                  <form className={classes.form} noValidate>
+        <Grid container spacing={4}>
+        <Grid item xs={6}>
+            <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="firstname"
+              label="FirstName"
+              name="firstName"
+              autoComplete="firstname"
+              onChange = {(event) =>{
+                setFrestname(event.target.value);
+                // console.log("mmmmmm" , firstname);
+              }}
+              ///vbvghv
+            />
+          </Grid>
+          {/* <Grid item xs={6}>
+            <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="secondname"
+              label="SecondName"
+              name="secondName"
+              autoComplete="secondname"
+              onChange = {(event) =>{
+                setSecondName(event.target.value);
+                // console.log("mmmmmm" , secondname);
+              }}
+            />
+          </Grid> */}
           <Grid item xs={6}>
             <TextField
-            size="small"
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="lastname"
+              label="LastName"
+              name="lastName"
+              autoComplete="lastname"
+              onChange = {(event) =>{
+                setlastName(event.target.value);
+                console.log("mmmmmm" , lastName);
+              }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+        <TextField
+         fullWidth
+         id="date"
+        label="Birthday"
+        type="date"
+       defaultValue="2021-01-01"
+       className={classes.textField}
+      InputLabelProps={{
+      shrink: true,
+    }}
+    onChange = {(event) =>{
+      setBirthdate(event.target.value);
+      console.log("mmmmmm" , lastName);
+    }}
+       />
+       </Grid>
+ 
+    <Grid item xs={6}>
+            <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="degree"
+              label="Degree"
+              name="Degree"
+              autoComplete="Degree"
+              onChange = {(event) =>{
+                setDegree(event.target.value);
+                console.log("mmmmmm" , degree);
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={6}>  
+            <TextField
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -135,7 +226,7 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-            size="small"
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -153,7 +244,7 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-            size="small"
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -170,10 +261,10 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
+              size="small"
               name="phone"
               label="Phone"
               type="phone"
@@ -186,7 +277,7 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-            size="small"
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -197,38 +288,6 @@ return (
               onChange = {(event) =>{
                 setAddress(event.target.value);
                 console.log("address" , address);
-              }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-            size="small"
-              variant="outlined"
-              required
-              fullWidth
-              name="establishmentName"
-              label="establishmentName"
-              type="establishmentName"
-              id="establishmentName"
-              onChange = {(event) =>{
-                setestablishmentName(event.target.value);
-                console.log("establishmentName" , establishmentName);
-              }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-            size="small"
-              variant="outlined"
-              required
-              fullWidth
-              name="contactLab"
-              label="contactLab"
-              type="contactLab"
-              id="contactLab"
-              onChange = {(event) =>{
-                setcontactLab(event.target.value);
-                // console.log("contactLab" , contactLab);
               }}
             />
           </Grid>
@@ -244,19 +303,25 @@ return (
             handleSignup()
           }}
         >
-         Signup
-                    </Button>
+          Sign Up
+          </Button>
                     <Grid container justify="flex-end">
                       <Grid item>
                         <Link href="#" variant="body2">
                           Already have an account? Sign in
                         </Link>
-                    
+                   
                       </Grid>
                     </Grid>
                   </form>
                 </div>
- </Container>
- </div>
-  );
+       
+      </Container>
+      </div>
+     
+      
+
+
+
+);
 }

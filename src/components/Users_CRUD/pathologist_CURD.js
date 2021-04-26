@@ -32,7 +32,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import "./types.css";
 // import EditIcon from '@material-ui/icons/Edit';
-// import ChemistSignup from '../Forms/signUpChimest';
+import ChemistSignup from './../Forms/chemist_signup';
 
 const useStyles = (theme) => ({
   paper: {

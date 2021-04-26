@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Signup() {
+export default function FDDoctorSignup() {
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
@@ -85,21 +85,18 @@ export default function Signup() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/authenticate/signup', {
+  fetch('http://localhost:3000/dFrontDisk/addPerson', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
   }).then((resp)=>{
-    resp.json().then((msg)=>{
-      console.log("successfully addedd....." , msg.message);
-      if(msg.message === "1 record inserted"){
-        console.log("yes");
-      }
-    });
+    console.log("llkkkkkk :   ",resp.data);
     // resp.json();
     
+  }).then((msg)=>{
+    console.log("llkkkkkk :   ",msg);
   })
   .catch(()=>{
     console.log("errror")
@@ -116,7 +113,7 @@ export default function Signup() {
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                    Sign up
+                    ADD Doctor FD
                   </Typography>
                   <form className={classes.form} noValidate>
                     <Grid container spacing={2}>

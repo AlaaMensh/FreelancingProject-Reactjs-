@@ -38,11 +38,8 @@ import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux"; 
-import {handleChangeOpen} from "../actions";
 // import Navbar from './Navbar';
-import { useDispatch } from 'react-redux'
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
@@ -158,113 +155,92 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-const DashBoardComp = (props) => {
-  const dispatch = useDispatch()
+const DashBoardComp = ({name , appBarList ,role , dropDownFunctions ,isLogin , MainFunctions}) => {
   const history = useHistory();
   const [spacing, setSpacing] = React.useState(2);
+  const [logged, setlogged] = React.useState(isLogin);
   const classes = useStyles();
-  const MainFunctions = [
-    {text: "New Doctor Appointement" , role :"doctor"},
-    {text: "New patient registration" , role :"doctor"},
-    {text: "EMR Electronic Medical Records" , role :"doctor"},
-    {text: "Lap Information System" , role :"doctor"},
-    {text: "Rediology information system" , role :"doctor"},
-    {text: "Path information system " , role :"doctor"},
-    {text: "Electronic proception ERX" , role :"doctor"},
-    {text: "Document Manegment" , role :"doctor"},
-    {text: "System Admin" , role :"doctor"},
-    // {text: "New Doctor Appointement" , role :"doctor"},
-]
-  // const [logged, setlogged] = React.useState(isLogin);
-  // const theme = useTheme();
+  const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  // const [open]
+  
 
 
   useEffect(()=>{
-    // dispatch({ type: 'getOpen', payload: true });
-    var o = props.handleChangeOpen().then(()=>{
-      // console.log("open: " , )
-    });
-    setOpen(open);
-    // console.log("openHere : " , open)
-    // setOpen(props.location.state.open);
-    // setOpen(props.location.state.open);
-    // console.log("‘hello’" , name , appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
+    console.log("‘hello’" , name , appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
     // setTimeout( ()=>{ alert(‘hello’); }, 2000);
  });
  
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+  
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
   
 
   return (
     <div className={classes.root}>
       <main
-      className={clsx(classes.content, {
-        [classes.contentShift]: open,
-      })}
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
       >
-
-      <div className={classes.drawerHeader} />
-      <Typography className="row">
-      <Grid container justify="center" className="ml-2 " spacing = {4}>
-        {MainFunctions.map(value => (
-      <Grid key={value} item xs={12} sm={4} md={3} >
-      <Card className={classes.cardStyle}>
-
-      <CardMedia
-        className={classes.media}
-        style={{padding:"3em"}}
-        image="images/img1.svg"
-        title="Contemplative Reptile"
-      />
-      <CardContent className={classes.cardContentHeight}>
-        <Typography color="" className="text-center text-secondary" gutterBottom>
-          {value.text}
-        </Typography>
-      </CardContent>
-      <CardActions className="row justify-content-center ">
-        <Button className={classes.learnMoreBtn} size="small" 
-        onClick={()=>{
-          if(value.role === "doctor" && value.text === "New Doctor Appointement"){
-            history.push("/appointement");
-          }
-          if(value.role==="patient" && value.text ==="New patient Registration"){
-            history.push("/");
-          }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-        }}>Learn More</Button>
-      </CardActions>
+        {/* <img className="mt-5" src="images/img1.svg" /> */}
+        <div className={classes.drawerHeader} />
+        <Typography className="row">
+        <Grid container justify="center" className="ml-2 " spacing = {4}>
+          {MainFunctions.map(value => (
+        <Grid key={value} item xs={12} sm={4} md={3} >
+        <Card className={classes.cardStyle}>
+        {/* <Card > */}
+         <CardMedia
+          className={classes.media}
+          style={{padding:"3em"}}
+          image="images/img1.svg"
+          title="Contemplative Reptile"
+        />
+        <CardContent className={classes.cardContentHeight}>
+          <Typography color="" className="text-center text-secondary" gutterBottom>
+            {value.text}
+          </Typography>
+        </CardContent>
+        <CardActions className="row justify-content-center ">
+          <Button className={classes.learnMoreBtn} size="small" 
+          onClick={()=>{
+            if(value.role === "doctor" && value.text === "New Doctor Appointement"){
+              history.push("/appointement");
+            }
+            if(value.role==="patient" && value.text ==="New patient Registration"){
+              history.push("/");
+            }
+            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+            //   history.push("/");
+            // }
+            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+            //   history.push("/");
+            // }
+            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+            //   history.push("/");
+            // }
+            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+            //   history.push("/");
+            // }
+            // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
+            //   history.push("/");
+            // }
+          }}>Learn More</Button>
+        </CardActions>
       </Card>
-          </Grid>
-        ))}
-      </Grid>
+            </Grid>
+          ))}
+        </Grid>
 
-      </Typography>
-
- </main>
-     </div>
+        </Typography>
+      
+      </main>
+    </div>
   );
-      }
-const mapactiontoprops = (disptch) =>{
-  return bindActionCreators({handleChangeOpen } ,disptch);
 }
-const mapstatetoprops = (state) =>{
-  // console.log("lllllllllllllll",state);
-  return {open : state.open}
-}
-
-export default connect(mapstatetoprops , mapactiontoprops)(DashBoardComp);
+export default DashBoardComp

@@ -35,7 +35,7 @@ import "./types.css";
 
 const useStyles = (theme) => ({
   paper: {
-    // marginTop: theme.spacing(8),
+    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -82,7 +82,7 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Doctor extends Component {
+class Assistant extends Component {
   constructor(props) {
     super(props);
     
@@ -92,17 +92,10 @@ class Doctor extends Component {
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      
-      userName:"",
-      firstName: "",
-      lastName :"",
-      password :"",
+      username:"",
+      name: "",
       email :"",
-      phone :"",
-      address: "" ,
-      date: "" ,
-      degree: "" ,
-      
+      phone: ""  
           }
         }
         
@@ -119,18 +112,13 @@ class Doctor extends Component {
             formBody.push(encodedKey + "=" + encodedValue);
           }
           
-          fetch(`http://localhost:3000/doctor/getDoctor`, {
-            method: 'POST',
+          fetch(`http://localhost:3000/assistant/getAssistant/${id}`, {
+            method: 'GET',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
+            }
+            // body: formBody
           }).then((result)=>{
-            result.json().then((data)=>{
-              console.log("data: " , data[0])
-              this.setState({TypeObj : data[0]})
-
-            })
             console.log("Getting: " , result);
           }).catch((e)=>{
             console.log("error here erroer idkdkdkdkdk" , e)
@@ -152,16 +140,12 @@ class Doctor extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      await axios.get('http://localhost:3000/doctor/getAll').then(async resp => {
+      await axios.get(' http://localhost:3000/assistant/getAll').then(async resp => {
         // return resp.data;
-        // resp.json().then((data)=>{
-        //   console.log("data:  " , data);
-        // })
-        console.log("resp.data: " , resp.data);
-
          this.setState({
             assistantList : resp.data
         })
+        console.log("resp.data: " , resp.data);
       })
     }
   
@@ -186,7 +170,7 @@ class Doctor extends Component {
       }
       // formBody = formBody.join("&");
       
-      fetch('http://localhost:3000/doctor/deleteDoctor', {
+      fetch('http://localhost:3000/assistant/deleteAssistant', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -206,43 +190,25 @@ class Doctor extends Component {
     handleUpdate = ()=>{
       var details = {
         id:this.state.TypeObj.id,
-        firstName: this.state.firstName,
-        lastName: this.state.lastName,
-        userName: this.state.userName,
-        password : this.state.password,
-        phone: this.state.phone,
-        address: this.state.address,
-        degree: this.state.degree,
-        date : this.state.date,
+        username: this.state.username,
+        name: this.state.name,
         email : this.state.email,
+        phone : this.state.phone,
       }
-      if(!details.firstName){
-        details.firstName = this.state.TypeObj.firstName
+      if(!details.username){
+        details.username = this.state.TypeObj.username
       }
-      if(!details.lastName){
-        details.lastName = this.state.TypeObj.lastName
+      if(!details.name){
+        details.name = this.state.TypeObj.name
       }
-      if(!details.userName){
-        details.userName = this.state.TypeObj.userName
-      }
-      if(!details.password){
-        details.password = this.state.TypeObj.password
+      if(!details.email){
+        details.email = this.state.TypeObj.email
       }
       if(!details.phone){
         details.phone = this.state.TypeObj.phone
       }
-      if(!details.address){
-        details.address = this.state.TypeObj.address
-      }
-      if(!details.degree){
-        details.degree = this.state.TypeObj.degree
-      }
-      if(!details.date){
-        details.date = this.state.TypeObj.Date
-      }
-      if(!details.email){
-        details.email = this.state.TypeObj.Email
-      }
+
+
 
       var formBody = [];
       for (var property in details) {
@@ -252,8 +218,8 @@ class Doctor extends Component {
       }
       formBody = formBody.join("&");
 
-   console.log("form :    "  , formBody);
-      fetch('http://localhost:3000/doctor/updateDoctor', {
+   
+      fetch('http://localhost:3000/allergy/updateAssistant', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -264,7 +230,7 @@ class Doctor extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-        //  this.getData()
+         this.getData()
     }
 
     componentDidUpdate(){
@@ -277,7 +243,7 @@ class Doctor extends Component {
           <div className="container gridDataContent mt-5"> 
           <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">Chemist Data</span>
+                <span className="">Assistant Data</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
@@ -289,11 +255,9 @@ class Doctor extends Component {
                <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.assistantList} columns={[
               { field: 'firstName', headerName: 'firstName', width: 200 },
               { field: 'lastName', headerName: 'lastName', width: 200 },
-              { field: 'userName', headerName: 'username', width: 200 },              
-              { field: 'Email', headerName: 'Email', width: 200 },                            
-              { field: 'phone', headerName: 'Phone', width: 200 },                    
-              { field: 'address', headerName: 'Address', width: 200 },              
-              { field: 'Date', headerName: 'Date', width: 200 },              
+              { field: 'Email', headerName: 'Email', width: 200 },              
+              { field: 'phone', headerName: 'Phone', width: 200 },              
+              { field: 'userName', headerName: 'username', width: 100 },              
                 {field: 'Actions',  
                 headerName: 'Actions',
                 width: 550,
@@ -415,163 +379,76 @@ class Doctor extends Component {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="firstName"
+                id="username"
                 // label="Name"
-                name="firstName" 
+                name="username" 
                 type="text"
-                autoComplete="firstName"
-                placeholder={this.state.TypeObj.firstName}
-                // placeholder="hhel"
+                autoComplete="UserName"
+                placeholder={this.state.TypeObj.username}
                 onChange = {(event) =>{
-                  this.setState({firstName : event.target.value});
+                  this.setState({username : event.target.value});
                 }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="lastName"
-                // label="lastName"
-                name="lastName" 
+                id="name"
+                name="name" 
                 type="text"
-                autoComplete="lastName"
-                placeholder={this.state.TypeObj.lastName}
-                // defaultValue={this.state.TypeObj.lastName}
+                autoComplete="Name"
+                placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({lastName : event.target.value});
+                  this.setState({name : event.target.value});
                 }}
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="userName"
-                // label="Name"
-                name="userName" 
+                name="email"
+                // label="description"
                 type="text"
-                autoComplete="userName"
-                placeholder={this.state.TypeObj.userName}
-                onChange = {(event) =>{
-                  this.setState({userName : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
                 id="email"
-                // label="Name"
-                name="email" 
-                type="text"
-                autoComplete="Email"
-                placeholder={this.state.TypeObj.Email}
+                autoComplete="email"
+                placeholder={this.state.TypeObj.email}
                 onChange = {(event) =>{
+                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
                   this.setState({email : event.target.value});
                 }}
+                
               />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="phone"
-                name="phone" 
+                name="phone"
                 type="text"
-                autoComplete="Phone"
+                id="phone"
+                autoComplete="phone"
                 placeholder={this.state.TypeObj.phone}
                 onChange = {(event) =>{
                   this.setState({phone : event.target.value});
                 }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="address"
-                // label="description"
-                type="text"
-                id="address"
-                autoComplete="address"
-                placeholder={this.state.TypeObj.address}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({address : event.target.value});
-                }}
                 
               />
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                type="text"
-                id="password"
-                autoComplete="password"
-                placeholder={this.state.TypeObj.password}
-                onChange = {(event) =>{
-                  this.setState({password : event.target.value});
-                }}
-                
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="date"
-                type="date"
-                id="date"
-                autoComplete="date"
-                placeholder={this.state.TypeObj.Date}
-                onChange = {(event) =>{
-                  console.log("dateeee:   " , event.target.value);
-                  this.setState({date : event.target.value});
-                }}
-                
-              />
-            </Grid>  
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="degree"
-                type="text"
-                id="degree"
-                autoComplete="degree"
-                placeholder={this.state.TypeObj.degree}
-                onChange = {(event) =>{
-                  this.setState({degree : event.target.value});
-                }}
-                
-              />
-            </Grid>  
+           
           </Grid>
           <Button
             type="button"
@@ -713,4 +590,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Doctor); 
+export default withStyles(useStyles)(Assistant); 

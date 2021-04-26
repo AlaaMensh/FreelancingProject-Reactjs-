@@ -20,12 +20,12 @@ import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    // marginTop: theme.spacing(11),
+    marginTop: theme.spacing(11),
     backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    // marginTop: theme.spacing(4),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    // marginTop: theme.spacing(3),
+    marginTop: theme.spacing(3),
 
   },
   submit: {
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function NurseSignup() {
+export default function AssistantSignup() {
   const [firstname, setFrestname] = useState();
   const [secondName, setSecondName] = useState();
   const [lastName, setlastName] = useState();
@@ -84,7 +84,7 @@ export default function NurseSignup() {
       'password': pass,
       'Email': email,
       'phone' : phone,
-      'address': address,
+      'address': address, 
     
   };
   
@@ -97,30 +97,38 @@ export default function NurseSignup() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/nurse/addNurse', {
+  fetch('http://localhost:3000/assistant/addAssistant', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
-  }).then(()=>{
-    console.log("it is inserted");
-  }).catch(()=>{
+  }).then((resp)=>{
+    resp.json().then((msg)=>{
+      console.log("successfully addedd....." , msg);
+      if(msg === "1 record inserted"){
+        console.log("yes");
+      }
+    });
+    // resp.json();
+    
+  })
+  .catch(()=>{
     console.log("errror")
   })
 
+
 }
 return (
-  <div className="row align-items-center justify-content-center" style={{
-    padding:"0" , margin:"0" , height:"100%"}} >
-          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
+  <div className="form-hero row" style={{height :"100%"}} >
+            <Container component="main" maxWidth="xs" >
     <div className={classes.paper}>
                   <Typography className={classes.backgroundHeader}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                   Add Nurse
+                    ADD Assistant
                   </Typography>
                   </Typography>
                   <form className={classes.form} noValidate>

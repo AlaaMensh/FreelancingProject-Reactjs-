@@ -20,12 +20,12 @@ import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    // marginTop: theme.spacing(11),
-    // backgroundColor :"yellow"
+    marginTop: theme.spacing(11),
+    backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    // marginTop: theme.spacing(4),
+    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     color:"#385968"
   },
   avatar: {
-    // margin: theme.spacing(1),
+    margin: theme.spacing(1),
     backgroundColor:"#385968",
     textAlign:"center",
     margin :"0.5em auto",
@@ -60,9 +60,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AssistantSignup() {
+export default function DoctorSignup() {
   const [firstname, setFrestname] = useState();
-  const [secondName, setSecondName] = useState();
   const [lastName, setlastName] = useState();
   const [ birthdate, setBirthdate] = useState();
   const [ degree, setDegree] = useState();
@@ -84,7 +83,7 @@ export default function AssistantSignup() {
       'password': pass,
       'Email': email,
       'phone' : phone,
-      'address': address, 
+      'Address': address,
     
   };
   
@@ -97,39 +96,29 @@ export default function AssistantSignup() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/assistant/addAssistant', {
+  fetch('http://localhost:3000/doctor/addDoctor', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
-  }).then((resp)=>{
-    resp.json().then((msg)=>{
-      console.log("successfully addedd....." , msg);
-      if(msg === "1 record inserted"){
-        console.log("yes");
-      }
-    });
-    // resp.json();
-    
-  })
-  .catch(()=>{
+  }).then(()=>{
+    console.log("it is inserted");
+  }).catch(()=>{
     console.log("errror")
   })
 
-
 }
 return (
-  <div className="row align-items-center justify-content-cente" style={{
-    padding:"0" , margin:"0" , height:"100%"}} >
-          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}  >
+  <div className="form-hero row" style={{height :"100%"}} >
+            <Container component="main" maxWidth="xs" >
     <div className={classes.paper}>
                   <Typography className={classes.backgroundHeader}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                    ADD Assistant
+                    ADD Doctor
                   </Typography>
                   </Typography>
                   <form className={classes.form} noValidate>
@@ -151,22 +140,7 @@ return (
               ///vbvghv
             />
           </Grid>
-          {/* <Grid item xs={6}>
-            <TextField
-             size="small"
-              variant="outlined"
-              required
-              fullWidth
-              id="secondname"
-              label="SecondName"
-              name="secondName"
-              autoComplete="secondname"
-              onChange = {(event) =>{
-                setSecondName(event.target.value);
-                // console.log("mmmmmm" , secondname);
-              }}
-            />
-          </Grid> */}
+          
           <Grid item xs={6}>
             <TextField
              size="small"
@@ -183,9 +157,9 @@ return (
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
         <TextField
-         fullWidth
+         size="small"
          id="date"
         label="Birthday"
         type="date"

@@ -21,12 +21,12 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    // marginTop: theme.spacing(11),
-    // backgroundColor :"yellow"
+    marginTop: theme.spacing(11),
+    backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    // marginTop: theme.spacing(4),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -61,14 +61,14 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function RadioFDSignUp() {
+export default function LabSignup() {
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
-  const [establishmentName, setestablishmentName] = useState();
-  const [contactLab, setcontactLab] = useState();
+  const [establishment_name, setEstablishment_name] = useState();
+  const [contact_lab, setContact_lab] = useState();
   const classes = useStyles();
 
   const handleSignup = async()=>{
@@ -76,11 +76,11 @@ export default function RadioFDSignUp() {
     var details = {
       'userName':username,
       'password': pass,
-      'email': email,
-      'address': address,
-      'phone' : phone,
-      'establishment': establishmentName,
-      'contactperson' : contactLab
+      'Email': email,
+      'Phone' : phone,
+      'Address': address,
+      'Establishment_name': establishment_name,
+      'Contact_person' : contact_lab
     
   };
   
@@ -92,7 +92,7 @@ export default function RadioFDSignUp() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/rFrontDisk/addPerson', {
+  fetch('http://localhost:3000/labs/addlab', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -105,15 +105,15 @@ export default function RadioFDSignUp() {
   })
   }
 return (
-  <div className="row align-items-center justify-content-center" style={{
-    padding:"0" , margin:"0" , height:"100%"}} >
-          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
+  <div className="form-hero row" style={{height :"100%"}} >
+    
+            <Container component="main" maxWidth="xs" >
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-      ADD Radio FD
+      ADD Lab FD
       </Typography>
       <form className={classes.form} noValidate>
         <Grid container spacing={2}>
@@ -149,22 +149,6 @@ return (
                 console.log("password" , pass);
               }}
               
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-            size="small"
-              variant="outlined"
-              required
-              fullWidth
-              name="establishmentName"
-              label="establishmentName"
-              type="establishmentName"
-              id="establishmentName"
-              onChange = {(event) =>{
-                setestablishmentName(event.target.value);
-                console.log("establishmentName" , establishmentName);
-              }}
             />
           </Grid>
           <Grid item xs={6}>
@@ -216,20 +200,35 @@ return (
               }}
             />
           </Grid>
-          
           <Grid item xs={6}>
             <TextField
             size="small"
               variant="outlined"
               required
               fullWidth
-              name="contactLab"
-              label="contactLab"
-              type="contactLab"
-              id="contactLab"
+              name="establishment_name"
+              label="Establishment_name"
+              type="establishment_name"
+              id="establishment_name"
               onChange = {(event) =>{
-                setcontactLab(event.target.value);
-                // console.log("contactLab" , contactLab);
+                setEstablishment_name(event.target.value);
+                console.log("establishment_name" , establishment_name);
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+            size="small"
+              variant="outlined"
+              required
+              fullWidth
+              name="contact_lab"
+              label="Contact_lab"
+              type="contact_lab"
+              id="contact_lab"
+              onChange = {(event) =>{
+                setContact_lab(event.target.value);
+                // console.log("contact_lab" , contact_lab);
               }}
             />
           </Grid>
