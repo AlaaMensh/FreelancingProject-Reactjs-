@@ -33,10 +33,9 @@ import AddIcon from '@material-ui/icons/Add';
 import "./types.css";
 // import EditIcon from '@material-ui/icons/Edit';
 
-var object  = {}
 const useStyles = (theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -83,60 +82,33 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Allergy extends Component {
+class Chemist extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      allergyList : [],
+      assistantList : [],
       typeId:0,
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      name:"",
-      description :""  
+      
+      userName:"",
+      firstName: "",
+      lastName :"",
+      password :"",
+      email :"",
+      phone :"",
+      address: "" ,
+      date: "" ,
+      degree: "" ,
+      
           }
         }
         
         getTypeByID = async(id) => {
-          console.log("dkkdkdkdkdkdkdkdkdk:    ")
-        //   console.log("id : " , id);
-        //   var details = {
-        //     id:id
-        //   }
-        //   var formBody = [];
-        //   // var encodedKey = encodeURIComponent("id").toString();
-
-        //   // var encodedValue = encodeURIComponent(details["id"]);
-        //   // formBody.push(encodedKey + "=" + encodedValue);
-        //   for (var property in details) {
-        //     var encodedKey = encodeURIComponent(property);
-        //     var encodedValue = encodeURIComponent(details[property]);
-        //     formBody.push(encodedKey + "=" + encodedValue);
-        //   }
-        //   formBody = formBody.join("&");
-
-        //   console.log("heeereeeee" ,  formBody);
-        //   // let response = await fetch(`http://localhost:3000/allergy/getById` ,{body: id});
-        //   // var payload = await response.json();
-        //   // console.log( "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
-        //   // this.setState({
-        //   //   TypeObj:payload
-        //   // })
-        //  await fetch(`http://localhost:3000/allergy/getById`, {
-        //     method: 'GET',
-        //     headers: {
-        //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        //     },
-        //     body: formBody
-        //   }).then((resp)=>{
-        //     console.log("it is inserted");
-        //     this.setState({
-        //     TypeObj:resp.data
-        //   })
-        //   }).catch(()=>{
-        //     console.log("error gettingj")
-        //   })
+          console.log("heeereeeee" , id);
+          // let response = await fetch(`http://localhost:3000/assistant/getAssistant`);
           var details = {
             id:id
           }
@@ -146,29 +118,26 @@ class Allergy extends Component {
             var encodedValue = encodeURIComponent(details[property]);
             formBody.push(encodedKey + "=" + encodedValue);
           }
-          // formBody = formBody.join("&");
           
-          fetch(`http://localhost:3000/allergy/getById`, {
+          fetch(`http://localhost:3000/chemist/getChemist`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             body: formBody
-          }).then((resp)=>{
-            console.log("Getting: " , resp);
-            resp.json().then((data)=>{
-              console.log("ddddddddddddddddd;  " , data[0])
-              this.setState({
-                TypeObj:data[0]
-              })
-              object = data
+          }).then((result)=>{
+            result.json().then((data)=>{
+              console.log("data: " , data[0])
+              this.setState({TypeObj : data[0]})
+
             })
-          }).catch(()=>{
-            console.log("errror")
+            console.log("Getting: " , result);
+          }).catch((e)=>{
+            console.log("error here erroer idkdkdkdkdk" , e)
           })
         }
-        getAllergyTypesList = (allergyList) =>{
-        for(var type in allergyList){
+        getAssistantTypesList = (assistqntList) =>{
+        for(var type in this.state.assistantList){
             console.log("type: ", type.name);
         }
     }
@@ -183,16 +152,17 @@ class Allergy extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      // await axios.get(' http://localhost:2400/allergy').then(async resp => {
-      await axios.get('http://localhost:3000/allergy/getAllergy').then(async resp => {
+      await axios.get('http://localhost:3000/chemist/getAll').then(async resp => {
         // return resp.data;
-         this.setState({  
-            allergyList : resp.data
-        })
+        // resp.json().then((data)=>{
+        //   console.log("data:  " , data);
+        // })
         console.log("resp.data: " , resp.data);
-      
+
+         this.setState({
+            assistantList : resp.data
+        })
       })
-      
     }
   
      handleCloseModal2 = () => {
@@ -200,7 +170,7 @@ class Allergy extends Component {
     };
     refreshAfterDeletion = (id)=>{
      this.setState({
-      allergyList: this.state.allergyList.filter(row => row.id !== id)
+      assistantList: this.state.assistantList.filter(row => row.id !== id)
      })
     }
  
@@ -216,7 +186,7 @@ class Allergy extends Component {
       }
       // formBody = formBody.join("&");
       
-      fetch('http://localhost:3000/allergy/deleteAllergy', {
+      fetch('http://localhost:3000/chemist/deleteChemist', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -227,31 +197,51 @@ class Allergy extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-        // await axios.delete(`http://localhost:2400/allergy/deleteAllergy/${id}`)
-        // .then(res => {
-        //   console.log(res);
-        //   console.log(res.data);
-        // })
-        // .catch(err=>{console.log("nooooo")})
-
+      
          
     }
    async componentDidMount(){
       this.getData()
     }
     handleUpdate = ()=>{
-
       var details = {
         id:this.state.TypeObj.id,
-        name: this.state.name,
-        description : this.state.description,
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        userName: this.state.userName,
+        password : this.state.password,
+        phone: this.state.phone,
+        address: this.state.address,
+        degree: this.state.degree,
+        date : this.state.date,
+        email : this.state.email,
       }
-
-      if(!details.name){
-        details.name = this.state.TypeObj.name
+      if(!details.firstName){
+        details.firstName = this.state.TypeObj.firstName
       }
-      if(!details.description){
-        details.description = this.state.TypeObj.description
+      if(!details.lastName){
+        details.lastName = this.state.TypeObj.lastName
+      }
+      if(!details.userName){
+        details.userName = this.state.TypeObj.userName
+      }
+      if(!details.password){
+        details.password = this.state.TypeObj.password
+      }
+      if(!details.phone){
+        details.phone = this.state.TypeObj.phone
+      }
+      if(!details.address){
+        details.address = this.state.TypeObj.address
+      }
+      if(!details.degree){
+        details.degree = this.state.TypeObj.degree
+      }
+      if(!details.date){
+        details.date = this.state.TypeObj.Date
+      }
+      if(!details.email){
+        details.email = this.state.TypeObj.Email
       }
 
       var formBody = [];
@@ -262,14 +252,8 @@ class Allergy extends Component {
       }
       formBody = formBody.join("&");
 
-      // console.log("add: ", obj);
-      // axios.put(`http://localhost:3000/allergy/addAllergy` , obj)
-      //    .then(res => {
-      //      console.log(res);
-      //      console.log(res.data);
-      //    })
-      console.log("formBody: ", formBody)
-      fetch('http://localhost:3000/allergy/updateAllergy', {
+   console.log("form :    "  , formBody);
+      fetch('http://localhost:3000/chemist/updateChemist', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -280,7 +264,7 @@ class Allergy extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-         this.getData()
+        //  this.getData()
     }
 
     componentDidUpdate(){
@@ -293,7 +277,7 @@ class Allergy extends Component {
           <div className="container gridDataContent mt-5"> 
           <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">Ellergy Types</span>
+                <span className="">Chemist Data</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
@@ -302,38 +286,40 @@ class Allergy extends Component {
             </div>
           </div>
             <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
-               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
-                 { field: 'id', headerName: 'id', width: 70 },
-              { field: 'name', headerName: 'Name', width: 200 },
-              { field: 'description', headerName: 'description', width: 500 },
-            
-              { 
-                field: 'Actions',
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.assistantList} columns={[
+              { field: 'firstName', headerName: 'firstName', width: 200 },
+              { field: 'lastName', headerName: 'lastName', width: 200 },
+              { field: 'userName', headerName: 'username', width: 200 },              
+              { field: 'Email', headerName: 'Email', width: 200 },                            
+              { field: 'phone', headerName: 'Phone', width: 200 },                    
+              { field: 'address', headerName: 'Address', width: 200 },              
+              { field: 'Date', headerName: 'Date', width: 200 },              
+                {field: 'Actions',  
                 headerName: 'Actions',
-                width: 250,
+                width: 550,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
                     <Button
-                      variant="contained"
-                      color="default"
-                      size="small"
-                      className={this.props.classes.button}
-                      startIcon={<EditIcon />}
-                     
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        this.handleopenModal1();
-                        console.log("lsssssssssssssssssssssssssssssssssssss")
-                        this.getTypeByID(params.row.id);
-                        this.getData()
-                      }
-                        
-                      }
-                    >
-                       Edit
+                    variant="contained"
+                    color="default"
+                    size="small"
+                    className={this.props.classes.button}
+                    startIcon={<EditIcon />}
+                   
+                    style={{ marginLeft: 16 }}
+                    onClick={()=>{
+                      this.handleopenModal1();
+                      console.log("lsssssssssssssssssssssssssssssssssssss")
+                      this.getTypeByID(params.row.id);
+                      this.getData()
+                    }
                       
+                    }
+                  >
+                     Edit
                     </Button>
+                    
                     <Button
                       variant="contained"
                       color="secondary"
@@ -351,45 +337,35 @@ class Allergy extends Component {
                     </Button>
                   </strong>
                 ),
-              }]} pageSize={5}
+              },]} pageSize={5}
                 checkboxSelection  onRowSelected={async (row) => {
-                  
-                   
                   console.log("yes" , this.state.typeId);
                   }} getRowId ={(row) =>{
-                      
                   }}
                   onRowClick = {(row)=>{
                       console.log("yyyys" , row);
                       id = row.row.id;
                       this.setState({typeId : row.row.id});
                   }} />
-            </div> 
-              <div className="row mt-4">
-                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                          this.handleopenModal2()
-                        }} >
-                          <AddIcon  />
-                        </Fab> 
-                      </div>
-                    </div>
-        
+            </div>  
+        </div>
         )
     }
     handleAdding = () =>{
       var details = {
-        name: this.state.name,
-        description : this.state.description,
+        firstName: this.state.username,
+        lastName: this.state.name,
+        Email : this.state.email,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+        address : this.state.phone,
+
       }
 
       // console.log("type: ", obj);
-      // axios.post(`http://localhost:3000/allergy/addAllergy`,  obj )
-      // .then(res => {
-      //   console.log(res);
-      //   console.log(res.data);
-      // })
-      console.log("detilaas : " , details)
-
       var formBody = [];
       for (var property in details) {
         var encodedKey = encodeURIComponent(property);
@@ -399,7 +375,7 @@ class Allergy extends Component {
       formBody = formBody.join("&");
       console.log("formging:     " , formBody)
       
-      fetch('http://localhost:3000/allergy/addAllergy', {
+      fetch('http://localhost:3000/allergy/addAssisrant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -422,6 +398,7 @@ class Allergy extends Component {
         {this.rendering()}
 
 <Modal
+
   open={this.state.openModal1}
   onClose={this.handleClose}
   aria-labelledby="simple-modal-title"
@@ -438,44 +415,163 @@ class Allergy extends Component {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
+                id="firstName"
                 // label="Name"
-                name="name" 
+                name="firstName" 
                 type="text"
-                autoComplete="Name"
-                placeholder={this.state.TypeObj.name}
+                autoComplete="firstName"
+                placeholder={this.state.TypeObj.firstName}
+                // placeholder="hhel"
                 onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.name)
-                  this.setState({name : event.target.value});
+                  this.setState({firstName : event.target.value});
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
+              <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="lastName"
+                // label="lastName"
+                name="lastName" 
+                type="text"
+                autoComplete="lastName"
+                placeholder={this.state.TypeObj.lastName}
+                // defaultValue={this.state.TypeObj.lastName}
+                onChange = {(event) =>{
+                  this.setState({lastName : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="userName"
+                // label="Name"
+                name="userName" 
+                type="text"
+                autoComplete="userName"
+                placeholder={this.state.TypeObj.userName}
+                onChange = {(event) =>{
+                  this.setState({userName : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="email"
+                // label="Name"
+                name="email" 
+                type="text"
+                autoComplete="Email"
+                placeholder={this.state.TypeObj.Email}
+                onChange = {(event) =>{
+                  this.setState({email : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="phone"
+                name="phone" 
+                type="text"
+                autoComplete="Phone"
+                placeholder={this.state.TypeObj.phone}
+                onChange = {(event) =>{
+                  this.setState({phone : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={6}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
+                name="address"
                 // label="description"
                 type="text"
-                id="description"
-                autoComplete="current-password"
-                placeholder={this.state.TypeObj.description}
+                id="address"
+                autoComplete="address"
+                placeholder={this.state.TypeObj.address}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  this.setState({address : event.target.value});
                 }}
                 
               />
             </Grid>
-           
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="password"
+                type="text"
+                id="password"
+                autoComplete="password"
+                placeholder={this.state.TypeObj.password}
+                onChange = {(event) =>{
+                  this.setState({password : event.target.value});
+                }}
+                
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="date"
+                type="date"
+                id="date"
+                autoComplete="date"
+                placeholder={this.state.TypeObj.Date}
+                onChange = {(event) =>{
+                  console.log("dateeee:   " , event.target.value);
+                  this.setState({date : event.target.value});
+                }}
+                
+              />
+            </Grid>  
+            <Grid item xs={6}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="degree"
+                type="text"
+                id="degree"
+                autoComplete="degree"
+                placeholder={this.state.TypeObj.degree}
+                onChange = {(event) =>{
+                  this.setState({degree : event.target.value});
+                }}
+                
+              />
+            </Grid>  
           </Grid>
           <Button
             type="button"
@@ -486,25 +582,25 @@ class Allergy extends Component {
             onClick={()=>{
               this.handleUpdate();
               this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
+              
             }}
           >
-           
             Edit
           </Button>
           
         </form>
-
       </div>
       {/* <Box mt={5}>
         <Copyright />
       </Box> */}
- 
     </Container>
 </Modal>
 
-
+{/* <Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
+  this.handleopenModal2()
+}} >
+  <AddIcon  />
+</Fab> */}
 <Modal
 key="1"
   open={this.state.openModal2}
@@ -529,12 +625,27 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
+                id="username"
+                label="UserName"
+                name="username" 
+                type="text"
+                autoComplete="UserName"
+                onChange = {(event) =>{
+                  this.setState({username : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
                 id="name"
                 label="Name"
                 name="name" 
                 type="text"
                 autoComplete="Name"
-                // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
                   this.setState({name : event.target.value});
                 }}
@@ -546,15 +657,29 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
-                label="description"
+                name="email"
+                label="email"
                 type="text"
-                id="description"
-                autoComplete="current-password"
-                // placeholder={this.state.TypeObj.description}
+                id="email"
+                autoComplete="email"
                 onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  this.setState({email : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="phone"
+                label="phone"
+                type="text"
+                id="phone"
+                autoComplete="phone"
+                onChange = {(event) =>{
+                  this.setState({phone : event.target.value});
                 }}
                 
               />
@@ -563,15 +688,13 @@ key="1"
           </Grid>
           <Button
             type="button"
+            fullWidth
             variant="contained"
             color="primary"
-            fullWidth
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
               this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
             }}
           >
             Add
@@ -590,4 +713,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Allergy); 
+export default withStyles(useStyles)(Chemist); 

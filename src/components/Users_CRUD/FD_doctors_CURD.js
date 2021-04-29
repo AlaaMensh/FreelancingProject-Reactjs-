@@ -67,7 +67,7 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class FD_doctors extends Component {
+class DoctorFD extends Component {
   constructor(props) {
     super(props);
     
@@ -492,4 +492,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(FD_doctors); 
+export default withStyles(useStyles)(DoctorFD); 

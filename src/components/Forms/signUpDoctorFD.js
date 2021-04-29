@@ -18,16 +18,15 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
-import Signup from './SignupDoctor_FD';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    marginTop: theme.spacing(11),
-    backgroundColor :"yellow"
+    // marginTop: theme.spacing(11),
+    // backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -44,12 +43,15 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor:"#385968"
+    backgroundColor:"#385968",
+    textAlign:"center",
+    margin :"0.5em auto",
+    
     // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
 
   },
   submit: {
@@ -59,15 +61,14 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-
-export default function SignupRadioFD() {
+export default function DoctorFDSignUp() {
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
-  const [establishment_name, setEstablishment_name] = useState();
-  const [contact_radio, setContact_radio] = useState();
+  const [establishmentName, setestablishmentName] = useState();
+  const [contactLab, setcontactLab] = useState();
   const classes = useStyles();
 
   const handleSignup = async()=>{
@@ -75,11 +76,11 @@ export default function SignupRadioFD() {
     var details = {
       'userName':username,
       'password': pass,
-      'Email': email,
-      'Phone' : phone,
-      'Address': address,
-      'Establishment_name': establishment_name,
-      'Contact_person' : contact_radio
+      'email': email,
+      'address': address,
+      'phone' : phone,
+      'establishment': establishmentName,
+      'contactperson' : contactLab
     
   };
   
@@ -91,7 +92,7 @@ export default function SignupRadioFD() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/authenticate/signup', {
+  fetch('http://localhost:3000/dFrontDisk/addPerson', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -102,28 +103,24 @@ export default function SignupRadioFD() {
   }).catch(()=>{
     console.log("errror")
   })
-
   }
-
-
 return (
-  <Grid container direction="row"
-  justify="center"
-  alignItems="center" className={classes.borderedDiv}>
-        
-          <Grid container xs={6} sm={4} spacing={1}>
+  <div className="row align-items-center justify-content-center" style={{
+    padding:"0" , margin:"0" , height:"100%"}} >
+          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
     <div className={classes.paper}>
       <Avatar className={classes.avatar}>
         <LockOutlinedIcon />
       </Avatar>
       <Typography component="h1" variant="h5">
-        Add Radio FD
+      ADD Doctor FD 
+
       </Typography>
       <form className={classes.form} noValidate>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <TextField
-             size="small"
+            size="small"
               variant="outlined"
               required
               fullWidth
@@ -157,7 +154,7 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-             size="small"
+            size="small"
               variant="outlined"
               required
               fullWidth
@@ -174,7 +171,7 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-             size="small"
+            size="small"
               variant="outlined"
               required
               fullWidth
@@ -190,7 +187,7 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-             size="small"
+            size="small"
               variant="outlined"
               required
               fullWidth
@@ -206,33 +203,33 @@ return (
           </Grid>
           <Grid item xs={6}>
             <TextField
-             size="small"
+            size="small"
               variant="outlined"
               required
               fullWidth
-              name="establishment_name"
-              label="Establishment_name"
-              type="establishment_name"
-              id="establishment_name"
+              name="establishmentName"
+              label="establishmentName"
+              type="establishmentName"
+              id="establishmentName"
               onChange = {(event) =>{
-                setEstablishment_name(event.target.value);
-                console.log("establishment_name" , establishment_name);
+                setestablishmentName(event.target.value);
+                console.log("establishmentName" , establishmentName);
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
-             size="small"
+            size="small"
               variant="outlined"
               required
               fullWidth
-              name="contact_radio"
-              label="Contact_radio"
-              type="contact_radio"
-              id="contact_radio"
+              name="contactLab"
+              label="contactLab"
+              type="contactLab"
+              id="contactLab"
               onChange = {(event) =>{
-                setContact_radio(event.target.value);
-                console.log("contact_radio" , contact_radio);
+                setcontactLab(event.target.value);
+                // console.log("contactLab" , contactLab);
               }}
             />
           </Grid>
@@ -247,23 +244,20 @@ return (
         
             handleSignup()
           }}
-          >
-          Sign Up
-        </Button>
-        <Grid container justify="flex-end">
-          <Grid item>
-            <Link href="#" variant="body2">
-              Already have an account? Sign in
-            </Link>
-          
-          </Grid>
-        </Grid>
-      </form>
-    </div>
-</Grid>
-
-</Grid>
-
-
-);
-        }
+        >
+         Signup
+                    </Button>
+                    <Grid container justify="flex-end">
+                      <Grid item>
+                        <Link href="#" variant="body2">
+                          Already have an account? Sign in
+                        </Link>
+                    
+                      </Grid>
+                    </Grid>
+                  </form>
+                </div>
+ </Container>
+ </div>
+  );
+}

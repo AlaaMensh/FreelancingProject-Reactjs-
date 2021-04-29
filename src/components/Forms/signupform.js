@@ -26,12 +26,12 @@ import "./form.css";
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    marginTop: theme.spacing(11),
-    backgroundColor :"yellow"
+    // marginTop: theme.spacing(11),
+    // backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
 
   },
   submit: {
@@ -109,8 +109,9 @@ export default function Signup() {
   
   }
   return (
-      <div className="form-hero row" >
-            <Container component="main" maxWidth="xs" >
+    <div className="row align-items-center justify-content-cente" style={{
+      padding:"0" , margin:"0" , height:"100%"}} >
+            <Container component="main" maxWidth="xs" style={{height:"100% !important"}}  >
     <div className={classes.paper}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />

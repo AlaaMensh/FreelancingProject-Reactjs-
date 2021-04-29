@@ -96,11 +96,11 @@ class Appointement extends Component {
       date:"",
       time :"",
       duration : "" ,
-      FD : "",
+      FD : 1,
       userID : 1 ,
       date:"",
-      startTime:"",
-      endTime:""
+      startDime:"",
+      endDime:""
           }
         }
         
@@ -180,7 +180,7 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:3000/appointment/getById`, {
+    await fetch(`http://localhost:3000/appointment/getAppointment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -216,7 +216,7 @@ class Appointement extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
-      fetch("http://localhost:3000/appointment/deleteAppointment", {
+      fetch("http://localhost:3000/appointment/deleteAppoinment", {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -247,7 +247,7 @@ class Appointement extends Component {
         date: this.state.date,
         time: this.state.time,
         duration : this.state.duration,
-        FD : this.state.FD
+        drFDId : this.state.FD
       }
       if(!obj.patientName){
         obj.patientName = this.state.TypeObj.patientName
@@ -258,22 +258,44 @@ class Appointement extends Component {
       if(!obj.date){
         obj.date = this.state.TypeObj.date
       }
-      if(!obj.time){
-        obj.time = this.state.TypeObj.time
+      if(!obj.startDate){
+        obj.startDate = this.state.TypeObj.startDate
       }
-      if(!obj.duration){
-        obj.duration = this.state.TypeObj.duration
-      }
-      if(!obj.FD){
-        obj.FD = this.state.TypeObj.FD
+      if(!obj.endDate){
+        obj.endDate = this.state.TypeObj.endDate
       }
       console.log("type: ", obj);
-      axios.put(`http://localhost:2400/appointements/${id}` , obj)
-         .then(res => {
-           console.log(res);
-           console.log(res.data);
-         })
-         this.getData()
+      // axios.put(`http://localhost:2400/appointements/${id}` , obj)
+      //    .then(res => {
+      //      console.log(res);
+      //      console.log(res.data);
+      //    })
+      //    this.getData()
+          
+    var formBody = [];
+    for (var property in obj) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(obj[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log("formBodu : " , formBody)
+     fetch(`http://localhost:3000/appointment/updateAppointment`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body:formBody
+    }) .then(response => response.json())
+    .then(
+      data => {
+        console.log("dataaaaaaaaaaaaaaa: " , data)
+        // this.setState({appointements : data})
+      }
+    )
+    .catch((e)=>{
+      console.log("errror" ,e)
+    })
     }
 
     componentDidUpdate(){
@@ -310,7 +332,7 @@ class Appointement extends Component {
                   </MuiPickersUtilsProvider>
             </div>
             <div className="mt-5" style = {{height: 400, width: '100%' }}>
-             <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 20 },
+             <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 70 },
               { field: 'patientName', headerName: 'patientName', width: 150 },
               { field: 'reason', headerName: 'Reason', width: 300 },
               { field: 'startDate', headerName: 'startTime', width: 150 },
@@ -381,9 +403,9 @@ class Appointement extends Component {
         patientName: this.state.patientName,
         reason : this.state.reason,
         startTime : this.state.startTime,
-        date: this.state.date,
         duration : this.state.duration,
-        drFDId : this.state.userID
+        date: this.state.date,
+        drFDId : this.state.FD
         // reason : this.state.reason,
       }
       console.log("details:  ", details)
@@ -400,7 +422,7 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:3000/appointment/addApointment`, {
+     fetch(`http://localhost:3000/appointment/addApointment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -514,14 +536,14 @@ class Appointement extends Component {
                 name="time" 
                 type="text"
                 autoComplete="Time"
-                // placeholder={this.state.TypeObj.time}
+                placeholder={this.state.TypeObj.startDate}
                 onChange = {(event) =>{
                   console.log("time: ", event.target.value)
-                  this.setState({startTime : event.target.value});
+                  this.setState({startDate : event.target.value});
                 }}
               />
             </Grid>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
@@ -532,12 +554,12 @@ class Appointement extends Component {
                 name="fd" 
                 type="text"
                 autoComplete="fd"
-                // placeholder={this.state.TypeObj.FD}
+                placeholder={this.state.TypeObj.FD}
                 onChange = {(event) =>{
                   this.setState({FD : event.target.value});
                 }}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
@@ -549,10 +571,10 @@ class Appointement extends Component {
                 type="text"
                 id="duration"
                 autoComplete="current-password"
-                // placeholder={this.state.TypeObj.duration}
+                placeholder={this.state.TypeObj.endDate}
                 onChange = {(event) =>{
                   // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({duration : event.target.value});
+                  this.setState({endDate : event.target.value});
                 }}
               />
             </Grid>
@@ -605,6 +627,40 @@ key="1"
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+            {/* <Grid item xs={12}>  
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="patientName"
+                label="Patient"
+                name="patientName" 
+                type="text"
+                autoComplete="patientName"
+                // placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({patientName : event.target.value});
+                }}
+              />
+            </Grid>
+            <Grid item xs={12}> // for FD Name
+              <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="patientName"
+                label="Patient"
+                name="patientName" 
+                type="text"
+                autoComplete="patientName"
+                // placeholder={this.state.TypeObj.name}
+                onChange = {(event) =>{
+                  this.setState({patientName : event.target.value});
+                }}
+              />
+            </Grid> */}
             <Grid item xs={12}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
@@ -692,7 +748,7 @@ key="1"
                 }}
               />
             </Grid> 
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
@@ -708,7 +764,7 @@ key="1"
                   this.setState({FD : event.target.value});
                 }}
               />
-            </Grid> 
+            </Grid>  */}
           </Grid>
           <Button
             type="button"

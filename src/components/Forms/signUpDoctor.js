@@ -18,61 +18,78 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
-
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    marginTop: theme.spacing(11),
+    // marginTop: theme.spacing(11),
+    // backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    
-    backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
+    backgroundColor:"#e7f0f4",
+    border:"1px solid #fff",
+    boxShadow:"4px 3px 16px 1px #fff",
+    // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
     padding:"1em",
     borderRadius:"1em"
 
   },
+  iconsColor:{
+    color:"#385968"
+  },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor:"#385968",
+    textAlign:"center",
+    margin :"0.5em auto",
+    
+    // backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
 
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    backgroundColor:"#385968",
   },
 
 }));
 
-
-export default function PathologySignup() {
+export default function DoctorSignup() {
+  const [firstname, setFrestname] = useState();
+  const [lastName, setlastName] = useState();
+  const [ birthdate, setBirthdate] = useState();
+  const [ degree, setDegree] = useState();
   const [username, setUsername] = useState();
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [address, setAddress] = useState();
-  const [establishment_name, setEstablishment_name] = useState();
-  const [contact_pathology, setContact_pathology] = useState();
+  const history = useHistory();
+  // const [, setAddress] = useState();
   const classes = useStyles();
-
+  
   const handleSignup = async()=>{
 
     var details = {
-      'userName':username,
+      'firstName':firstname,
+       'lastName': lastName, 
+       'Date': birthdate,
+       'degree' : degree,
+       'userName': username,
       'password': pass,
       'Email': email,
-      'Phone' : phone,
+      'phone' : phone,
       'Address': address,
-      'Establishment_name': establishment_name,
-       'Contact_person' : contact_pathology
     
   };
+  
   
   var formBody = [];
   for (var property in details) {
@@ -82,39 +99,107 @@ export default function PathologySignup() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/authenticate/signup', {
+  fetch('http://localhost:3000/doctor/addDoctor', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
-  }).then(()=>{
-    console.log("it is inserted");
+  }).then((resp)=>{
+    console.log("it is inserted", resp.text());
   }).catch(()=>{
     console.log("errror")
   })
-
-
+  history.push("/login")
 
 }
 return (
-  <Grid container direction="row"
-    justify="center"
-    alignItems="center" className={classes.borderedDiv}>
-          
-            <Grid container xs={6} sm={4} spacing={1}>
- 
+  <div className="row align-items-center justify-content-center" style={{
+    padding:"0" , margin:"0" , height:"100%"}} >
+          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
     <div className={classes.paper}>
-      <Avatar className={classes.avatar}>
-        <LockOutlinedIcon />
-      </Avatar>
-      <Typography component="h1" variant="h5">
-        Sign up
-      </Typography>
-      <form className={classes.form} noValidate>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
+                  <Typography className={classes.backgroundHeader}>
+                  <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    ADD Doctor
+                  </Typography>
+                  </Typography>
+                  <form className={classes.form} noValidate>
+        <Grid container spacing={4}>
+        <Grid item xs={6}>
             <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="firstname"
+              label="FirstName"
+              name="firstName"
+              autoComplete="firstname"
+              onChange = {(event) =>{
+                setFrestname(event.target.value);
+                // console.log("mmmmmm" , firstname);
+              }}
+              ///vbvghv
+            />
+          </Grid>
+          
+          <Grid item xs={6}>
+            <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="lastname"
+              label="LastName"
+              name="lastName"
+              autoComplete="lastname"
+              onChange = {(event) =>{
+                setlastName(event.target.value);
+                console.log("mmmmmm" , lastName);
+              }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+        <TextField
+         size="small"
+         id="date"
+        label="Birthday"
+        type="date"
+       defaultValue="2021-01-01"
+       className={classes.textField}
+      InputLabelProps={{
+      shrink: true,
+    }}
+    onChange = {(event) =>{
+      setBirthdate(event.target.value);
+      // console.log("mmmmmm" , lastName);
+    }}
+       />
+       </Grid>
+ 
+    <Grid item xs={6}>
+            <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="degree"
+              label="Degree"
+              name="Degree"
+              autoComplete="Degree"
+              onChange = {(event) =>{
+                setDegree(event.target.value);
+                console.log("mmmmmm" , degree);
+              }}
+            />
+          </Grid>
+
+          <Grid item xs={6}>
+            <TextField
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -128,8 +213,9 @@ return (
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -145,8 +231,9 @@ return (
               
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -161,11 +248,12 @@ return (
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
               variant="outlined"
               required
               fullWidth
+              size="small"
               name="phone"
               label="Phone"
               type="phone"
@@ -176,8 +264,9 @@ return (
               }}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={6}>
             <TextField
+             size="small"
               variant="outlined"
               required
               fullWidth
@@ -188,36 +277,6 @@ return (
               onChange = {(event) =>{
                 setAddress(event.target.value);
                 console.log("address" , address);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              name="establishment_name"
-              label="Establishment_name"
-              type="establishment_name"
-              id="establishment_name"
-              onChange = {(event) =>{
-                setEstablishment_name(event.target.value);
-                console.log("establishment_name" , establishment_name);
-              }}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              name="contact_pathology"
-              label="Contact_Pathology"
-              type="contact_pathology"
-              id="contact_pathology"
-              onChange = {(event) =>{
-                setContact_pathology(event.target.value);
-                console.log("contact_pathology" , contact_pathology);
               }}
             />
           </Grid>
@@ -233,26 +292,26 @@ return (
             handleSignup()
           }}
         >
-        Sign Up
-      </Button>
-      <Grid container justify="flex-end">
-        <Grid item>
-          <Link href="#" variant="body2">
-            Already have an account? Sign in
-          </Link>
-          <Link href="#" variant="body2">
-            Forgot Password
-          </Link>
-        </Grid>
-      </Grid>
-    </form>
-  </div>
-</Grid>
-{/* <Grid container item xs={4} className={classes.marginTopp} spacing={0} style={{width:"100%" ,height:"auto"  }} >
-        
-</Grid> */}
+          Sign Up
+          </Button>
+                    <Grid container justify="flex-end">
+                      <Grid item>
+                        <Link href="#" variant="body2">
+                          Already have an account? Sign in
+                        </Link>
+                        <Link href="#" variant="body2">
+                          Forgot Password
+                        </Link>
+                      </Grid>
+                    </Grid>
+                  </form>
+                </div>
+       
+      </Container>
+      </div>
+     
+      
 
-</Grid>
 
 
 );

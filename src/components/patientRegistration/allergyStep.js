@@ -30,10 +30,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import "./types.css";
+// import "./types.css";
 // import EditIcon from '@material-ui/icons/Edit';
-import ChemistSignup from './../Forms/chemist_signup';
 
+var object  = {}
 const useStyles = (theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -83,50 +83,43 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Doctors extends Component {
+class Allergy extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      assistantList : [],
+      allergyList : [
+        //   {
+        //       id:"",
+        //       type:"" ,
+        //       status:"",
+        //       reaction:"",
+        //       notes:"" 
+        // }
+      ],
       typeId:0,
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      username:"",
-      name: "",
-      email :"",
-      phone: ""  
+      type:"",
+      status :"",  
+      reaction :"" , 
+      notes :"" , 
+      type:"" ,
+      status:"",
+      reaction:"",
+      notes:"" ,
+      key:1
           }
         }
         
-        getTypeByID = async(id) => {
-          console.log("heeereeeee" , id);
-          // let response = await fetch(`http://localhost:3000/assistant/getAssistant`);
-          var details = {
-            id:id
-          }
-          var formBody = [];
-          for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-          }
+        getTypeByID = async(row) => {
+          console.log("dkkdkdkdkdkdkdkdkdk:    " , row);
+          this.setState({TypeObj : row});       
           
-          fetch(`http://localhost:3000/chimest/getAssistant/${id}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            }
-            // body: formBody
-          }).then((result)=>{
-            console.log("Getting: " , result);
-          }).catch((e)=>{
-            console.log("error here erroer idkdkdkdkdk" , e)
-          })
         }
-        getAssistantTypesList = (assistqntList) =>{
-        for(var type in this.state.assistantList){
+        getAllergyTypesList = (allergyList) =>{
+        for(var type in allergyList){
             console.log("type: ", type.name);
         }
     }
@@ -141,13 +134,7 @@ class Doctors extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      await axios.get(' http://localhost:3000/doctor/getAll').then(async resp => {
-        // return resp.data;
-         this.setState({
-            assistantList : resp.data
-        })
-        console.log("resp.data: " , resp.data);
-      })
+      
     }
   
      handleCloseModal2 = () => {
@@ -155,88 +142,58 @@ class Doctors extends Component {
     };
     refreshAfterDeletion = (id)=>{
      this.setState({
-      assistantList: this.state.assistantList.filter(row => row.id !== id)
+      allergyList: this.state.allergyList.filter(row => row.id !== id)
      })
     }
  
     handleDelete= async(id)=>{
-      var details = {
-        id:id
-      }
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      // formBody = formBody.join("&");
-      
-      fetch('http://localhost:3000/chimest/deleteAssistant', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is deleted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-      
-         
+      this.setState({
+        allergyList: this.state.allergyList.filter(row => row.id !== id)
+       }) 
     }
    async componentDidMount(){
-      this.getData()
+     if(this.props.allergyListHome && this.props.allergyListHome.length > 0   ){
+       this.setState({allergyList : this.props.allergyListHome , key:this.props.allergyListHome.length+1})
+     }
+      // this.getData()
+
     }
     handleUpdate = ()=>{
+
       var details = {
         id:this.state.TypeObj.id,
-        username: this.state.username,
-        name: this.state.name,
-        email : this.state.email,
-        phone : this.state.phone,
-      }
-      if(!details.username){
-        details.username = this.state.TypeObj.username
-      }
-      if(!details.name){
-        details.name = this.state.TypeObj.name
-      }
-      if(!details.email){
-        details.email = this.state.TypeObj.email
-      }
-      if(!details.phone){
-        details.phone = this.state.TypeObj.phone
+        type: this.state.type,
+        status: this.state.status,
+        reaction: this.state.reaction,
+        notes: this.state.notes,
       }
 
-
-
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
+      if(!details.type){
+        details.type = this.state.TypeObj.type
       }
-      formBody = formBody.join("&");
-
-   
-      fetch('http://localhost:3000/chimest/updateAssistant', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is inserted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-         this.getData()
+      if(!details.status){
+        details.status = this.state.TypeObj.status
+      }
+      if(!details.reaction){
+        details.reaction = this.state.TypeObj.reaction
+      }
+      if(!details.notes){
+        details.notes = this.state.TypeObj.notes
+      }
+      var allergyObj = this.state.allergyList.filter(row => row.id === this.state.TypeObj.id);
+        console.log( "mmmmmmmmmmmmm:    ", allergyObj)
+        const items = this.state.allergyList.map(
+          item => item.id === this.state.TypeObj.id ? details : item
+        );
+      
+        this.setState({allergyList : items});
     }
 
     componentDidUpdate(){
         console.log("hhhhhhh")
         this.rendering();
+        this.props.getAllergyList(this.state.allergyList)
+
     }
 
     rendering = () =>{
@@ -244,7 +201,7 @@ class Doctors extends Component {
           <div className="container gridDataContent mt-5"> 
           <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">Doctor Data</span>
+                <span className="">Ellergy Types</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
@@ -253,38 +210,40 @@ class Doctors extends Component {
             </div>
           </div>
             <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
-               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.assistantList} columns={[
-              { field: 'firstName', headerName: 'firstName', width: 200 },
-              { field: 'lastName', headerName: 'lastName', width: 200 },
-              { field: 'Email', headerName: 'Email', width: 200 },              
-              { field: 'phone', headerName: 'Phone', width: 200 },              
-              { field: 'userName', headerName: 'username', width: 100 },              
-                {field: 'Actions',  
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
+                 { field: 'id', headerName: 'id', width: 70 },
+              { field: 'type', headerName: 'Type', width: 200 },
+              { field: 'status', headerName: 'Status', width: 200 },
+              { field: 'reaction', headerName: 'Reaction', width: 200 },
+              { field: 'notes', headerName: 'Notes', width: 400 },
+            
+              { 
+                field: 'Actions',
                 headerName: 'Actions',
-                width: 550,
+                width: 250,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
                     <Button
-                    variant="contained"
-                    color="default"
-                    size="small"
-                    className={this.props.classes.button}
-                    startIcon={<EditIcon />}
-                   
-                    style={{ marginLeft: 16 }}
-                    onClick={()=>{
-                      this.handleopenModal1();
-                      console.log("lsssssssssssssssssssssssssssssssssssss")
-                      this.getTypeByID(params.row.id);
-                      this.getData()
-                    }
+                      variant="contained"
+                      color="default"
+                      size="small"
+                      className={this.props.classes.button}
+                      startIcon={<EditIcon />}
+                     
+                      style={{ marginLeft: 16 }}
+                      onClick={()=>{
+                        this.handleopenModal1();
+                        console.log("lsssssssssssssssssssssssssssssssssssss")
+                        this.getTypeByID(params.row);
+                        // this.getData()
+                      }
+                        
+                      }
+                    >
+                       Edit
                       
-                    }
-                  >
-                     Edit
                     </Button>
-                    
                     <Button
                       variant="contained"
                       color="secondary"
@@ -295,63 +254,73 @@ class Doctors extends Component {
                       onClick={async ()=>{
                          console.log("delete function: " , params.row.id);
                         this.handleDelete(params.row.id);
-                        this.refreshAfterDeletion(params.row.id);
                       }}
                     >
                       delete
                     </Button>
                   </strong>
                 ),
-              },]} pageSize={5}
+              }]} pageSize={5}
                 checkboxSelection  onRowSelected={async (row) => {
+                  
+                   
                   console.log("yes" , this.state.typeId);
                   }} getRowId ={(row) =>{
+                      
                   }}
                   onRowClick = {(row)=>{
                       console.log("yyyys" , row);
                       id = row.row.id;
                       this.setState({typeId : row.row.id});
                   }} />
-            </div>  
-        </div>
+            </div> 
+              <div className="row mt-4">
+                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                          this.handleopenModal2()
+                        }} >
+                          <AddIcon  />
+                        </Fab> 
+                      </div>
+                    </div>
+        
         )
     }
     handleAdding = () =>{
       var details = {
-        firstName: this.state.username,
-        lastName: this.state.name,
-        Email : this.state.email,
-        address : this.state.phone,
-        address : this.state.phone,
-        address : this.state.phone,
-        address : this.state.phone,
-        address : this.state.phone,
-        address : this.state.phone,
-
+          id:this.state.key,
+        type: this.state.type,
+        status : this.state.status,
+        reaction : this.state.reaction,
+        notes : this.state.notes,
       }
-
-      // console.log("type: ", obj);
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
-      console.log("formging:     " , formBody)
       
-      fetch('http://localhost:3000/allergy/addAssisrant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is inserted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-      this.getData();
+      this.setState({})
+      console.log("detilaas : " , details)
+      var joined = this.state.allergyList.concat(details);
+      this.setState({ allergyList: joined });
+      this.setState({key : this.state.key+1});
+
+    //   var formBody = [];
+    //   for (var property in details) {
+    //     var encodedKey = encodeURIComponent(property);
+    //     var encodedValue = encodeURIComponent(details[property]);
+    //     formBody.push(encodedKey + "=" + encodedValue);
+    //   }
+    //   formBody = formBody.join("&");
+    //   console.log("formging:     " , formBody)
+      
+    //   fetch('http://localhost:3000/allergy/addAllergy', {
+    //     method: 'POST',
+    //     headers: {  
+    //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    //     },
+    //     body: formBody
+    //   }).then(()=>{
+    //     console.log("it is inserted");
+    //   }).catch(()=>{
+    //     console.log("errror")
+    //   })
+    //   this.getData();
     }
 
 
@@ -363,7 +332,6 @@ class Doctors extends Component {
         {this.rendering()}
 
 <Modal
-
   open={this.state.openModal1}
   onClose={this.handleClose}
   aria-labelledby="simple-modal-title"
@@ -386,14 +354,15 @@ class Doctors extends Component {
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
+                id="type"
                 // label="Name"
-                name="username" 
+                name="type" 
                 type="text"
-                autoComplete="UserName"
-                placeholder={this.state.TypeObj.username}
+                autoComplete="Type"
+                placeholder={this.state.TypeObj.type}
                 onChange = {(event) =>{
-                  this.setState({username : event.target.value});
+                  // console.log("kkkk;   ", this.state.TypeObj.type)
+                  this.setState({type : event.target.value});
                 }}
               />
             </Grid>
@@ -403,53 +372,54 @@ class Doctors extends Component {
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                name="name" 
+                id="status"
+                // label="Name"
+                name="status" 
                 type="text"
-                autoComplete="Name"
-                placeholder={this.state.TypeObj.name}
+                autoComplete="status"
+                placeholder={this.state.TypeObj.status}
                 onChange = {(event) =>{
-                  this.setState({name : event.target.value});
+                  // console.log("kkkk;   ", this.state.TypeObj.name)
+                  this.setState({status : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="email"
-                // label="description"
+                id="reaction"
+                // label="Name"
+                name="reaction" 
                 type="text"
-                id="email"
-                autoComplete="email"
-                placeholder={this.state.TypeObj.email}
+                autoComplete="reaction"
+                placeholder={this.state.TypeObj.reaction}
                 onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({email : event.target.value});
+                  console.log("kkkk;   ", this.state.TypeObj.reaction)
+                  this.setState({reaction : event.target.value});
                 }}
-                
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="phone"
+                id="notes"
+                // label="Name"
+                name="notes" 
                 type="text"
-                id="phone"
-                autoComplete="phone"
-                placeholder={this.state.TypeObj.phone}
+                autoComplete="Notes"
+                placeholder={this.state.TypeObj.notes}
                 onChange = {(event) =>{
-                  this.setState({phone : event.target.value});
+                  // console.log("kkkk;   ", this.state.TypeObj.notes)
+                  this.setState({notes : event.target.value});
                 }}
-                
               />
-            </Grid>
-           
+            </Grid>           
           </Grid>
           <Button
             type="button"
@@ -460,25 +430,24 @@ class Doctors extends Component {
             onClick={()=>{
               this.handleUpdate();
               this.getData();
-              
+              // console.log("user: " , obj);
+              // handleSignup()
             }}
           >
             Edit
           </Button>
           
         </form>
+
       </div>
       {/* <Box mt={5}>
         <Copyright />
       </Box> */}
+ 
     </Container>
 </Modal>
 
-{/* <Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
-  this.handleopenModal2()
-}} >
-  <AddIcon  />
-</Fab> */}
+
 <Modal
 key="1"
   open={this.state.openModal2}
@@ -503,13 +472,14 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                id="username"
-                label="UserName"
-                name="username" 
+                id="type"
+                label="Type"
+                name="type" 
                 type="text"
-                autoComplete="UserName"
+                autoComplete="type"
+                // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({username : event.target.value});
+                  this.setState({type : event.target.value});
                 }}
               />
             </Grid>
@@ -519,13 +489,14 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                label="Name"
-                name="name" 
+                id="status"
+                label="Status"
+                name="status" 
                 type="text"
-                autoComplete="Name"
+                autoComplete="Status"
+                // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({name : event.target.value});
+                  this.setState({status : event.target.value});
                 }}
               />
             </Grid>
@@ -535,13 +506,14 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                name="email"
-                label="email"
+                id="reaction"
+                label="Reaction"
+                name="reaction" 
                 type="text"
-                id="email"
-                autoComplete="email"
+                autoComplete="Reaction"
+                // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
-                  this.setState({email : event.target.value});
+                  this.setState({reaction : event.target.value});
                 }}
               />
             </Grid>
@@ -551,13 +523,15 @@ key="1"
                 variant="outlined"
                 required
                 fullWidth
-                name="phone"
-                label="phone"
+                name="notes"
+                label="Notes"
                 type="text"
-                id="phone"
-                autoComplete="phone"
+                id="notes"
+                autoComplete="notes"
+                // placeholder={this.state.TypeObj.description}
                 onChange = {(event) =>{
-                  this.setState({phone : event.target.value});
+                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
+                  this.setState({notes : event.target.value});
                 }}
                 
               />
@@ -566,13 +540,15 @@ key="1"
           </Grid>
           <Button
             type="button"
-            fullWidth
             variant="contained"
+            fullWidth
             color="primary"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
               this.getData();
+              // console.log("user: " , obj);
+              // handleSignup()
             }}
           >
             Add
@@ -591,4 +567,4 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Doctors); 
+export default withStyles(useStyles)(Allergy); 

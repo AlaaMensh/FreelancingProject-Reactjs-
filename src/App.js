@@ -7,87 +7,138 @@ import Appointement from './pages/appointements';
 import Error from './pages/error';
 import logo from './logo.svg';
 import './App.css';
-import SignupForm from './components/Forms/signupform';
-import ChemistSignup from './components/Forms/chemist_signup';
+import SignupForm from './components/Forms/signUpForm';
+import ChemistSignup from './components/Forms/signUpChimest';
 import LoginForm from './components/Forms/loginform';
-import NurseSignup from './components/Forms/nurse_signup';
-import DoctorSignup from './components/Forms/Doctor_signup';
-import AssistantSignup from './components/Forms/assistant_signup';
-import PathologistSignup from './components/Forms/pathologist_signup';
-import RadiogistSignup from './components/Forms/radiogist_signup';
+import NurseSignup from './components/Forms/signUpNurse';
+import DoctorSignup from './components/Forms/signUpDoctor';
+import AssistantSignup from './components/Forms/signUpAssistant';
+import PathologistFDSignUp from './components/Forms/singUpPathologist';
+import RadiogistSignup from './components/Forms/signUpRadiogist';
 import Private_Login_Form from './components/Forms/private_login_form';
 import ForgotPasswordForm from './components/Forms/ForgotPasswordForm';
 import {BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
-import LabSignup from './components/Forms/Signup_lab_FD';
-import PathologySignup from './components/Forms/pathologist_signup';
+import LabFDSignUp from './components/Forms/signUpLabFD';
+import PathologyFDSignUp from './components/Forms/signUpPathologyFD';
+import PathologistSignUp from './components/Forms/singUpPathologist';
 // import PathologySignup from './components/Forms/pathologist_signup';
-import FDDoctorSignup from './components/Forms/SignupDoctor_FD';
-import SignupRadioFD from './components/Forms/Signupradio_FD';
-import Assistant from './components/Users_CRUD/assistant.CURD';
-import Chimest from './components/Users_CRUD/chemist_CRUD';
-import Doctors from './components/Users_CRUD/Doctors_CRUD';
+import DoctorFDSignUp from './components/Forms/signUpDoctorFD';
+import RadioFDSignUp from './components/Forms/signUpRadioFD';
+import Assistant from './components/Users_CRUD/Assistant';
+import Chimest from './components/Users_CRUD/Chemist';
+import Doctors from './components/Users_CRUD/Doctor';
 import Pathologist from './components/Users_CRUD/pathologist_CURD';
 import Nurse from './components/Users_CRUD/nurse_CRUD';
 import Radiogist from './components/Users_CRUD/radiogist_CURD';
-
-
-
-//import PathologySignup from './components/Forms/signup_pathology_FD';
-
+import ptRegistration from './components/patientRegistration/ptRegistration';
+import {applyMiddleware , createStore } from "redux";
+import {Provider} from "react-redux";
+import promiseMW from "redux-promise"
+import reducers from "./reducers";
+import Doctor from './components/Users_CRUD/Doctor';
+import CustomizedAccordions from './components/Visit/visit';
+import OrderLabList from './components/Orders/orderLabList';
+import LabOrder from './components/Orders/order_lab';
+import PatientLabOrders from './components/Orders/patientLabsData';
+import PathologyOrder from './components/Orders/orderPathology';
+import RadioOrder from './components/Orders/orderRadio';
+import PatientPathologyData from './components/Orders/patientPathologyData';
+import PatientRadioOrders from './components/Orders/patientRadioData';
+import OrderPathologyList from './components/Orders/orderPathologyList';
+import OrderRadioList from './components/Orders/orderRadioList';
+import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard';
+import NurseVisit from './components/nurseModule/nursemodule';
+import ChangePassword from "./components/Forms/changePassword"
+import UserWelcomePage from "./pages/newUserWelcomPage";
 
 
 function App() {
+  const createStoreWithMDW = applyMiddleware(promiseMW)(createStore)
+  
   return (
+    <Provider store = {createStoreWithMDW(reducers)}>
     <Router >
-      <div className="roo container--fluid " style={{paddingBottom:"9em"}} >
-        <div className="row" style ={{height : "100%"}}>
+      
         <Switch>
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
       <Route exact path="/forgetPasswordCode" component={ForgotPasswordCode}></Route>
+      <Route exact path="/changePassword" component={ChangePassword}></Route>
       
       <Route exact path="/allergy" component={Allergy}></Route>
       <Route exact path="/disease" component={Disease}></Route>
       <Route exact path="/drug" component={Drug}></Route>
-      
-      <Route exact path="/dashBoard" component={DashBoard}></Route>
+{/*       
+      <Route exact path="/dashBoard" component={DashBoard}></Route> */}
+      <Route  path="/dashBoard" component={Navbar}></Route>
+      <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
       
       <Route exact path="/appointement" component={Appointement}></Route>
-      {/* <Route exact path="/drug" component={Drug}></Route> */}
-      {/* <Route exact path="/DashBoard" component={DashBoard}></Route> */}
-      {/* <Route exact path="/Assistant" component={Assistant}></Route> */}
+      
       <Route exact path="/Assistant" component={Assistant}></Route>
       <Route exact path="/chimest" component={Chimest}></Route>
+      <Route exact path="/doctor" component={Doctor}></Route>
+      <Route exact path="/nurse" component={Nurse}></Route>
+      {/* <Route exact path="/doctorFD" component={}></Route> */}
+      
+      <Route exact path="/SignupRadioFD" component={RadioFDSignUp}></Route>
+      <Route exact path="/SignupPathologyFD" component={PathologyFDSignUp}></Route>
+      <Route exact path="/SignupLabFD" component={LabFDSignUp}></Route>
+      <Route exact path="/SignupDoctorFD" component={DoctorFDSignUp}></Route>
+      <Route exact path="/SignupRadiogist" component={RadiogistSignup}></Route>
+      <Route exact path="/SignupPathologist" component={PathologistSignUp}></Route>
+      <Route exact path="/NurseSignup" component={NurseSignup}></Route>
+      <Route exact path="/DoctorSignup" component={DoctorSignup}></Route>
+      <Route exact path="/ChemistSignup" component={ChemistSignup}></Route>
+      <Route exact path="/AssistantSignup" component={AssistantSignup}></Route>
+      <Route exact path="/" component={SignupForm}></Route>
       
       <Route exact path="/login" component={LoginForm}></Route>
-      <Route exact path="/" component={SignupForm}></Route>
-      <Route exact path="/DoctorSignup" component={DoctorSignup}></Route>
-      <Route exact path="/NurseSignup" component={NurseSignup}></Route>
-      <Route exact path="/ChemistSignup" component={ChemistSignup}></Route>
-      <Route exact path="/pathologySignup" component={PathologistSignup}></Route>
+      {/* <Route exact path="/pathologySignup" component={PathologistSignup}></Route> */}
       <Route exact path="/loginPrivate" component={Private_Login_Form}></Route>
-      <Route exact path="/AssistantSignup" component={AssistantSignup}></Route>
-      <Route exact path="/radiogist_signup" component={RadiogistSignup}></Route>
+      
+      
+      <Route exact path="/welcomePage" component={UserWelcomePage}></Route>
+      {/* <Route exact path="/radiologistSignUp" component={RadiogistSignup}></Route> */}
       {/* <Route exact path="/Private_Login_Form" component={Private_Login_Form}></Route> */}
       {/* <Route exact path="/LabSignup" component={LabSignup}></Route> */}
       {/* <Route exact path="/PathologySignup" component={PathologySignup}></Route> */}
-      <Route exact path="/FDDoctorSignup" component={FDDoctorSignup}></Route>
-      <Route exact path="/SignupRadioFD" component={SignupRadioFD}></Route>
-      <Route exact path="/PathologySignup" component={PathologySignup}></Route>
+      {/* <Route exact path="/FDDoctorSignup" component={FDDoctorSignup}></Route> */}
+      {/* <Route exact path="/PathologySignupFD" component={PathologySignupFD}></Route> */}
       <Route exact path="/Doctors" component={Doctors}></Route>
       <Route exact path="/Nurse" component={Nurse}></Route>
       <Route exact path="/Pathologist" component={Pathologist}></Route>
       <Route exact path="/Radiogist" component={Radiogist}></Route>
-      <Route exact path="/FDLabSignup" component={LabSignup}></Route>
+  
+      
+      {/* for patient Registration */}
+      <Route exact path="/ptRegistration" component={ptRegistration}></Route>
+      
+      <Route exact path="/visit" component={CustomizedAccordions}></Route>
+     
+     {/* for lab orders */}
+      <Route exact path="/labOrder" component={LabOrder}></Route>
+      <Route exact path="/LabOrderForm" component={PatientLabOrders}></Route>
+      <Route exact path="/orderLabList" component={OrderLabList}></Route>
+    
+    
+    {/* for pathology orders */}
+      <Route exact path="/pathologyOrder" component={PathologyOrder}></Route>
+      <Route exact path="/pathologyOrderForm" component={PatientPathologyData}></Route>
+      <Route exact path="/orderPathologyList" component={OrderPathologyList}></Route>
+      
+      
+      {/* for radio orders */}
+      <Route exact path="/radioOrder" component={RadioOrder}></Route>
+      <Route exact path="/radioOrderForm" component={PatientRadioOrders}></Route>
+      <Route exact path="/orderRadioList" component={OrderRadioList}></Route>
+     
+      <Route exact path="/nurseVisit" component={NurseVisit}></Route>
       <Route exact path="**" component={Error}></Route>
     </Switch>
-        </div>
-        <div className="row aaaaa" style={{height :"100%"}}>
-          
-        </div>
-      </div>
   
   </Router>
+  </Provider>
 
   );
 }

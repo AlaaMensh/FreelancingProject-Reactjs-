@@ -18,14 +18,15 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
+import { data } from 'jquery';
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
-    marginTop: theme.spacing(11),
-    backgroundColor :"yellow"
+    // marginTop: theme.spacing(11),
+    // backgroundColor :"yellow"
     // backgroundImage:"url('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014_960_720.jpg')",
   },
   paper: {
-    marginTop: theme.spacing(4),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   form: {
     width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
 
   },
   submit: {
@@ -60,9 +61,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AssistantSignup() {
+export default function ChemistSignup() {
   const [firstname, setFrestname] = useState();
-  const [secondName, setSecondName] = useState();
+  
   const [lastName, setlastName] = useState();
   const [ birthdate, setBirthdate] = useState();
   const [ degree, setDegree] = useState();
@@ -97,13 +98,16 @@ export default function AssistantSignup() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/nurse/addNurse', {
+  fetch('http://localhost:3000/chemist/addChemist', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
     body: formBody
-  }).then(()=>{
+  }).then((data)=>{
+    // data.json().then(()=>{
+
+    // })
     console.log("it is inserted");
   }).catch(()=>{
     console.log("errror")
@@ -111,15 +115,16 @@ export default function AssistantSignup() {
 
 }
 return (
-  <div className="form-hero row" style={{height :"100%"}} >
-            <Container component="main" maxWidth="xs" >
+  <div className="row align-items-center justify-content-center" style={{
+    padding:"0" , margin:"0" , height:"100%"}} >
+          <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
     <div className={classes.paper}>
                   <Typography className={classes.backgroundHeader}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                   </Avatar>
                   <Typography component="h1" variant="h5">
-                   Add Nurse
+                    ADD Chemist
                   </Typography>
                   </Typography>
                   <form className={classes.form} noValidate>
@@ -141,6 +146,23 @@ return (
               ///vbvghv
             />
           </Grid>
+        <Grid item xs={6}>
+            <TextField
+             size="small"
+              variant="outlined"
+              required
+              fullWidth
+              id="lastName"
+              label="lastname"
+              name="lastName"
+              autoComplete="lastname"
+              onChange = {(event) =>{
+                setlastName(event.target.value);
+                console.log("mmmmmmdddddddd:  " , lastName);
+              }}
+              ///vbvghv
+            />
+          </Grid>
           {/* <Grid item xs={6}>
             <TextField
              size="small"
@@ -157,7 +179,7 @@ return (
               }}
             />
           </Grid> */}
-          <Grid item xs={6}>
+          {/* <Grid item xs={6}>
             <TextField
              size="small"
               variant="outlined"
@@ -169,13 +191,13 @@ return (
               autoComplete="lastname"
               onChange = {(event) =>{
                 setlastName(event.target.value);
-                console.log("mmmmmm" , lastName);
+                // console.log("mmmmmm" , lastName);
               }}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12}>
         <TextField
-         fullWidth
+         size="small"
          id="date"
         label="Birthday"
         type="date"
@@ -310,9 +332,7 @@ return (
                         <Link href="#" variant="body2">
                           Already have an account? Sign in
                         </Link>
-                        <Link href="#" variant="body2">
-                          Forgot Password
-                        </Link>
+                        
                       </Grid>
                     </Grid>
                   </form>

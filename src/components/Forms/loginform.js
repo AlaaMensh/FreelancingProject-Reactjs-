@@ -23,6 +23,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import "./form.css";
+import { useHistory ,useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -68,6 +69,7 @@ export default function LoginForm() {
   const [pass, setPass] = useState();
   const [email, setEmail] = useState();
   const classes = useStyles();
+  const history = useHistory();
 
   const handleSignup = async()=>{
 
@@ -92,7 +94,19 @@ export default function LoginForm() {
     },
     body: formBody
   }).then((resp)=>{
-    console.log("llkkkkkk :   ",resp);
+  resp.json().then((data)=>{
+    console.log("data:  " , data);
+    localStorage.setItem('role', data.role);
+    localStorage.setItem('userId', data.userId);
+
+    if(data.userId > 1 ){
+      history.push("/dashBoard")
+    }
+    if(data.userId == 1){
+      history.push("/welcomePage");
+    }
+
+  })
     // resp.json();
     
   }).then((msg)=>{
@@ -214,9 +228,9 @@ export default function LoginForm() {
                         <Link href="#" variant="body2">
                          havn't account? sign up
                         </Link>
-                        {/* <Link href="#" variant="body2">
+                        <Link href="/forgetPassword" className="ml-3" variant="body2">
                           Forgot Password
-                        </Link> */}
+                        </Link>
                       </Grid>
                     </Grid>
                   </form>

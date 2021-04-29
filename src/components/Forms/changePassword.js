@@ -24,7 +24,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import "./form.css";
-import { useHistory ,useLocation } from "react-router-dom";
+import { useHistory ,useLocation} from "react-router-dom";
+// import InputLabel from '@material-ui/core/InputLabel';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -66,58 +67,56 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const ForgotPasswordCode = ()=>{
-
-
-    const [code , setCode] = useState();
+const ChangePassword = ()=>{
+  const location = useLocation();
+    const [pass1 , setPass1] = useState();
+    const [pass2 , setPass2] = useState();
     const [email , setEmail] = useState();
     const classes = useStyles();
     const history = useHistory();
-    const location = useLocation();
-    useEffect((props)=>{
-      setEmail(location.state.email);
+    useEffect(()=>{
+      console.log("from change Pass: " , location.state.email);
      
-
-      // console.log("props:   " , location.state.email);
-      //   var details = {
-      //       email:email,
-      //       code:code
-      //     }
-      //     var formBody = [];
-      //     for (var property in details) {
-      //       var encodedKey = encodeURIComponent(property);
-      //       var encodedValue = encodeURIComponent(details[property]);
-      //       formBody.push(encodedKey + "=" + encodedValue);
-      //     }
-      //     // formBody = formBody.join("&");
+      setEmail(location.state.email)
+        // var details = {
+        //     id:id
+        //   }
+        //   var formBody = [];
+        //   for (var property in details) {
+        //     var encodedKey = encodeURIComponent(property);
+        //     var encodedValue = encodeURIComponent(details[property]);
+        //     formBody.push(encodedKey + "=" + encodedValue);
+        //   }
+        //   // formBody = formBody.join("&");
           
-      //     fetch(`http://localhost:3000/allergy/getById`, {
-      //       method: 'POST',
-      //       headers: {
-      //         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      //       },
-      //       body: formBody
-      //     }).then((resp)=>{
-      //       console.log("Getting: " , resp);
-      //       resp.json().then((data)=>{
-      //         console.log("ddddddddddddddddd;  " , data[0])
-      //         this.setState({
-      //           TypeObj:data[0]
-      //         })
-      //         object = data
-      //       })
-      //     }).catch(()=>{
-      //       console.log("errror")
-      //     })
+        //   fetch(`http://localhost:3000/allergy/getById`, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        //     },
+        //     body: formBody
+        //   }).then((resp)=>{
+        //     console.log("Getting: " , resp);
+        //     resp.json().then((data)=>{
+        //       console.log("ddddddddddddddddd;  " , data[0])
+        //       this.setState({
+        //         TypeObj:data[0]
+        //       })
+        //       object = data
+        //     })
+        //   }).catch(()=>{
+        //     console.log("errror")
+        //   })
     },[])
   
     const handleSubmit = async () =>{
 
-        console.log("email : " , code);
+        // console.log("email : " , code);
         var formBody = [];
         var details = {
-            code : code,
-            email: email
+          newPassword : pass1,
+          email:email
+          
         }
         for (var property in details) {
           var encodedKey = encodeURIComponent(property);
@@ -126,14 +125,14 @@ const ForgotPasswordCode = ()=>{
         }
         formBody = formBody.join("&");
         
-        await fetch('http://localhost:3000/authenticate/getCode', {
+        await fetch('http://localhost:3000/authenticate/updatePass', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
           },
           body: formBody
         }).then(()=>{
-         
+          console.log("yes")
         }).catch(()=>{
           console.log("no");
         })
@@ -141,11 +140,8 @@ const ForgotPasswordCode = ()=>{
         //   pathname: "/forgetPasswordCode",
         //   // state: {yourCalculatedData: data}
         // }); 
-     
-        history.push({
-          pathname:"/changePassword",
-          state:{email : email}
-        })
+        history.push("/login");
+
     }
   return (
       <div className="form-hero row" >
@@ -164,12 +160,28 @@ const ForgotPasswordCode = ()=>{
                 variant="outlined"
                 required
                 size="small"
-                id="code"
-                label="Code"
-                name="code"
-                autoComplete="Eamil"
+                id="pass1"
+                label="New Password"
+                name="pass1"
+                autoComplete="pass1"
                 onChange = {(event) =>{
-                    setCode(event.target.value);
+                    setPass1(event.target.value);
+                }}
+              />
+            </Grid>
+        </Grid>
+           <Grid container spacing={2} className="mt-3" justify="center">
+             <Grid item xs={6}>
+               <TextField
+                variant="outlined"
+                required
+                size="small"
+                id="pass2"
+                label="Confirm Password"
+                name="pass2"
+                autoComplete="pass2"
+                onChange = {(event) =>{
+                    setPass2(event.target.value);
                 }}
               />
             </Grid>
@@ -197,4 +209,4 @@ const ForgotPasswordCode = ()=>{
    
   );
 }
-export default ForgotPasswordCode;
+export default ChangePassword;

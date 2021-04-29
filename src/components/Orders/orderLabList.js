@@ -30,7 +30,8 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import "./types.css";
+import { useHistory } from "react-router-dom";
+// import "./types.css";
 // import EditIcon from '@material-ui/icons/Edit';
 
 var object  = {}
@@ -83,95 +84,37 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Allergy extends Component {
+class OrderLabList extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      allergyList : [],
+      orderlabList : [],
       typeId:0,
       openModal1:false,
       openModal2:false,
       TypeObj : {},
-      name:"",
-      description :""  
+      investigation_type:"",
+      date :""  ,
+      comments: "cc",
+      status: "sc",
+     result:"",
+      PTname: "",
+      labId:1,
+      file:""
           }
         }
         
         getTypeByID = async(id) => {
           console.log("dkkdkdkdkdkdkdkdkdk:    ")
-        //   console.log("id : " , id);
-        //   var details = {
-        //     id:id
-        //   }
-        //   var formBody = [];
-        //   // var encodedKey = encodeURIComponent("id").toString();
-
-        //   // var encodedValue = encodeURIComponent(details["id"]);
-        //   // formBody.push(encodedKey + "=" + encodedValue);
-        //   for (var property in details) {
-        //     var encodedKey = encodeURIComponent(property);
-        //     var encodedValue = encodeURIComponent(details[property]);
-        //     formBody.push(encodedKey + "=" + encodedValue);
-        //   }
-        //   formBody = formBody.join("&");
-
-        //   console.log("heeereeeee" ,  formBody);
-        //   // let response = await fetch(`http://localhost:3000/allergy/getById` ,{body: id});
-        //   // var payload = await response.json();
-        //   // console.log( "kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
-        //   // this.setState({
-        //   //   TypeObj:payload
-        //   // })
-        //  await fetch(`http://localhost:3000/allergy/getById`, {
-        //     method: 'GET',
-        //     headers: {
-        //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        //     },
-        //     body: formBody
-        //   }).then((resp)=>{
-        //     console.log("it is inserted");
-        //     this.setState({
-        //     TypeObj:resp.data
-        //   })
-        //   }).catch(()=>{
-        //     console.log("error gettingj")
-        //   })
-          var details = {
-            id:id
-          }
-          var formBody = [];
-          for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-          }
-          // formBody = formBody.join("&");
-          
-          fetch(`http://localhost:3000/allergy/getById`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then((resp)=>{
-            console.log("Getting: " , resp);
-            resp.json().then((data)=>{
-              console.log("ddddddddddddddddd;  " , data[0])
-              this.setState({
-                TypeObj:data[0]
-              })
-              object = data
-            })
-          }).catch(()=>{
-            console.log("errror")
+        
+          const labObj = this.state.orderlabList.filter(lab => lab.id === id);
+          this.setState({
+            TypeObj:labObj[0]
           })
         }
-        getAllergyTypesList = (allergyList) =>{
-        for(var type in allergyList){
-            console.log("type: ", type.name);
-        }
-    }
+  
+    
     handleopenModal1 = () => {
       this.setState({openModal1 : true})
     };
@@ -183,15 +126,33 @@ class Allergy extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      // await axios.get(' http://localhost:2400/allergy').then(async resp => {
-      await axios.get('http://localhost:3000/allergy/getAllergy').then(async resp => {
-        // return resp.data;
-         this.setState({  
-            allergyList : resp.data
-        })
-        console.log("resp.data: " , resp.data);
-      
-      })
+      var details = {
+        labId:this.state.labId
+       }
+       var formBody = [];
+       for (var property in details) {
+         var encodedKey = encodeURIComponent(property);
+         var encodedValue = encodeURIComponent(details[property]);
+         formBody.push(encodedKey + "=" + encodedValue);
+       }
+       formBody = formBody.join("&");
+   
+   
+       await fetch(`http://localhost:3000/lab/getOrdersByLabId`, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+         },
+         body: formBody
+       }).then(async(resp)=>{
+         resp.json().then(async(data)=>{
+           console.log("Data:  " , data)
+           await this.setState({orderlabList: data});
+       
+         })
+       }).catch(()=>{
+         console.log("error Getting Here")
+       })
       
     }
   
@@ -200,7 +161,7 @@ class Allergy extends Component {
     };
     refreshAfterDeletion = (id)=>{
      this.setState({
-      allergyList: this.state.allergyList.filter(row => row.id !== id)
+        orderlabList: this.state.orderlabList.filter(row => row.id !== id)
      })
     }
  
@@ -214,9 +175,8 @@ class Allergy extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
-      // formBody = formBody.join("&");
       
-      fetch('http://localhost:3000/allergy/deleteAllergy', {
+      fetch('http://localhost:3000/lab/deleteOrder', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -227,33 +187,37 @@ class Allergy extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-        // await axios.delete(`http://localhost:2400/allergy/deleteAllergy/${id}`)
-        // .then(res => {
-        //   console.log(res);
-        //   console.log(res.data);
-        // })
-        // .catch(err=>{console.log("nooooo")})
-
-         
+        
     }
    async componentDidMount(){
       this.getData()
     }
+  
     handleUpdate = ()=>{
-
       var details = {
+        ptId:1,
+        drId:1,
         id:this.state.TypeObj.id,
-        name: this.state.name,
-        description : this.state.description,
+        date: this.state.date,
+        comments : this.state.comments,
+        status: this.state.status,
+        result: "",
       }
 
-      if(!details.name){
-        details.name = this.state.TypeObj.name
+      if(!details.result){
+        details.result = this.state.TypeObj.result
       }
-      if(!details.description){
-        details.description = this.state.TypeObj.description
+      if(!details.date){
+        details.date = this.state.TypeObj.date
+      }
+      if(!details.comments){
+          details.comments = this.state.comments
+      }
+      if(!details.status){
+          details.status = this.state.status
       }
 
+      
       var formBody = [];
       for (var property in details) {
         var encodedKey = encodeURIComponent(property);
@@ -262,21 +226,22 @@ class Allergy extends Component {
       }
       formBody = formBody.join("&");
 
-      // console.log("add: ", obj);
-      // axios.put(`http://localhost:3000/allergy/addAllergy` , obj)
-      //    .then(res => {
-      //      console.log(res);
-      //      console.log(res.data);
-      //    })
       console.log("formBody: ", formBody)
-      fetch('http://localhost:3000/allergy/updateAllergy', {
+      fetch('http://localhost:3000/lab/updateOrder', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
         body: formBody
-      }).then(()=>{
-        console.log("it is inserted");
+      }).then((resp)=>{
+        console.log("Getting: " , resp);
+        resp.json().then((data)=>{
+          console.log("ddddddddddddddddd;  " , data[0])
+          this.setState({
+            TypeObj:data[0]
+          })
+          // object = data
+        })
       }).catch(()=>{
         console.log("errror")
       })
@@ -293,7 +258,7 @@ class Allergy extends Component {
           <div className="container gridDataContent mt-5"> 
           <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">Ellergy Types</span>
+                <span className="">All Your Orders</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
@@ -302,15 +267,16 @@ class Allergy extends Component {
             </div>
           </div>
             <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
-               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.orderlabList} columns={[
                  { field: 'id', headerName: 'id', width: 70 },
-              { field: 'name', headerName: 'Name', width: 200 },
-              { field: 'description', headerName: 'description', width: 500 },
-            
+                 { field: 'date', headerName: 'date', width: 150 },
+                  { field: 'comments', headerName: 'comments', width: 150 },
+                  { field: 'status', headerName: 'Status', width: 200 },              
+                  { field: 'result', headerName: 'Result', width: 200 },              
               { 
                 field: 'Actions',
                 headerName: 'Actions',
-                width: 250,
+                width: 230,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
@@ -366,53 +332,27 @@ class Allergy extends Component {
                   }} />
             </div> 
               <div className="row mt-4">
-                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                          this.handleopenModal2()
-                        }} >
-                          <AddIcon  />
-                        </Fab> 
+                     
                       </div>
                     </div>
         
         )
     }
-    handleAdding = () =>{
-      var details = {
-        name: this.state.name,
-        description : this.state.description,
-      }
-
-      // console.log("type: ", obj);
-      // axios.post(`http://localhost:3000/allergy/addAllergy`,  obj )
-      // .then(res => {
-      //   console.log(res);
-      //   console.log(res.data);
-      // })
-      console.log("detilaas : " , details)
-
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
-      console.log("formging:     " , formBody)
-      
-      fetch('http://localhost:3000/allergy/addAllergy', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is inserted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-      this.getData();
+    handleChange =(e)=>{
+      console.log('yes' , e.target.files[0]);
+      this.setState({result: e.target.files[0]});
     }
+    UpladeFile = ()=>{
+      const data = new FormData();
+      data.append("result" , this.state.result)
 
+
+      axios.post("" , data , {
+
+      }).then(resp=>{
+        console.log("resp: ", resp.statusText);
+      })
+    }
 
     render() { 
       const { classes } = this.props;
@@ -428,7 +368,6 @@ class Allergy extends Component {
   aria-describedby="simple-modal-description"
 >
 <Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <EditIcon />
@@ -438,43 +377,99 @@ class Allergy extends Component {
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+          
+            <Grid item xs={12}>
+            <Select
+                native
+                label = "Marital Status"
+                defaultValue={this.state.TypeObj.status}
+                onChange = {(event) =>{
+                this.setState({status : event.target.value});
+                console.log("status" , event.target.value );
+              }}                                                     
+               
+               >
+          <option aria-label="None" value="" />
+          <option value= "choice1">choice1</option>
+          <option value="choice2">choice2</option>
+          <option value="choice3">choice3</option>
+          
+        </Select>
+              {/* <TextField
+              InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                name="status"
+                type="text"
+                label="Marital status"
+                id="status"
+                autoComplete="status"
+                defaultValue={this.state.TypeObj.status}
+                // placeholder={this.state.TypeObj.investigation_type}
+                onChange = {(event) =>{
+                  this.setState({status : event.target.value});
+                }}
+                
+              /> */}
+            </Grid>
             <Grid item xs={12}>
               <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                // label="Name"
-                name="name" 
-                type="text"
-                autoComplete="Name"
-                placeholder={this.state.TypeObj.name}
+                id="date"
+                name="date" 
+                type="date"
+                label="Date"
+                autoComplete="date"
+                defaultValue={this.state.TypeObj.date}
                 onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.name)
-                  this.setState({name : event.target.value});
+                  console.log("kkkk;   ", this.state.TypeObj.date)
+                  this.setState({date : event.target.value});
                 }}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="description"
-                // label="description"
+                id="comments"
+                name="comments"
+                label="comments" 
                 type="text"
-                id="description"
-                autoComplete="current-password"
-                placeholder={this.state.TypeObj.description}
+                autoComplete="comments"
+                defaultValue={this.state.TypeObj.comments}
                 onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
+                  console.log("kkkk;   ", this.state.TypeObj.comments)
+                  this.setState({comments : event.target.value});
                 }}
-                
               />
             </Grid>
+            <Grid item xs={12}>
+              {/* <TextField
+               InputProps={{ classes: { input: this.props.classes.input2 } }}
+                variant="outlined"
+                required
+                fullWidth
+                id="result"
+                name="result"
+                label="result" 
+                type="text"
+                autoComplete="result"
+                defaultValue={this.state.TypeObj.result}
+                onChange = {(event) =>{
+                  console.log("kkkk;   ", this.state.TypeObj.result)
+                  this.setState({result : event.target.value});
+                }}
+              /> */}
+
+              <input type="file" name="file" onChange={this.handleChange}/>
+            </Grid>
+            
            
           </Grid>
           <Button
@@ -486,108 +481,26 @@ class Allergy extends Component {
             onClick={()=>{
               this.handleUpdate();
               this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
+              
             }}
           >
            
             Edit
           </Button>
+
           
         </form>
 
       </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
- 
+     
     </Container>
 </Modal>
 
 
-<Modal
-key="1"
-  open={this.state.openModal2}
-  onClose={this.handleCloseModal2}
-  aria-labelledby="simple-modal-title1"
-  aria-describedby="simple-modal-description2"
->
-<Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <AddBoxIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Add
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                label="Name"
-                name="name" 
-                type="text"
-                autoComplete="Name"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="description"
-                label="description"
-                type="text"
-                id="description"
-                autoComplete="current-password"
-                // placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
-                }}
-                
-              />
-            </Grid>
-           
-          </Grid>
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            fullWidth
-            className={classes.submit}
-            onClick={()=>{
-              this.handleAdding();
-              this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
-            }}
-          >
-            Add
-          </Button>
-          
-        </form>
-      </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
-    </Container>
-</Modal>
     </div>
  
   );
     }
 }
  
-export default withStyles(useStyles)(Allergy); 
+export default withStyles(useStyles)(OrderLabList); 
