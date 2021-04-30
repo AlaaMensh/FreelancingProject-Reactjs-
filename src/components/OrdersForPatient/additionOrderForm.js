@@ -8,7 +8,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import  { useState } from 'react';
+import  { useState , useEffect } from 'react';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/Lock';
@@ -19,7 +19,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
-import { useHistory } from "react-router-dom";
+import { useHistory , useLocation } from "react-router-dom";
 // import "./form.css";
 
 
@@ -59,27 +59,45 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function LabOrder() {
+export default function AdditionOrderForm({match}) {
+  const location = useLocation();
   const history = useHistory();
+  const [type, setType] = useState();
+//   const [dr, setType] = useState();
+  
   const [investigation_type, setInvestigation_type] = useState();
   const [date, setDate] = useState();
   const [comments, setComments] = useState();
   const [status, setStatus] = useState();
   const [PtId, setPtId] = useState(1);
   const [drId, setDrId] = useState(1);
+  const [flag, setFlag] = useState(false);
+  
   const classes = useStyles();
+
+  useEffect(() => {
+    console.log("params:   " , match.params)
+    setType(match.params.type);
+    setDrId(localStorage.getItem("userId"));
+    if(match.params.id){
+      setPtId(match.params.id);
+      setFlag(false);
+    }
+    setDrId(localStorage.getItem("userId"));
+  },[])
 
 
   const handleSubmit = async()=>{
+
     var details = {
-      'investigation_type':investigation_type,
+      'investigation_type' : investigation_type,
       'date': date,
       'comments': comments,
       'status' : status,
       'ptId': PtId,
       'drId': drId
-      
   };
+
   console.log("details", details)
   var formBody = [];
   for (var property in details) {
@@ -89,7 +107,7 @@ export default function LabOrder() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/lab/addOrder', {
+  fetch(`http://localhost:3000/${type}/addOrder`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -99,15 +117,11 @@ export default function LabOrder() {
     console.log("resp: " , resp);
     resp.text().then((msg)=>{
       console.log("successfully added....." , msg);
-      if(msg == "1 record added"){
-        history.push("/radioOrderForm");
+      if(msg == "1 record added" && flag){
+        // history.push("/labOrderForm");
       }
-      else{
-        alert("something wrong ....")
-      }
-    }).catch(()=>{
-      alert("something wrong ....")
-    });
+
+    })
 
 
    
@@ -125,7 +139,7 @@ export default function LabOrder() {
     <div className={classes.paper}>
                  
                   <Typography component="h1" variant="h5">
-                   LabOrder
+                   Add {type} Order
                   </Typography>
                   <form className={classes.form} noValidate>
                     <Grid container spacing={2}>

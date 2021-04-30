@@ -40,16 +40,11 @@ import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import DashBoard from "../pages/DashBoard"
 import Appointement from '../pages/appointements';
 import DashBoardComp from "./dashboardComp";
 import { BrowserRouter } from 'react-router-dom';
 import Signup from './Forms/signUpForm';
-import {useRoutes} from 'hookrouter';
-// import DashBoardComp from "./dashboardComp";
-// import Navbar from './Navbar';
-// import DashBoard from './../pages/DashBoard';
 import { useState } from 'react';
 import LoginForm from './Forms/loginform';
 import { connect } from "react-redux";
@@ -58,6 +53,11 @@ import {handleChangeOpen,setChangeOpen } from "../actions";
 import { useSelector } from 'react-redux'
 import PaientRegistration from './patientRegistration/importatntInfo';
 import ptRegistration from './patientRegistration/ptRegistration';
+import NurseVisit from "../components/nurseModule/nursemodule";
+import Visit from "../components/Visit/visit";
+import PatientsOnVisit from "../components/nurseModule/patinetsOnVisit";
+import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
+
 
 const drawerWidth = 250;
 
@@ -210,18 +210,29 @@ const MainFunctions = [
 ]
 
 const dispatch = useDispatch();
-  const routes = {
-    '/': () => <DashBoard />,
-    '/com': () => <DashBoardComp  />,
-    // '/products': () => <ProductOverview props={yourProps} />,
-    // '/products/:id': ({id}) => <ProductDetails id={id} />
-};
+
   
 
 
   useEffect(()=>{
-    console.log("herree dashBoard: " , localStorage.getItem("role"));
-    setRole(localStorage.getItem("role"));
+    console.log("herree dashBoard:" , localStorage.getItem("role"));
+    var localStorageRole = parseInt(localStorage.getItem("role"));
+  
+    if(localStorageRole == 1){
+      history.push("/notAuthorized");
+    }
+    else{
+      console.log("mmmmmmmmmmmmmmmmmmmmmm")
+    }
+    if(localStorage.getItem("role")){ // for Change the login and logout button in navBar
+      setRole(localStorage.getItem("role"));
+      // console.log("yes")
+      setlogged(true);  // make it logout
+    }
+    else{
+      // console.log("no")
+      setlogged(false); // make it login
+    }
 
 
     // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
@@ -275,22 +286,14 @@ const dispatch = useDispatch();
             // console.log("patient Register");
             history.push(match.path+"/ptRegistration");
           }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-          // if(value.role==="doctor" && value.text ==="New Doctor Appointement"){
-          //   history.push("/");
-          // }
-        }}>Learn More</Button>
+          // if(value.role.includes(role) && value.text == "Nursing Assessment"){
+          if( value.text == "Nursing Assessment"){
+            // console.log("patient Register");
+            history.push(match.path+"/patientsOnVisit");
+          }
+          
+        }}>
+          Learn More</Button>
       </CardActions>
       </Card>
           </Grid>
@@ -327,13 +330,16 @@ const dispatch = useDispatch();
           {
             logged ? (
               <Button variant="contained" className={classes.loginLogoutButton}  onClick= {()=>{
+                localStorage.removeItem("userId");
+                localStorage.removeItem("role");
                 setlogged(false);
               }}>
               LogOut
             </Button>
             ):(
               <Button className ={classes.loginLogoutButton} variant="contained"  onClick= {()=>{
-                setlogged(true);
+                // setlogged(true);
+                history.push("/login");
               }}>
               LogIn
             </Button>
@@ -348,10 +354,11 @@ const dispatch = useDispatch();
           // value = {state.age}
           onChange = {(e)=>{
             console.log(e.target.value);
-            if(e.target.value == "Dr.DahshBoard" && role > 1 ){
+            if(e.target.value == "Dr.DahshBoard" && parseInt(role) > 1 ){
               history.push(`${match.path}`);
             }
-            if(e.target.value == "appointments" && (role == 8 || role == 2)){
+            if(e.target.value == "appointments" && (parseInt(role) == 8 || parseInt(role) == 2)){
+             console.log("heeskskkskkkkkkkkkkkkkkkk:  ")
               history.push(match.path+"/appoint");
             }
           }}
@@ -427,6 +434,9 @@ const dispatch = useDispatch();
       <div className="row" style={{marginTop:"5em"}}>
       <Switch> 
       <Route exact path={match.path+"/appoint"}  component={Appointement}/> 
+      <Route exact path={match.path +"/patientsOnVisit"} component = {PatientsOnVisit} />
+      <Route exact path={match.path +"/patientsOnVisit/nurseVisit/:id"} component = {NurseVisit} />
+      
       <Route exact path={match.path} >
       <div className={classes.root}>
       <main
@@ -450,6 +460,8 @@ const dispatch = useDispatch();
       {/* <Route exact path={match.path+"/com"} component={Signup}/>
       <Route exact path={match.path+"/login"} component={LoginForm}/> */}
       <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/>
+      <Route exact path={match.path+"/nurseVisit"} component={NurseVisit}/>
+      <Route  path={match.path+"/appoint/visit"} component={Visit}/>
        {/* <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/> */}
 
       
@@ -457,8 +469,7 @@ const dispatch = useDispatch();
       </div>
       
       </div>
-      
-      {/* routes */}
+  
       {/* <h1 className="mt-5">dddd</h1> */}
            {/* <main
 className={clsx(classes.content, {

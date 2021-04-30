@@ -30,6 +30,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
+import { useHistory } from "react-router-dom";
 // import "./types.css";
 // import EditIcon from '@material-ui/icons/Edit';
 
@@ -83,7 +84,7 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class OrderRadioList extends Component {
+class OrderGeneration extends Component {
   constructor(props) {
     super(props);
     
@@ -99,7 +100,11 @@ class OrderRadioList extends Component {
       status: "sc",
      result:"",
       PTname: "",
-      labId:1
+      labId:1,
+      ptId:"",
+      file:"",
+      orderType:"",
+      type:""
           }
         }
         
@@ -107,6 +112,7 @@ class OrderRadioList extends Component {
           console.log("dkkdkdkdkdkdkdkdkdk:    ")
         
           const labObj = this.state.orderlabList.filter(lab => lab.id === id);
+          console.log("typeObj : " , labObj[0])
           this.setState({
             TypeObj:labObj[0]
           })
@@ -125,7 +131,8 @@ class OrderRadioList extends Component {
     };
     getData = async()=>{
       var details = {
-        radioId:this.state.labId
+        ptId:this.state.ptId,
+        type:this.state.type
        }
        var formBody = [];
        for (var property in details) {
@@ -136,7 +143,7 @@ class OrderRadioList extends Component {
        formBody = formBody.join("&");
    
    
-       await fetch(`http://localhost:3000/radio/getOrdersByRadioId`, {
+       await fetch(`http://localhost:3000/lab/getOrderByPtId`, {
          method: 'POST',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -174,7 +181,7 @@ class OrderRadioList extends Component {
         formBody.push(encodedKey + "=" + encodedValue);
       }
       
-      fetch('http://localhost:3000/radio/deleteOrder', {
+      fetch(`http://localhost:3000/${this.state.orderType}/deleteOrder`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -188,18 +195,36 @@ class OrderRadioList extends Component {
         
     }
    async componentDidMount(){
-      this.getData()
+     console.log("props:  " , this.props.match.params.type)
+     await this.setState({ptId : this.props.match.params.id});
+     await this.setState({drId : localStorage.getItem("userId")});
+   
+     await this.setState({orderType : this.props.match.params.type});
+     switch(this.props.match.params.type){
+         case "lab":
+             this.setState({type : 0})
+             break;
+         case "radio":
+             this.setState({type : 1})
+             break;
+         case "pathology":
+             console.log("pathology yesss")
+             this.setState({type : 2})
+             break;
+
+     }
+    await this.getData()
     }
   
-    handleUpdate = ()=>{
+    handleUpdate = async ()=>{
       var details = {
-        ptId:1,
-        drId:1,
         id:this.state.TypeObj.id,
+        ptId:this.state.ptId,
+        drId:this.state.drId,
         date: this.state.date,
         comments : this.state.comments,
         status: this.state.status,
-        result: this.state.result,
+        result: "",
       }
 
       if(!details.result){
@@ -209,12 +234,15 @@ class OrderRadioList extends Component {
         details.date = this.state.TypeObj.date
       }
       if(!details.comments){
-          details.comments = this.state.comments
+          details.comments =this.state.TypeObj.comments
       }
       if(!details.status){
-          details.status = this.state.status
+          details.status = this.state.TypeObj.status
       }
-      
+
+
+
+
       var formBody = [];
       for (var property in details) {
         var encodedKey = encodeURIComponent(property);
@@ -224,7 +252,7 @@ class OrderRadioList extends Component {
       formBody = formBody.join("&");
 
       console.log("formBody: ", formBody)
-      fetch('http://localhost:3000/radio/updateOrder', {
+      await fetch(`http://localhost:3000/${this.state.orderType}/updateOrder`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -233,29 +261,16 @@ class OrderRadioList extends Component {
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
-          console.log("ddddddddddddddddd;  " , data[0])
-          this.setState({
-            TypeObj:data[0]
-          })
-          
+   
+       
           // object = data
         })
       }).catch(()=>{
         console.log("errror")
       })
+      //  var allergyObj = this.state.orderlabList.filter(row => row.id === this.state.TypeObj.id);
       this.getData()
-
-      const items = this.state.orderlabList.map(
-        item => item.id === this.state.TypeObj.id ? details : item
-      );
-    
-      this.setState({orderlabList : items});
-     
-      // const orderlabList = this.state.orderlabList.map(
-      //   item => item.id === details.id ? details : item
-      // );
-    
-      // this.setState({orderlabList});
+         
     }
 
     componentDidUpdate(){
@@ -278,10 +293,10 @@ class OrderRadioList extends Component {
           </div>
             <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
                <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.orderlabList} columns={[
-                 { field: 'id', headerName: 'id', width: 70 },
-                 { field: 'date', headerName: 'date', width: 150 },
+                  { field: 'id', headerName: 'id', width: 70 },
+                  { field: 'date', headerName: 'date', width: 150 },
                   { field: 'comments', headerName: 'comments', width: 150 },
-                  { field: 'status', headerName: 'Marital status', width: 200 },              
+                  { field: 'status', headerName: 'Status', width: 200 },              
                   { field: 'result', headerName: 'Result', width: 200 },              
               { 
                 field: 'Actions',
@@ -342,15 +357,31 @@ class OrderRadioList extends Component {
                   }} />
             </div> 
               <div className="row mt-4">
-                      {/* <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                          this.handleopenModal2()
+                    <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                       console.log("hhhhhhhh:  " , this.props.location.pathname)
+                       this.props.history.push(`${this.props.location.pathname}/additionOrderForm`)
                         }}>
                           <AddIcon  />
-                        </Fab>  */}
+                        </Fab>                      
                       </div>
                     </div>
         
         )
+    }
+    handleChange =(e)=>{
+      console.log('yes' , e.target.files[0]);
+      this.setState({result: e.target.files[0]});
+    }
+    UpladeFile = ()=>{
+      const data = new FormData();
+      data.append("result" , this.state.result)
+
+
+      axios.post("" , data , {
+
+      }).then(resp=>{
+        console.log("resp: ", resp.statusText);
+      })
     }
 
     render() { 
@@ -358,8 +389,7 @@ class OrderRadioList extends Component {
         
   return (
     <div className="hero">
-         {this.rendering()}
-         {console.log("TypeObjj :  " , this.state.TypeObj)}
+        {this.rendering()}
 
 <Modal
   open={this.state.openModal1}
@@ -381,18 +411,18 @@ class OrderRadioList extends Component {
             <Grid item xs={12}>
             <Select
                 native
-                label="MaritalStatus"
-                defaultValue={this.state.TypeObj.status}
+                label = "Marital Status"
+               
                 onChange = {(event) =>{
                 this.setState({status : event.target.value});
                 console.log("status" , event.target.value );
               }}                                                     
                
                >
-          <option aria-label="None"  />
-          <option value= "single">single</option>
-          <option value="married">married</option>
-          <option value="widower">widower</option>
+          <option aria-label="None" value="" />
+          <option value= "choice1">choice1</option>
+          <option value="choice2">choice2</option>
+          <option value="choice3">choice3</option>
           
         </Select>
               {/* <TextField
@@ -450,7 +480,7 @@ class OrderRadioList extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              {/* <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
@@ -465,7 +495,9 @@ class OrderRadioList extends Component {
                   console.log("kkkk;   ", this.state.TypeObj.result)
                   this.setState({result : event.target.value});
                 }}
-              />
+              /> */}
+
+              <input type="file" name="file" onChange={this.handleChange}/>
             </Grid>
             
            
@@ -479,12 +511,12 @@ class OrderRadioList extends Component {
             onClick={()=>{
               this.handleUpdate();
               this.getData();
-              
             }}
           >
            
             Edit
           </Button>
+
           
         </form>
 
@@ -500,4 +532,4 @@ class OrderRadioList extends Component {
     }
 }
  
-export default withStyles(useStyles)(OrderRadioList); 
+export default withStyles(useStyles)(OrderGeneration); 

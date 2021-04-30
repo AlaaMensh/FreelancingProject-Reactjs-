@@ -46,7 +46,7 @@ import Appointement from '../../pages/appointements';
 import DashBoardComp from "../dashboardComp";
 import { BrowserRouter } from 'react-router-dom';
 // import Signup from './Forms/signUpForm';
-import {useRoutes} from 'hookrouter';
+// import {useRoutes} from 'hookrouter';
 // import DashBoardComp from "./dashboardComp";
 // import Navbar from './Navbar';
 // import DashBoard from './../pages/DashBoard';
@@ -64,6 +64,14 @@ import AllergyProblems from "./Allergy";
 import UserInfo from "./userInfo";
 import onGoingProblemStep from '../patientRegistration/onGoingProblemStep';
 import DashBoard from './../../pages/DashBoard';
+import PatientAppointement from './patientAppointements';
+import OrderLabListForPt from '../OrdersForPatient/orderLabListForPatient';
+import OrderPathologyForPatient from '../OrdersForPatient/orderPathologyForPatient';
+import OrderRadioListForPt from '../OrdersForPatient/orderRadioForPatient';
+// import LabOrder from '../OrdersForPatient/LabOrder';
+import LabOrder from './../Orders/order_lab';
+import OrderGeneration from '../OrdersForPatient/orderGeneration';
+import AdditionOrderForm from '../OrdersForPatient/additionOrderForm';
 
 const drawerWidth = 250;
 
@@ -189,6 +197,8 @@ const ClinicalDashBoard = ({match}) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [ptId, setPtId] = useState(25);
+  
   
   
 const [ appBarList , setAppBarList] = useState(["OnGoingProblems" , "index2" , "index3" , "index4"]);
@@ -216,6 +226,12 @@ const dispatch = useDispatch();
 
 
   useEffect(()=>{
+    console.log("herree dashBoard:" , localStorage.getItem("role"));
+    var localStorageRole = parseInt(localStorage.getItem("role"));
+  
+    if(localStorageRole !==8 ){
+      history.push("/notAuthorized");
+    }
     // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
     // setTimeout( ()=>{ alert(‘hello’); }, 2000);
  });
@@ -344,7 +360,12 @@ const dispatch = useDispatch();
             <li>
             <Link to={match.path} >
                        Clinical DashBoard
-                      </Link>
+            </Link>
+            </li>
+            <li>
+            <Link to={match.path+"/patientAppointement"}>
+                       Patient Appointement
+            </Link>
             </li>
             <li>
             <Link to={match.path+"/OnGoingProblems"} >
@@ -354,6 +375,21 @@ const dispatch = useDispatch();
             <li>
             <Link to={match.path+"/Allergy"} >
                         Allergy
+            </Link>
+            </li>
+            <li>
+            <Link to={match.path+`/orderGeneration/${ptId}/${"lab"}`} >
+                        Lab Orders
+            </Link>
+            </li>
+            <li>
+            <Link to={match.path+`/orderGeneration/${ptId}/${"pathology"}`} >
+                        Pathology Orders
+            </Link>
+            </li>
+            <li>
+            <Link to={match.path+`/orderGeneration/${ptId}/${"radio"}`} >
+                        Radiology Orders
             </Link>
             </li>
         
@@ -375,6 +411,13 @@ const dispatch = useDispatch();
         </Route> 
       <Route exact path={match.path+"/OnGoingProblems"}  component={OnGoingProblemStep}/> 
       <Route exact path={match.path+"/Allergy"}  component={AllergyProblems}/> 
+      <Route exact path={match.path+"/patientAppointement"}  component={PatientAppointement}/> 
+      <Route exact path={match.path+"/labOrders/:id"}  component={OrderLabListForPt}/> 
+      <Route exact path={match.path+"/pathologyOrders/:id"}  component={OrderPathologyForPatient}/> 
+      <Route exact path={match.path+"/radioOrders/:id"}  component={OrderRadioListForPt}/> 
+      <Route exact path={match.path+"/labOrders/:id/labOrderForm"}  component={LabOrder}/> 
+      <Route exact path={match.path+"/orderGeneration/:id/:type"}  component={OrderGeneration}/> 
+      <Route exact path={match.path+"/orderGeneration/:id/:type/additionOrderForm"}  component={AdditionOrderForm}/> 
       {/* <Route exact path={match.path}  component={DashBoardComp}/>  */}
       {/* <Route exact path={match.path+"/com"} component={Signup}/>
       <Route exact path={match.path+"/login"} component={LoginForm}/> */}

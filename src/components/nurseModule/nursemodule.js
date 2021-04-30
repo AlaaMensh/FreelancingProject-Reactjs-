@@ -19,162 +19,17 @@ import TextField from '@material-ui/core/TextField';
 
 
 
-var times = [
-    {date :"20-4-2021" , time:"5:00" , temp:"37" , pulse:"ll" , bloodPressure: "52" ,pain:"1",
-     respiratoryRate: "100" , OXSat:"20%" ,Height:"50" , weight:"30" , BMI :"5" ,smokingStatus: 10 , headC : "10"},
-    
-    // { date :"20-4-2021" , time:"22:50" , temp:"37" , pulse:"ll" , bloodPressure: "52" ,
-    //  respiratoryRate: "100" , OXSat:"20%" ,Height:"50" , weight:"30" , BMI :"5" ,smokingStatus: 10 , headC : "10"},
-    
-    // { date :"20-4-2021" , time:"22:50" , temp:"37" , pulse:"ll" , bloodPressure: "52" ,
-    //  respiratoryRate: "100" , OXSat:"20%" ,Height:"50" , weight:"30" , BMI :"5" ,smokingStatus: 10 , headC : "10"},
-    
-    // { date :"20-4-2021" , time:"22:50" , temp:"37" , pulse:"ll" , bloodPressure: "52" ,
-    //  respiratoryRate: "100" , OXSat:"20%" ,Height:"50" , weight:"30" , BMI :"5" ,smokingStatus: 10 , headC : "10"},
-    
-]
+
 const sortModel = [
   {
     field: 'time',
-    sort: 'asc',
+    sort: 'desc',
   },
 ];
 
-const columns = [
-//   { field: 'id', headerName: 'ID', width: 70 },
-{ 
-    field: 'date',
-    
-    headerName: 'Date',
-    width: 250,
-    sort: 'asc',
-   
-    renderCell: (params) => (       
-     <>
-          {/* {console.log("parammmmms:    " , params.row.date)} */}
-          {/* {console.log("parammmmms:    " , params.row.time)} */}
-        <p className="span">{params.row.date}</p>
-        <p className="span">{params.row.time}</p>
-        </>
-    
-    ),
-    // field: 'time',
-//     renderCell: (params) => (
-        
-//       <strong>
-//         {params.value}
-        
-//       </strong>
-//     ),
-  },
-
-  { field: 'temp',
-   headerName: "Tempreture (f)"
-   , width: 200 },
-  {
-    field: 'pulse',
-    headerName: 'pulse(bpm)',
-    type: 'number',
-    width: 150,
-  },
-  {
-    field: 'bloodPressure',
-    headerName: 'Blood Pressure(mmHg)',
-    width: 300,
-  },
-  {
-    field: 'pain',
-    headerName: 'Pain (1-10)',
-    width: 150,
-  },
-  {
-    field: 'respiratoryRate',
-    headerName: 'Respiratory Rate(rpm)',
-    width: 200,
-  },
-  {
-    field: 'OXSat',
-    headerName: 'Oxygen Saturation(%)',
-    width: 200,
-  },
- 
-  {
-    field: 'height',
-    headerName: 'Height (in)',
-    width: 150,
-  },
-  {
-    field: 'weight',
-    headerName: 'weight(lbs)',
-    width: 150,
-  },
-
-  {
-    field: 'BMI',
-    headerName: 'BMI (Kg/m2)',
-    width: 150,
-  },
-
-  {
-    field: 'smokingStatus',
-    headerName: 'smokingStatus',
-    width: 200,
-  },
-  {
-    field: 'headC',
-    headerName: 'headCircumfrence(in)',
-    width: 200,
-  },
-                { 
-                field: 'Actions',
-                headerName: 'Actions',
-                width: 250,
-                renderCell: (params) => (
-                  <strong>
-                    {/* {params.value.getFullYear()} */}
-                    <Button
-                      variant="contained"
-                      color="default"
-                      size="small"
-                      className={this.props.classes.button}
-                      startIcon={<EditIcon />}
-                     
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        this.handleopenModal1();
-                        console.log("lsssssssssssssssssssssssssssssssssssss")
-                        this.getTypeByID(params.row.id);
-                        this.getData()
-                      }
-                        
-                      }
-                    >
-                       Edit
-                      
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      className={this.props.classes.button , this.props.classes.deleteButton}
-                      startIcon={<EditIcon />}
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                         console.log("delete function: " , params.row.id);
-                        this.handleDelete(params.row.id);
-                        // this.refreshAfterDeletion(params.row.id);
-                      }}
-                    >
-                      delete
-                    </Button>
-                  </strong>
-                ),
-              }
-
-];
 const useStyles = (theme) => ({
     paper: {
-      marginTop: theme.spacing(2),
+      // marginTop: theme.spacing(1),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -188,7 +43,6 @@ const useStyles = (theme) => ({
     form: {
       width: '100%', // Fix IE 11 issue.
       marginTop: theme.spacing(3),
-      
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
@@ -236,7 +90,8 @@ class NurseVisit extends Component {
             headCircumference:"",    
             openModal1:false ,
             key:0,
-            pId:1  
+            pId:2,
+            patientName:""  
           }
     }
     handleChange = (event)=>{
@@ -273,10 +128,12 @@ class NurseVisit extends Component {
     }
 
     func2=()=>{
+      var d = new Date();
+      var time = d.getHours()+":"+(d.getMinutes()+1)
             var obj2 = {
             id:0,
             date:this.getDate(),
-            time :this.getTime(),
+            time :time,
             temp:"",
             pulse:"" , 
             bloodPressure: "" ,
@@ -292,7 +149,7 @@ class NurseVisit extends Component {
         var joined = this.state.timeDate.concat(obj2);
         this.setState({ timeDate: joined });
     }
-    sortAfterAdding = () =>{
+    sortAfterAdding = () => {
       const sorted = this.state.timeDate.sort((a, b) => a.id - b.id);
       console.log("sorted: " , sorted);
       this.setState({timeDate : sorted})
@@ -400,11 +257,13 @@ class NurseVisit extends Component {
             console.log("Getting: " , resp);
             resp.json().then((data)=>{
               console.log("ddddddddddddddddd;  " , data[0])
-
+              
+              var d = new Date();
+              var time = d.getHours()+":"+(d.getMinutes()+1)
               var obj2 = {
                 id:0,
                 date:this.getDate(),
-                time :this.getTime(),
+                time : time,
                 temp:"",
                 pulse:"" , 
                 bloodPressure: "" ,
@@ -449,8 +308,7 @@ class NurseVisit extends Component {
             BMI: this.state.BMI,
             pain: this.state.pain,
             smokingStatus: this.state.smokingStatus,
-            headC: this.state.headCircumference,
-          
+            headC: this.state.headCircumference,  
           }
 
         
@@ -462,7 +320,7 @@ class NurseVisit extends Component {
           }
           formBody = formBody.join("&");
          
-          fetch(`http://localhost:3000/nurse/add`, {
+          await fetch(`http://localhost:3000/nurse/add`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -522,64 +380,30 @@ class NurseVisit extends Component {
       }
 
     async componentDidMount(){
+      console.log("parmas.:   ",  this.props.match.params.id)
+      this.setState({pId : this.props.match.params.id});
       await this.getLastVisits();
      
-
-      // this.setState({key: this.state.timeDate.length});
-      //   var temp =[];
-      //   var obj2 = {
-      //       id:this.state.key,
-      //       date:this.getDate(),
-      //       time :this.getTime(),
-      //       temp:"",
-      //       pulse:"" , 
-      //       bloodPressure: "" ,
-      //       respiratoryRate: "" ,
-      //       OXSat:"" ,
-      //       height:"" , 
-      //       weight:"" ,
-      //       BMI :"" ,
-      //       pain:"",
-      //       smokingStatus: "" ,
-      //       headC : ""
-      //   }
-      //   temp.push(obj2)
-      //   times.map((time,index)=>{
-      //       var obj = {
-      //           id:this.state.key+1,
-      //           date:time.date,
-      //           time:time.time,
-      //           temp:time.temp,
-      //           pulse:time.pulse, 
-      //           bloodPressure: time.bloodPressure ,
-      //           respiratoryRate: time.respiratoryRate,
-      //           OXSat:time.OXSat,
-      //           height:time.headC, 
-      //           weight:time.weight,
-      //           BMI :time.BMI,
-      //           smokingStatus: time.smokingStatus,
-      //           headC : time.headC,
-      //           pain:time.pain
-
-      //       }
-      //       temp.push(obj);
-      //       this.setState({timeDate:temp})
-      //       this.setState({temp:[] , key : this.state.key+1});
-            
-
-      //   })
     }
-    rendering = ()=>{
+    rendering = () => {
       return(
-        <DataGrid sortModel={sortModel} rows={this.state.timeDate} columns={[
+        <DataGrid   
+        sortModel={[
+          {
+            field: 'time',
+            sort: 'desc',
+          },
+        ]}
+          rows={this.state.timeDate} columns={[
           { 
-           field: 'date',
-           
+           field: 'time',
+           type: 'dateTime',
            headerName: 'Date',
            width: 250,
-           valueGetter: (params) =>
-           `${params.getValue('time') || 'unknown'} - ${params.getValue('time') || 'x'}`,
-         sortComparator: (v1, v2, param1, param2) => param1.row.age - param2.row.age,
+          //  valueGetter: (params) =>
+          //  console.log("params", params)
+          //  `${params.getValue('time') || 'unknown'}`,
+        //  sortComparator: (v1, v2, param1, param2) => param1.row.time - param2.row.time,
           
            renderCell: (params) => (       
             <>
@@ -661,30 +485,11 @@ class NurseVisit extends Component {
          { 
            field: 'Actions',
            headerName: 'Actions',
-           width: 250,
+           width: 150,
            renderCell: (params) => (
              <strong>
                {/* {params.value.getFullYear()} */}
-               <Button
-                 variant="contained"
-                 color="default"
-                 size="small"
-                 className={this.props.classes.button}
-                 startIcon={<EditIcon />}
-                
-                 style={{ marginLeft: 16 }}
-                 onClick={()=>{
-                   this.handleopenModal1();
-                   console.log("lsssssssssssssssssssssssssssssssssssss")
-                   this.getTypeByID(params.row.id);
-                   this.getData()
-                 }
-                   
-                 }
-               >
-                  Edit
-                 
-               </Button>
+               
                <Button
                  variant="contained"
                  color="secondary"
@@ -739,6 +544,7 @@ key = "1"
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
+
             <Grid item xs={6}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
@@ -767,7 +573,7 @@ key = "1"
                 id="pulse"
                 label="pulse"
                 name="pulse" 
-                type="text"
+                type="number"
                 autoComplete="pulse"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
@@ -786,7 +592,7 @@ key = "1"
                 id="bloodPressure"
                 label="Blood Pressure"
                 name="bloodPressure" 
-                type="text"
+                type="number"
                 autoComplete="bloodPressure"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
@@ -805,7 +611,7 @@ key = "1"
                 id="respiratoryRate"
                 label="Respiratory Rate"
                 name="respiratoryRate" 
-                type="text"
+                type="number"
                 autoComplete="RespiratoryRate"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
@@ -824,7 +630,7 @@ key = "1"
                 id="OXYgenSaturation"
                 label="Oxygen Saturation"
                 name="oxygenSaturation" 
-                type="text"
+                type="number"
                 autoComplete="OXYgenSaturation"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
@@ -881,7 +687,7 @@ key = "1"
                 id="BMI"
                 label="BMI"
                 name="BMI" 
-                type="text"
+                type="number"
                 autoComplete="BMI"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{
@@ -919,7 +725,7 @@ key = "1"
                 id="smokingStatus"
                 label="smokingStatus"
                 name="smokingStatus" 
-                type="text"
+                type="number"
                 autoComplete="smokingStatus"
                 // placeholder={this.state.TypeObj.name}
                 onChange = {(event) =>{

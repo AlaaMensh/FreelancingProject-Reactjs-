@@ -97,7 +97,7 @@ class OrderPathologyList extends Component {
       date :""  ,
       comments: "cc",
       status: "sc",
-     result:"",
+      result:"",
       PTname: "",
       labId:1
           }

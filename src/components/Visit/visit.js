@@ -90,9 +90,10 @@ function getSteps() {
 
 
 
-export default function HorizontalLabelPositionBelowStepper() {
+export default function Visit() {
   
   const [ptId, setPId] = useState(1);
+  const [patientName, setPatientName] = useState(1);
   // const [ptId, setPId] = useState(1);
   
   
@@ -124,6 +125,37 @@ export default function HorizontalLabelPositionBelowStepper() {
   
   
     useEffect(()=>{
+      // var details = {
+      //   ptId:ptId, 
+      //   }
+     
+
+      // console.log("formBody:  " , details)
+
+      // var formBody = [];
+      // for (var property in details) {
+      //   var encodedKey = encodeURIComponent(property);
+      //   var encodedValue = encodeURIComponent(details[property]);
+      //   formBody.push(encodedKey + "=" + encodedValue);
+      // }
+      // formBody = formBody.join("&");
+      // console.log("formBody:  " , formBody)
+
+      // fetch('http://localhost:3000/visit/addvisit', {
+      //   method: 'POST',
+      //    headers: {
+      //      'Content-Type': 'application/json'
+      //    },
+      //   body: JSON.stringify(details)
+      // }).then((resp)=>{
+      //   resp.json().then((data)=>{
+      //     if(data == true){
+      //       history.push("/")
+      //     }
+      //   })
+      // }).catch(()=>{
+      //   console.log("errror")
+      // })
 
     },[])
 
@@ -174,6 +206,10 @@ export default function HorizontalLabelPositionBelowStepper() {
 
             
     }
+    const getPatientName = (value)=>{
+        console.log("value:  ",value);
+        setPatientName(value);
+    }
     const getChiefComplains = (value)=>{
         console.log("value:  ",value);
         setChiefComplains(value);
@@ -213,6 +249,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     }
   
     const obj = {
+        patientName : patientName,
         chiefComplains : chiefComplains,
         diagnosis : diagnosis,
         DD : DD,
@@ -274,12 +311,12 @@ export default function HorizontalLabelPositionBelowStepper() {
 
 
     const ptRegistration = (stepIndex ) =>{
-       
-        // const classes = useStyles();
+
       switch (stepIndex) {
         case 0:
           return (
               <ChiefComplains 
+                getPatientName = {getPatientName}
                 getChiefComplains = {getChiefComplains}
                 getDiagnosis = {getDiagnosis}
                 getNotes = {getNotes}

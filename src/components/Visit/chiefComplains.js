@@ -67,15 +67,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ChiefComplains({getChiefComplains ,getDiagnosis,  getDD , getNotes , obj} ) {
-    // const [firstName, setFirstName] = useState();
-    // const [lastName, setLastName] = useState();
-    // const [ birthDate, setbirthDate] = useState();
-    // const [email, setEmail] = useState();
-    // const [address, setAddress] = useState();
-    // const [status, setStatus] = useState();
-    const [deseases, setDeases] = useState([]);
-    // const [phone, setPhone] = useState();
+export default function ChiefComplains({getPatientName,getChiefComplains ,getDiagnosis,  getDD , getNotes , obj} ) {
+
+  const [deseases, setDeases] = useState([]);
   const classes = useStyles();
   useEffect(() => { 
     fetch(`http://localhost:3000/diseases/getAll`, {
@@ -88,11 +82,7 @@ export default function ChiefComplains({getChiefComplains ,getDiagnosis,  getDD 
       console.log("Getting: " , resp);
       resp.json().then((data)=>{
         console.log("deasess;  " , data)
-        // this.setState({
-        //   TypeObj:data[0]
-        // })
         setDeases(data);
-        // object = data
       })
     }).catch(()=>{
       console.log("errror")
@@ -125,7 +115,6 @@ export default function ChiefComplains({getChiefComplains ,getDiagnosis,  getDD 
                                     autoComplete="chiefComplains"
                                     defaultValue= {obj.chiefComplains}
                                     onChange = {(event) =>{
-                                        // setChiefComplains(event.target.value);
                                         getChiefComplains(event.target.value);
                                         console.log("yyyyys" , event.target.value);
                                     }}
@@ -147,7 +136,6 @@ export default function ChiefComplains({getChiefComplains ,getDiagnosis,  getDD 
                                     autoComplete="diagnosis"
                                     defaultValue= {obj.diagnosis}
                                     onChange = {(event) =>{
-
                                         getDiagnosis(event.target.value);
                                         // console.log("yyyyys" , lastName);
                                     }}

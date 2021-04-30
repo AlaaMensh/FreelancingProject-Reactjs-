@@ -83,7 +83,7 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class OrderRadioList extends Component {
+class OrderPathologyListForPatient extends Component {
   constructor(props) {
     super(props);
     
@@ -97,9 +97,10 @@ class OrderRadioList extends Component {
       date :""  ,
       comments: "cc",
       status: "sc",
-     result:"",
+      result:"",
       PTname: "",
-      labId:1
+      labId:1,
+      ptId:"",
           }
         }
         
@@ -125,7 +126,8 @@ class OrderRadioList extends Component {
     };
     getData = async()=>{
       var details = {
-        radioId:this.state.labId
+        ptId:this.state.ptId,
+        type:2
        }
        var formBody = [];
        for (var property in details) {
@@ -136,7 +138,7 @@ class OrderRadioList extends Component {
        formBody = formBody.join("&");
    
    
-       await fetch(`http://localhost:3000/radio/getOrdersByRadioId`, {
+       await fetch(`http://localhost:3000/lab/getOrderByPtId`, {
          method: 'POST',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -144,7 +146,7 @@ class OrderRadioList extends Component {
          body: formBody
        }).then(async(resp)=>{
          resp.json().then(async(data)=>{
-           console.log("Data:  " , data)
+           console.log("Dataccccccccc:  " , data)
            await this.setState({orderlabList: data});
        
          })
@@ -174,7 +176,7 @@ class OrderRadioList extends Component {
         formBody.push(encodedKey + "=" + encodedValue);
       }
       
-      fetch('http://localhost:3000/radio/deleteOrder', {
+      fetch('http://localhost:3000/pathology/deleteOrder', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -188,10 +190,12 @@ class OrderRadioList extends Component {
         
     }
    async componentDidMount(){
-      this.getData()
+    console.log("props:  " , this.props.match.params.id)
+    await this.setState({ptId : this.props.match.params.id});
+     await this.getData()
     }
   
-    handleUpdate = ()=>{
+    handleUpdate = async ()=>{
       var details = {
         ptId:1,
         drId:1,
@@ -224,7 +228,7 @@ class OrderRadioList extends Component {
       formBody = formBody.join("&");
 
       console.log("formBody: ", formBody)
-      fetch('http://localhost:3000/radio/updateOrder', {
+      await fetch('http://localhost:3000/pathology/updateOrder', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -237,25 +241,12 @@ class OrderRadioList extends Component {
           this.setState({
             TypeObj:data[0]
           })
-          
           // object = data
         })
       }).catch(()=>{
         console.log("errror")
       })
-      this.getData()
-
-      const items = this.state.orderlabList.map(
-        item => item.id === this.state.TypeObj.id ? details : item
-      );
-    
-      this.setState({orderlabList : items});
-     
-      // const orderlabList = this.state.orderlabList.map(
-      //   item => item.id === details.id ? details : item
-      // );
-    
-      // this.setState({orderlabList});
+         this.getData()
     }
 
     componentDidUpdate(){
@@ -358,8 +349,7 @@ class OrderRadioList extends Component {
         
   return (
     <div className="hero">
-         {this.rendering()}
-         {console.log("TypeObjj :  " , this.state.TypeObj)}
+        {this.rendering()}
 
 <Modal
   open={this.state.openModal1}
@@ -500,4 +490,4 @@ class OrderRadioList extends Component {
     }
 }
  
-export default withStyles(useStyles)(OrderRadioList); 
+export default withStyles(useStyles)(OrderPathologyListForPatient); 

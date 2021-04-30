@@ -40,9 +40,7 @@ import {
   KeyboardDatePicker,
   KeyboardTimePicker
 } from '@material-ui/pickers';  
-import "./appointments.css";
-
-
+// import "./appointments.css"
 
 const useStyles = (theme) => ({
   paper: {
@@ -80,7 +78,7 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class Appointement extends Component {
+class PatientAppointement extends Component {
   constructor(props) {
     super(props);
     
@@ -102,8 +100,7 @@ class Appointement extends Component {
       userID : 1 ,
       date:"",
       startDime:"",
-      endDime:"",
-      flag:true
+      endDime:""
           }
         }
         
@@ -138,7 +135,13 @@ class Appointement extends Component {
             console.log("errror")
           })
 
-
+          // console.log("heeereeeee" , id);
+          // let response = await fetch(`http://localhost:3000/appointements`);
+          // var payload = await response.json();
+          // console.log( " kkkkkkkkkkkkkkkkkkkkkkkkkkkkk" , payload);
+          // this.setState({
+          //   TypeObj:payload
+          // })
         }
         getAllergyTypesList = (allergyList) =>{
         for(var type in allergyList){
@@ -157,10 +160,16 @@ class Appointement extends Component {
     };
     getData = async()=>{
       console.log("hhhhhhhoekehgogg      ");
-      
+      // await axios.get('http://localhost:3000/appointment/getById').then(async resp => {
+      //   // return resp.data;
+      //    this.setState({
+      //       appointements : resp.data
+      //   })
+      //   // console.log('appointements : ') 
+      // })
       var details = {
         'date':this.state.date,
-        'drFDId': 1
+        'drFDId': this.state.userID
     };
     
     var formBody = [];
@@ -218,20 +227,16 @@ class Appointement extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-  
+        // await axios.delete(`http://localhost:3000/appointment/deleteAppointment`)
+        // .then(res => {
+        //   console.log(res);
+        //   console.log(res.data);
+        // })
+        // .catch(err=>{console.log("nooooo")})
 
          
     }
    async componentDidMount(){
-     if(parseInt(localStorage.getItem("role")) != 8 && parseInt(localStorage.getItem("role")) != 2){
-      console.log("jjjjjjjjjjjjjj") 
-      this.setState({flag : true});
-     }
-     else{
-      console.log("jjjjjjjjjjjjjj") 
-       this.setState({flag: false})
-     }
-     this.setState({userID : localStorage.getItem("userId")});
       // this.getData()
     }
     handleUpdate = ()=>{
@@ -260,7 +265,13 @@ class Appointement extends Component {
         obj.endDate = this.state.TypeObj.endDate
       }
       console.log("type: ", obj);
-
+      // axios.put(`http://localhost:2400/appointements/${id}` , obj)
+      //    .then(res => {
+      //      console.log(res);
+      //      console.log(res.data);
+      //    })
+      //    this.getData()
+          
     var formBody = [];
     for (var property in obj) {
       var encodedKey = encodeURIComponent(property);
@@ -322,9 +333,7 @@ class Appointement extends Component {
             </div>
             <div className="mt-5" style = {{height: 400, width: '100%' }}>
              <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-              { field: 'patientName',
-                // hide:(this.state.flag)?true:false,
-              headerName: 'patientName',  width: 150 },
+              { field: 'patientName', headerName: 'patientName', width: 150 },
               { field: 'reason', headerName: 'Reason', width: 300 },
               { field: 'startDate', headerName: 'startTime', width: 150 },
               { field: 'endDate', headerName: 'endTime', width: 150 },
@@ -334,7 +343,7 @@ class Appointement extends Component {
               {
                 field: 'Actions',
                 headerName: 'Actions',
-                width: 400,
+                width: 200,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
@@ -368,23 +377,6 @@ class Appointement extends Component {
                     >
                       delete
                     </Button>
-                    <Button
-                    hidden={this.state.flag}
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                        console.log("herie   function: " , params.row);
-                        console.log("herooo ",this.props)
-                       this.props.history.push({
-                         pathname :`${this.props.match.path}/visit`,
-                         state:{ptId :""}
-                       })
-                      }}
-                    >
-                      Make Visit
-                    </Button>
                   </strong>
                 ),
               },]} pageSize={5}
@@ -417,7 +409,10 @@ class Appointement extends Component {
         // reason : this.state.reason,
       }
       console.log("details:  ", details)
-
+    //   var details = {
+    //     'date':this.state.date,
+    //     'drFDId': this.state.userID
+    // };
     
     var formBody = [];
     for (var property in details) {
@@ -557,7 +552,7 @@ class Appointement extends Component {
                 id="fd"
                 label="FD"
                 name="fd" 
-                type="text"
+                type="text" 
                 autoComplete="fd"
                 placeholder={this.state.TypeObj.FD}
                 onChange = {(event) =>{
@@ -612,7 +607,7 @@ class Appointement extends Component {
 <Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
   this.handleopenModal2()
 }} >
-  <AddIcon  />
+  <AddIcon />
 </Fab>
 <Modal
 key="1"
@@ -753,23 +748,7 @@ key="1"
                 }}
               />
             </Grid> 
-            {/* <Grid item xs={12}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="FD"
-                label="FD"
-                name="FD" 
-                type="text"
-                autoComplete="FD"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({FD : event.target.value});
-                }}
-              />
-            </Grid>  */}
+
           </Grid>
           <Button
             type="button"
@@ -779,9 +758,7 @@ key="1"
             className={classes.submit}
             onClick={()=>{
               this.handleAdding();
-              // this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
+
             }}
           >
             Add
@@ -800,5 +777,5 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(Appointement); 
+export default withStyles(useStyles)(PatientAppointement); 
 

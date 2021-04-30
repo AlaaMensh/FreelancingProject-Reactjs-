@@ -11,7 +11,7 @@ import SignupForm from './components/Forms/signUpForm';
 import ChemistSignup from './components/Forms/signUpChimest';
 import LoginForm from './components/Forms/loginform';
 import NurseSignup from './components/Forms/signUpNurse';
-import DoctorSignup from './components/Forms/signUpDoctor';
+import DoctorSignup from './components/Forms/formGeneratorList1';
 import AssistantSignup from './components/Forms/signUpAssistant';
 import PathologistFDSignUp from './components/Forms/singUpPathologist';
 import RadiogistSignup from './components/Forms/signUpRadiogist';
@@ -37,7 +37,7 @@ import {Provider} from "react-redux";
 import promiseMW from "redux-promise"
 import reducers from "./reducers";
 import Doctor from './components/Users_CRUD/Doctor';
-import CustomizedAccordions from './components/Visit/visit';
+import Visit from './components/Visit/visit';
 import OrderLabList from './components/Orders/orderLabList';
 import LabOrder from './components/Orders/order_lab';
 import PatientLabOrders from './components/Orders/patientLabsData';
@@ -51,6 +51,8 @@ import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard'
 import NurseVisit from './components/nurseModule/nursemodule';
 import ChangePassword from "./components/Forms/changePassword"
 import UserWelcomePage from "./pages/newUserWelcomPage";
+import NotAuthorized from "./pages/notAuthorized";
+import TableGenerator from "./components/Types/tableGenerator";
 
 
 function App() {
@@ -85,6 +87,7 @@ function App() {
       <Route exact path="/SignupPathologyFD" component={PathologyFDSignUp}></Route>
       <Route exact path="/SignupLabFD" component={LabFDSignUp}></Route>
       <Route exact path="/SignupDoctorFD" component={DoctorFDSignUp}></Route>
+      
       <Route exact path="/SignupRadiogist" component={RadiogistSignup}></Route>
       <Route exact path="/SignupPathologist" component={PathologistSignUp}></Route>
       <Route exact path="/NurseSignup" component={NurseSignup}></Route>
@@ -114,7 +117,7 @@ function App() {
       {/* for patient Registration */}
       <Route exact path="/ptRegistration" component={ptRegistration}></Route>
       
-      <Route exact path="/visit" component={CustomizedAccordions}></Route>
+      <Route exact path="/visit" component={Visit}></Route>
      
      {/* for lab orders */}
       <Route exact path="/labOrder" component={LabOrder}></Route>
@@ -134,6 +137,9 @@ function App() {
       <Route exact path="/orderRadioList" component={OrderRadioList}></Route>
      
       <Route exact path="/nurseVisit" component={NurseVisit}></Route>
+      <Route exact path="/tableGenerator" component={TableGenerator}></Route>
+      
+      <Route exact path="/notAuthorized" component={NotAuthorized}></Route>
       <Route exact path="**" component={Error}></Route>
     </Switch>
   
