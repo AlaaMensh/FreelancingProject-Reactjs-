@@ -104,7 +104,8 @@ class OrderGeneration extends Component {
       ptId:"",
       file:"",
       orderType:"",
-      type:""
+      type:"",
+      base64URL:""
           }
         }
         
@@ -368,21 +369,53 @@ class OrderGeneration extends Component {
         
         )
     }
+    getBase64 = file => {
+      return new Promise(resolve => {
+        let fileInfo;
+        let baseURL = "";
+        // Make new FileReader
+        let reader = new FileReader();
+  
+        // Convert the file to base64 text
+        reader.readAsDataURL(file);
+  
+        // on reader load somthing...
+        reader.onload = () => {
+          // Make a fileInfo Object
+          console.log("Called", reader);
+          baseURL = reader.result;
+          console.log(baseURL);
+          resolve(baseURL);
+        };
+        console.log(fileInfo);
+      });
+    };
+
+
     handleChange =(e)=>{
-      console.log('yes' , e.target.files[0]);
-      this.setState({result: e.target.files[0]});
+      // console.log('yes' , e.target.files[0]);
+      // this.setState({result: e.target.files[0]});
+      // file = e.target.files[0];
+      let { result } = this.state;
+      result = e.target.files[0];
+      this.getBase64(result)
+        .then(res => {
+          result["base64"] = res;
+          console.log("File Is", result);
+          this.setState({
+            base64URL: res,
+            result
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  
+      this.setState({
+        file: e.target.files[0]
+      });
     }
-    UpladeFile = ()=>{
-      const data = new FormData();
-      data.append("result" , this.state.result)
 
-
-      axios.post("" , data , {
-
-      }).then(resp=>{
-        console.log("resp: ", resp.statusText);
-      })
-    }
 
     render() { 
       const { classes } = this.props;
@@ -480,23 +513,6 @@ class OrderGeneration extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              {/* <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="result"
-                name="result"
-                label="result" 
-                type="text"
-                autoComplete="result"
-                defaultValue={this.state.TypeObj.result}
-                onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.result)
-                  this.setState({result : event.target.value});
-                }}
-              /> */}
-
               <input type="file" name="file" onChange={this.handleChange}/>
             </Grid>
             

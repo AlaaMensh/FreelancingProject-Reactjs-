@@ -64,8 +64,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function PaientRegistration({getFirstName ,getBloodGroup,  getEmail , getStatus , getLastName , getAddress ,  getBirthDate , getPhone , obj} ) {
+export default function PaientRegistration({getFirstName,getSecondName ,getBloodGroup,  getEmail , getStatus , getLastName , getAddress ,  getBirthDate , getPhone , obj} ) {
     const [firstName, setFirstName] = useState();
+    const [secondName, setSecondName] = useState();
     const [lastName, setLastName] = useState();
     const [ birthDate, setbirthDate] = useState();
     const [email, setEmail] = useState();
@@ -99,6 +100,32 @@ export default function PaientRegistration({getFirstName ,getBloodGroup,  getEma
                                     onChange = {(event) =>{
                                         setFirstName(event.target.value);
                                         getFirstName(event.target.value);
+                                        console.log("yyyyys" , firstName);
+                                    }}
+                                    defaultValue={obj.secondName}
+                                    InputProps={{
+                                        startAdornment: (
+                                        <InputAdornment position="start">
+                                            <AccountCircle className={classes.iconsColor} />
+                                        </InputAdornment>
+                                        ),
+                                    }}
+                                    />
+                                
+                                </Grid>
+                               <Grid item xs={12}>
+                                    <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    size="small"
+                                    id="secondName"
+                                    label="Second Name"
+                                    name="secondName"
+                                    autoComplete="secondName"
+                                    onChange = {(event) =>{
+                                        setSecondName(event.target.value);
+                                        getSecondName(event.target.value);
                                         console.log("yyyyys" , firstName);
                                     }}
                                     defaultValue={obj.firstName}

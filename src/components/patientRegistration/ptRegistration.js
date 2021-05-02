@@ -98,6 +98,7 @@ function getSteps() {
 
 export default function HorizontalLabelPositionBelowStepper() {
   const [firstName, setFirstName] = useState();
+  const [secondName, setSecondName] = useState();
   const [lastName, setLastName] = useState();
   const [ birthDate, setbirthDate] = useState();
   const [email, setEmail] = useState();
@@ -124,6 +125,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             var details = {
             firstName:firstName,
             lastName:lastName,
+            secondName:secondName,
             address:address,
             phone:phone,
             email:email,
@@ -175,6 +177,10 @@ const getFirstName  = (name) =>{
     // console.log("fiffffff:   " , name);
     setFirstName(name);
 } 
+const getSecondName  = (name) =>{
+    // console.log("fiffffff:   " , name);
+    setSecondName(name);
+} 
 const getLastName  = (name) =>{
     // console.log("fiffffff:   " , name);
     setLastName(name);
@@ -206,6 +212,7 @@ const getBirthDate  = (name) =>{
 const obj = {
   firstName : firstName,
   lastName : lastName,
+  secondName : secondName,
   email:email,
   address: address,
   birthDate:birthDate ,
@@ -242,6 +249,7 @@ setonGoingProblemList(List);
           return (
             <Info 
             getFirstName = {getFirstName} 
+            getSecondName = {getSecondName} 
             getEmail ={getEmail} 
             getStatus={getStatus} 
             getLastName = {getLastName} 

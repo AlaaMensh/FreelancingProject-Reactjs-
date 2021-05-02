@@ -53,14 +53,41 @@ import ChangePassword from "./components/Forms/changePassword"
 import UserWelcomePage from "./pages/newUserWelcomPage";
 import NotAuthorized from "./pages/notAuthorized";
 import TableGenerator from "./components/Types/tableGenerator";
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { useState, useHistory } from 'react';
+
 
 
 function App() {
+
   const createStoreWithMDW = applyMiddleware(promiseMW)(createStore)
   
   return (
     <Provider store = {createStoreWithMDW(reducers)}>
-    <Router >
+    <Router>
+      {/* <div className="row">
+      <Toolbar>
+          <Typography variant="h6" noWrap>
+            Our DahsBoard
+          </Typography>
+          <Typography  component="div" style={{marginLeft :"auto"}}>
+          {
+           
+              <Button variant="contained"  onClick= {()=>{
+                localStorage.removeItem("userId");
+                localStorage.removeItem("role");
+                // setlogged(false);
+              }}>
+              LogOut
+            </Button>
+            
+          }
+               </Typography>
+        </Toolbar>
+      </div> */}
       
         <Switch>
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>

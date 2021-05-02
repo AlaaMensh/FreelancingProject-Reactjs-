@@ -90,9 +90,10 @@ function getSteps() {
 
 
 
-export default function Visit() {
+export default function Visit({match}) {
   
   const [ptId, setPId] = useState(1);
+  const [drId, setDrId] = useState(1);
   const [patientName, setPatientName] = useState(1);
   // const [ptId, setPId] = useState(1);
   
@@ -125,37 +126,12 @@ export default function Visit() {
   
   
     useEffect(()=>{
-      // var details = {
-      //   ptId:ptId, 
-      //   }
-     
+      console.log("this.props" , match.params.id );
+      setPId(match.params.id);
+      setPId(localStorage.getItem("userId"));
 
-      // console.log("formBody:  " , details)
+      
 
-      // var formBody = [];
-      // for (var property in details) {
-      //   var encodedKey = encodeURIComponent(property);
-      //   var encodedValue = encodeURIComponent(details[property]);
-      //   formBody.push(encodedKey + "=" + encodedValue);
-      // }
-      // formBody = formBody.join("&");
-      // console.log("formBody:  " , formBody)
-
-      // fetch('http://localhost:3000/visit/addvisit', {
-      //   method: 'POST',
-      //    headers: {
-      //      'Content-Type': 'application/json'
-      //    },
-      //   body: JSON.stringify(details)
-      // }).then((resp)=>{
-      //   resp.json().then((data)=>{
-      //     if(data == true){
-      //       history.push("/")
-      //     }
-      //   })
-      // }).catch(()=>{
-      //   console.log("errror")
-      // })
 
     },[])
 
@@ -166,6 +142,7 @@ export default function Visit() {
 
         var details = {
           ptId:ptId,
+          drId:drId,
           chiefComplains : chiefComplains,
           diagnosis : diagnosis,
           surgeries : surgeries,

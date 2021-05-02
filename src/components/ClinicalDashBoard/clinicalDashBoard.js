@@ -72,6 +72,7 @@ import OrderRadioListForPt from '../OrdersForPatient/orderRadioForPatient';
 import LabOrder from './../Orders/order_lab';
 import OrderGeneration from '../OrdersForPatient/orderGeneration';
 import AdditionOrderForm from '../OrdersForPatient/additionOrderForm';
+import Visit from '../Visit/visit';
 
 const drawerWidth = 250;
 
@@ -225,7 +226,7 @@ const dispatch = useDispatch();
   
 
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     console.log("herree dashBoard:" , localStorage.getItem("role"));
     var localStorageRole = parseInt(localStorage.getItem("role"));
   
@@ -363,7 +364,7 @@ const dispatch = useDispatch();
             </Link>
             </li>
             <li>
-            <Link to={match.path+"/patientAppointement"}>
+            <Link to={match.path+`/patientAppointement/${ptId}`}>
                        Patient Appointement
             </Link>
             </li>
@@ -411,13 +412,14 @@ const dispatch = useDispatch();
         </Route> 
       <Route exact path={match.path+"/OnGoingProblems"}  component={OnGoingProblemStep}/> 
       <Route exact path={match.path+"/Allergy"}  component={AllergyProblems}/> 
-      <Route exact path={match.path+"/patientAppointement"}  component={PatientAppointement}/> 
+      <Route exact path={match.path+"/patientAppointement/:id"}  component={PatientAppointement}/> 
       <Route exact path={match.path+"/labOrders/:id"}  component={OrderLabListForPt}/> 
       <Route exact path={match.path+"/pathologyOrders/:id"}  component={OrderPathologyForPatient}/> 
       <Route exact path={match.path+"/radioOrders/:id"}  component={OrderRadioListForPt}/> 
       <Route exact path={match.path+"/labOrders/:id/labOrderForm"}  component={LabOrder}/> 
       <Route exact path={match.path+"/orderGeneration/:id/:type"}  component={OrderGeneration}/> 
       <Route exact path={match.path+"/orderGeneration/:id/:type/additionOrderForm"}  component={AdditionOrderForm}/> 
+      <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 
       {/* <Route exact path={match.path}  component={DashBoardComp}/>  */}
       {/* <Route exact path={match.path+"/com"} component={Signup}/>
       <Route exact path={match.path+"/login"} component={LoginForm}/> */}

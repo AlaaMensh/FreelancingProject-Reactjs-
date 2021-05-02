@@ -152,6 +152,33 @@ class PatientsOnVisit extends Component {
     };
     getData = async()=>{
 
+      var details = {
+        date:new Date()
+       }
+       var formBody = [];
+       for (var property in details) {
+         var encodedKey = encodeURIComponent(property);
+         var encodedValue = encodeURIComponent(details[property]);
+         formBody.push(encodedKey + "=" + encodedValue);
+       }
+       formBody = formBody.join("&");
+   
+   
+       await fetch(`http://localhost:3000/session/getSessionByDate`, {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+         },
+         body: formBody
+       }).then(async(resp)=>{
+         resp.json().then(async(data)=>{
+           console.log("Data:  " , data)
+          //  await this.setState({orderlabList: data});
+       
+         })
+       }).catch(()=>{
+         console.log("error Getting Here")
+       })
       
     }
   
@@ -309,11 +336,7 @@ class PatientsOnVisit extends Component {
                   }} />
             </div> 
               <div className="row mt-4">
-                      <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                          this.handleopenModal2()
-                        }} >
-                          <AddIcon  />
-                        </Fab> 
+                       
                       </div>
                     </div>
         

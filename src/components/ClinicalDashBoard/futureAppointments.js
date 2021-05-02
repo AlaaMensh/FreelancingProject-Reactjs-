@@ -42,8 +42,6 @@ import {
 } from '@material-ui/pickers';  
 import { getSeconds } from 'date-fns';
 // import "./appointments.css";
-import PastAppointement from "./pastAppointments";
-import FutureAppointement from "./futureAppointments";
 
 
 
@@ -83,7 +81,7 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
-class PatientAppointement extends Component {
+class FutureAppointement extends Component {
   constructor(props) {
     super(props);
     
@@ -164,56 +162,7 @@ class PatientAppointement extends Component {
     };
     getData = async()=>{
       console.log("hhhhhhhoekehgogg      " , this.props.match.params.id);
-      
-      var details = {
-        ptId:this.props.match.params.id
-    };
-    
-    var formBody = [];
-    for (var property in details) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-    console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:3000/appointment/getpation`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body:formBody
-    }) .then(response => response.json())
-    .then(
-      async data => {
-        var dateNow1 = new Date();
-          var d = new Date(dateNow1),
-          mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
-          day = ("0" + dateNow1.getDate()).slice(-2);
-          var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
 
-        this.setState({appointements : data});
-        var res = data.filter(element => {
-          if(element.date < dateNow2){
-            return element;
-          }
-        });
-
-        await this.setState({past : res})
-        console.log("reeessssssssssssssss: " , res);
-
-        var future = data.filter(element => {
-          if(element.date > dateNow2){
-            return element;
-          }
-        });
-        this.setState({future : future});
-        console.log("reeessssssssssssssss: " , future);
-      }
-    )
-    .catch((e)=>{
-      console.log("errror" ,e)
-    })
     }
   
      handleCloseModal2 = () => {
@@ -451,10 +400,19 @@ class PatientAppointement extends Component {
         })
       }
 
-    rendering = (past) => {
+    rendering = () => {
         return(
         <div className="mt-5">
-     
+            <div className="row justify-content-center">
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <KeyboardDatePicker
+                      label="Material Date Picker"
+                      // value={selectedDate}
+                      format="MM/dd/yyyy"
+                      onChange={this.handleDateChange}
+                      />
+                  </MuiPickersUtilsProvider>
+            </div>
             <div className="mt-5" style = {{height: 400, width: '100%' }}>
              <DataGrid rows={this.state.appointements} columns={[{ field: 'id', headerName: 'ID', width: 70 },
               { field: 'patientName',
@@ -542,208 +500,7 @@ class PatientAppointement extends Component {
                       // this.settypeID(row.row.id);
                       this.setState({typeId : row.row.id});
     }} />
-
-            </div> 
-            <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-            this.handleopenModal2()
-          }} >
-            <AddIcon  />
-          </Fab> 
-          
-        </div>
-        )
-    }
-    renderPast = () =>{
-      return(
-        <div className=""  style={{marginTop : "4em"}}>
-            <div className="" style = {{height: 400, width: '100%' }}>
-            <h4>Patient Past Appointements</h4>
-             <DataGrid rows={this.state.past} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-              { field: 'patientName',
-                // hide:(this.state.flag)?true:false,
-              headerName: 'patientName',  width: 150 },
-              { field: 'reason', headerName: 'Reason', width: 300 },
-              { field: 'startDate', headerName: 'startTime', width: 150 },
-              { field: 'endDate', headerName: 'endTime', width: 150 },
-              // { field: 'drFDId', headerName: 'drFDId', width: 200 },
-              { field: 'date', headerName: 'date', width: 200 },
-              // { field: <button>Hi</button>, headerName: 'description', width: 400 },
-              {
-                field: 'Actions',
-                headerName: 'Actions',
-                width: 400,
-                renderCell: (params) => (
-                  <strong>
-                    {}
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      hidden={this.compareTimeForEditButton(params.row.date, params.row.startDate , "editButton")}
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        console.log("dateeeeeeeee: " , params.row.date);
-                        // this.compareTimeForEditButton(params.row.date, params.row.startDate);
-                        this.handleopenModal1();
-                        this.getTypeByID(params.row.id);
-                        this.getData()
-                      }
-                        
-                      }
-                    >
-                      edit
-                    </Button>
-                    
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                        console.log("delete function: " , params.row.id);
-                        this.handleDelete(params.row.id);
-                        this.refreshAfterDeletion(params.row.id);
-                      }}
-                    >
-                      delete
-                    </Button>
-                    <Button
-                    hidden={this.state.flag}
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      hidden={this.compareTimeForEditButton(params.row.date, params.row.startDate , "makeVisit")}
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                        this.makeVisit();
-                        console.log("herie   function: " , params.row);
-                        console.log("herooo ",this.props)
-                       this.props.history.push({
-                         pathname :`${this.props.location.pathname}/visit`,
-                         state:{ptId :""}
-                       })
-                      }}
-                    >
-                      Make Visit
-                    </Button>
-                  </strong>
-                ),
-              },]} pageSize={5}
-                checkboxSelection  onRowSelected={async (row) => {
-                  // this.handleDelete(row.data.id);
-                  // document.getElementById("hide").hidden = true;
-                  
-                  console.log("yes" , this.state.typeId);
-                  }} getRowId ={(row) =>{
-                      // console.log("id: " , row.id);
-                  }}
-                  onRowClick = {(row)=>{
-                      console.log("yyyys" , row);
-                      id = row.row.id;
-                      // this.settypeID(row.row.id);
-                      this.setState({typeId : row.row.id});
-    }} />
-
             </div>  
-          
-        </div>
-        )
-    }
-    renderFuture = () =>{
-      return(
-        <div className="" style={{marginTop : "4em"}}>
-            <div className="" style = {{height: 400, width: '100%' }}>
-            <h4>Patient Future Appointements</h4>
-             <DataGrid rows={this.state.future} columns={[{ field: 'id', headerName: 'ID', width: 70 },
-              { field: 'patientName',
-                // hide:(this.state.flag)?true:false,
-              headerName: 'patientName',  width: 150 },
-              { field: 'reason', headerName: 'Reason', width: 300 },
-              { field: 'startDate', headerName: 'startTime', width: 150 },
-              { field: 'endDate', headerName: 'endTime', width: 150 },
-              // { field: 'drFDId', headerName: 'drFDId', width: 200 },
-              { field: 'date', headerName: 'date', width: 200 },
-              // { field: <button>Hi</button>, headerName: 'description', width: 400 },
-              {
-                field: 'Actions',
-                headerName: 'Actions',
-                width: 400,
-                renderCell: (params) => (
-                  <strong>
-                    {}
-
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      hidden={this.compareTimeForEditButton(params.row.date, params.row.startDate , "editButton")}
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        console.log("dateeeeeeeee: " , params.row.date);
-                        // this.compareTimeForEditButton(params.row.date, params.row.startDate);
-                        this.handleopenModal1();
-                        this.getTypeByID(params.row.id);
-                        this.getData()
-                      }
-                        
-                      }
-                    >
-                      edit
-                    </Button>
-                    
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                        console.log("delete function: " , params.row.id);
-                        this.handleDelete(params.row.id);
-                        this.refreshAfterDeletion(params.row.id);
-                      }}
-                    >
-                      delete
-                    </Button>
-                    <Button
-                    hidden={this.state.flag}
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      hidden={this.compareTimeForEditButton(params.row.date, params.row.startDate , "makeVisit")}
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                        this.makeVisit();
-                        console.log("herie   function: " , params.row);
-                        console.log("herooo ",this.props)
-                       this.props.history.push({
-                         pathname :`${this.props.location.pathname}/visit`,
-                         state:{ptId :""}
-                       })
-                      }}
-                    >
-                      Make Visit
-                    </Button>
-                  </strong>
-                ),
-              },]} pageSize={5}
-                checkboxSelection  onRowSelected={async (row) => {
-                  // this.handleDelete(row.data.id);
-                  // document.getElementById("hide").hidden = true;
-                  
-                  console.log("yes" , this.state.typeId);
-                  }} getRowId ={(row) =>{
-                      // console.log("id: " , row.id);
-                  }}
-                  onRowClick = {(row)=>{
-                      console.log("yyyys" , row);
-                      id = row.row.id;
-                      // this.settypeID(row.row.id);
-                      this.setState({typeId : row.row.id});
-    }} />
-
-            </div>  
-          
         </div>
         )
     }
@@ -790,13 +547,10 @@ class PatientAppointement extends Component {
 
     render() { 
       const { classes } = this.props;
-      let {past} = this.state
         
   return (
     <div className ="container">
-        {this.rendering(past)}
-        {this.renderFuture(past)}
-        {this.renderPast(past)}
+        {this.rendering()}
 
 <Modal
 
@@ -947,12 +701,11 @@ class PatientAppointement extends Component {
     </Container>
 </Modal>
 
-
-
-
-
-
-
+<Fab color="primary" aria-label="add" className ={classes.iconPlus} onClick = {()=>{
+  this.handleopenModal2()
+}} >
+  <AddIcon  />
+</Fab>
 <Modal
 key="1"
   open={this.state.openModal2}
@@ -1139,5 +892,5 @@ key="1"
     }
 }
  
-export default withStyles(useStyles)(PatientAppointement); 
+export default withStyles(useStyles)(FutureAppointement); 
 

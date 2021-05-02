@@ -103,7 +103,8 @@ class Appointement extends Component {
       date:"",
       startDime:"",
       endDime:"",
-      flag:true
+      flag:true, 
+      check:"",
           }
         }
         
@@ -160,7 +161,8 @@ class Appointement extends Component {
       
       var details = {
         'date':this.state.date,
-        'drFDId': 1
+        check: this.state.check,
+        id:this.state.FD
     };
     
     var formBody = [];
@@ -231,18 +233,26 @@ class Appointement extends Component {
       console.log("jjjjjjjjjjjjjj") 
        this.setState({flag: false})
      }
+     if(parseInt(localStorage.getItem("role") == 8)){
+       this.setState({check : "drId"});
+     }
+     else{
+      this.setState({check : "drFDId"});
+     }
+     this.setState({FD: localStorage.getItem("userId")});
      this.setState({userID : localStorage.getItem("userId")});
       // this.getData()
     }
     handleUpdate = ()=>{
       var obj = {
-        id:this.state.TypeObj.id,
+        appId:this.state.TypeObj.id,
         patientName: this.state.patientName,
         reason: this.state.reason,
         date: this.state.date,
         time: this.state.time,
         duration : this.state.duration,
-        drFDId : this.state.FD
+        check:this.state.check,
+        id : this.state.FD
       }
       if(!obj.patientName){
         obj.patientName = this.state.TypeObj.patientName
@@ -413,7 +423,8 @@ class Appointement extends Component {
         startTime : this.state.startTime,
         duration : this.state.duration,
         date: this.state.date,
-        drFDId : this.state.FD
+        check : this.state.check,
+         id : this.state.FD
         // reason : this.state.reason,
       }
       console.log("details:  ", details)
