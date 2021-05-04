@@ -315,7 +315,7 @@ class OrderGeneration extends Component {
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="default"
                       size="small"
@@ -334,8 +334,8 @@ class OrderGeneration extends Component {
                     >
                        Edit
                       
-                    </Button>
-                    <Button
+                    </Button> */}
+                    {/* <Button
                       variant="contained"
                       color="secondary"
                       size="small"
@@ -349,7 +349,7 @@ class OrderGeneration extends Component {
                       }}
                     >
                       delete
-                    </Button>
+                    </Button> */}
                   </strong>
                 ),
               }]} pageSize={5}
