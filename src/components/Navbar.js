@@ -293,11 +293,11 @@ const dispatch = useDispatch();
             history.push(match.path+"/ptRegistration");
           }
           // if(value.role.includes(role) && value.text == "Nursing Assessment"){
-          else if( value.text == "Nursing Assessment"){
+          else if( value.text == "Nursing Assessment" && value.role.includes(role)){
             // console.log("patient Register");
             history.push(match.path+"/patientsOnVisit");
           }
-          else if( value.text == "Lap Information System"){
+          else if( value.text == "Lap Information System" && value.role.includes(role)){
             // console.log("patient Register");
             history.push(match.path+"/search");
           }

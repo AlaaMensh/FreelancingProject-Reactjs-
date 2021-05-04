@@ -24,6 +24,7 @@ import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import "./form.css";
 import { useFormik,Formik } from 'formik';
+import {useHistory} from "react-router-dom";
 import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,9 +86,10 @@ export default function SignupForm() {
  // const [username, setUsername] = useState();
  // const [pass, setPass] = useState();
 //  const [email, setEmail] = useState();
+const history = useHistory();
   const classes = useStyles();
   const handleSignup = async(values)=>{
-    alert(values)
+    // alert(values)
         var details = {
           'userName':values.username,
           'Password': values.pass,
@@ -121,6 +123,7 @@ export default function SignupForm() {
   .catch(()=>{
     console.log("errror")
   })
+  history.push("/login")
 
 
   

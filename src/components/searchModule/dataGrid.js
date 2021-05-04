@@ -207,7 +207,7 @@ class DataGridTable extends Component {
                        Edit
                       
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="contained"
                       color="secondary"
                       size="small"
@@ -222,7 +222,7 @@ class DataGridTable extends Component {
                       }}
                     >
                       View
-                    </Button>
+                    </Button> */}
                   </strong>
                 ),
               }]} pageSize={5}
@@ -247,7 +247,7 @@ class DataGridTable extends Component {
     }
     
      fileChangedHandler = (event) => {
-    this.setState({result : event.target.value})
+    this.setState({result : event.target.files[0]})
       }
 
       handleUpdate = () =>{
@@ -314,7 +314,7 @@ class DataGridTable extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-          if(parseInt(localStorage.getItem("role") == 2)){
+          if(parseInt(localStorage.getItem("role")) == 2){
             this.handleUpdate();
           }
           else{

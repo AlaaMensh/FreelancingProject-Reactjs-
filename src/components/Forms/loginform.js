@@ -78,7 +78,7 @@ const validationSchema = Yup.object({
     //.required('Email is required'),
   pass: Yup
     .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
+    .min(2, 'Password should be of minimum 8 characters length')
     .required('Password is required'),
 });
 
@@ -90,7 +90,7 @@ export default function LoginForm() {
   const history = useHistory();
 
   const handleSignup = async(values)=>{
-    alert(values)
+    // alert(values)
     var details = {
       'userName':values.username,
       'Password': values.pass,
@@ -137,6 +137,11 @@ export default function LoginForm() {
         // console.log("resp.data: " , resp.data);
       
       })
+    }
+    if(data.role == "done"){
+      history.push("/welcomePage");
+      console.log("heeereeeee")
+      
     }
 
   })
