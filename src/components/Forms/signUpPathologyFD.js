@@ -18,6 +18,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
+import { useFormik,Formik } from 'formik';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -60,29 +62,74 @@ const useStyles = makeStyles((theme) => ({
   },
 
 }));
+const validationSchema = Yup.object({
+  username: Yup
+  .string('UserName ')
+  .required('UserName is required')
+        .max(20, 'UserName should be of maxmum 20 characters length')
+        .min(2,'UserName should be of minimum 2 characters length')
+        ,
+
+  email: Yup
+  .string('Enter your email')
+  .required('Email is required')
+    .email('Enter a valid email')
+    ,
+  pass: Yup
+  .string('Enter your password')
+  .required('Password is required')
+    .min(8, 'Password should be of minimum 8 characters length')
+   ,
+  phone: Yup
+  .number()
+  .required('phone is required')
+    .min(8, 'Phone number should be of minimum 8 numbers length')
+    .max(20,'Phone number should be of maxmum 8 numbers length')
+   ,
+   address: Yup
+   .string('Enter your address')
+   .required('address is required')
+    ,
+
+    establishment_name: Yup
+    .string ('establishment_name ')
+    .required('establishment_name is required')
+      .max(20, 'establishment_name should be of maxmum 20 characters length')
+      .min(2,'establishment_name should be of minimum 2 characters length')
+      ,
+
+  contact_pathology: Yup
+  .number('contact_pathology ')
+  .required('contact_pathology is required')
+     .max(20, 'contact_pathology should be of maxmum 20 characters length')
+     .min(2,'contact_pathology should be of minimum 2 characters length')
+     ,
+});
 
 export default function PathologyFDSignUp() {
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [address, setAddress] = useState();
-  const [establishmentName, setestablishmentName] = useState();
-  const [contactLab, setcontactLab] = useState();
+  //const [username, setUsername] = useState();
+  //const [pass, setPass] = useState();
+  //const [email, setEmail] = useState();
+  //const [phone, setPhone] = useState();
+  //const [address, setAddress] = useState();
+  //const [establishment_name, setEstablishment_name] = useState();
+  //const [contact_pathology, setContact_pathology] = useState();
   const classes = useStyles();
 
-  const handleSignup = async()=>{
-
+  const handleSignup = async(values)=>{
+    alert(values)
     var details = {
-      'userName':username,
-      'password': pass,
-      'email': email,
-      'address': address,
-      'phone' : phone,
-      'establishment': establishmentName,
-      'contactperson' : contactLab
+      'userName':values.username,
+      'password': values.pass,
+      'Email': values.email,
+      'phone' : values.phone,
+      'address': values.address,
+      'establishment': values.establishment_name,
+      'contactperson' : values.contact_lab,
+      'labId':values.labName
     
   };
+  
   
   var formBody = [];
   for (var property in details) {
@@ -115,11 +162,19 @@ return (
       <Typography component="h1" variant="h5">
       ADD Pathology FD
       </Typography>
-      <form className={classes.form} noValidate>
+      <Formik 
+                  initialValues={{username:'',degree:'',pass:'',email:'',phone:'',address:'', establishment_name:'',contact_pathology:'',}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    handleSignup(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form >
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -127,15 +182,15 @@ return (
               label="UserName"
               name="userName"
               autoComplete="username"
-              onChange = {(event) =>{
-                setUsername(event.target.value);
-                console.log("mmmmmm" , username);
-              }}
+              onChange = {formikprops.handleChange('username')}
+              onBlur = {formikprops.handleBlur('username')}
+              value = {formikprops.values.username}
+              error={formikprops.touched.username && formikprops.errors.username}
+              helperText={formikprops.touched.username && formikprops.errors.username}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -144,16 +199,15 @@ return (
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange = {(event) =>{
-                setPass(event.target.value);
-                console.log("password" , pass);
-              }}
-              
+              onChange = {formikprops.handleChange('pass')}
+              onBlur = {formikprops.handleBlur('pass')}
+              value = {formikprops.values.pass}
+              error={formikprops.touched.pass && formikprops.errors.pass}
+              helperText={formikprops.touched.pass && formikprops.errors.pass}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -162,15 +216,15 @@ return (
               type="email"
               id="email"
               // autoComplete="current-password"
-              onChange = {(event) =>{
-                setEmail(event.target.value);
-                console.log("email" , email);
-              }}
+              onChange = {formikprops.handleChange('email')}
+              onBlur = {formikprops.handleBlur('email')}
+              value = {formikprops.values.email}
+              error={formikprops.touched.email && formikprops.errors.email}
+              helperText={formikprops.touched.email && formikprops.errors.email}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -178,15 +232,15 @@ return (
               label="Phone"
               type="phone"
               id="phone"
-              onChange = {(event) =>{
-                setPhone(event.target.value);
-                console.log("phone" , phone);
-              }}
+              onChange = {formikprops.handleChange('phone')}
+              onBlur = {formikprops.handleBlur('phone')}
+              value = {formikprops.values.phone}
+              error={formikprops.touched.phone && formikprops.errors.phone}
+              helperText={formikprops.touched.phone && formikprops.errors.phone}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -194,43 +248,42 @@ return (
               label="Address"
               type="address"
               id="address"
-              onChange = {(event) =>{
-                setAddress(event.target.value);
-                console.log("address" , address);
-              }}
-            />
+              onChange = {formikprops.handleChange('address')}
+              onBlur = {formikprops.handleBlur('address')}
+              value = {formikprops.values.address}
+              error={formikprops.touched.address && formikprops.errors.address}
+              helperText={formikprops.touched.address && formikprops.errors.address}/>
+       
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
-              name="establishmentName"
-              label="establishmentName"
-              type="establishmentName"
-              id="establishmentName"
-              onChange = {(event) =>{
-                setestablishmentName(event.target.value);
-                console.log("establishmentName" , establishmentName);
-              }}
-            />
+              name="establishment_name"
+              label="Establishment_name"
+              type="establishment_name"
+              id="establishment_name"
+              onChange = {formikprops.handleChange('establishment_name')}
+              onBlur = {formikprops.handleBlur('establishment_name')}
+              value = {formikprops.values.establishment_name}
+              error={formikprops.touched.establishment_name && formikprops.errors.establishment_name}
+              helperText={formikprops.touched.establishment_name && formikprops.errors.establishment_name}/>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
-              name="contactLab"
-              label="contactLab"
-              type="contactLab"
-              id="contactLab"
-              onChange = {(event) =>{
-                setcontactLab(event.target.value);
-                // console.log("contactLab" , contactLab);
-              }}
-            />
+              name="contact_pathology"
+              label="Contact_Pathology"
+              type="contact_pathology"
+              id="contact_pathology"
+              onChange = {formikprops.handleChange('contact_pathology')}
+              onBlur = {formikprops.handleBlur('contact_pathology')}
+              value = {formikprops.values.contact_pathology}
+              error={formikprops.touched.contact_pathology && formikprops.errors.contact_pathology}
+              helperText={formikprops.touched.contact_pathology && formikprops.errors.contact_pathology}/>
           </Grid>
         </Grid>
         <Button
@@ -239,10 +292,8 @@ return (
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={()=>{
-        
-            handleSignup()
-          }}
+          onClick={formikprops.handleSubmit}
+
         >
          Signup
                     </Button>
@@ -254,9 +305,14 @@ return (
                     
                       </Grid>
                     </Grid>
-                  </form>
+                    </form>
+                   )}
+                   </Formik>
+ 
                 </div>
- </Container>
- </div>
-  );
+       
+      </Container>
+      </div>
+
+);
 }

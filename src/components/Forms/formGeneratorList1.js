@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DoctorSignup() {
+export default function FormGeneratorList1() {
   const [firstname, setFrestname] = useState();
   const [lastName, setlastName] = useState();
   const [ birthdate, setBirthdate] = useState();
@@ -200,7 +200,8 @@ return (
     }
     
           {/* <Container component="main" maxWidth="xs" style={{height:"100% !important"}}>
-    <div className={classes.paper}>
+    <div className={classes.paper}>import FormGenerator from './../../../../New folder/src/components/Forms/formCompoenent';
+
                   <Typography className={classes.backgroundHeader}>
                   <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />

@@ -73,6 +73,8 @@ import LabOrder from './../Orders/order_lab';
 import OrderGeneration from '../OrdersForPatient/orderGeneration';
 import AdditionOrderForm from '../OrdersForPatient/additionOrderForm';
 import Visit from '../Visit/visit';
+import Prescription from "../Prescription/Prescription";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const drawerWidth = 250;
 
@@ -276,22 +278,22 @@ const dispatch = useDispatch();
           <Typography variant="h6" noWrap>
             Our Clinical DashBoard
           </Typography>
-          <Typography  component="div" style={{marginLeft :"auto"}}>
-          {
-            logged ? (
-              <Button variant="contained" className={classes.loginLogoutButton}  onClick= {()=>{
-                setlogged(false);
+          <Typography  component="div" style={{marginLeft :"auto",    marginRight: "1em" , display:"flex" , alignItems:"center"}}>
+          <Button variant="contained" className={classes.loginLogoutButton}  onClick= {()=>{
+                 localStorage.removeItem("userId");
+                 localStorage.removeItem("role");
+                 localStorage.removeItem("labId");
+                 setlogged(false);
+                 history.push("/login")
               }}>
               LogOut
             </Button>
-            ):(
-              <Button className ={classes.loginLogoutButton} variant="contained"  onClick= {()=>{
-                setlogged(true);
-              }}>
-              LogIn
-            </Button>
-            )
-          }
+            <span>
+              <AccountCircleIcon style={{fontSize:"2em"}} onClick={()=>{
+                history.push(`${match.path}/profile`)
+              }}/>
+            </span>
+     
                  <FormControl className={classes.formControl}>
         {/* <InputLabel htmlFor="age-native-simple">Age</InputLabel> */}
         
@@ -420,6 +422,8 @@ const dispatch = useDispatch();
       <Route exact path={match.path+"/orderGeneration/:id/:type"}  component={OrderGeneration}/> 
       <Route exact path={match.path+"/orderGeneration/:id/:type/additionOrderForm"}  component={AdditionOrderForm}/> 
       <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 
+      <Route exact path={match.path+"/patientAppointement/:id/visit/prescription/:visitId"}  component={Prescription}/> 
+      <Route exact path={match.path+"/profile"}  component={Prescription}/> 
       {/* <Route exact path={match.path}  component={DashBoardComp}/>  */}
       {/* <Route exact path={match.path+"/com"} component={Signup}/>
       <Route exact path={match.path+"/login"} component={LoginForm}/> */}

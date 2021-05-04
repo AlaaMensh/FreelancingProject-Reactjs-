@@ -23,6 +23,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import "./form.css";
+import { useFormik,Formik } from 'formik';
+import * as Yup from 'yup';
 import { useHistory ,useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -64,18 +66,34 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const validationSchema = Yup.object({
+  username: Yup
+  .string('UserName ')
+    .max(20, 'UserName should be of maxmum 20 characters length')
+    .required('UserName is required'),
+  
+ // email: Yup
+   // .string('Enter your email')
+   // .email('Enter a valid email')
+    //.required('Email is required'),
+  pass: Yup
+    .string('Enter your password')
+    .min(8, 'Password should be of minimum 8 characters length')
+    .required('Password is required'),
+});
+
 export default function LoginForm() {
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
-  const [email, setEmail] = useState();
+  //const [username, setUsername] = useState();
+ // const [pass, setPass] = useState();
+ // const [email, setEmail] = useState();
   const classes = useStyles();
   const history = useHistory();
 
-  const handleSignup = async()=>{
-
+  const handleSignup = async(values)=>{
+    alert(values)
     var details = {
-      'userName':username,
-      'Password': pass,
+      'userName':values.username,
+      'Password': values.pass,
       // 'Email': email
   };
   
@@ -87,7 +105,7 @@ export default function LoginForm() {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
-  fetch('http://localhost:3000/authenticate/login/', {
+ await fetch('http://localhost:3000/authenticate/login/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -99,11 +117,26 @@ export default function LoginForm() {
     localStorage.setItem('role', data.role);
     localStorage.setItem('userId', data.userId);
 
-    if(data.userId > 1 ){
+    if(parseInt(data.role) > 2 ){
       history.push("/dashBoard")
     }
-    if(data.userId == 1){
+    if(parseInt(data.role) == 1){
       history.push("/welcomePage");
+    }
+    if(parseInt(data.role) == 2){
+      console.log("heeereeeee")
+      axios.post('http://localhost:3000/lab/getLabByUser' ,{
+        userId: data.userId
+      } ,{
+      } ).then(async resp => {
+        console.log("resppppppp : " ,resp);
+        localStorage.setItem('labId', resp.data.labId);
+        history.push("/dashBoard")
+     
+        // setLabs(resp.data)
+        // console.log("resp.data: " , resp.data);
+      
+      })
     }
 
   })
@@ -129,8 +162,17 @@ export default function LoginForm() {
                   <Typography component="h1" variant="h5">
                     Login
                   </Typography>
-                  <form className={classes.form} noValidate>
-                    <Grid container spacing={2}>
+                  <Formik 
+                  initialValues={{username:'',pass:'',email:''}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    handleSignup(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>                 
+                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <TextField
                           variant="outlined"
@@ -141,10 +183,11 @@ export default function LoginForm() {
                           label="UserName"
                           name="userName"
                           autoComplete="username"
-                          onChange = {(event) =>{
-                            setUsername(event.target.value);
-                            console.log("yyyyys" , username);
-                          }}
+                          onChange = {formikprops.handleChange('username')}
+                          onBlur = {formikprops.handleBlur('username')}
+                          value = {formikprops.values.username}
+                          error={formikprops.touched.username && formikprops.errors.username}
+                          helperText={formikprops.touched.username && formikprops.errors.username}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -166,10 +209,11 @@ export default function LoginForm() {
                           type="password"
                           id="password"
                           autoComplete="current-password"
-                          onChange = {(event) =>{
-                            setPass(event.target.value);
-                            console.log("password" , pass);
-                          }}
+                          onChange = {formikprops.handleChange('pass')}
+                          onBlur = {formikprops.handleBlur('pass')}
+                          value = {formikprops.values.pass}
+                          error={formikprops.touched.pass && formikprops.errors.pass}
+                          helperText={formikprops.touched.pass && formikprops.errors.pass}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -211,15 +255,8 @@ export default function LoginForm() {
                       variant="contained"
                       // color="primary"
                       className={classes.submit}
-                      onClick={()=>{
-                        // var obj = {
-                        //   userName:username,
-                        //   password:pass,
-                        //   email:email,
-                        // }
-                        // console.log("user: " , obj);
-                        handleSignup()
-                      }}
+                      onClick={formikprops.handleSubmit}
+
                     >
                       Login
                     </Button>
@@ -233,7 +270,10 @@ export default function LoginForm() {
                         </Link>
                       </Grid>
                     </Grid>
-                  </form>
+                    </form>
+                    )}
+                  </Formik>
+
                 </div>
        
       </Container>

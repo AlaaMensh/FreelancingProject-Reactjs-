@@ -99,7 +99,8 @@ class PatientsOnVisit extends Component {
       openModal2:false,
       TypeObj : {},
       name:"",
-      description :""  
+      description :"",
+      patientsOnVisit : []  
           }
         }
         
@@ -165,16 +166,16 @@ class PatientsOnVisit extends Component {
    
    
        await fetch(`http://localhost:3000/session/getSessionByDate`, {
-         method: 'POST',
+         method: 'GET',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-         },
-         body: formBody
+         }
+         
        }).then(async(resp)=>{
          resp.json().then(async(data)=>{
            console.log("Data:  " , data)
+           this.setState({patientsOnVisit : data});
           //  await this.setState({orderlabList: data});
-       
          })
        }).catch(()=>{
          console.log("error Getting Here")
@@ -289,12 +290,12 @@ class PatientsOnVisit extends Component {
             </div>
           </div>
             <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
-               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={rows} columns={[
+               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.patientsOnVisit} columns={[
                  { field: 'id', headerName: 'id', width: 70 },
               { field: 'firstName', headerName: 'firstName', width: 200 },
               { field: 'phone', headerName: 'phone', width: 100 },
               { field: 'address', headerName: 'address', width: 100 },
-              { field: 'email', headerName: 'email', width: 200 },
+              { field: 'maritalStatus', headerName: 'Marital Status', width: 200 },
             
               { 
                 field: 'Actions',
@@ -312,9 +313,9 @@ class PatientsOnVisit extends Component {
                      
                       style={{ marginLeft: 16 }}
                       onClick={()=>{ 
-                          console.log("props:  " , this.props.location.pathname);
-                          this.props.history.push(`${this.props.location.pathname}/nurseVisit/${params.row.id}`)
-                        this.getTypeByID(params.row.id); 
+                          console.log("props:  " ,params.row);
+                          this.props.history.push(`${this.props.location.pathname}/nurseVisit/${params.row.ptId}`)
+                        // this.getTypeByID(params.row.id); 
                       }}>
 
                        Fill Vitals

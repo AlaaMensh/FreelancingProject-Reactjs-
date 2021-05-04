@@ -557,7 +557,7 @@ class PatientAppointement extends Component {
       return(
         <div className=""  style={{marginTop : "4em"}}>
             <div className="" style = {{height: 400, width: '100%' }}>
-            <h4>Patient Past Appointements</h4>
+            <h4 style={{color: "#17a2b8"}}>Patient Past Appointements</h4>
              <DataGrid rows={this.state.past} columns={[{ field: 'id', headerName: 'ID', width: 70 },
               { field: 'patientName',
                 // hide:(this.state.flag)?true:false,
@@ -654,7 +654,7 @@ class PatientAppointement extends Component {
       return(
         <div className="" style={{marginTop : "4em"}}>
             <div className="" style = {{height: 400, width: '100%' }}>
-            <h4>Patient Future Appointements</h4>
+            <h4 style={{color: "#17a2b8"}}>Patient Future Appointements</h4>
              <DataGrid rows={this.state.future} columns={[{ field: 'id', headerName: 'ID', width: 70 },
               { field: 'patientName',
                 // hide:(this.state.flag)?true:false,
@@ -886,23 +886,7 @@ class PatientAppointement extends Component {
                 }}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="fd"
-                label="FD"
-                name="fd" 
-                type="text"
-                autoComplete="fd"
-                placeholder={this.state.TypeObj.FD}
-                onChange = {(event) =>{
-                  this.setState({FD : event.target.value});
-                }}
-              />
-            </Grid> */}
+
             <Grid item xs={12}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}

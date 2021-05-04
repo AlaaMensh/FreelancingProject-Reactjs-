@@ -31,11 +31,14 @@ import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import "./types.css";
+import { useFormik,Formik } from 'formik';
+//import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 // import EditIcon from '@material-ui/icons/Edit';
 
 const useStyles = (theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -76,7 +79,52 @@ const useStyles = (theme) => ({
   }
 });
 
+const validationSchema = Yup.object({
+  genric_name: Yup
+  .string('genric_name ').required()
+    .max(20, 'genric_name should be of maxmum 20 characters length')
+    .min(2,'genric_name should be of minimum 2 characters length'),
 
+    trade_name: Yup
+    .string('trade_name ').required()
+      .max(20, 'trade_name should be of maxmum 20 characters length')
+      .min(2,'trade_name should be of minimum 2 characters length'),
+
+    form: Yup
+    .string('Enter form').required()
+    .min(3,'abbreviation should be of minimum 3 characters length'),
+    dose: Yup
+    .string('Enter does').required()
+    .min(3,'dose should be of minimum 3 characters length'),
+    family: Yup 
+    .string('Enter the family').required()
+    .min(3,'family should be of minimum 3 characters length'),
+
+
+});
+const validationSchemaEdit = Yup.object({
+  genric_name: Yup
+  .string('genric_name ')
+    .max(20, 'genric_name should be of maxmum 20 characters length')
+    .min(2,'genric_name should be of minimum 2 characters length'),
+
+    trade_name: Yup
+    .string('trade_name ')
+      .max(20, 'trade_name should be of maxmum 20 characters length')
+      .min(2,'trade_name should be of minimum 2 characters length'),
+
+    form: Yup
+    .string('Enter form')
+    .min(3,'abbreviation should be of minimum 3 characters length'),
+    dose: Yup
+    .string('Enter does')
+    .min(3,'dose should be of minimum 3 characters length'),
+    family: Yup 
+    .string('Enter the family')
+    .min(3,'family should be of minimum 3 characters length'),
+
+
+});
 
 var id = 0;
 var rowsToKeep = [];
@@ -193,14 +241,15 @@ class Drug extends Component {
     this.getData()
   }
   
-    handleUpdate = ()=>{
+  handleUpdate = async(values)=>{
+    alert(values)
       var details = {      
        id:this.state.TypeObj.id,
-        genricName: this.state.genric_name,
-        tradeName: this.state.trade_name,
-        form: this.state.form,
-        dose: this.state.dose,
-        family : this.state.family,
+        genricName: values.genric_name,
+        tradeName: values.trade_name,
+        form: values.form,
+        dose: values.dose,
+        family :values.family,
       }
       if(!details.genricName){
         details.genricName = this.state.TypeObj.genricName
@@ -336,7 +385,7 @@ class Drug extends Component {
         )
     }
         
-    handleAdding = () =>{
+    handleAdding = async() =>{
       var details = {
         genricName: this.state.genric_name,
         tradeName: this.state.trade_name,
@@ -356,7 +405,7 @@ class Drug extends Component {
       formBody = formBody.join("&");
       console.log("formging:     " , formBody)
       
-      fetch('http://localhost:3000/drug/addDrug', {
+      await fetch('http://localhost:3000/drug/addDrug', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -393,7 +442,16 @@ class Drug extends Component {
         <Typography component="h1" variant="h5">
           Edit
         </Typography>
-        <form className={classes.form} noValidate>
+        <Formik 
+                  initialValues={{genric_name:'',trade_name:'',form:'',dose:'',family:''}}
+                  validationSchema={validationSchemaEdit}
+                  onSubmit={(values,actions)=>{
+                    this.handleUpdate(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -407,10 +465,12 @@ class Drug extends Component {
                 type="text"
                 autoComplete="Genric_Name"
                  placeholder={this.state.TypeObj.genricName}
-                onChange = {(event) =>{
-                  // console.log("name:    ", this.state.TypeObj);  
-                  this.setState({genric_name : event.target.value});
-                }}
+                 onChange = {formikprops.handleChange('genric_name')}
+                 onBlur = {formikprops.handleBlur('genric_name')}
+                 value = {formikprops.values.genric_name}
+                 error={formikprops.touched.genric_name && formikprops.errors.genric_name}
+                 helperText={formikprops.touched.genric_name && formikprops.errors.genric_name}
+               
               />
             </Grid>
             <Grid item xs={12}>
@@ -425,9 +485,11 @@ class Drug extends Component {
                 type="text"
                 autoComplete="Trade_Name"
                 placeholder={this.state.TypeObj.tradeName}
-                onChange = {(event) =>{
-                  this.setState({trade_name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('trade_name')}
+                onBlur = {formikprops.handleBlur('trade_name')}
+                value = {formikprops.values.trade_name}
+                error={formikprops.touched.trade_name && formikprops.errors.trade_name}
+                helperText={formikprops.touched.trade_name && formikprops.errors.trade_name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -442,9 +504,11 @@ class Drug extends Component {
                 type="text"
                 autoComplete="Form"
                 placeholder={this.state.TypeObj.form}
-                onChange = {(event) =>{
-                  this.setState({trade_name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('form')}
+                onBlur = {formikprops.handleBlur('form')}
+                value = {formikprops.values.form}
+                error={formikprops.touched.form && formikprops.errors.form}
+                helperText={formikprops.touched.form && formikprops.errors.form}
               />
             </Grid>
             <Grid item xs={12}>
@@ -459,9 +523,11 @@ class Drug extends Component {
                 type="text"
                 autoComplete="Dose"
                 placeholder={this.state.TypeObj.dose}
-                onChange = {(event) =>{
-                  this.setState({dose : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('dose')}
+                onBlur = {formikprops.handleBlur('dose')}
+                value = {formikprops.values.dose}
+                error={formikprops.touched.form && formikprops.errors.dose}
+                helperText={formikprops.touched.dose && formikprops.errors.dose}
               />
             </Grid>
             <Grid item xs={12}>
@@ -475,10 +541,11 @@ class Drug extends Component {
                 id="family"
                 autoComplete="family"
                 placeholder={this.state.TypeObj.family}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({family : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('family')}
+                onBlur = {formikprops.handleBlur('family')}
+                value = {formikprops.values.family}
+                error={formikprops.touched.family && formikprops.errors.family}
+                helperText={formikprops.touched.family && formikprops.errors.family}
                 
               />
             </Grid>
@@ -491,15 +558,18 @@ class Drug extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              this.handleUpdate();
+              formikprops.handleSubmit()
               this.getData();
+              return ;
             }}
           >
            
             Edit
           </Button>
-          
-        </form>
+       
+          </form>
+)}
+                  </Formik>
       </div>
       {/* <Box mt={5}>
         <Copyright />
@@ -523,7 +593,16 @@ key="1"
         <Typography component="h1" variant="h5">
           Add
         </Typography>
-        <form className={classes.form} noValidate>
+        <Formik 
+                  initialValues={{genric_name:'',trade_name:'',form:'',dose:'',family:''}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    this.handleAdding(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -537,9 +616,12 @@ key="1"
                 type="text"
                 autoComplete="Genric_Name"
                 // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({genric_name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('genric_name')}
+                 onBlur = {formikprops.handleBlur('genric_name')}
+                 value = {formikprops.values.genric_name}
+                 error={formikprops.touched.genric_name && formikprops.errors.genric_name}
+                 helperText={formikprops.touched.genric_name && formikprops.errors.genric_name}
+               
               />
             </Grid>
             <Grid item xs={12}>
@@ -553,10 +635,11 @@ key="1"
                 name="trade_name" 
                 type="text"
                 autoComplete="Trade_Name"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({trade_name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('trade_name')}
+                onBlur = {formikprops.handleBlur('trade_name')}
+                value = {formikprops.values.trade_name}
+                error={formikprops.touched.trade_name && formikprops.errors.trade_name}
+                helperText={formikprops.touched.trade_name && formikprops.errors.trade_name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -570,9 +653,11 @@ key="1"
                 name="form" 
                 type="text"
                 autoComplete="Form"
-                onChange = {(event) =>{
-                  this.setState({form : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('form')}
+                onBlur = {formikprops.handleBlur('form')}
+                value = {formikprops.values.form}
+                error={formikprops.touched.form && formikprops.errors.form}
+                helperText={formikprops.touched.form && formikprops.errors.form}
               />
             </Grid>
             <Grid item xs={12}>
@@ -586,9 +671,11 @@ key="1"
                 name="dose" 
                 type="text"
                 autoComplete="Dose"
-                onChange = {(event) =>{
-                  this.setState({dose : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('dose')}
+                onBlur = {formikprops.handleBlur('dose')}
+                value = {formikprops.values.dose}
+                error={formikprops.touched.form && formikprops.errors.dose}
+                helperText={formikprops.touched.dose && formikprops.errors.dose}
               />
             </Grid>
             <Grid item xs={12}>
@@ -603,10 +690,11 @@ key="1"
                 id="family"
                 autoComplete="family"
                 // placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({family : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('family')}
+                onBlur = {formikprops.handleBlur('family')}
+                value = {formikprops.values.family}
+                error={formikprops.touched.family && formikprops.errors.family}
+                helperText={formikprops.touched.family && formikprops.errors.family}
                 
               />
             </Grid>
@@ -619,15 +707,19 @@ key="1"
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              this.handleAdding();
+              formikprops.handleSubmit()
               this.getData();
+              return ;
 
             }}
           >
             Add
           </Button>
           
-        </form>
+     
+          </form>
+)}
+                  </Formik>
       </div>
       {}
     </Container>

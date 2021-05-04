@@ -30,7 +30,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-
+import { useFormik,Formik } from 'formik';
+//import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from 'yup';
 var object  = {}
 const useStyles = (theme) => ({
   paper: {
@@ -79,6 +81,37 @@ var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
 
+const validationSchema = Yup.object({
+  name: Yup
+  .string('Name ').required()
+    .max(20, 'Name should be of maxmum 20 characters length')
+    .min(2,'Name should be of minimum 2 characters length'),
+    
+  
+  
+    code: Yup
+    .number('Enter code').required()
+    .min(3,'code should be of minimum 20 number length'),
+    abbreviation: Yup
+    .string('Enter abbreviation').required()
+    .min(3,'abbreviation should be of minimum 20 characters length'),
+
+});
+const validationSchemaForEdit = Yup.object({
+  name: Yup
+  .string('Name ')
+    .max(20, 'Name should be of maxmum 20 characters length')
+    .min(2,'Name should be of minimum 2 characters length'),
+  
+  
+    code: Yup
+    .number('Enter code')
+    .min(3,'code should be of minimum 20 number length'),
+    abbreviation: Yup
+    .string('Enter abbreviation')
+    .min(3,'abbreviation should be of minimum 20 characters length'),
+
+});
 class Disease extends Component {
   constructor(props) {
     super(props);
@@ -165,7 +198,7 @@ class Disease extends Component {
     };
     refreshAfterDeletion = (id)=>{
      this.setState({
-      allergyList: this.state.allergyList.filter(row => row.id !== id)
+      diseaseList: this.state.diseaseList.filter(row => row.id !== id)
      })
     }
  
@@ -196,12 +229,13 @@ class Disease extends Component {
       this.getData()
     }
   
-    handleUpdate = ()=>{
+    handleUpdate = async(values)=>{
+      // alert(values)
       var details = {
         id:this.state.TypeObj.id,
-        name: this.state.name,
-        code: this.state.code,
-        abbreviation : this.state.abbreviation,
+        name: values.name,
+        code: values.code,
+        abbreviation : values.abbreviation,
       }
       if(!details.name){
         details.name = this.state.TypeObj.name
@@ -277,7 +311,6 @@ class Disease extends Component {
                       style={{ marginLeft: 16 }}
                       onClick={()=>{
                         this.handleopenModal1();
-                        console.log("lsssssssssssssssssssssssssssssssssssss")
                         this.getTypeByID(params.row.id);
                         this.getData()
                       }
@@ -331,11 +364,12 @@ class Disease extends Component {
        
        )
    }
-    handleAdding = () =>{
+   handleAdding = async(values)=>{
+    // alert(values)
       var details = {
-        name: this.state.name,
-        code: this.state.code,
-        abbreviation : this.state.abbreviation,
+        name:values.name,
+        code: values.code,
+        abbreviation : values.abbreviation,
       }
 
       console.log("detilaas : " , details)
@@ -349,7 +383,7 @@ class Disease extends Component {
       formBody = formBody.join("&");
       console.log("formging:     " , formBody)
       
-      fetch('http://localhost:3000/allergy/addAllergy', {
+      fetch('http://localhost:3000/diseases/addDiseases', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -386,7 +420,16 @@ class Disease extends Component {
         <Typography component="h1" variant="h5">
           Edit
         </Typography>
-        <form className={classes.form} noValidate>
+        <Formik 
+                  initialValues={{name:'',code:'',abbreviation:''}}
+                  validationSchema={validationSchemaForEdit}
+                  onSubmit={(values,actions)=>{
+                    this.handleUpdate(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -400,9 +443,11 @@ class Disease extends Component {
                 type="text"
                 autoComplete="Name"
                 placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('name')}
+                onBlur = {formikprops.handleBlur('name')}
+                value = {formikprops.values.name}
+                error={formikprops.touched.name && formikprops.errors.name}
+                helperText={formikprops.touched.name && formikprops.errors.name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -417,11 +462,11 @@ class Disease extends Component {
                 id="code"
                 autoComplete="current-password"
                 placeholder={this.state.TypeObj.code}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({code : event.target.value});
-                }}
-                
+                onChange = {formikprops.handleChange('code')}
+                onBlur = {formikprops.handleBlur('code')}
+                value = {formikprops.values.code}
+                error={formikprops.touched.code && formikprops.errors.code}
+                helperText={formikprops.touched.code && formikprops.errors.code}
               />
             </Grid>
             <Grid item xs={12}>
@@ -434,12 +479,13 @@ class Disease extends Component {
                 // label="description"
                 type="text"
                 id="abbreviation"
-                autoComplete="current-password"
+                autoComplete="abbreviation"
                 placeholder={this.state.TypeObj.abbreviation}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({abbreviation : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('abbreviation')}
+                onBlur = {formikprops.handleBlur('abbreviation')}
+                value = {formikprops.values.abbreviation}
+                error={formikprops.touched.abbreviation && formikprops.errors.abbreviation}
+                helperText={formikprops.touched.abbreviation && formikprops.errors.abbreviation}
                 
               />
             </Grid>
@@ -452,7 +498,7 @@ class Disease extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              this.handleUpdate();
+              formikprops.handleSubmit()
               this.getData();
               // console.log("user: " , obj);
               // handleSignup()
@@ -461,7 +507,9 @@ class Disease extends Component {
            
             Edit
           </Button>
-        </form>
+          </form>
+                    )}
+                  </Formik>
       </div>
       {}
     </Container>
@@ -488,10 +536,20 @@ key="1"
         <Typography component="h1" variant="h5">
           Add
         </Typography>
-        <form className={classes.form} noValidate>
+        <Formik 
+                  initialValues={{name:'',code:'',abbreviation:''}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    this.handleAdding(values)
+                    this.getData();
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
+            <TextField
                InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
@@ -501,10 +559,12 @@ key="1"
                 name="name" 
                 type="text"
                 autoComplete="Name"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({name : event.target.value});
-                }}
+                placeholder={this.state.TypeObj.name}
+                onChange = {formikprops.handleChange('name')}
+                onBlur = {formikprops.handleBlur('name')}
+                value = {formikprops.values.name}
+                error={formikprops.touched.name && formikprops.errors.name}
+                helperText={formikprops.touched.name && formikprops.errors.name}
               />
             </Grid>
             <Grid item xs={12}>
@@ -517,11 +577,12 @@ key="1"
                 label="code"
                 type="text"
                 id="code"
-                autoComplete="current-password"
-                onChange = {(event) =>{
-                  this.setState({code : event.target.value});
-                }}
-                
+                autoComplete="code"
+                onChange = {formikprops.handleChange('code')}
+                onBlur = {formikprops.handleBlur('code')}
+                value = {formikprops.values.code}
+                error={formikprops.touched.code && formikprops.errors.code}
+                helperText={formikprops.touched.code && formikprops.errors.code}
               />
             </Grid>
             <Grid item xs={12}>
@@ -534,13 +595,13 @@ key="1"
                 label="abbreviation"
                 type="text"
                 id="abbreviation"
-                autoComplete="current-password"
+                autoComplete="abbreviation"
                 // placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({abbreviation : event.target.value});
-                }}
-                
+                onChange = {formikprops.handleChange('abbreviation')}
+                onBlur = {formikprops.handleBlur('abbreviation')}
+                value = {formikprops.values.abbreviation}
+                error={formikprops.touched.abbreviation && formikprops.errors.abbreviation}
+                helperText={formikprops.touched.abbreviation && formikprops.errors.abbreviation}
               />
             </Grid> 
            
@@ -551,17 +612,13 @@ key="1"
             color="primary"
             fullWidth
             className={classes.submit}
-            onClick={()=>{
-              this.handleAdding();
-              this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
-            }}
+            onClick={formikprops.handleSubmit}
           >
             Add
           </Button>
-           
           </form>
+                    )}
+                  </Formik>
       </div>
       {/* <Box mt={5}>
         <Copyright />

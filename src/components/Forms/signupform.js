@@ -23,6 +23,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import LockIcon from '@material-ui/icons/Lock';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import "./form.css";
+import { useFormik,Formik } from 'formik';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -63,19 +65,34 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function Signup() {
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
-  const [email, setEmail] = useState();
+const validationSchema = Yup.object({
+  username: Yup
+  .string('UserName ')
+    .max(20, 'UserName should be of maxmum 20 characters length')
+    .min(2,'UserName should be of minimum 20 characters length')
+    .required('UserName is required'),
+  
+  email: Yup
+    .string('Enter your email')
+    .email('Enter a valid email')
+    .required('Email is required'),
+  pass: Yup
+    .string('Enter your password')
+    .required('Password is required')
+    .min(8,'Password should be of minimum 8 characters length'),
+});
+export default function SignupForm() {
+ // const [username, setUsername] = useState();
+ // const [pass, setPass] = useState();
+//  const [email, setEmail] = useState();
   const classes = useStyles();
-
-  const handleSignup = async()=>{
-
-    var details = {
-      'userName':username,
-      'Password': pass,
-      'Email': email
-  };
+  const handleSignup = async(values)=>{
+    alert(values)
+        var details = {
+          'userName':values.username,
+          'Password': values.pass,
+          'Email': values.email
+      };
   
   var formBody = [];
   for (var property in details) {
@@ -119,7 +136,16 @@ export default function Signup() {
                   <Typography component="h1" variant="h5">
                     Sign up
                   </Typography>
-                  <form className={classes.form} noValidate>
+                  <Formik 
+                  initialValues={{username:'',pass:'',email:''}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    handleSignup(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>
                     <Grid container spacing={2}>
                       <Grid item xs={12}>
                         <TextField
@@ -131,10 +157,13 @@ export default function Signup() {
                           label="UserName"
                           name="userName"
                           autoComplete="username"
-                          onChange = {(event) =>{
-                            setUsername(event.target.value);
-                            console.log("yyyyys" , username);
-                          }}
+                          onChange = {formikprops.handleChange('username')}
+                          onBlur = {formikprops.handleBlur('username')}
+                          value = {formikprops.values.username}
+                          error={formikprops.touched.username && formikprops.errors.username}
+                          helperText={formikprops.touched.username && formikprops.errors.username}
+                        
+                       
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -143,7 +172,7 @@ export default function Signup() {
                             ),
                           }}
                         />
-                        
+                      
                       </Grid>
                       <Grid item xs={12}>
                         <TextField
@@ -156,10 +185,13 @@ export default function Signup() {
                           type="password"
                           id="password"
                           autoComplete="current-password"
-                          onChange = {(event) =>{
-                            setPass(event.target.value);
-                            console.log("password" , pass);
-                          }}
+                          onChange = {formikprops.handleChange('pass')}
+                          onBlur = {formikprops.handleBlur('pass')}
+                          value = {formikprops.values.pass}
+                          error={formikprops.touched.pass && formikprops.errors.pass}
+                          helperText={formikprops.touched.pass && formikprops.errors.pass}
+
+
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -180,11 +212,14 @@ export default function Signup() {
                           label="Email"
                           type="email"
                           id="email"
+                          error={formikprops.touched.email && formikprops.errors.email}
+
                           // autoComplete="current-password"
-                          onChange = {(event) =>{
-                            setEmail(event.target.value);
-                            console.log("email" , email);
-                          }}
+                          onChange = {formikprops.handleChange('email')}
+                          onBlur = {formikprops.handleBlur('email')}
+                          value = {formikprops.values.email}
+                          error={formikprops.touched.email && formikprops.errors.email}
+                          helperText={formikprops.touched.email && formikprops.errors.email}
                           InputProps={{
                             startAdornment: (
                               <InputAdornment position="start">
@@ -201,15 +236,8 @@ export default function Signup() {
                       variant="contained"
                       // color="primary"
                       className={classes.submit}
-                      onClick={()=>{
-                        // var obj = {
-                        //   userName:username,
-                        //   password:pass,
-                        //   email:email,
-                        // }
-                        // console.log("user: " , obj);
-                        handleSignup()
-                      }}
+                      onClick={formikprops.handleSubmit}
+
                     >
                       Sign Up
                     </Button>
@@ -223,7 +251,10 @@ export default function Signup() {
                         </Link> */}
                       </Grid>
                     </Grid>
-                  </form>
+                    </form>
+                    )}
+                  </Formik>
+
                 </div>
        
       </Container>

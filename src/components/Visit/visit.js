@@ -19,7 +19,7 @@ import Typography from '@material-ui/core/Typography';
 // import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import InputLabel from '@material-ui/core/InputLabel';
-import  { useState , useEffect} from 'react';
+import  { useState , useEffect } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -29,6 +29,8 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import ChiefComplains from "./chiefComplains";
 import Procedures from './procedures';
 import Investgation from './investgation';
+import {useHistory} from "react-router-dom";
+// import Investgation from './Prescription';
 // import Procedures from "./procedures"
 
 const useStyles = makeStyles((theme) => ({
@@ -85,12 +87,13 @@ const styles = {
 }
 
 function getSteps() {
-  return ['Fill Important Info', 'Investigation', 'Procedures' ];
+  return ['Fill Important Info', 'Investigation', 'Procedures'  , 'finished' ];
 }
 
 
 
 export default function Visit({match}) {
+  const history = useHistory();
   
   const [ptId, setPId] = useState(1);
   const [drId, setDrId] = useState(1);
@@ -126,7 +129,7 @@ export default function Visit({match}) {
   
   
     useEffect(()=>{
-      console.log("this.props" , match.params.id );
+      console.log("this.props" , match );
       setPId(match.params.id);
       setPId(localStorage.getItem("userId"));
 
@@ -141,7 +144,7 @@ export default function Visit({match}) {
         console.log("step3obj :  " , objStep3);
 
         var details = {
-          ptId:ptId,
+          ptId:match.params.id,
           drId:drId,
           chiefComplains : chiefComplains,
           diagnosis : diagnosis,
@@ -173,11 +176,17 @@ export default function Visit({match}) {
              'Content-Type': 'application/json'
            },
           body: JSON.stringify(details)
-        }).then(()=>{
-          console.log("it is inserted");
+        }).then((resp)=>{
+          resp.json().then((data) =>{
+            console.log("my Data:   " , data);
+            history.push(`${match.url}/prescription/${data.id}`);
+           
+
+          })
         }).catch(()=>{
           console.log("errror")
         })
+        // history.push(`${match.url}/prescription/1`);
 
 
 
@@ -327,6 +336,7 @@ export default function Visit({match}) {
             obj = {objStep2}
              />    
           );
+  
         
         default:
           return 'Finished Thanks.....';

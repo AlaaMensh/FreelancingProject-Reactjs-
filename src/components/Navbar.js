@@ -55,8 +55,14 @@ import PaientRegistration from './patientRegistration/importatntInfo';
 import ptRegistration from './patientRegistration/ptRegistration';
 import NurseVisit from "../components/nurseModule/nursemodule";
 import Visit from "../components/Visit/visit";
+import Prescription from "../components/Prescription/Prescription";
 import PatientsOnVisit from "../components/nurseModule/patinetsOnVisit";
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
+import Search from "./searchModule/search";
+import PatientLabOrders from "./Orders/patientLabsData";
+// import Profile from "../Profile";
+import Profile from './Profile/Profile';
+
 
 
 const drawerWidth = 250;
@@ -193,16 +199,16 @@ const [ appBarList , setAppBarList] = useState(["Patient Registration" , "index2
 const [ role , setRole] = useState("doctor");
 const [ isLogin , setisLogin] = useState(false);
 const [ dropDownFunctions , setdropDownFunctions] = useState(["Dr.DahshBoard" 
-                , "appointments" ,"activityLog" ,"trash"]);
+                , "appointments" ,"Profile" ,"trash"]);
 // var appBarList = ["Alaa" , "Ahmed" , "Mohamed" , "lol"];
 const MainFunctions = [
     {text: "New Doctor Appointement" , role :["8"]},
     {text: "New patient registration" , role :["8" , "6"]},
     {text: "EMR Electronic Medical Records" , role :["8"]},
     {text: "Nursing Assessment" , role :["8" , "7"]},
-    {text: "Lap Information System" , role :["3"]},
-    {text: "Rediology information system" , role :["4"]},
-    {text: "Path information system " , role :["5"]},
+    {text: "Lap Information System" , role :["2"]},
+    {text: "Rediology information system" , role :["3"]},
+    {text: "Path information system " , role :["4"]},
     {text: "Electronic procreption ERX" , role :["13" , ""]},
     {text: "System Admin" , role :["admin"]},
     {text: "Document Manegment" , role :["" , ""]},
@@ -282,14 +288,18 @@ const dispatch = useDispatch();
             // console.log("yyysds");
             history.push(match.path+"/appoint");
           }
-          if(value.role.includes(role) && value.text == "New patient registration"){
+          else if(value.role.includes(role) && value.text == "New patient registration"){
             // console.log("patient Register");
             history.push(match.path+"/ptRegistration");
           }
           // if(value.role.includes(role) && value.text == "Nursing Assessment"){
-          if( value.text == "Nursing Assessment"){
+          else if( value.text == "Nursing Assessment"){
             // console.log("patient Register");
             history.push(match.path+"/patientsOnVisit");
+          }
+          else if( value.text == "Lap Information System"){
+            // console.log("patient Register");
+            history.push(match.path+"/search");
           }
           
         }}>
@@ -332,7 +342,9 @@ const dispatch = useDispatch();
               <Button variant="contained" className={classes.loginLogoutButton}  onClick= {()=>{
                 localStorage.removeItem("userId");
                 localStorage.removeItem("role");
+                localStorage.removeItem("labId");
                 setlogged(false);
+                history.push("/login")
               }}>
               LogOut
             </Button>
@@ -354,12 +366,16 @@ const dispatch = useDispatch();
           // value = {state.age}
           onChange = {(e)=>{
             console.log(e.target.value);
-            if(e.target.value == "Dr.DahshBoard" && parseInt(role) > 1 ){
+             if(e.target.value == "Dr.DahshBoard" && parseInt(role) > 1 ){
               history.push(`${match.path}`);
             }
-            if(e.target.value == "appointments" && (parseInt(role) == 8 || parseInt(role) == 2)){
+            else if(e.target.value == "appointments" && (parseInt(role) == 8 || parseInt(role) == 2)){
              console.log("heeskskkskkkkkkkkkkkkkkkk:  ")
               history.push(match.path+"/appoint");
+            }
+            else if(e.target.value == "Profile" ){
+             console.log("heeskskkskkkkkkkkkkkkkkkk:  ")
+            history.push(match.path+"/profile");
             }
           }}
           // inputProps = {{
@@ -434,9 +450,14 @@ const dispatch = useDispatch();
       <div className="row" style={{marginTop:"5em"}}>
       <Switch> 
       <Route exact path={match.path+"/appoint"}  component={Appointement}/> 
+      <Route exact path={match.path+"/search"}  component={Search}/> 
+      <Route exact path={match.path +"/search/patientOrders/:ptId"} component = {PatientLabOrders} />
       <Route exact path={match.path +"/patientsOnVisit"} component = {PatientsOnVisit} />
       <Route exact path={match.path +"/patientsOnVisit/nurseVisit/:id"} component = {NurseVisit} />
-      
+      <Route exact path={match.path +"/appoint/visit/:id"} component = {Visit} />
+      <Route exact path={match.path +"/appoint/visit/:id/prescription/:visitId"} component = {Prescription} />
+      <Route exact path={match.path +"/profile"} component = {Profile} />
+            
       <Route exact path={match.path} >
       <div className={classes.root}>
       <main

@@ -91,11 +91,14 @@ class PatientLabOrders extends Component {
       ptId:1,
       labs:[],
       acceptedIds:[],
-      labId:1
+      labId:1,
+      userName:""
 
           }
         }
        async componentDidMount(){
+         console.log("kkkkk: ",this.props.match.params.ptId);
+         this.setState({ptId : this.props.match.params.ptId})
          this.setState({acceptedIds:[]});
         await this.getLabsByPId();
            this.getPatientDetails()
@@ -133,7 +136,7 @@ class PatientLabOrders extends Component {
         getLabsByPId = async ()=> {
           var details = {
            type:0,
-           ptId:this.state.ptId
+           ptId:this.props.match.params.ptId
           }
           var formBody = [];
           for (var property in details) {
@@ -211,9 +214,12 @@ class PatientLabOrders extends Component {
     };
   //  'http://localhost:3000/radio/getAll
     getData = async()=>{
-      await axios.get('http://localhost:3000/lab/getOrdersByLabId').then(async resp => {
+      await axios.post('http://localhost:3000/lab/getOrderByPtId' ,{
+        ptId : this.state.userName
+      } ).then(async resp => {
+        console.log("resp : " ,)
          this.setState({
-            radio_orderList : resp.data
+            labs : resp.data
         })
         // console.log("resp.data: " , resp.data);
       
@@ -233,11 +239,18 @@ class PatientLabOrders extends Component {
     rendering = () =>{
       const { todos } = this.state;
         return(
+          
+          <div className="container gridDataContent " style={{marginTop : "10em"}}>
+            
 
-          <div className="container gridDataContent mt-5 "> 
             <div className="row justify-content-center align-items-center borderedGrid  ">
               <div className="col-8 mt-5">
-                <UserInfo  id = {this.state.ptId}/>
+                <UserInfo  id = {this.props.match.params.ptId}/>
+                {/* {
+                  this.state.userName && 
+                  <UserInfo  id = {this.state.userName}/>
+                  
+                } */}
                 {/* <div className="row text-center">
                   <div className="col-12 col-md-6 headerSpan">
                     <span className="leftSide">Patient Name: </span>
@@ -276,7 +289,26 @@ class PatientLabOrders extends Component {
                   { field: 'date', headerName: 'Date', width: 130 },
                   { field: 'comments', headerName: 'Comments', width: 200 },
                   { field: 'status', headerName: 'Status', width: 130 },
-                  
+                  { 
+                    field: 'Accepted',
+                    headerName: 'Accepted',
+                    width: 250,
+                    renderCell: (params) => (
+                      <strong>
+                        {/* {console.log("params",params)} */}
+                        
+                        
+                        { 
+                        params.row.LfDId ?(
+                          <h3>Accepted</h3>
+                        ):(
+                          <h3>Not Accepted</h3>
+                        )
+
+                        }
+                      </strong>
+                    ),
+                  }
             
                     ]} pageSize={4} autoHeight="true"
                       checkboxSelection  onRowSelected={async (row) => {
@@ -338,8 +370,8 @@ class PatientLabOrders extends Component {
       console.log("Accepted IDS:  " , this.state.acceptedIds )
       var details = {
         acceptedIds : this.state.acceptedIds,
-        labFdId : 1,
-        labId:this.state.labId
+        labFdId : localStorage.getItem("userId"),
+        labId: localStorage.getItem("userId")
       }
 
       
@@ -384,8 +416,15 @@ class PatientLabOrders extends Component {
         
   return (
     <div className="hero">
+      
         {this.rendering()}
-        
+        {/* <input type="text"   name ="userName" onChange={(e)=>{
+          this.setState({userName: e.target.value})
+          
+        }}/>
+        <button className="btn btn-primary" onClick={()=>{
+          this.getData();
+        }}>Search</button> */}
 
 <Modal
   open={this.state.openModal1}

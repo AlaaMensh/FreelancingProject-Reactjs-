@@ -225,12 +225,12 @@ class OrderGeneration extends Component {
         date: this.state.date,
         comments : this.state.comments,
         status: this.state.status,
-        result: "",
+        result: this.state.result,
       }
 
-      if(!details.result){
-        details.result = this.state.TypeObj.result
-      }
+      // if(!details.result){
+      //   details.result = this.state.TypeObj.result
+      // }
       if(!details.date){
         details.date = this.state.TypeObj.date
       }
@@ -241,8 +241,20 @@ class OrderGeneration extends Component {
           details.status = this.state.TypeObj.status
       }
 
+      var Form = new FormData();
+      Form.append("id" , details.id)
+      Form.append("ptId" , details.ptId)
+      Form.append("drId" , details.drId)
+      Form.append("date" , details.date)
+      Form.append("comments" , details.comments)
+      Form.append("status" , details.status)
+      Form.append("result" , details.result)
 
+      console.log("details: " , details);
 
+      for(var pair of Form.entries()) {
+        console.log(pair[0]+ ', '+ pair[1]);
+     }
 
       var formBody = [];
       for (var property in details) {
@@ -254,11 +266,8 @@ class OrderGeneration extends Component {
 
       console.log("formBody: ", formBody)
       await fetch(`http://localhost:3000/${this.state.orderType}/updateOrder`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
+        method: 'POST',
+        body: Form
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
@@ -415,7 +424,9 @@ class OrderGeneration extends Component {
         file: e.target.files[0]
       });
     }
-
+     fileChangedHandler = (event) => {
+    this.setState({result : event.target.files[0]})  
+      }
 
     render() { 
       const { classes } = this.props;
@@ -513,7 +524,21 @@ class OrderGeneration extends Component {
               />
             </Grid>
             <Grid item xs={12}>
-              <input type="file" name="file" onChange={this.handleChange}/>
+              {/* <input type="file" name="file" onChange={this.handleChange}/> */}
+              <input
+        style={{display:'none'}}
+        accept="*"
+        id="contained-button-file"
+        type="file"
+        onChange={(e)=>{
+          this.fileChangedHandler(e)
+        }}
+      />
+      <label htmlFor="contained-button-file">
+        <Button style={{marginLeft:'40%'}} variant="contained" color="primary" component="span">
+          Upload
+        </Button>
+      </label>
             </Grid>
             
            

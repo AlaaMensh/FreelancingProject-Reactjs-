@@ -359,7 +359,7 @@ class OrderRadioList extends Component {
   return (
     <div className="hero">
          {this.rendering()}
-         {console.log("TypeObjj :  " , this.state.TypeObj)}
+         
 
 <Modal
   open={this.state.openModal1}

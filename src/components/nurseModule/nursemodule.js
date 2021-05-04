@@ -90,7 +90,7 @@ class NurseVisit extends Component {
             headCircumference:"",    
             openModal1:false ,
             key:0,
-            pId:2,
+            pId:4,
             patientName:""  
           }
     }
@@ -235,9 +235,9 @@ class NurseVisit extends Component {
       var time = d.getHours()+":"+d.getMinutes()
       return (time);
     }
-    getLastVisits = ()=>{
+    getLastVisits = async()=>{
       var details = {
-      pId : this.state.pId
+      pId : this.props.match.params.id
       }
       var formBody = [];
           for (var property in details) {
@@ -247,7 +247,7 @@ class NurseVisit extends Component {
           }
           formBody = formBody.join("&");
          
-          fetch(`http://localhost:3000/nurse/getByPId`, {
+         await fetch(`http://localhost:3000/nurse/getByPId`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -375,7 +375,7 @@ class NurseVisit extends Component {
 
     getDate = ()=>{
       var d = new Date();
-      var date = d.getFullYear()+"-"+d.getMonth()+"-"+d.getDay();
+      var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
       return date
       }
 
@@ -389,6 +389,10 @@ class NurseVisit extends Component {
       return(
         <DataGrid   
         sortModel={[
+          {
+            field: 'date',
+            sort: 'desc',
+          },
           {
             field: 'time',
             sort: 'desc',
@@ -414,19 +418,17 @@ class NurseVisit extends Component {
                </>
            
            ),
-           // field: 'time',
-       //     renderCell: (params) => (
-               
-       //       <strong>
-       //         {params.value}
-               
-       //       </strong>
-       //     ),
+
          },
        
          { field: 'temp',
           headerName: "Tempreture (f)"
           , width: 200 },
+         { field: 'date',
+          headerName: "Date"
+          , width: 200,
+          hide: "true" 
+        },
          {
            field: 'pulse',
            headerName: 'pulse(bpm)',
@@ -508,7 +510,7 @@ class NurseVisit extends Component {
              </strong>
            ),
          }
-        ]} pageSize={5} checkboxSelection rowHeight={80} />
+        ]} pageSize={5} checkboxSelection rowHeight={90} />
       )
     }
     componentDidUpdate () {

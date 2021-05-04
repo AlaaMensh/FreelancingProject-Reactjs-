@@ -15,9 +15,13 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import InputLabel from '@material-ui/core/InputLabel';
-import  { useState } from 'react';
+import  { useState , useEffect } from 'react';
 import { NativeSelect } from '@material-ui/core';
+
 import axios from 'axios';
+
+import { useFormik,Formik } from 'formik';
+import * as Yup from 'yup';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -61,28 +65,78 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const validationSchema = Yup.object({
+  username: Yup
+  .string('UserName ')
+  .required('UserName is required')
+        .max(20, 'UserName should be of maxmum 20 characters length')
+        .min(2,'UserName should be of minimum 2 characters length')
+        ,
+
+  email: Yup
+  .string('Enter your email')
+  .required('Email is required')
+    .email('Enter a valid email')
+    ,
+  pass: Yup
+  .string('Enter your password')
+  .required('Password is required')
+    .min(8, 'Password should be of minimum 8 characters length')
+   ,
+  phone: Yup
+  .number()
+  .required('phone is required')
+    .min(8, 'Phone number should be of minimum 8 numbers length')
+   
+   ,
+   address: Yup
+   .string('Enter your address')
+   .required('address is required')
+    ,
+
+    establishment_name: Yup
+    .string ('establishment_name ')
+    .required('establishment_name is required')
+      .max(20, 'establishment_name should be of maxmum 20 characters length')
+      .min(2,'establishment_name should be of minimum 2 characters length')
+      ,
+
+      contact_lab: Yup
+  .number('contact_lab ')
+  .required('contact_lab is required')
+     .min(2,'contact_lab should be of minimum 2 characters length')
+     ,
+     labName: Yup
+     .string('Enter your address')
+  .required('contact_lab is required')
+   
+     ,
+});
 export default function LabFDSignUp() {
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [address, setAddress] = useState();
-  const [establishmentName, setestablishmentName] = useState();
-  const [contact_lab, setContact_lab] = useState();
+  //const [username, setUsername] = useState();
+  //const [pass, setPass] = useState();
+  //const [email, setEmail] = useState();
+  const [labs, setLabs] = useState();
+  //const [address, setAddress] = useState();
+  //const [establishment_name, setEstablishment_name] = useState();
+  //const [contact_pathology, setContact_pathology] = useState();
   const classes = useStyles();
 
-  const handleSignup = async()=>{
-
+  const handleSignup = async(values)=>{
+    console.log("lllllllll")
+    // alert(values)
     var details = {
-      'userName':username,
-      'password': pass,
-      'email': email,
-      'address': address,
-      'phone' : phone,
-      'establishment': establishmentName,
-      'contactperson' : contact_lab
+      'userName':values.username,
+      'password': values.pass,
+      'Email': values.email,
+      'phone' : values.phone,
+      'address': values.address,
+      'establishment': values.establishment_name,
+      'contactperson' : values.contact_lab,
+      'labId':values.labName
     
   };
+
   
   var formBody = [];
   for (var property in details) {
@@ -104,6 +158,16 @@ export default function LabFDSignUp() {
     console.log("errror")
   })
   }
+  useEffect(()=>{
+     axios.get('http://localhost:3000/labs/getAll' ,{
+    } ).then(async resp => {
+      console.log("resp : " ,resp)
+   
+      setLabs(resp.data)
+      // console.log("resp.data: " , resp.data);
+    
+    })
+  },[])
 return (
   <div className="row align-items-center justify-content-center" style={{
     padding:"0" , margin:"0" , height:"100%"}} >
@@ -115,11 +179,20 @@ return (
       <Typography component="h1" variant="h5">
       ADD Lab FD
       </Typography>
-      <form className={classes.form} noValidate>
+      <Formik 
+                  initialValues={{username:'',degree:'',pass:'',email:'',phone:'',address:'', establishment_name:'',contact_lab:'',labName:''}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    console.log("lllllllllllllllllllllllll",values)
+                    handleSignup(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form >
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -127,15 +200,15 @@ return (
               label="UserName"
               name="userName"
               autoComplete="username"
-              onChange = {(event) =>{
-                setUsername(event.target.value);
-                console.log("mmmmmm" , username);
-              }}
+              onChange = {formikprops.handleChange('username')}
+              onBlur = {formikprops.handleBlur('username')}
+              value = {formikprops.values.username}
+              error={formikprops.touched.username && formikprops.errors.username}
+              helperText={formikprops.touched.username && formikprops.errors.username}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -144,16 +217,15 @@ return (
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange = {(event) =>{
-                setPass(event.target.value);
-                console.log("password" , pass);
-              }}
-              
+              onChange = {formikprops.handleChange('pass')}
+              onBlur = {formikprops.handleBlur('pass')}
+              value = {formikprops.values.pass}
+              error={formikprops.touched.pass && formikprops.errors.pass}
+              helperText={formikprops.touched.pass && formikprops.errors.pass}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -162,15 +234,15 @@ return (
               type="email"
               id="email"
               // autoComplete="current-password"
-              onChange = {(event) =>{
-                setEmail(event.target.value);
-                console.log("email" , email);
-              }}
+              onChange = {formikprops.handleChange('email')}
+              onBlur = {formikprops.handleBlur('email')}
+              value = {formikprops.values.email}
+              error={formikprops.touched.email && formikprops.errors.email}
+              helperText={formikprops.touched.email && formikprops.errors.email}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -178,15 +250,15 @@ return (
               label="Phone"
               type="phone"
               id="phone"
-              onChange = {(event) =>{
-                setPhone(event.target.value);
-                console.log("phone" , phone);
-              }}
+              onChange = {formikprops.handleChange('phone')}
+              onBlur = {formikprops.handleBlur('phone')}
+              value = {formikprops.values.phone}
+              error={formikprops.touched.phone && formikprops.errors.phone}
+              helperText={formikprops.touched.phone && formikprops.errors.phone}
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
@@ -194,55 +266,66 @@ return (
               label="Address"
               type="address"
               id="address"
-              onChange = {(event) =>{
-                setAddress(event.target.value);
-                console.log("address" , address);
-              }}
-            />
+              onChange = {formikprops.handleChange('address')}
+              onBlur = {formikprops.handleBlur('address')}
+              value = {formikprops.values.address}
+              error={formikprops.touched.address && formikprops.errors.address}
+              helperText={formikprops.touched.address && formikprops.errors.address}/>
+       
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
-              name="establishmentName"
-              label="establishmentName"
-              type="establishmentName"
-              id="establishmentName"
-              onChange = {(event) =>{
-                setestablishmentName(event.target.value);
-                console.log("establishmentName" , establishmentName);
-              }}
-            />
+              name="establishment_name"
+              label="Establishment_name"
+              type="establishment_name"
+              id="establishment_name"
+              onChange = {formikprops.handleChange('establishment_name')}
+              onBlur = {formikprops.handleBlur('establishment_name')}
+              value = {formikprops.values.establishment_name}
+              error={formikprops.touched.establishment_name && formikprops.errors.establishment_name}
+              helperText={formikprops.touched.establishment_name && formikprops.errors.establishment_name}/>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <TextField
-            size="small"
               variant="outlined"
               required
               fullWidth
               name="contact_lab"
-              label="Contact_lab"
+              label="contact_lab"
               type="contact_lab"
               id="contact_lab"
-              onChange = {(event) =>{
-                setContact_lab(event.target.value);
-                // console.log("contact_lab" , contact_lab);
-              }}
-            />
+              onChange = {formikprops.handleChange('contact_lab')}
+              onBlur = {formikprops.handleBlur('contact_lab')}
+              value = {formikprops.values.contact_lab}
+              error={formikprops.touched.contact_lab && formikprops.errors.contact_lab}
+              helperText={formikprops.touched.contact_lab && formikprops.errors.contact_lab}/>
+          </Grid>
+          <Grid item xs={12}>
+          <Select
+                
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={formikprops.values.labName}
+                onChange={formikprops.handleChange('labName')}
+                onBlur={formikprops.handleBlur('labName')}
+                error={(formikprops.touched.labName && formikprops.errors.labName)?true:false}
+                >
+                  {labs && labs.length >0 && labs.map(lab=><MenuItem key={lab.id} value={lab.id}>{lab.name}</MenuItem>)}
+                </Select>
           </Grid>
         </Grid>
+
         <Button
           type="button"
           fullWidth
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={()=>{
-        
-            handleSignup()
-          }}
+          onClick={formikprops.handleSubmit}
+
         >
          Signup
                     </Button>
@@ -254,9 +337,14 @@ return (
                     
                       </Grid>
                     </Grid>
-                  </form>
+                    </form>
+                   )}
+                   </Formik>
+ 
                 </div>
- </Container>
- </div>
-  );
+       
+      </Container>
+      </div>
+
+);
 }

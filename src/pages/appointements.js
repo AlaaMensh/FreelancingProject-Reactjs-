@@ -161,7 +161,7 @@ class Appointement extends Component {
       
       var details = {
         'date':this.state.date,
-        check: this.state.check,
+        check: this.state.check, // if He drId or FDId
         id:this.state.FD
     };
     
@@ -243,13 +243,83 @@ class Appointement extends Component {
      this.setState({userID : localStorage.getItem("userId")});
       // this.getData()
     }
+
+    compareTimeForEditButton = (date , startTime , type) =>{
+     
+      // var appDate1 = new Date(date);
+      var appDate2 = date;
+      var dateNow1 = new Date();
+    // console.log( this.convert(dateNow1))
+    // var dd = this.convert(dateNow1)
+    
+    var d = new Date(dateNow1),
+          mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
+          day = ("0" + dateNow1.getDate()).slice(-2);
+          var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
+      // var dateNow2 = dateNow1.getFullYear() + "-" + dateNow1.getMonth() + "-" + dateNow1.getDate()
+    
+      
+      console.log("appDate2: " , appDate2, "dateNow2: ", dateNow2);
+      if(type === "editButton"){
+        if (appDate2 === dateNow2)
+        {
+          // var time1 = g1.getHours() +":" + g1.getMinutes() +":"+ g1.getSeconds()
+          var time2 = dateNow1.getHours() +":" + dateNow1.getMinutes() +":"+ dateNow1.getSeconds()
+          console.log("time1 " , time2 , "time2: " , startTime);
+          // if(time1)
+          if(startTime > time2){
+            console.log("not Accepted....");
+            return true
+            // this.setState({editButtonFlag : false})
+          }
+
+        }
+        else if (appDate2 < dateNow2){
+          console.log("elseIf....")
+          return true
+        }
+        else{
+          console.log("else....")
+          return false;
+        }
+
+      }
+      if(type === "makeVisit"){
+        if (appDate2 === dateNow2)
+        {
+          // var time1 = g1.getHours() +":" + g1.getMinutes() +":"+ g1.getSeconds()
+          var time2 = dateNow1.getHours() +":" + dateNow1.getMinutes() +":"+ dateNow1.getSeconds()
+          console.log("time1 " , time2 , "time2: " , startTime);
+          // if(time1)
+          if(startTime >= time2){
+            console.log("not Accepted....");
+            return true
+            // this.setState({editButtonFlag : false})
+          }
+
+        }
+        else if (appDate2 < dateNow2){
+          console.log("elseIf....")
+          return true
+        }
+        else{
+          console.log("else....")
+          return false;
+        }
+
+      }
+
+      
+          // console.log("not equalllll")
+    }
     handleUpdate = ()=>{
       var obj = {
         appId:this.state.TypeObj.id,
         patientName: this.state.patientName,
         reason: this.state.reason,
         date: this.state.date,
-        time: this.state.time,
+        startDate: this.state.startDate,
+        endDate: this.state.endDate,
         duration : this.state.duration,
         check:this.state.check,
         id : this.state.FD
@@ -316,6 +386,40 @@ class Appointement extends Component {
         this.getData();
        
       }
+      makeVisit =(id)=>{
+        var details = {
+          ptId: id,
+          userId : this.state.userID 
+          }
+       
+  
+        console.log("formBody:  " , details)
+  
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+        console.log("formBody:  " , formBody)
+  
+        fetch('http://localhost:3000/session/addSession', {
+          method: 'POST',
+           headers: {
+             'Content-Type': 'application/json'
+           },
+          body: JSON.stringify(details)
+        }).then((resp)=>{
+          resp.json().then((data)=>{
+            // if(data == true){
+            //   history.push("/")
+            // }
+          })
+        }).catch(()=>{
+          console.log("errror")
+        })
+      }
 
     rendering = () =>{
         return(
@@ -352,9 +456,10 @@ class Appointement extends Component {
                       variant="contained"
                       color="primary"
                       size="small"
-                    
+                      hidden={this.compareTimeForEditButton(params.row.date, params.row.startDate , "makeVisit")}
                       style={{ marginLeft: 16 }}
                       onClick={()=>{
+                        
                         this.handleopenModal1();
                         this.getTypeByID(params.row.id);
                         this.getData()
@@ -383,12 +488,14 @@ class Appointement extends Component {
                       variant="contained"
                       color="primary"
                       size="small"
+                      hidden={this.compareTimeForEditButton(params.row.date, params.row.startDate , "makeVisit")}
                       style={{ marginLeft: 16 }}
                       onClick={async ()=>{
+                        this.makeVisit(params.row.id);
                         console.log("herie   function: " , params.row);
                         console.log("herooo ",this.props)
                        this.props.history.push({
-                         pathname :`${this.props.match.path}/visit`,
+                         pathname :`${this.props.match.path}/visit/${params.row.ptId}`,
                          state:{ptId :""}
                        })
                       }}
@@ -533,7 +640,7 @@ class Appointement extends Component {
                 id="date"
                 // label="Name"
                 name="date" 
-                type="text"
+                type="date"
                 autoComplete="Date"
                 placeholder={this.state.TypeObj.date}
                 onChange = {(event) =>{
@@ -550,7 +657,7 @@ class Appointement extends Component {
                 id="time"
                 // label="Name"
                 name="time" 
-                type="text"
+                type="time"
                 autoComplete="Time"
                 placeholder={this.state.TypeObj.startDate}
                 onChange = {(event) =>{
@@ -559,32 +666,16 @@ class Appointement extends Component {
                 }}
               />
             </Grid>
-            {/* <Grid item xs={12}>
-              <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="fd"
-                label="FD"
-                name="fd" 
-                type="text"
-                autoComplete="fd"
-                placeholder={this.state.TypeObj.FD}
-                onChange = {(event) =>{
-                  this.setState({FD : event.target.value});
-                }}
-              />
-            </Grid> */}
+
             <Grid item xs={12}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
                 variant="outlined"
                 required
                 fullWidth
-                name="duration"
+                name="endTime"
                 // label="description"
-                type="text"
+                type="endTime"
                 id="duration"
                 autoComplete="current-password"
                 placeholder={this.state.TypeObj.endDate}

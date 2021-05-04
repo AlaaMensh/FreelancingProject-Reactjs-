@@ -31,6 +31,8 @@ import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import "./types.css";
+import { useFormik,Formik } from 'formik';
+import * as Yup from 'yup';
 // import EditIcon from '@material-ui/icons/Edit';
 
 var object  = {}
@@ -82,7 +84,30 @@ const useStyles = (theme) => ({
 var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
+const validationSchema = Yup.object({
+  name: Yup
+  .string('Name ').required()
+    .max(20, 'Name should be of maxmum 20 characters length')
+    .min(2,'Name should be of minimum 2 characters length')
+    .required('Name is required'),
+  
+    description: Yup
+    .string('Enter description').required()
+    .min(3,'description should be of minimum 3 characters length')
 
+});
+const validationSchemaEdit = Yup.object({
+  name: Yup
+  .string('Name ')
+    .max(20, 'Name should be of maxmum 20 characters length')
+    .min(2,'Name should be of minimum 2 characters length')
+    .required('Name is required'),
+  
+    description: Yup
+    .string('Enter description')
+    .min(3,'description should be of minimum 3 characters length')
+
+});
 class Allergy extends Component {
   constructor(props) {
     super(props);
@@ -239,12 +264,13 @@ class Allergy extends Component {
    async componentDidMount(){
       this.getData()
     }
-    handleUpdate = ()=>{
+    handleUpdate = async(values)=>{
+      // alert(values)
 
       var details = {
         id:this.state.TypeObj.id,
-        name: this.state.name,
-        description : this.state.description,
+        name: values.name,
+        description : values.description,
       }
 
       if(!details.name){
@@ -376,10 +402,11 @@ class Allergy extends Component {
         
         )
     }
-    handleAdding = () =>{
+    handleAdding = async(values)=>{
+      alert(values)
       var details = {
-        name: this.state.name,
-        description : this.state.description,
+        name: values.name,
+        description : values.description,
       }
 
       // console.log("type: ", obj);
@@ -399,7 +426,7 @@ class Allergy extends Component {
       formBody = formBody.join("&");
       console.log("formging:     " , formBody)
       
-      fetch('http://localhost:3000/allergy/addAllergy', {
+  await fetch('http://localhost:3000/allergy/addAllergy', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -436,7 +463,17 @@ class Allergy extends Component {
         <Typography component="h1" variant="h5">
           Edit
         </Typography>
-        <form className={classes.form} noValidate>
+        <Formik 
+                  initialValues={{name:'',description:''}}
+                  validationSchema={validationSchemaEdit}
+                  onSubmit={(values,actions)=>{
+                    this.handleUpdate(values)
+                    actions.resetForm()
+                    
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -450,10 +487,12 @@ class Allergy extends Component {
                 type="text"
                 autoComplete="Name"
                 placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.name)
-                  this.setState({name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('name')}
+                onBlur = {formikprops.handleBlur('name')}
+                value = {formikprops.values.name}
+                error={formikprops.touched.name && formikprops.errors.name}
+                helperText={formikprops.touched.name && formikprops.errors.name}
+              
               />
             </Grid>
             <Grid item xs={12}>
@@ -466,13 +505,14 @@ class Allergy extends Component {
                 // label="description"
                 type="text"
                 id="description"
-                autoComplete="current-password"
+                autoComplete="description"
                 placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
-                }}
-                
+                onChange = {formikprops.handleChange('description')}
+                onBlur = {formikprops.handleBlur('description')}
+                value = {formikprops.values.description}
+                error={formikprops.touched.description && formikprops.errors.description}
+                helperText={formikprops.touched.description && formikprops.errors.description}
+              
               />
             </Grid>
            
@@ -484,8 +524,9 @@ class Allergy extends Component {
             color="primary"
             className={classes.submit}
             onClick={()=>{
-              this.handleUpdate();
-              this.getData();
+              formikprops.handleSubmit()
+              // this.getData();
+              return ;
               // console.log("user: " , obj);
               // handleSignup()
             }}
@@ -494,7 +535,9 @@ class Allergy extends Component {
             Edit
           </Button>
           
-        </form>
+          </form>
+                    )}
+                  </Formik>
 
       </div>
       {/* <Box mt={5}>
@@ -521,8 +564,16 @@ key="1"
         <Typography component="h1" variant="h5">
           Add
         </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
+        <Formik 
+                  initialValues={{name:'',description:''}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    this.handleAdding(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form>          <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
               InputProps={{ classes: { input: this.props.classes.input2 } }}
@@ -535,9 +586,12 @@ key="1"
                 type="text"
                 autoComplete="Name"
                 // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({name : event.target.value});
-                }}
+                onChange = {formikprops.handleChange('name')}
+                onBlur = {formikprops.handleBlur('name')}
+                value = {formikprops.values.name}
+                error={formikprops.touched.name && formikprops.errors.name}
+                helperText={formikprops.touched.name && formikprops.errors.name}
+              
               />
             </Grid>
             <Grid item xs={12}>
@@ -552,11 +606,11 @@ key="1"
                 id="description"
                 autoComplete="current-password"
                 // placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
-                }}
-                
+                onChange = {formikprops.handleChange('description')}
+                onBlur = {formikprops.handleBlur('description')}
+                value = {formikprops.values.description}
+                error={formikprops.touched.description && formikprops.errors.description}
+                helperText={formikprops.touched.description && formikprops.errors.description}
               />
             </Grid>
            
@@ -568,8 +622,9 @@ key="1"
             fullWidth
             className={classes.submit}
             onClick={()=>{
-              this.handleAdding();
-              this.getData();
+              formikprops.handleSubmit()
+              // this.getData();
+              return ;
               // console.log("user: " , obj);
               // handleSignup()
             }}
@@ -577,8 +632,10 @@ key="1"
             Add
           </Button>
           
-        </form>
-      </div>
+          </form>
+                    )}
+                  </Formik>     
+                   </div>
       {/* <Box mt={5}>
         <Copyright />
       </Box> */}

@@ -122,20 +122,21 @@ export default function HorizontalLabelPositionBelowStepper() {
             ,"Allergy  : " , allergyList)
             var result=JSON.stringify(familyHistoryList);  
             var json =  JSON.parse(result); 
+
             var details = {
-            firstName:firstName,
-            lastName:lastName,
-            secondName:secondName,
-            address:address,
-            phone:phone,
-            email:email,
-            birthDate:birthDate,
+            firstName: firstName,
+            lastName: lastName,
+            secondName: secondName,
+            address: address,
+            phone: phone,
+            email: email,
+            birthDate: birthDate,
             status: status,
             BloodGroup : bloodGroup,
             Allergy : allergyList,
             familyHistory : familyHistoryList,
             surgeries : surgeriesList,
-            Interventions :interventionsList,
+            Interventions : interventionsList,
             onGoingProblems : onGoingProblemList,
             
           }

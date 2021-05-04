@@ -18,6 +18,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
 import { NativeSelect } from '@material-ui/core';
 import axios from 'axios';
+import { useFormik,Formik } from 'formik';
+import * as Yup from 'yup';
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
     // marginTop: theme.spacing(11),
@@ -60,33 +62,88 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function RadiogistSignup() {
-  const [firstname, setFrestname] = useState();
-  const [secondName, setSecondName] = useState();
-  const [lastName, setlastName] = useState();
-  const [ birthdate, setBirthdate] = useState();
-  const [ degree, setDegree] = useState();
-  const [username, setUsername] = useState();
-  const [pass, setPass] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [address, setAddress] = useState();
-  const classes = useStyles();
-  
-  const handleSignup = async()=>{
+const validationSchema = Yup.object({
 
-    var details = {
-      'firstName':firstname,
-       'lastName': lastName, 
-       'Date': birthdate,
-       'degree' : degree,
-       'userName': username,
-        'password': pass, 
-        'Email': email,
-        'phone' : phone,
-        'address': address,
-    
-  };
+
+  firstname: Yup
+  .string ('firstname ')
+  .required('firstname is required')
+    .max(20, 'firstname should be of maxmum 20 characters length')
+    .min(2,'firstname should be of minimum 2 characters length')
+    ,
+
+   lastName: Yup
+   .string('lastName ')
+   .required('lastName is required')
+      .max(20, 'lastName should be of maxmum 20 characters length')
+      .min(2,'lastName should be of minimum 2 characters length')
+      ,
+  username: Yup
+  .string('UserName ')
+  .required('UserName is required')
+        .max(20, 'UserName should be of maxmum 20 characters length')
+        .min(2,'UserName should be of minimum 2 characters length')
+        ,
+
+  birthdate: Yup
+  .string('birthday')
+    .required('birthday is required'),
+    degree: Yup
+    .string('Enter your degree')
+    .required('degree is required')
+    ,
+  email: Yup
+  .string('Enter your email')
+  .required('Email is required')
+    .email('Enter a valid email')
+    ,
+  pass: Yup
+  .string('Enter your password')
+  .required('Password is required')
+    .min(8, 'Password should be of minimum 8 characters length')
+   ,
+  phone: Yup
+  .number()
+  .required('phone is required')
+    .min(8, 'Phone number should be of minimum 8 numbers length')
+    .max(20,'Phone number should be of maxmum 8 numbers length')
+   ,
+   address: Yup
+   .string('Enter your address')
+   .required('address is required')
+    ,
+});
+
+export default function RadiogistSignup() {
+ // const [firstname, setFrestname] = useState();
+  //const [secondName, setSecondName] = useState();
+ // const [lastName, setlastName] = useState();
+ // const [ birthdate, setBirthdate] = useState();
+ // const [ degree, setDegree] = useState();
+ // const [username, setUsername] = useState();
+ // const [pass, setPass] = useState();
+ // const [email, setEmail] = useState();
+ // const [phone, setPhone] = useState();
+ // const [address, setAddress] = useState();
+ const classes = useStyles();
+  
+ const handleSignup = async(values)=>{
+  //  alert(values)
+
+   var details = {
+     'firstName':values.firstname,
+      'lastName': values.lastName, 
+      'Date': values.birthdate,
+      'degree' : values.degree,
+      'userName': values.username,
+     'password': values.pass,
+     'Email': values.email,
+     'phone' : values.phone,
+     'address': values.address,
+   
+   
+ };
+ 
   
   
   var formBody = [];
@@ -123,7 +180,16 @@ return (
                     Add Radiogist
                   </Typography>
                   </Typography>
-                  <form className={classes.form} noValidate>
+                  <Formik 
+                  initialValues={{firstname:'', lastName:'',username:'', birthdate:'',degree:'',pass:'',email:'',phone:'',address:'',}}
+                  validationSchema={validationSchema}
+                  onSubmit={(values,actions)=>{
+                    handleSignup(values)
+                    actions.resetForm()
+                  }}
+                  >
+                    {(formikprops)=>(
+                  <form >
         <Grid container spacing={4}>
         <Grid item xs={6}>
             <TextField
@@ -135,11 +201,11 @@ return (
               label="FirstName"
               name="firstName"
               autoComplete="firstname"
-              onChange = {(event) =>{
-                setFrestname(event.target.value);
-                // console.log("mmmmmm" , firstname);
-              }}
-              ///vbvghv
+              onChange = {formikprops.handleChange('firstname')}
+              onBlur = {formikprops.handleBlur('firstname')}
+              value = {formikprops.values.firstname}
+              error={formikprops.touched.firstname && formikprops.errors.firstname}
+              helperText={formikprops.touched.firstname && formikprops.errors.firstname}
             />
           </Grid>
           {/* <Grid item xs={6}>
@@ -168,10 +234,11 @@ return (
               label="LastName"
               name="lastName"
               autoComplete="lastname"
-              onChange = {(event) =>{
-                setlastName(event.target.value);
-                console.log("mmmmmm" , lastName);
-              }}
+              onChange = {formikprops.handleChange('lastName')}
+              onBlur = {formikprops.handleBlur('lastName')}
+              value = {formikprops.values.lastName}
+              error={formikprops.touched.lastName && formikprops.errors.lastName}
+              helperText={formikprops.touched.lastName && formikprops.errors.lastName}
             />
           </Grid>
           <Grid item xs={12}>
@@ -185,10 +252,11 @@ return (
       InputLabelProps={{
       shrink: true,
     }}
-    onChange = {(event) =>{
-      setBirthdate(event.target.value);
-      console.log("mmmmmm" , lastName);
-    }}
+    onChange = {formikprops.handleChange('birthdate')}
+    onBlur = {formikprops.handleBlur('birthdate')}
+    value = {formikprops.values.birthdate}
+    error={formikprops.touched.birthdate && formikprops.errors.birthdate}
+    helperText={formikprops.touched.birthdate && formikprops.errors.birthdate}
        />
        </Grid>
  
@@ -202,14 +270,15 @@ return (
               label="Degree"
               name="Degree"
               autoComplete="Degree"
-              onChange = {(event) =>{
-                setDegree(event.target.value);
-                console.log("mmmmmm" , degree);
-              }}
+              onChange = {formikprops.handleChange('degree')}
+              onBlur = {formikprops.handleBlur('degree')}
+              value = {formikprops.values.degree}
+              error={formikprops.touched.degree && formikprops.errors.degree}
+              helperText={formikprops.touched.degree && formikprops.errors.degree}
             />
           </Grid>
 
-          <Grid item xs={6}>  
+          <Grid item xs={6}>
             <TextField
              size="small"
               variant="outlined"
@@ -219,10 +288,12 @@ return (
               label="UserName"
               name="userName"
               autoComplete="username"
-              onChange = {(event) =>{
-                setUsername(event.target.value);
-                console.log("mmmmmm" , username);
-              }}
+              onChange = {formikprops.handleChange('username')}
+              onBlur = {formikprops.handleBlur('username')}
+              value = {formikprops.values.username}
+              error={formikprops.touched.username && formikprops.errors.username}
+              helperText={formikprops.touched.username && formikprops.errors.username}
+                 
             />
           </Grid>
           <Grid item xs={6}>
@@ -236,11 +307,11 @@ return (
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange = {(event) =>{
-                setPass(event.target.value);
-                console.log("password" , pass);
-              }}
-              
+              onChange = {formikprops.handleChange('pass')}
+              onBlur = {formikprops.handleBlur('pass')}
+              value = {formikprops.values.pass}
+              error={formikprops.touched.pass && formikprops.errors.pass}
+              helperText={formikprops.touched.pass && formikprops.errors.pass}
             />
           </Grid>
           <Grid item xs={6}>
@@ -254,10 +325,11 @@ return (
               type="email"
               id="email"
               // autoComplete="current-password"
-              onChange = {(event) =>{
-                setEmail(event.target.value);
-                console.log("email" , email);
-              }}
+              onChange = {formikprops.handleChange('email')}
+              onBlur = {formikprops.handleBlur('email')}
+              value = {formikprops.values.email}
+              error={formikprops.touched.email && formikprops.errors.email}
+              helperText={formikprops.touched.email && formikprops.errors.email}
             />
           </Grid>
           <Grid item xs={6}>
@@ -270,10 +342,11 @@ return (
               label="Phone"
               type="phone"
               id="phone"
-              onChange = {(event) =>{
-                setPhone(event.target.value);
-                console.log("phone" , phone);
-              }}
+              onChange = {formikprops.handleChange('phone')}
+              onBlur = {formikprops.handleBlur('phone')}
+              value = {formikprops.values.phone}
+              error={formikprops.touched.phone && formikprops.errors.phone}
+              helperText={formikprops.touched.phone && formikprops.errors.phone}
             />
           </Grid>
           <Grid item xs={6}>
@@ -286,11 +359,12 @@ return (
               label="Address"
               type="address"
               id="address"
-              onChange = {(event) =>{
-                setAddress(event.target.value);
-                console.log("address" , address);
-              }}
-            />
+              onChange = {formikprops.handleChange('address')}
+              onBlur = {formikprops.handleBlur('address')}
+              value = {formikprops.values.address}
+              error={formikprops.touched.address && formikprops.errors.address}
+              helperText={formikprops.touched.address && formikprops.errors.address}
+              />
           </Grid>
         </Grid>
         <Button
@@ -299,10 +373,7 @@ return (
           variant="contained"
           color="primary"
           className={classes.submit}
-          onClick={()=>{
-        
-            handleSignup()
-          }}
+          onClick={formikprops.handleSubmit}
         >
           Sign Up
           </Button>
@@ -314,7 +385,10 @@ return (
                    
                       </Grid>
                     </Grid>
-                  </form>
+                    </form>
+                   )}
+                   </Formik>
+ 
                 </div>
        
       </Container>

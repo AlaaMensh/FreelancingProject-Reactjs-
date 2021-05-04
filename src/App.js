@@ -11,7 +11,7 @@ import SignupForm from './components/Forms/signUpForm';
 import ChemistSignup from './components/Forms/signUpChimest';
 import LoginForm from './components/Forms/loginform';
 import NurseSignup from './components/Forms/signUpNurse';
-import DoctorSignup from './components/Forms/formGeneratorList1';
+import FormGeneratorList1 from './components/Forms/formGeneratorList1';
 import AssistantSignup from './components/Forms/signUpAssistant';
 import PathologistFDSignUp from './components/Forms/singUpPathologist';
 import RadiogistSignup from './components/Forms/signUpRadiogist';
@@ -58,6 +58,10 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useState, useHistory } from 'react';
+import DoctorSignup from "./components/Forms/signUpDoctor"
+import Prescription from "./components/Prescription/Prescription";
+import Profile from "./components/Profile/Profile";
+import Search from "./components/searchModule/search";
 
 
 
@@ -68,26 +72,7 @@ function App() {
   return (
     <Provider store = {createStoreWithMDW(reducers)}>
     <Router>
-      {/* <div className="row">
-      <Toolbar>
-          <Typography variant="h6" noWrap>
-            Our DahsBoard
-          </Typography>
-          <Typography  component="div" style={{marginLeft :"auto"}}>
-          {
-           
-              <Button variant="contained"  onClick= {()=>{
-                localStorage.removeItem("userId");
-                localStorage.removeItem("role");
-                // setlogged(false);
-              }}>
-              LogOut
-            </Button>
-            
-          }
-               </Typography>
-        </Toolbar>
-      </div> */}
+
       
         <Switch>
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
@@ -118,6 +103,8 @@ function App() {
       <Route exact path="/SignupRadiogist" component={RadiogistSignup}></Route>
       <Route exact path="/SignupPathologist" component={PathologistSignUp}></Route>
       <Route exact path="/NurseSignup" component={NurseSignup}></Route>
+      {/* form Generator for Doctor..nurse..chemist */}
+      {/* <Route exact path="/DoctorSignup" component={FormGeneratorList1}></Route> */}
       <Route exact path="/DoctorSignup" component={DoctorSignup}></Route>
       <Route exact path="/ChemistSignup" component={ChemistSignup}></Route>
       <Route exact path="/AssistantSignup" component={AssistantSignup}></Route>
@@ -145,6 +132,7 @@ function App() {
       <Route exact path="/ptRegistration" component={ptRegistration}></Route>
       
       <Route exact path="/visit" component={Visit}></Route>
+      <Route exact path="/prescription" component={Prescription}></Route>
      
      {/* for lab orders */}
       <Route exact path="/labOrder" component={LabOrder}></Route>
@@ -167,6 +155,10 @@ function App() {
       <Route exact path="/tableGenerator" component={TableGenerator}></Route>
       
       <Route exact path="/notAuthorized" component={NotAuthorized}></Route>
+      
+      <Route exact path="/profile" component={Profile}></Route>
+      <Route exact path="/search" component={Search}></Route>
+      
       <Route exact path="**" component={Error}></Route>
     </Switch>
   
