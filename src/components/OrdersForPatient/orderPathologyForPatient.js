@@ -333,11 +333,12 @@ class OrderPathologyListForPatient extends Component {
                   }} />
             </div> 
               <div className="row mt-4">
-                      {/* <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                          this.handleopenModal2()
+              <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                       console.log("hhhhhhhh:  " , this.props.location.pathname)
+                       this.props.history.push(`${this.props.location.pathname}/additionOrderForm/${"pathology"}`)
                         }}>
                           <AddIcon  />
-                        </Fab>  */}
+                        </Fab> 
                       </div>
                     </div>
         

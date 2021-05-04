@@ -168,8 +168,10 @@ class Search extends Component {
           this.setState((state) => {
               state.filtered = this.state.list.filter((item) => {
                   console.log(name.toLowerCase())
+                  var searchWordWithoutSpaces = name.split(' ').join('');
+                  var itemFirstLastSecond = item.firstname+item.secondName+item.lastname
                   // console.log("$$$$" , item.name.toLowerCase().includes(name.toLowerCase()) )
-                  return item.firstname.toLowerCase().includes(name.toLowerCase())
+                  return itemFirstLastSecond.toLowerCase().includes(searchWordWithoutSpaces.toLowerCase())
               })
               return state;
           })  

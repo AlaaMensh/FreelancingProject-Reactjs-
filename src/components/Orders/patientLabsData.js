@@ -15,8 +15,9 @@ import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router-dom";
 import "./orders.css";
-import UserInfo from "../ClinicalDashBoard/userInfo"
-
+import UserInfo from "../ClinicalDashBoard/userInfo";
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 var object  = {}
 const useStyles = (theme) => ({
   paper: {
@@ -107,7 +108,7 @@ class PatientLabOrders extends Component {
           var details = {
             type:0,
             id:this.state.ptId,
-            labId:1
+            labId:localStorage.getItem("labId"),
            }
            var formBody = [];
            for (var property in details) {
@@ -136,7 +137,8 @@ class PatientLabOrders extends Component {
         getLabsByPId = async ()=> {
           var details = {
            type:0,
-           ptId:this.props.match.params.ptId
+           ptId:this.props.match.params.ptId,
+           labId : localStorage.getItem("labId")
           }
           var formBody = [];
           for (var property in details) {
@@ -294,32 +296,33 @@ class PatientLabOrders extends Component {
                     headerName: 'Accepted',
                     width: 250,
                     renderCell: (params) => (
-                      <strong>
+                      <>
                         {/* {console.log("params",params)} */}
                         
                         
                         { 
                         params.row.LfDId ?(
-                          <h3>Accepted</h3>
+                       <div className="row justify-content-center align-content-center" >
+                            <CheckCircleOutlineIcon style={{color : "#395c6b"}}/>
+                          <h5>Accepted</h5>
+
+                       </div>
                         ):(
-                          <h3>Not Accepted</h3>
-                        )
+                          <div className="row justify-content-center align-content-center" >
+                          <HighlightOffIcon style={{color : "#395c6b"}}/>
+                        <h5>Not Accepted</h5>
+
+                     </div>
+                      )
 
                         }
-                      </strong>
+                      </>
                     ),
                   }
             
                     ]} pageSize={4} autoHeight="true"
                       checkboxSelection  onRowSelected={async (row) => {
-                        // let acceptedIds = [...this.state.acceptedIds];
-
-                        // // Add item to it
-                        // acceptedIds.push({ id: row.data.id });
-                        
-                        // // Set state
-                        // this.setState({ acceptedIds });
-                        // console.log("yes Selectedhere" , row.data.id);
+                 
                         }} getRowId ={(row) =>{
                             
                         }}
@@ -339,12 +342,12 @@ class PatientLabOrders extends Component {
             <div className="row justify-content-center mt-3 py-3">
                       <Button
                           variant="contained"
-                          color="secondary"
+                        
                           size="small"
                           
                           className={this.props.classes.button , this.props.classes.deleteButton}
                           
-                          style={{ marginLeft: 16 }}
+                          style={{ marginLeft: 16 , backgroundColor :"#395c6b" , color:"white" }}
                           onClick={async ()=>{
                             //  console.log("delete function: " , params.row.id);
                             this.handleAccept();

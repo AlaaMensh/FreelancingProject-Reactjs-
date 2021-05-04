@@ -152,31 +152,19 @@ class DataGridTable extends Component {
         console.log("hhhhhhh")
         this.rendering();
     }
-    getSearchName = (name) =>{
-      this.setState({word:name});   
-          this.setState((state) => {
-              state.filtered = this.props.students.filter((item) => {
-                  console.log(name.toLowerCase())
-                  // console.log("$$$$" , item.name.toLowerCase().includes(name.toLowerCase()) )
-                  return item.name.toLowerCase().includes(name.toLowerCase())
-              })
-              return state;
-          })  
 
-      
-  }
 
     rendering = () =>{
         return(
-          <div className="container gridDataContent mt-5"> 
+          <div className="container gridDataContent"> 
           
            {/* <input class="form-control border-secondary rounded-pill pr-5" type="search"  id="example-search-input2" onChange={(e)=>{
             this.setState({searchWord : e.target.value})
             this.filterData(e.target.value);
           }}></input> */}
-          <div className="row mt-5">
+          <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">Ellergy Types</span>
+                <span className="">All Lab Orders</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
@@ -188,8 +176,8 @@ class DataGridTable extends Component {
                <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.props.filtered} columns={[
               { field: 'id', headerName: 'id', width: 70 },
               { field: 'firstname', headerName: 'FirstName', width: 200 },
-              { field: 'secondName', headerName: 'SecondName', width: 100 },
-              { field: 'lastname', headerName: 'LastName', width: 100 },
+              { field: 'secondName', headerName: 'SecondName', width: 200 },
+              { field: 'lastname', headerName: 'LastName', width: 200 },
             
               { 
                 field: 'Actions',

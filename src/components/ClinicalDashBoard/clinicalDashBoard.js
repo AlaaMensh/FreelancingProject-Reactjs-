@@ -200,7 +200,7 @@ const ClinicalDashBoard = ({match}) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const [ptId, setPtId] = useState(25);
+  const [ptId, setPtId] = useState(41);
   
   
   
@@ -232,9 +232,9 @@ const dispatch = useDispatch();
     console.log("herree dashBoard:" , localStorage.getItem("role"));
     var localStorageRole = parseInt(localStorage.getItem("role"));
   
-    if(localStorageRole !==8 ){
-      history.push("/notAuthorized");
-    }
+    // if(localStorageRole !==8 ){
+    //   history.push("/notAuthorized");
+    // }
     // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
     // setTimeout( ()=>{ alert(‘hello’); }, 2000);
  });
@@ -361,9 +361,19 @@ const dispatch = useDispatch();
 
 
             <li>
-            <Link to={match.path} >
-                       Clinical DashBoard
-            </Link>
+     
+            {
+              parseInt(localStorage.getItem("role") == 8)?
+              (
+                <Link to={match.path+"/clinicalDashBoard"} >
+                Clinical DashBoard
+                </Link>
+              ):(
+                <Link to="#" style={{cursor:"not-allowed"}} >
+                Clinical DashBoard
+                </Link>
+              )
+            }
             </li>
             <li>
             <Link to={match.path+`/patientAppointement/${ptId}`}>
@@ -380,12 +390,27 @@ const dispatch = useDispatch();
                         Allergy
             </Link>
             </li>
-            <li>
+            {/* <li>
             <Link to={match.path+`/orderGeneration/${ptId}/${"lab"}`} >
+                        Lab Orders
+            </Link>
+            </li> */}
+            <li>
+            <Link to={match.path+`/labOrders/${ptId}`} >
                         Lab Orders
             </Link>
             </li>
             <li>
+            <Link to={match.path+`/pathologyOrders/${ptId}`} >
+                        path Orders
+            </Link>
+            </li>
+            <li>
+            <Link to={match.path+`/radioOrders/${ptId}`} >
+                        radio Orders
+            </Link>
+            </li>
+            {/* <li>
             <Link to={match.path+`/orderGeneration/${ptId}/${"pathology"}`} >
                         Pathology Orders
             </Link>
@@ -394,7 +419,7 @@ const dispatch = useDispatch();
             <Link to={match.path+`/orderGeneration/${ptId}/${"radio"}`} >
                         Radiology Orders
             </Link>
-            </li>
+            </li> */}
         
            
         </ul>
@@ -407,7 +432,7 @@ const dispatch = useDispatch();
         <UserInfo id="25" />
       </Typography>
       <Switch>  
-      <Route exact path={match.path} >
+      <Route exact path={match.path+"/clinicalDashBoard"} >
         <OnGoingProblemStep />
         <AllergyProblems />
         
@@ -420,7 +445,11 @@ const dispatch = useDispatch();
       <Route exact path={match.path+"/radioOrders/:id"}  component={OrderRadioListForPt}/> 
       <Route exact path={match.path+"/labOrders/:id/labOrderForm"}  component={LabOrder}/> 
       <Route exact path={match.path+"/orderGeneration/:id/:type"}  component={OrderGeneration}/> 
-      <Route exact path={match.path+"/orderGeneration/:id/:type/additionOrderForm"}  component={AdditionOrderForm}/> 
+      {/* <Route exact path={match.path+"/orderGeneration/:id/:type/additionOrderForm"}  component={AdditionOrderForm}/>  */}
+      <Route exact path={match.path+"/radioOrders/:id/additionOrderForm/:type"}  component={AdditionOrderForm}/> 
+      <Route exact path={match.path+"/labOrders/:id/additionOrderForm/:type"}  component={AdditionOrderForm}/> 
+      <Route exact path={match.path+"/pathologyOrders/:id/additionOrderForm/:type"}  component={AdditionOrderForm}/> 
+     
       <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 
       <Route exact path={match.path+"/patientAppointement/:id/visit/prescription/:visitId"}  component={Prescription}/> 
       <Route exact path={match.path+"/profile"}  component={Prescription}/> 

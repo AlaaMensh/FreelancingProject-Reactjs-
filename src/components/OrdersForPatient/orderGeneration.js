@@ -130,10 +130,15 @@ class OrderGeneration extends Component {
     handleopenModal2 = () => {
       this.setState({openModal2 : true})
     };
+    componentDidUpdate (){
+      this.getData()
+    }
     getData = async()=>{
+      
       var details = {
-        ptId:this.state.ptId,
-        type:this.state.type
+        ptId:this.props.match.params.ptId,
+        type:this.props.match.params.type,
+        labId : localStorage.getItem("labId")
        }
        var formBody = [];
        for (var property in details) {
@@ -196,9 +201,16 @@ class OrderGeneration extends Component {
         
     }
    async componentDidMount(){
-     console.log("props:  " , this.props.match.params.type)
+     console.log("propsppppppppppp:  " , this.props.match.params.type)
      await this.setState({ptId : this.props.match.params.id});
      await this.setState({drId : localStorage.getItem("userId")});
+
+     if(this.props.match.params.type != "lab"){
+       console.log("noooooooooo");
+      this.setState({labID : 1})
+      // this.setState({ptId : 1})
+     }
+
    
      await this.setState({orderType : this.props.match.params.type});
      switch(this.props.match.params.type){
@@ -293,7 +305,7 @@ class OrderGeneration extends Component {
           <div className="container gridDataContent mt-5"> 
           <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">All Your Orders</span>
+                <span className="">All Your {this.state.type} Orders</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">

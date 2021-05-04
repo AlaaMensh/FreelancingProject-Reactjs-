@@ -89,14 +89,30 @@ export default function AdditionOrderForm({match}) {
 
   const handleSubmit = async()=>{
 
-    var details = {
-      'investigation_type' : investigation_type,
-      'date': date,
-      'comments': comments,
-      'status' : status,
-      'ptId': PtId,
-      'drId': drId
-  };
+    if(type == "lab"){
+      console.log("laaaaaaaaaaaaaaaaaaaab")
+      var details = {
+        'investigation_type' : investigation_type,
+        'date': date,
+        'comments': comments,
+        'status' : status,
+        'ptId': PtId,
+        'drId': drId,
+        'labId' : localStorage.getItem("labId")
+    };
+    }
+    else{
+      var details = {
+        'investigation_type' : investigation_type,
+        'date': date,
+        'comments': comments,
+        'status' : status,
+        'ptId': PtId,
+        'drId': drId,
+        'labId' :1
+          };
+    }
+ 
 
   console.log("details", details)
   var formBody = [];

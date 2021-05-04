@@ -129,7 +129,8 @@ class OrderLabListForPt extends Component {
     getData = async()=>{
       var details = {
         ptId:this.state.ptId,
-        type:0
+        type:0,
+        labId : localStorage.getItem("labId")
        }
        var formBody = [];
        for (var property in details) {
@@ -340,12 +341,12 @@ class OrderLabListForPt extends Component {
                   }} />
             </div> 
               <div className="row mt-4">
-                    <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                       console.log("hhhhhhhh:  " , this.props)
-                       this.props.history.push(`${this.props.location.pathname}/labOrderForm`)
+              <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
+                       console.log("hhhhhhhh:  " , this.props.location.pathname)
+                       this.props.history.push(`${this.props.location.pathname}/additionOrderForm/${"lab"}`)
                         }}>
                           <AddIcon  />
-                        </Fab>                      
+                        </Fab>                    
                       </div>
                     </div>
         
