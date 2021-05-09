@@ -429,7 +429,7 @@ const dispatch = useDispatch();
       </div>
       <div className="col-8">
       <Typography className="row">
-        <UserInfo id="25" />
+        <UserInfo id="41" />
       </Typography>
       <Switch>  
       <Route exact path={match.path+"/clinicalDashBoard"} >

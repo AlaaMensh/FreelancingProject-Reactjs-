@@ -329,7 +329,7 @@ class Allergy extends Component {
           </div>
             <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
                <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.allergyList} columns={[
-                { field: 'id', headerName: 'id', width: 70 },
+                 { field: 'id', headerName: 'id', width: 70 },
               { field: 'name', headerName: 'Name', width: 200 },
               { field: 'description', headerName: 'description', width: 500 },
             
