@@ -40,12 +40,12 @@ import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux"; 
-import {handleChangeOpen} from "../actions";
+
 // import Navbar from './Navbar';
-import { useDispatch } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ptRegistration from './patientRegistration/ptRegistration';
-import Appointement from '../pages/appointements';
+import ptRegistration from '../patientRegistration/ptRegistration';
+import Appointement from '../../pages/appointements';
 
 const drawerWidth = 300;
 
@@ -163,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DashBoardComp = ({match}) => {
-  const dispatch = useDispatch()
+
   const history = useHistory();
   const [spacing, setSpacing] = React.useState(2);
   const classes = useStyles();
@@ -186,16 +186,8 @@ const DashBoardComp = ({match}) => {
 
 
   useEffect(()=>{
-    // dispatch({ type: 'getOpen', payload: true });
-    // var o = props.handleChangeOpen().then(()=>{
-    //   // console.log("open: " , )
-    // });
-    // setOpen(open);
-    // console.log("openHere : " , open)
-    // setOpen(props.location.state.open);
-    // setOpen(props.location.state.open);
-    // console.log("‘hello’" , name , appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
-    // setTimeout( ()=>{ alert(‘hello’); }, 2000);
+
+  
  });
  
   
@@ -204,21 +196,7 @@ const DashBoardComp = ({match}) => {
 <h1>kkkk</h1>
   );
       }
-const mapactiontoprops = (disptch) =>{
-  return bindActionCreators({handleChangeOpen } ,disptch);
-}
-const mapstatetoprops = (state) =>{
-  // console.log("lllllllllllllll",state);
-  return {open : state.open}
-}
-
-export default connect(mapstatetoprops , mapactiontoprops)(DashBoardComp);
 
 
-{/* <Switch> 
-<Route exact path={match.path+"/appoint"}  component={Appointement}/> 
-<Route exact path={match.path}  component={DashBoardComp}/> 
-<Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/>
+export default DashBoardComp;
 
-
-</Switch> */}

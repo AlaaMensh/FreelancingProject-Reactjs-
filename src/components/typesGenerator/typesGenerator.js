@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 // import React from 'react';
 import DataTable from 'react-data-table-component';
-import columns from './db.json';
+import columns from './typesDB.json';
 import Modal from '@material-ui/core/Modal';
-import ModalComp from "./Modal";
+import ModalComp from "./modalGenerator";
 import axios from 'axios';
 import DataTableExtensions from "react-data-table-component-extensions";
 import { ButtonBase } from '@material-ui/core';
@@ -14,26 +14,7 @@ import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 
-
-// const data = [
-//   {
-//   "name": "Katelyn T. Boyle",
-//   "description": "1-389-886-8523",
-
-//   },
-//   {
-//   "name": "September Y. Forbes",
-//   "description": "879-4512",
-
-//   },
-// ]
-
-
-
-
-
-
-class Try extends Component {
+class TypesGenerator extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -45,9 +26,9 @@ class Try extends Component {
       typeObj : {},
       type:"",
       formType:"add"
-
      }
   }
+
   handleClose = () => {
     this.setState({openModal : false})
   };
@@ -227,6 +208,7 @@ await fetch(`${columns[this.state.type].addType}`, {
       // console.log("propertyyyy :  " , property)
       newState[property] = "" 
     }
+    
     await this.getData(type);
   }
 
@@ -244,7 +226,7 @@ await fetch(`${columns[this.state.type].addType}`, {
  
     return (
       <div className="container " style={{height :"100%",display:"flex"}}>
-        {console.log("state: " , this.state.ModalInputs)}
+        {console.log("state: " , this.state)}
         <div className="row  align-items-center"  style={{margin:"auto"}}>
           <Fab className="col-auto" color="primary" aria-label="add"  onClick = {()=>{
                    this.setState({formType :"add"})
@@ -278,4 +260,4 @@ await fetch(`${columns[this.state.type].addType}`, {
   }
 }
  
-export default Try;
+export default TypesGenerator;

@@ -1,17 +1,7 @@
 
 import Button from '@material-ui/core/Button';
-
-import MenuItem from '@material-ui/core/MenuItem';
-
-import Select from '@material-ui/core/Select';
-import { useDispatch } from 'react-redux'
-
-
 import React from 'react';
 import clsx from 'clsx';
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -35,15 +25,13 @@ import FormControl from '@material-ui/core/FormControl';
 // import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import { useEffect } from 'react';
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
+
 import { useHistory } from "react-router-dom";
 // import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
 // import DashBoard from "../pages/DashBoard"
-import Appointement from '../../pages/appointements';
-import DashBoardComp from "../dashboardComp";
+
 import { BrowserRouter } from 'react-router-dom';
 // import Signup from './Forms/signUpForm';
 // import {useRoutes} from 'hookrouter';
@@ -52,9 +40,9 @@ import { BrowserRouter } from 'react-router-dom';
 // import DashBoard from './../pages/DashBoard';
 import { useState } from 'react';
 // import LoginForm from './Forms/loginform';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux"; 
-import {handleChangeOpen,setChangeOpen } from "../../actions";
+// import { connect } from "react-redux";
+// import { bindActionCreators } from "redux"; 
+// import {handleChangeOpen,setChangeOpen } from "../../actions";
 import { useSelector } from 'react-redux'
 // import PaientRegistration from './patientRegistration/importatntInfo';
 // import ptRegistration from './patientRegistration/ptRegistration';
@@ -62,19 +50,20 @@ import OnGoingProblemStep from './patientOnGoingProblems';
 import "./index.css";
 import AllergyProblems from "./Allergy";
 import UserInfo from "./userInfo";
-import onGoingProblemStep from '../patientRegistration/onGoingProblemStep';
-import DashBoard from './../../pages/DashBoard';
+// import onGoingProblemStep from '../patientRegistration/onGoingProblemStep';
+// import DashBoard from './../../pages/DashBoard';
 import PatientAppointement from './patientAppointements';
-import OrderLabListForPt from '../OrdersForPatient/orderLabListForPatient';
-import OrderPathologyForPatient from '../OrdersForPatient/orderPathologyForPatient';
-import OrderRadioListForPt from '../OrdersForPatient/orderRadioForPatient';
+// import OrderLabListForPt from '../OrdersForPatient/orderLabListForPatient';
+// import OrderPathologyForPatient from '../OrdersForPatient/orderPathologyForPatient';
+// import OrderRadioListForPt from '../OrdersForPatient/orderRadioForPatient';
 // import LabOrder from '../OrdersForPatient/LabOrder';
-import LabOrder from './../Orders/order_lab';
-import OrderGeneration from '../OrdersForPatient/orderGeneration';
-import AdditionOrderForm from '../OrdersForPatient/additionOrderForm';
+// import LabOrder from './../Orders/order_lab';
+// import OrderGeneration from '../OrdersForPatient/orderGeneration';
+// import AdditionOrderForm from '../OrdersForPatient/additionOrderForm';
 import Visit from '../Visit/visit';
 import Prescription from "../Prescription/Prescription";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AllOrders from "../orderGeneration/allOrders"
 
 const drawerWidth = 250;
 
@@ -223,7 +212,7 @@ const MainFunctions = [
     // {text: "New Doctor Appointement" , role :"doctor"},
 ]
 
-const dispatch = useDispatch();
+// const dispatch = useDispatch();
 
   
 
@@ -241,16 +230,16 @@ const dispatch = useDispatch();
  
   const handleDrawerOpen = () => {
     setOpen(true);
-    setChangeOpen(true);
-    dispatch({ type: 'setOpen', payload: true })
+    // setChangeOpen(true);
+    // dispatch({ type: 'setOpen', payload: true })
     // console.log("message :" , msg);
   };
   
 
   const handleDrawerClose = () => {
     setOpen(false);
-    setChangeOpen(false);
-    dispatch({ type: 'setOpen', payload: false })
+    // setChangeOpen(false);
+    // dispatch({ type: 'setOpen', payload: false })
   };
 
 
@@ -396,17 +385,27 @@ const dispatch = useDispatch();
             </Link>
             </li> */}
             <li>
-            <Link to={match.path+`/labOrders/${ptId}`} >
+            <Link to={match.path+`/allLabOrders/${"lab"}/${ptId}`} >
                         Lab Orders
             </Link>
             </li>
+            {/* <li>
+            <Link to={match.path+`/labOrders/${ptId}`} >
+                        Lab Orders
+            </Link>
+            </li> */}
             <li>
+            <Link to={match.path+`/allPathologyOrders/${"pathology"}/${ptId}`} >
+                        Pathology Orders
+            </Link>
+            </li>
+            {/* <li>
             <Link to={match.path+`/pathologyOrders/${ptId}`} >
                         path Orders
             </Link>
-            </li>
+            </li> */}
             <li>
-            <Link to={match.path+`/radioOrders/${ptId}`} >
+            <Link to={match.path+`/allRadioOrders/${"radio"}/${ptId}`} >
                         radio Orders
             </Link>
             </li>
@@ -440,23 +439,20 @@ const dispatch = useDispatch();
       <Route exact path={match.path+"/OnGoingProblems"}  component={OnGoingProblemStep}/> 
       <Route exact path={match.path+"/Allergy"}  component={AllergyProblems}/> 
       <Route exact path={match.path+"/patientAppointement/:id"}  component={PatientAppointement}/> 
-      <Route exact path={match.path+"/labOrders/:id"}  component={OrderLabListForPt}/> 
-      <Route exact path={match.path+"/pathologyOrders/:id"}  component={OrderPathologyForPatient}/> 
-      <Route exact path={match.path+"/radioOrders/:id"}  component={OrderRadioListForPt}/> 
-      <Route exact path={match.path+"/labOrders/:id/labOrderForm"}  component={LabOrder}/> 
-      <Route exact path={match.path+"/orderGeneration/:id/:type"}  component={OrderGeneration}/> 
-      {/* <Route exact path={match.path+"/orderGeneration/:id/:type/additionOrderForm"}  component={AdditionOrderForm}/>  */}
-      <Route exact path={match.path+"/radioOrders/:id/additionOrderForm/:type"}  component={AdditionOrderForm}/> 
-      <Route exact path={match.path+"/labOrders/:id/additionOrderForm/:type"}  component={AdditionOrderForm}/> 
-      <Route exact path={match.path+"/pathologyOrders/:id/additionOrderForm/:type"}  component={AdditionOrderForm}/> 
+      
+      
+      {/* <Route path={[`${match.path}/AllOrders/lab/:id`, "/users", "/widgets"]} component={Home} /> */}
+      
+      <Route exact key={1} path={match.path+"/allLabOrders/:type/:id"}  component={AllOrders}/> 
+      <Route exact key={11} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
+      <Route exact key={2} path={match.path+"/allPathologyOrders/:type/:id"}  component={AllOrders}/> 
+      <Route exact key={3} path={match.path+"/allRadioOrders/:type/:id"}  component={AllOrders}/> 
+      
      
       <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 
       <Route exact path={match.path+"/patientAppointement/:id/visit/prescription/:visitId"}  component={Prescription}/> 
       <Route exact path={match.path+"/profile"}  component={Prescription}/> 
-      {/* <Route exact path={match.path}  component={DashBoardComp}/>  */}
-      {/* <Route exact path={match.path+"/com"} component={Signup}/>
-      <Route exact path={match.path+"/login"} component={LoginForm}/> */}
-      {/* <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/> */}
+     
     </Switch>
       </div>
     </Typography>
@@ -474,15 +470,15 @@ const dispatch = useDispatch();
           
   );
 }
-const mapactiontoprops = (disptch) =>{
-  return bindActionCreators({setChangeOpen } ,disptch);
-}
-const mapstatetoprops = (state) =>{
-  console.log("lllllllllllllll",state);
-  return {msg : state.Drawer}
-}
+// const mapactiontoprops = (disptch) =>{
+//   return bindActionCreators({setChangeOpen } ,disptch);
+// }
+// const mapstatetoprops = (state) =>{
+//   console.log("lllllllllllllll",state);
+//   return {msg : state.Drawer}
+// }
 
-export default connect(mapstatetoprops , mapactiontoprops)(ClinicalDashBoard);
+export default ClinicalDashBoard;
 
       // <div className="container">
       //       <div className="row" style={{marginTop:"5em" }}>

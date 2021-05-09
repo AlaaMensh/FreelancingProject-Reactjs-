@@ -31,8 +31,10 @@ import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import { useHistory } from "react-router-dom";
-// import "./types.css";
-// import EditIcon from '@material-ui/icons/Edit';
+
+import DataTableComp from '../typesGenerator/dataTable';
+import orderType from "../ordersdb.json"
+
 
 var object  = {}
 const useStyles = (theme) => ({
@@ -83,29 +85,25 @@ const useStyles = (theme) => ({
 var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
+const data1 = [
+  {id:"1",firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
+  {firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
+  {firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
+  {firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
+]//
 
-class OrderGeneration extends Component {
+
+
+class AllOrders extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
       orderlabList : [],
-      typeId:0,
-      openModal1:false,
-      openModal2:false,
-      TypeObj : {},
-      investigation_type:"",
-      date :""  ,
-      comments: "cc",
-      status: "sc",
-     result:"",
-      PTname: "",
-      labId:1,
-      ptId:"",
-      file:"",
-      orderType:"",
+      orderType : 0,
       type:"",
-      base64URL:""
+      flagCompoenentType : true // for patientID ==> false or for LabID ==>true
+
           }
         }
         
@@ -130,16 +128,30 @@ class OrderGeneration extends Component {
     handleopenModal2 = () => {
       this.setState({openModal2 : true})
     };
-    componentDidUpdate (){
-      this.getData()
-    }
-    getData = async()=>{
-      
-      var details = {
-        ptId:this.props.match.params.ptId,
-        type:this.props.match.params.type,
-        labId : localStorage.getItem("labId")
-       }
+    // componentDidUpdate (){
+    //   this.getData()
+    // }
+    getData = async (flag ,type) => {
+      var endPoint = "";
+      console.log("orderType: " , type)
+      if(!flag){ // for PatientID and only Accepted Orders
+        console.log("yessssssssssssssssssssss");
+        var details = {
+          ptId:this.props.match.params.id,
+          type:this.state.orderType,
+          labId : localStorage.getItem("labId")
+         }
+         endPoint = `${orderType[type].getAllOrdersByPtID}`;
+      }
+      else{ // for LabId
+        console.log("hhhhhhhhhhhhhhhhhhhhhhhh")
+        endPoint = `${orderType[type].getAllOrdersByLabId}`
+        var details = {
+          labId:localStorage.getItem("labId")
+         }
+
+      }
+
        var formBody = [];
        for (var property in details) {
          var encodedKey = encodeURIComponent(property);
@@ -149,7 +161,7 @@ class OrderGeneration extends Component {
        formBody = formBody.join("&");
    
    
-       await fetch(`http://localhost:3000/lab/getOrderByPtId`, {
+       await fetch(`${endPoint}`, {
          method: 'POST',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -157,8 +169,8 @@ class OrderGeneration extends Component {
          body: formBody
        }).then(async(resp)=>{
          resp.json().then(async(data)=>{
-           console.log("Data:  " , data)
-           await this.setState({orderlabList: data});
+           console.log("DataList :  " , data)
+            this.setState({orderlabList: data});
        
          })
        }).catch(()=>{
@@ -200,36 +212,55 @@ class OrderGeneration extends Component {
       })
         
     }
-   async componentDidMount(){
-     console.log("propsppppppppppp:  " , this.props.match.params.type)
-     await this.setState({ptId : this.props.match.params.id});
-     await this.setState({drId : localStorage.getItem("userId")});
 
+   async componentDidMount(){
+
+    var flag = false;
+     console.log("propsppppppppppp:  " , this.props.match.params.id)
+     
+     this.setState({type : this.props.match.params.type});
+     this.handleDataTableColumns(this.props.match.params.type)
+     
+
+     if(this.props.match.params.id){ // for PatientId
+       console.log("yes here is it ")
+       this.setState({flagCompoenentType : false});
+        flag = false;
+        this.setState({ptId : this.props.match.params.id});
+     }
+     else{
+       console.log("no it it is not")
+      this.setState({flagCompoenentType : true});
+      flag = true;
+     }
+     
+     this.setState({drId : localStorage.getItem("userId")});
+     
+     
      if(this.props.match.params.type != "lab"){
-       console.log("noooooooooo");
       this.setState({labID : 1})
-      // this.setState({ptId : 1})
      }
 
-   
-     await this.setState({orderType : this.props.match.params.type});
+
+      this.setState({type : this.props.match.params.type});
      switch(this.props.match.params.type){
          case "lab":
-             this.setState({type : 0})
+             this.setState({orderType : 0})
              break;
          case "radio":
-             this.setState({type : 1})
+             this.setState({orderType : 1})
              break;
          case "pathology":
-             console.log("pathology yesss")
-             this.setState({type : 2})
+             this.setState({orderType : 2})
              break;
-
      }
-    await this.getData()
+
+    await this.getData(flag , this.props.match.params.type)
+
     }
   
     handleUpdate = async ()=>{
+
       var details = {
         id:this.state.TypeObj.id,
         ptId:this.state.ptId,
@@ -240,9 +271,6 @@ class OrderGeneration extends Component {
         result: this.state.result,
       }
 
-      // if(!details.result){
-      //   details.result = this.state.TypeObj.result
-      // }
       if(!details.date){
         details.date = this.state.TypeObj.date
       }
@@ -283,9 +311,6 @@ class OrderGeneration extends Component {
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
-   
-       
-          // object = data
         })
       }).catch(()=>{
         console.log("errror")
@@ -295,12 +320,63 @@ class OrderGeneration extends Component {
          
     }
 
-    componentDidUpdate(){
-        console.log("hhhhhhh")
-        this.rendering();
-    }
+    handleDataTableColumns = (type) => {
+      
+      var temp = []
+      for(var p in orderType[type].columnsTable ){
+        if(p === "actions"){
+          orderType[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+              <button  className="btn btn-primary"
+                onClick={() => {  
+                  console.log("rooooow : " , row)
+                    console.log("id:  " , row)
+                  }}>
+                    Upload Result
+                    </button>
+              <button className="ml-2 btn btn-danger"
+                  onClick = {() => {  
+                    // console.log("rooooow : " , row)
+                      console.log("id:  " , row)
+                    }}>
+                      Delete
+                      </button>
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(orderType[type].columnsTable[p])
+        }
+        else{
+  
+          temp.push(orderType[type].columnsTable[p])
+        }
+      }
+      this.setState({columns : temp})
+      temp = []
+      var newState = this.state;
+      for(var property in orderType[type].state ){
+        // console.log("propertyyyy :  " , property)
+        newState[property] = "" 
+      }
+      this.setState({newState})
+  
+      // if the page Will Contain modal
+      // for(var p in columns[type].modalForms ){
+      //   // console.log("p : " , columns[type].modalForms[p]);
+      //   temp.push(columns[type].modalForms[p])
+      // } 
+      // // console.log("temp : "  , temp)
+      // this.setState({ModalInputs : temp})
+  
 
-    rendering = () =>{
+  }
+
+   
+
+    rendering = () => {
         return(
           <div className="container gridDataContent mt-5"> 
           <div className="row">
@@ -313,70 +389,11 @@ class OrderGeneration extends Component {
                 </div>
             </div>
           </div>
-            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
-               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.orderlabList} columns={[
-                  { field: 'id', headerName: 'id', width: 70 },
-                  { field: 'date', headerName: 'date', width: 150 },
-                  { field: 'comments', headerName: 'comments', width: 150 },
-                  { field: 'status', headerName: 'Status', width: 200 },              
-                  { field: 'result', headerName: 'Result', width: 200 },              
-              { 
-                field: 'Actions',
-                headerName: 'Actions',
-                width: 230,
-                renderCell: (params) => (
-                  <strong>
-                    {/* {params.value.getFullYear()} */}
-                    {/* <Button
-                      variant="contained"
-                      color="default"
-                      size="small"
-                      className={this.props.classes.button}
-                      startIcon={<EditIcon />}
-                     
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{
-                        this.handleopenModal1();
-                        console.log("lsssssssssssssssssssssssssssssssssssss")
-                        this.getTypeByID(params.row.id);
-                        this.getData()
-                      }
-                        
-                      }
-                    >
-                       Edit
-                      
-                    </Button> */}
-                    {/* <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      className={this.props.classes.button , this.props.classes.deleteButton}
-                      startIcon={<EditIcon />}
-                      style={{ marginLeft: 16 }}
-                      onClick={async ()=>{
-                         console.log("delete function: " , params.row.id);
-                        this.handleDelete(params.row.id);
-                        this.refreshAfterDeletion(params.row.id);
-                      }}
-                    >
-                      delete
-                    </Button> */}
-                  </strong>
-                ),
-              }]} pageSize={5}
-                checkboxSelection  onRowSelected={async (row) => {
-                  
-                   
-                  console.log("yes" , this.state.typeId);
-                  }} getRowId ={(row) =>{
-                      
-                  }}
-                  onRowClick = {(row)=>{
-                      console.log("yyyys" , row);
-                      id = row.row.id;
-                      this.setState({typeId : row.row.id});
-                  }} />
+            <div className = "row  align-items-center" >
+                <DataTableComp  data = {this.state.orderlabList}
+                  columns = {this.state.columns}
+                  title= "Lab" 
+                />
             </div> 
               <div className="row mt-4">
                     <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
@@ -413,7 +430,7 @@ class OrderGeneration extends Component {
     };
 
 
-    handleChange =(e)=>{
+    handleChange = (e) => {
       // console.log('yes' , e.target.files[0]);
       // this.setState({result: e.target.files[0]});
       // file = e.target.files[0];
@@ -439,6 +456,10 @@ class OrderGeneration extends Component {
      fileChangedHandler = (event) => {
     this.setState({result : event.target.files[0]})  
       }
+      // componentDidUpdate(){
+      //   console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyy");
+      //   // this.componentDidMount();
+      // }
 
     render() { 
       const { classes } = this.props;
@@ -446,143 +467,76 @@ class OrderGeneration extends Component {
   return (
     <div className="hero">
         {this.rendering()}
-
-<Modal
-  open={this.state.openModal1}
-  onClose={this.handleClose}
-  aria-labelledby="simple-modal-title"
-  aria-describedby="simple-modal-description"
->
-<Container component="main" maxWidth="xs">
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <EditIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Edit
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-          
-            <Grid item xs={12}>
-            <Select
-                native
-                label = "Marital Status"
-               
-                onChange = {(event) =>{
-                this.setState({status : event.target.value});
-                console.log("status" , event.target.value );
-              }}                                                     
-               
-               >
-          <option aria-label="None" value="" />
-          <option value= "choice1">choice1</option>
-          <option value="choice2">choice2</option>
-          <option value="choice3">choice3</option>
-          
-        </Select>
-              {/* <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="status"
-                type="text"
-                label="Marital status"
-                id="status"
-                autoComplete="status"
-                defaultValue={this.state.TypeObj.status}
-                // placeholder={this.state.TypeObj.investigation_type}
-                onChange = {(event) =>{
-                  this.setState({status : event.target.value});
-                }}
-                
-              /> */}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="date"
-                name="date" 
-                type="date"
-                label="Date"
-                autoComplete="date"
-                defaultValue={this.state.TypeObj.date}
-                onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.date)
-                  this.setState({date : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="comments"
-                name="comments"
-                label="comments" 
-                type="text"
-                autoComplete="comments"
-                defaultValue={this.state.TypeObj.comments}
-                onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.comments)
-                  this.setState({comments : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              {/* <input type="file" name="file" onChange={this.handleChange}/> */}
-              <input
-        style={{display:'none'}}
-        accept="*"
-        id="contained-button-file"
-        type="file"
-        onChange={(e)=>{
-          this.fileChangedHandler(e)
-        }}
-      />
-      <label htmlFor="contained-button-file">
-        <Button style={{marginLeft:'40%'}} variant="contained" color="primary" component="span">
-          Upload
-        </Button>
-      </label>
-            </Grid>
-            
-           
-          </Grid>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={()=>{
-              this.handleUpdate();
-              this.getData();
-            }}
-          >
-           
-            Edit
-          </Button>
-
-          
-        </form>
-
-      </div>
-     
-    </Container>
-</Modal>
-
-
     </div>
  
   );
     }
 }
  
-export default withStyles(useStyles)(OrderGeneration); 
+export default withStyles(useStyles)(AllOrders); 
+
+
+
+{/* <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.orderlabList} columns={[
+    { field: 'id', headerName: 'id', width: 70 },
+    { field: 'date', headerName: 'date', width: 150 },
+    { field: 'comments', headerName: 'comments', width: 150 },
+    { field: 'status', headerName: 'Status', width: 200 },              
+    { field: 'result', headerName: 'Result', width: 200 },              
+{ 
+  field: 'Actions',
+  headerName: 'Actions',
+  width: 230,
+  renderCell: (params) => (
+    <strong>
+      {/* {params.value.getFullYear()} */}
+      {/* <Button
+        variant="contained"
+        color="default"
+        size="small"
+        className={this.props.classes.button}
+        startIcon={<EditIcon />}
+       
+        style={{ marginLeft: 16 }}
+        onClick={()=>{
+          this.handleopenModal1();
+          console.log("lsssssssssssssssssssssssssssssssssssss")
+          this.getTypeByID(params.row.id);
+          this.getData()
+        }
+          
+        }
+      >
+         Edit
+        
+      </Button> */}
+      {/* <Button
+        variant="contained"
+        color="secondary"
+        size="small"
+        className={this.props.classes.button , this.props.classes.deleteButton}
+        startIcon={<EditIcon />}
+        style={{ marginLeft: 16 }}
+        onClick={async ()=>{
+           console.log("delete function: " , params.row.id);
+          this.handleDelete(params.row.id);
+          this.refreshAfterDeletion(params.row.id);
+        }}
+      >
+        delete
+      </Button> 
+    </strong>
+  ),
+}]} pageSize={5}
+  checkboxSelection  onRowSelected={async (row) => {
+    
+     
+    console.log("yes" , this.state.typeId);
+    }} getRowId ={(row) =>{
+        
+    }}
+    onRowClick = {(row)=>{
+        console.log("yyyys" , row);
+        id = row.row.id;
+        this.setState({typeId : row.row.id});
+    }} /> */}

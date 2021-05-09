@@ -2,11 +2,7 @@
 import Button from '@material-ui/core/Button';
 
 import MenuItem from '@material-ui/core/MenuItem';
-
 import Select from '@material-ui/core/Select';
-import { useDispatch } from 'react-redux'
-
-
 import React from 'react';
 import clsx from 'clsx';
 import Card from "@material-ui/core/Card";
@@ -40,28 +36,26 @@ import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
-import DashBoard from "../pages/DashBoard"
-import Appointement from '../pages/appointements';
+import Appointement from '../../pages/appointements';
 import DashBoardComp from "./dashboardComp";
 import { BrowserRouter } from 'react-router-dom';
-import Signup from './Forms/signUpForm';
+// import Signup from './Forms/signUpForm';
 import { useState } from 'react';
-import LoginForm from './Forms/loginform';
+// import LoginForm from './Forms/loginform';
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux"; 
-import {handleChangeOpen,setChangeOpen } from "../actions";
+
 import { useSelector } from 'react-redux'
-import PaientRegistration from './patientRegistration/importatntInfo';
-import ptRegistration from './patientRegistration/ptRegistration';
-import NurseVisit from "../components/nurseModule/nursemodule";
-import Visit from "../components/Visit/visit";
-import Prescription from "../components/Prescription/Prescription";
-import PatientsOnVisit from "../components/nurseModule/patinetsOnVisit";
+// import PaientRegistration from './patientRegistration/importatntInfo';
+import ptRegistration from '../patientRegistration/ptRegistration';
+import NurseVisit from "../nurseModule/nursemodule";
+import Visit from "../Visit/visit";
+import Prescription from "../Prescription/Prescription";
+import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
-import Search from "./searchModule/search";
-import PatientLabOrders from "./Orders/patientLabsData";
-// import Profile from "../Profile";
-import Profile from './Profile/Profile';
+import Profile from '../Profile/Profile';
+import AcceptOrders from './../orderGeneration/acceptOrders';
+import AllOrders from './../orderGeneration/allOrders';
 
 
 
@@ -185,7 +179,7 @@ const useStyles = makeStyles((theme) => ({
     
 }));
 
-const Navbar = ({match}) => {
+const PublicDashBoard = ({match}) => {
   const history = useHistory();
   const [spacing, setSpacing] = React.useState(2);
   const [logged, setlogged] = React.useState(false);
@@ -207,7 +201,7 @@ const MainFunctions = [
     {text: "EMR Electronic Medical Records" , role :["8"]},
     {text: "Nursing Assessment" , role :["8" , "7"]},
     {text: "Lap Information System" , role :["2"]},
-    {text: "Rediology information system" , role :["3"]},
+    {text: "Radiology Information System" , role :["3"]},
     {text: "Path information system " , role :["4"]},
     {text: "Electronic procreption ERX" , role :["13" , ""]},
     {text: "System Admin" , role :["admin"]},
@@ -215,9 +209,6 @@ const MainFunctions = [
     // {text: "New Doctor Appointement" , role :"doctor"},
 ]
 
-const dispatch = useDispatch();
-
-  
 
 
   useEffect(()=>{
@@ -240,23 +231,15 @@ const dispatch = useDispatch();
       setlogged(false); // make it login
     }
 
-
-    // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
-    // setTimeout( ()=>{ alert(‘hello’); }, 2000);
  },[]);
  
   const handleDrawerOpen = () => {
     setOpen(true);
-    setChangeOpen(true);
-    dispatch({ type: 'setOpen', payload: true })
-    // console.log("message :" , msg);
   };
   
 
   const handleDrawerClose = () => {
     setOpen(false);
-    setChangeOpen(false);
-    dispatch({ type: 'setOpen', payload: false })
   };
    const renderMainCards = ()=>{
     
@@ -285,21 +268,29 @@ const dispatch = useDispatch();
         }} 
         onClick={()=>{
           if(value.role.includes(role) && value.text === "New Doctor Appointement"){
-            // console.log("yyysds");
+         
             history.push(match.path+"/appoint");
           }
           else if(value.role.includes(role) && value.text == "New patient registration"){
-            // console.log("patient Register");
+           
             history.push(match.path+"/ptRegistration");
           }
-          // if(value.role.includes(role) && value.text == "Nursing Assessment"){
+         
           else if( value.text == "Nursing Assessment" && value.role.includes(role)){
             // console.log("patient Register");
             history.push(match.path+"/patientsOnVisit");
           }
           else if( value.text == "Lap Information System" && value.role.includes(role)){
             // console.log("patient Register");
-            history.push(match.path+"/search");
+            history.push(match.path+`/acceptOrders/${"lab"}`);
+          }
+          else if( value.text == "Path Information System" && value.role.includes(role)){
+            // console.log("patient Register");
+            history.push(match.path+`/acceptOrders/${"pathology"}`);
+          }
+          else if( value.text == "Radiology Information System" && value.role.includes(role)){
+            // console.log("patient Register");
+            history.push(match.path+`/acceptOrders/${"radio"}`);
           }
           
         }}>
@@ -450,8 +441,8 @@ const dispatch = useDispatch();
       <div className="row" style={{marginTop:"5em"}}>
       <Switch> 
       <Route exact path={match.path+"/appoint"}  component={Appointement}/> 
-      <Route exact path={match.path+"/search"}  component={Search}/> 
-      <Route exact path={match.path +"/search/patientOrders/:ptId"} component = {PatientLabOrders} />
+      {/* <Route exact path={match.path+"/search"}  component={Search}/>  */}
+      {/* <Route exact path={match.path +"/search/patientOrders/:ptId"} component = {PatientLabOrders} /> */}
       <Route exact path={match.path +"/patientsOnVisit"} component = {PatientsOnVisit} />
       <Route exact path={match.path +"/patientsOnVisit/nurseVisit/:id"} component = {NurseVisit} />
       <Route exact path={match.path +"/appoint/visit/:id"} component = {Visit} />
@@ -483,6 +474,18 @@ const dispatch = useDispatch();
       <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/>
       <Route exact path={match.path+"/nurseVisit"} component={NurseVisit}/>
       <Route  path={match.path+"/appoint/visit"} component={Visit}/>
+      
+      
+
+                      {/* AcceptOrders */}
+      <Route exact path={match.path+"/acceptOrders/:type"} component={AcceptOrders}/>
+      
+                    {/* All Orders */}
+      <Route  path={match.path+"/acceptOrders/:type/allLabOrders"} component={AllOrders}/>
+      {/* <Route  path={match.path+"/acceptOrders/:type/allPathologyOrders"} component={AllOrders}/>
+      <Route  path={match.path+"/acceptOrders/:type/allRadioOrders"} component={AllOrders}/> */}
+      
+      
        {/* <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/> */}
 
       
@@ -555,26 +558,7 @@ className={clsx(classes.content, {
           
   );
 }
-const mapactiontoprops = (disptch) =>{
-  return bindActionCreators({setChangeOpen } ,disptch);
-}
-const mapstatetoprops = (state) =>{
-  console.log("lllllllllllllll",state);
-  return {msg : state.Drawer}
-}
-
-export default connect(mapstatetoprops , mapactiontoprops)(Navbar);
 
 
-{/* <Switch>
-{/* <Route path="/">
-  <Signup />
-</Route>
-<Route path="/com">
-  <DashBoardComp/>
-</Route> 
- <Route exact path="/singup" component={Signup}></Route>
-<Route exact path="/com" component={DashBoardComp}></Route>
-{/* <Route exact path="/PathologistSignup" component={PathologistSignup}></Route> 
+export default PublicDashBoard;
 
-</Switch> */}

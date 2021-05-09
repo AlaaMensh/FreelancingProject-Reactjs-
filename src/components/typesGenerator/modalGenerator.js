@@ -2,7 +2,7 @@ import { Modal } from 'react-bootstrap'
 // import Modal from '@material-ui/core/Modal';
 import React, { Component } from 'react';
 
-import Form from "./Form"
+import Form from "./formModal"
 
 class ModalComp extends Component {
     constructor(props) {

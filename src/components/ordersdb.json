@@ -1,0 +1,152 @@
+{
+    "lab" : 
+            {   "state":{
+                    "date":"",
+                    "comments":"",
+                    "status":"",
+                    "result":""
+                    
+            },
+               "columnsTable" : {
+                        "date": {
+                                "name": "Date",
+                                "selector": "date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "comments": {
+                                "name": "Comments",
+                                "selector": "comments",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "status": {
+                                "name": "Status",
+                                "selector": "status",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "result" :{
+                                "name" :"Result",
+                                "selector" : "result",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "date" :{
+                                "type": "date",
+                                "name" : "date"
+                        },
+                        "comments" : {
+                                "type":"text",
+                                "name" :"comments"
+                        },
+                        
+                        "status" : {
+                                "type":"text",
+                                "name" :"status"
+                        },
+                        "result" : {
+                                "type":"text",
+                                "name" :"result"
+                        }
+
+               },
+               "addOrder" :"http://localhost:3000/lab/addOrder",
+               "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
+               "updateOrder":"http://localhost:3000/allergy/updateAllergy",
+               "getAll":"http://localhost:3000/allergy/getAllergy",
+               "acceptOrder":"",
+               "getNotAcceptedOrders" :"",
+               "getAllAcceptedOrders" :"",
+               "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrderByPtId",
+               "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"
+
+            },
+    "pathology" : 
+            {   "state":{
+                    "date":"",
+                    "comments":"",
+                    "status":"",
+                    "result":""
+                    
+            },
+               "columnsTable" : {
+                        "date": {
+                                "name": "Date",
+                                "selector": "date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "comments": {
+                                "name": "Comments",
+                                "selector": "comments",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "status": {
+                                "name": "Status",
+                                "selector": "status",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "result" :{
+                                "name" :"Result",
+                                "selector" : "result",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "date" :{
+                                "type": "date",
+                                "name" : "date"
+                        },
+                        "comments" : {
+                                "type":"text",
+                                "name" :"comments"
+                        },
+                        
+                        "status" : {
+                                "type":"text",
+                                "name" :"status"
+                        },
+                        "result" : {
+                                "type":"text",
+                                "name" :"result"
+                        }
+
+               },
+               "addOrder" :"http://localhost:3000/lab/addOrder",
+               "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
+               "updateOrder":"http://localhost:3000/allergy/updateAllergy",
+               "getAll":"http://localhost:3000/allergy/getAllergy",
+               "acceptOrder":"",
+               "getNotAcceptedOrders" :"",
+               "getAllAcceptedOrders" :"",
+               "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrderByPtId",
+               "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"
+
+            }
+    
+            
+            
+    
+}

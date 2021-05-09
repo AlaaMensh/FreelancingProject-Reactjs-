@@ -1,6 +1,9 @@
 .herrrro{
 
 }
+body,html{
+  height: 100%;
+}
 .overlay{
     display: none;
     position: fixed;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PathologistSignUp from './../Forms/singUpPathologist';
+// import PathologistSignUp from './../Forms/singUpPathologist';
 class UserInfo extends Component {
     constructor(props) {
         super(props);
