@@ -30,8 +30,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-// import "./types.css";
-// import EditIcon from '@material-ui/icons/Edit';
+
 
 var object  = {}
 const useStyles = (theme) => ({
