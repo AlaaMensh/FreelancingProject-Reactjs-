@@ -94,6 +94,7 @@ export default function LabOrder() {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
+  
     body: formBody
   }).then((resp)=>{
     console.log("resp: " , resp);
