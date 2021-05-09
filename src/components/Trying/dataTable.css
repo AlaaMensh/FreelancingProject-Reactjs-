@@ -1,0 +1,13 @@
+.data-table-extensions-filter{
+    justify-content: center;
+    display: flex;
+}
+.filter-text{
+    border-radius: 2em;
+    padding: 0.2em 0.7em;
+    margin: auto;
+}
+
+.data-table-extensions{
+    width: 90%;
+}

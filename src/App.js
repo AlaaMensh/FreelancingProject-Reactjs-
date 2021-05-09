@@ -62,6 +62,7 @@ import DoctorSignup from "./components/Forms/signUpDoctor"
 import Prescription from "./components/Prescription/Prescription";
 import Profile from "./components/Profile/Profile";
 import Search from "./components/searchModule/search";
+import Try from "./components/Trying/try";
 
 
 
@@ -159,6 +160,8 @@ function App() {
       <Route exact path="/profile" component={Profile}></Route>
       <Route exact path="/search" component={Search}></Route>
       
+      <Route exact path="/try" component={Try}></Route>
+     
       <Route exact path="**" component={Error}></Route>
     </Switch>
   

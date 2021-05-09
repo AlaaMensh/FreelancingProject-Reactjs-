@@ -1,0 +1,106 @@
+{
+    "allergy" : 
+            {   "state":{
+                    "name":"",
+                    "description":""
+            },
+               "columnsTable" : {
+                        "name": {
+                
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "description" :{
+                                "name" :"description",
+                                "selector" : "description",
+                                "sortable":true,
+                                "center" : true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name"
+                        },
+                        "description" : {
+                                "type":"text",
+                                "name" :"description"
+                        }
+
+               },
+               "addType" :"http://localhost:3000/allergy/addAllergy",
+               "deleteType" : "http://localhost:3000/allergy/deleteAllergy",
+               "updateType":"http://localhost:3000/allergy/updateAllergy",
+               "getAll":"http://localhost:3000/allergy/getAllergy"
+
+            },
+    "disease" : 
+            {   "state":{
+                    "name":"",
+                    "code":"",
+                    "abbreviation":""
+            },
+               "columnsTable" : {
+                        "id": {
+                                "name": "id",
+                                "selector": "id",
+                                "sortable": true,
+                                "hide" : true
+                        },
+                        "name": {
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true
+                        },
+                        "abbreviation" :{
+                                "name" :"Abbreviation",
+                                "selector" : "abbreviation",
+                                "sortable":true
+                        },
+                        "code" :{
+                                "name" :"Code",
+                                "selector" : "code",
+                                "sortable":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name"
+                        },
+                        "code" : {
+                                "type":"text",
+                                "name" :"code"
+                        },
+                        "abbreviation" : {
+                                "type":"text",
+                                "name" :"abbreviation"
+                        }
+               },
+               "addType" :"http://localhost:3000/diseases/addDiseases",
+               "deleteType" : "http://localhost:3000/disease/deleteDisease",
+               "updateType":"http://localhost:3000/diseases/updateDiseases",
+               "getAll":"http://localhost:3000/diseases/getAll"
+
+            }
+            
+            
+    
+}
