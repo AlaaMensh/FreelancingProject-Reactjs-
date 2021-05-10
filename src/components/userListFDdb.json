@@ -1,0 +1,91 @@
+{
+    "labFD" : 
+            {   "state":{
+                        "userName":"",
+                        "password": "",
+                        "Email": "",
+                        "phone" : "",
+                        "address": "",
+                        "establishment": "",
+                        "contactperson" : ""
+                       
+                        
+            },
+               "columnsTable" : {
+                        "date": {
+                                "name": "Date",
+                                "selector": "date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "comments": {
+                                "name": "Comments",
+                                "selector": "comments",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "status": {
+                                "name": "Status",
+                                "selector": "status",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "result" :{
+                                "name" :"Result",
+                                "selector" : "result",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "establishment" :{
+                                "type": "text",
+                                "name" : "establishment"
+                        },
+                        "contactperson" :{
+                                "type": "text",
+                                "name" : "contactperson"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        
+                        "password" : {
+                                "type":"password",
+                                "name" :"password"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
+               "deleteUser" : "",
+               "updateUser":"",
+               "getAll":""
+               
+
+            }
+    
+            
+            
+    
+}

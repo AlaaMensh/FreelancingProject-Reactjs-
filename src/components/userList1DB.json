@@ -1,95 +1,15 @@
 {
-    "lab" : 
+    "doctor" : 
             {   "state":{
-                    "date":"",
-                    "comments":"",
-                    "status":"",
-                    "result":""
-                    
-            },
-               "columnsTable" : {
-                        "date": {
-                                "name": "Date",
-                                "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "firstName": {
-                                "name": "First Name",
-                                "selector": "firstName",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "secondName": {
-                                "name": "Second Name",
-                                "selector": "secondName",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "phone": {
-                                "name": "Phone",
-                                "selector": "phone",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true
-                               
-                        },
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "date" :{
-                                "type": "date",
-                                "name" : "date"
-                        },
-                        "comments" : {
-                                "type":"text",
-                                "name" :"comments"
-                        },
-                        
-                        "status" : {
-                                "type":"text",
-                                "name" :"status"
-                        },
-                        "result" : {
-                                "type":"text",
-                                "name" :"result"
-                        }
-
-               },
-               "addOrder" :"http://localhost:3000/lab/addOrder",
-               "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
-               "updateOrder":"http://localhost:3000/allergy/updateAllergy",
-               "getAll":"http://localhost:3000/allergy/getAllergy",
-               "acceptOrder":"",
-               "getNotAcceptedOrders" :"http://localhost:3000/lab/getOrder",
-               "getAllAcceptedOrders" :"",
-               "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrderByPtId",
-               "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"
-
-            },
-    "pathology" : 
-            {   "state":{
-                    "date":"",
-                    "comments":"",
-                    "status":"",
-                    "result":""
+                    "firstName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "Address": ""
                     
             },
                "columnsTable" : {
@@ -127,36 +47,147 @@
                         }
                },
                "modalForms": {
-                        "date" :{
-                                "type": "date",
-                                "name" : "date"
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
                         },
-                        "comments" : {
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },
+                        "userName" : {
                                 "type":"text",
-                                "name" :"comments"
+                                "name" :"userName"
                         },
                         
-                        "status" : {
-                                "type":"text",
-                                "name" :"status"
+                        "password" : {
+                                "type":"password",
+                                "name" :"password"
                         },
-                        "result" : {
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "phone" : {
                                 "type":"text",
-                                "name" :"result"
+                                "name" :"phone"
+                        },
+                        "Address" : {
+                                "type":"text",
+                                "name" :"Address"
                         }
 
                },
-               "addOrder" :"http://localhost:3000/lab/addOrder",
-               "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
-               "updateOrder":"http://localhost:3000/allergy/updateAllergy",
-               "getAll":"http://localhost:3000/allergy/getAllergy",
-               "acceptOrder":"",
-               "getNotAcceptedOrders" :"http://localhost:3000/lab/getOrder",
-               "getAllAcceptedOrders" :"",
-               "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrderByPtId",
-               "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"
+               "addUser" :"http://localhost:3000/doctor/addDoctor",
+               "deleteUser" : "",
+               "updateUser":"",
+               "getAll":""
+               
+
+            },
+    "nurse" : 
+            {   "state":{
+                    "firstName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "Address": ""
+                    
+            },
+               "columnsTable" : {
+                        "date": {
+                                "name": "Date",
+                                "selector": "date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "comments": {
+                                "name": "Comments",
+                                "selector": "comments",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "status": {
+                                "name": "Status",
+                                "selector": "status",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "result" :{
+                                "name" :"Result",
+                                "selector" : "result",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        
+                        "password" : {
+                                "type":"password",
+                                "name" :"password"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "Address" : {
+                                "type":"text",
+                                "name" :"Address"
+                        }
+
+               },
+               "addUser" :"http://localhost:3000/nurse/addNurse",
+               "deleteUser" : "",
+               "updateUser":"",
+               "getAll":""
+               
 
             }
+
     
             
             

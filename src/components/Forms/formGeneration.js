@@ -14,8 +14,8 @@ class FormGenerator extends Component {
                 <div className="row">
                     <div className="col-10">
                     {this.props.ModalInputs.map((input) => (
-                            <div className="row py-2">
-                                    <TextField  id="standard-basic" label={input.name}
+                            <div className="row py-2 justify-content-center">
+                                    <TextField size="small"  id="filled-basic"  variant="filled" label={input.name}
                                                 name={input.name}
                                                 type={input.type}
                                                 defaultValue={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
@@ -28,7 +28,7 @@ class FormGenerator extends Component {
                             </div>
                 
                 ))}
-                <input type="button" value="Add Order" className="btn-primary btn" 
+                <input type="button" value={this.props.buttonTitle || "Add Order"} className="btn-primary btn" 
                 onClick={()=>{
                     this.props.handleSubmit()
                 }}/>

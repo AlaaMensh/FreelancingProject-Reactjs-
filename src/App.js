@@ -13,6 +13,8 @@ import AcceptOrders from "./components/orderGeneration/acceptOrders";
 import AddOrderForm from "./components/orderGeneration/addOrderForm";
 import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard';
 import PublicDashBoard from './components/publicDashBoard/publicDashBoard';
+import SignupList1 from './components/Forms/signUp/signupList1';
+import SignUpFD from './components/Forms/signUp/signUpListFD';
 
 
 
@@ -27,11 +29,12 @@ function App() {
 
       
       <Switch>
-      <Route exact path="/AcceptOrders" component={AcceptOrders}></Route>
       <Route exact path="/typesGenerator" component={TypesGenerator}></Route>
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
       <Route  path="/publicDashBoard" component={PublicDashBoard}></Route>
+      <Route  path="/signUpList1/:type" component={SignupList1}></Route>
+      <Route  path="/signUpFD/:type" component={SignUpFD}></Route>
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>
   

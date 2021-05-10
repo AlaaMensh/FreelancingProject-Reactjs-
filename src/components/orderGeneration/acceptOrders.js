@@ -16,17 +16,18 @@ const data2 =[
     {firstName :"Alaa" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
 ]
 
-class AcceptOrders extends Component {
+class AcceptOrders extends Component { // this Component to View All The Not Accepted Orders in our System
     constructor(props) {
         super(props);
         this.state = { 
             type:"",
             columns:[],
-            data:[]
+            allNotAcceptedOrders:[] // this will be viewed in DataTable Component
          }
     }
     async componentDidMount(){
         await this.handleDataTableColumns()
+        await this.getData(this.props.match.params.type)
     }
 
 
@@ -72,16 +73,49 @@ class AcceptOrders extends Component {
         // this.getData();
       }
 
-      getData = async(type)=>{
-        await axios.get(`${orderType[type].getNotAcceptedOrders}` ,{
-        //   ptId : this.state.userName
-        } ).then(async resp => {
-          console.log("resp : " ,)
-           this.setState({
-            data : resp.data
+      getData = async(type)=>{ 
+        var typeOrder = 0;
+        switch(type){
+          case "lab":
+              typeOrder = 4
+              break;
+          case "radio":
+            typeOrder = 3
+              break;
+          case "pathology":
+            typeOrder = 5
+              break;
+      }
+        var details = {     
+          type : typeOrder,
+        }
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
+          console.log("endPoint : " , orderType[type].getNotAcceptedOrders);
+         
+      fetch(`${orderType[type].getNotAcceptedOrders}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          body: formBody
+        }).then((resp)=>{
+          resp.json().then((data)=>{
+            console.log("All Incomming Data;  " , data)
+
+
+            this.setState({ 
+              allNotAcceptedOrders:data
+            })
+      
           })
-          // console.log("resp.data: " , resp.data);
-        
+        }).catch(()=>{
+          console.log("errror")
         })
         
       }
@@ -134,17 +168,16 @@ class AcceptOrders extends Component {
     
 
     }
-
+  
     render() { 
         return (     
             <div>
                 {console.log(this.state.columns)}
-                <DataTableComp  data = {data1}
+                <DataTableComp  data = {this.state.allNotAcceptedOrders}
                   columns = {this.state.columns}
                   title= "Allergy" />
                   <div className="row justify-content-center mt-5">
                     <button className="btn btn-primary" onClick={()=>{
-                      console.log("historyL:::: " , this.props.history)
                       this.props.history.push(`${this.props.history.location.pathname}/allLabOrders`)
                     }}>Get All Accepted Orders</button>
                   </div>
