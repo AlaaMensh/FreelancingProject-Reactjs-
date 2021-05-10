@@ -26,6 +26,7 @@ class FormGenerator extends Component {
                                                 type={input.type}
                                                 defaultValue={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
                                                 onChange={(e)=>{
+                                                   
                                                     this.props.handleChange(e)}
                                                 }
                                                 

@@ -13,28 +13,27 @@ import AcceptOrders from "./components/orderGeneration/acceptOrders";
 import AddOrderForm from "./components/orderGeneration/addOrderForm";
 import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard';
 import PublicDashBoard from './components/publicDashBoard/publicDashBoard';
-import SignupList1 from './components/Forms/signUp/signupList1';
-import SignUpFD from './components/Forms/signUp/signUpListFD';
+import SignupList1 from './components/Forms/signUp/signUp';
+import UserCrud from './components/userCrud/userCrud';
+
 
 
 
 
 function App() {
 
-  // const createStoreWithMDW = applyMiddleware(promiseMW)(createStore)
   
   return (
 
     <Router>
 
-      
       <Switch>
       <Route exact path="/typesGenerator" component={TypesGenerator}></Route>
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
       <Route  path="/publicDashBoard" component={PublicDashBoard}></Route>
-      <Route  path="/signUpList1/:type" component={SignupList1}></Route>
-      <Route  path="/signUpFD/:type" component={SignUpFD}></Route>
+      <Route exact  path="/signUpList1/:type" component={SignupList1}></Route>
+      <Route  path="/userCrud/:type" component={UserCrud}></Route>
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>
   

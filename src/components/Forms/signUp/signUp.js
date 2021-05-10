@@ -1,25 +1,27 @@
 import React, { Component } from 'react';
-import userType from "../../userListFDdb.json";
+import userType from "../../usersDB.json";
 import FormGenerator from "../formGeneration"
 
 
 
 
-class SignUpFD extends Component { //for Doctor - nurse - pathologist - chemist
+class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemist
     constructor(props) {
         super(props);
         this.state = { 
             formInputs : [],
-            type:""
+            type:"",
+            addingUserObject : {},
+
 
          }
     }
     async componentDidMount(){
         this.setState({type: this.props.match.params.type})
-        await this.handleDataFormInputs();
+        await this.handleDataTableColumns();
     }
 
-    handleDataFormInputs = () => {
+    handleDataTableColumns = () => {
         var type = this.props.match.params.type;
 
         this.setState({type});
@@ -36,15 +38,15 @@ class SignUpFD extends Component { //for Doctor - nurse - pathologist - chemist
     
         // if the page Will Contain modal
         
-        for(var p in userType[type].modalForms ){
+        for(var p in userType[type].modalAdditionForms ){
           // console.log("p : " , columns[type].modalForms[p]);
-          temp.push(userType[type].modalForms[p])
+          temp.push(userType[type].modalAdditionForms[p])
         } 
         // console.log("temp : "  , temp)
         this.setState({formInputs : temp})
     
 
-    } 
+    }
     handleChange = (evt) =>{
         console.log("evnet " , evt.target.value)
         const value = evt.target.value;
@@ -57,22 +59,22 @@ class SignUpFD extends Component { //for Doctor - nurse - pathologist - chemist
        
      
         var details = {
-      //     'firstName':this.state.firstName,
-      //      'lastName': this.state.lastName, 
-      //      'Date': this.state.Date,
-      //      'degree' : this.state.degree,
-      //      'userName': this.state.userName,
-      //     'password': this.state.password,
-      //     'Email': this.state.Email,
-      //     'phone' : this.state.phone,
-      //     'address': this.state.address,
+          // 'firstName':this.state.firstName,
+          //  'lastName': this.state.lastName, 
+          //  'Date': this.state.Date,
+          //  'degree' : this.state.degree,
+          //  'userName': this.state.userName,
+          // 'password': this.state.password,
+          // 'Email': this.state.Email,
+          // 'phone' : this.state.phone,
+          // 'address': this.state.address,
       };
       for(var property in userType[this.state.type].state ){
         // console.log("propertyyyy :  " , property)
         details[property] = this.state[property]; 
       }
       
-       console.log("details: " , details)
+       
        var formBody = [];
        for (var property in details) {
          var encodedKey = encodeURIComponent(property);
@@ -92,7 +94,7 @@ class SignUpFD extends Component { //for Doctor - nurse - pathologist - chemist
        }).catch(()=>{
          console.log("errror")
        })
-      //  this.props.history.push("")
+    //    this.props.history.push("")
      
      }
 
@@ -114,4 +116,4 @@ class SignUpFD extends Component { //for Doctor - nurse - pathologist - chemist
     }
 }
  
-export default SignUpFD;
+export default SignupList1;

@@ -36,7 +36,7 @@ class ModalComp extends Component {
                 <Modal.Title>Login Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {console.log("hhhhhhheeeree   ",this.props.ModalInputs)}
+                    {/* {console.log("hhhhhhheeeree   ",this.props.ModalInputs)} */}
                     <Form ModalInputs = {this.props.ModalInputs} 
                           updatedTypeObj = {this.props.updatedTypeObj}
                           handleChange = {this.props.handleChange}

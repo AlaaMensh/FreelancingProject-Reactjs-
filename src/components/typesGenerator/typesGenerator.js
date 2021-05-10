@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import React from 'react';
 import DataTable from 'react-data-table-component';
-import columns from './typesDB.json';
+import columns from '../typesDB.json';
 import Modal from '@material-ui/core/Modal';
 import ModalComp from "./modalGenerator";
 import axios from 'axios';
@@ -45,16 +44,12 @@ class TypesGenerator extends Component {
 
           var details = {
             id:this.state.typeObj.id,
-            name: this.state.name,
-            description : this.state.description,
           }
-    
-          if(!details.name){
-            details.name = this.state.typeObj.name
+          for(var p in columns[this.state.type].state ){ // take attributes in state and put in object to backend
+            details[p] = this.state[p] || this.state.typeObj[p]; 
           }
-          if(!details.description){
-            details.description = this.state.typeObj.description
-          }
+          console.log("/////////////////" , details)
+
     
           var formBody = [];
           for (var property in details) {
@@ -90,7 +85,7 @@ class TypesGenerator extends Component {
     }
     // formBody = formBody.join("&");
     
-    fetch(`${columns[this.state.type].deleteType}`, {
+    await fetch(`${columns[this.state.type].deleteType}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -109,9 +104,9 @@ class TypesGenerator extends Component {
   }
   handleAdding = async()=>{
    
-    var details = {
-      name: this.state.name,
-      description : this.state.description,
+    var details = {}
+    for(var p in columns[this.state.type].state ){ // take attributes in state and put in object to backend
+      details[p] = this.state[p] || this.state.typeObj[p]; 
     }
     console.log("detilaas : " , details)
 
@@ -176,7 +171,7 @@ await fetch(`${columns[this.state.type].addType}`, {
         <div className="col-auto">
         <button  className="btn btn-danger"
               onClick={() => {
-                  // console.log("id:  " , prop)
+                  // console.log("id:  " , row)
                   this.handleDelete(row.id)
                 }}>Delete</button>
         </div>

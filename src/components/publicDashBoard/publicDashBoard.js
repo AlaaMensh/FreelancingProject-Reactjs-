@@ -252,7 +252,9 @@ const MainFunctions = [
       <Grid key={index} item xs={12} sm={4} md={3} >
       <Card className={classes.cardStyle} style={{
         cursor : value.role.includes(role)?"pointer":"not-allowed" 
-        }} >
+        }} onClick = {()=>{
+          console.log("llooooooo")
+        }}>
       <CardMedia
         className={classes.media}
         style={{padding:"3em"}}

@@ -51,12 +51,6 @@
                     "abbreviation":""
             },
                "columnsTable" : {
-                        "id": {
-                                "name": "id",
-                                "selector": "id",
-                                "sortable": true,
-                                "hide" : true
-                        },
                         "name": {
                                 "name": "Name",
                                 "selector": "name",
@@ -95,7 +89,7 @@
                         }
                },
                "addType" :"http://localhost:3000/diseases/addDiseases",
-               "deleteType" : "http://localhost:3000/disease/deleteDisease",
+               "deleteType" : "http://localhost:3000/diseases/deleteDiseases",
                "updateType":"http://localhost:3000/diseases/updateDiseases",
                "getAll":"http://localhost:3000/diseases/getAll"
 

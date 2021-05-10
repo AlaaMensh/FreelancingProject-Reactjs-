@@ -34,7 +34,6 @@ export default function Info(props)
     const getUser = ()=>{
         axios.get('http://localhost:3000/authenticate/update_phote/user/'+props.userId).then(result=>{
             console.log("result :   ",result)
-
             setUser(result.data)
             setImg("http://localhost:3000/images/"+result.data.image)
             console.log(img)
