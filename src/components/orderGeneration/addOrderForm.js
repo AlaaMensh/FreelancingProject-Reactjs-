@@ -18,7 +18,7 @@ class AddOrderForm extends Component {
      }
   }
   componentDidMount(){
-    var type = "lab";
+    var type = this.props.match.params.type;
     this.setState({type});
     this.setState();
     if(this.props.match.params.id){
@@ -50,7 +50,7 @@ class AddOrderForm extends Component {
     });
   }
 
-     handleSubmit = async()=>{
+  handleSubmit = async()=>{
 
     
       console.log("laaaaaaaaaaaaaaaaaaaab")

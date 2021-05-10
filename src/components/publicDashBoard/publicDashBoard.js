@@ -54,8 +54,10 @@ import Prescription from "../Prescription/Prescription";
 import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
 import Profile from '../Profile/Profile';
+
 import AcceptOrders from './../orderGeneration/acceptOrders';
 import AllOrders from './../orderGeneration/allOrders';
+import AddOrderForm from "../orderGeneration/addOrderForm";
 
 
 
@@ -481,12 +483,10 @@ const MainFunctions = [
       <Route exact path={match.path+"/acceptOrders/:type"} component={AcceptOrders}/>
       
                     {/* All Orders */}
-      <Route  path={match.path+"/acceptOrders/:type/allLabOrders"} component={AllOrders}/>
-      {/* <Route  path={match.path+"/acceptOrders/:type/allPathologyOrders"} component={AllOrders}/>
-      <Route  path={match.path+"/acceptOrders/:type/allRadioOrders"} component={AllOrders}/> */}
+      <Route exact path={match.path+"/acceptOrders/:type/allLabOrders"} component={AllOrders}/>
       
-      
-       {/* <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/> */}
+                    {/* Add order Form */}
+      <Route exact  path={match.path+"/acceptOrders/:type/allLabOrders/addOrder"} component={AddOrderForm}/>        
 
       
       </Switch>

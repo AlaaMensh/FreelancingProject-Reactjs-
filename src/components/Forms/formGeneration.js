@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputLabel from '@material-ui/core/InputLabel';
+
+
 
 class FormGenerator extends Component {
     constructor(props) {
@@ -15,7 +19,9 @@ class FormGenerator extends Component {
                     <div className="col-10">
                     {this.props.ModalInputs.map((input) => (
                             <div className="row py-2 justify-content-center">
-                                    <TextField size="small"  id="filled-basic"  variant="filled" label={input.name}
+                                    {
+                                        input.type !== "select" ? (
+                                            <TextField size="small"  id="filled-basic"  variant="filled" label={input.name}
                                                 name={input.name}
                                                 type={input.type}
                                                 defaultValue={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
@@ -24,6 +30,27 @@ class FormGenerator extends Component {
                                                 }
                                                 
                                     />
+                                        ):(<>
+                                            <InputLabel htmlFor="age-native-helper">Age</InputLabel>
+                                            {console.log("options: " , input.options)}
+                                            <NativeSelect
+                                            // value={state.age}
+                                            onChange={this.props.handleChange}
+                                            >
+                                            {
+                                                input.options.map((option)=>{
+                                                    return <option value={option.value}>{option.text}</option>
+                                                })
+                                            }
+                                            {/* <option aria-label="" value="" />
+                                            <option value={10}>Ten</option>
+                                            <option value={20}>Twenty</option>
+                                            <option value={30}>Thirty</option> */}
+                                            </NativeSelect>
+                                            </>
+                                            
+                                        )
+                                    }
 
                             </div>
                 

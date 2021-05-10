@@ -17,7 +17,7 @@ class DataTableComp extends Component {
             data :this.props.data
           };
         return ( 
-            <DataTableExtensions {...tableData}
+            <DataTableExtensions {...tableData} //for filtering
             export = {false}
             print = {false}
             style={{width: "90%"}}

@@ -8,21 +8,21 @@
                     
             },
                "columnsTable" : {
+                       "firstName": {
+                               "name": "First Name",
+                               "selector": "firstName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "secondName": {
+                               "name": "Second Name",
+                               "selector": "secondName",
+                               "sortable": true,
+                               "center" : true
+                       },
                         "date": {
                                 "name": "Date",
                                 "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "firstName": {
-                                "name": "First Name",
-                                "selector": "firstName",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "secondName": {
-                                "name": "Second Name",
-                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -64,8 +64,13 @@
                         },
                         
                         "status" : {
-                                "type":"text",
-                                "name" :"status"
+                                "type":"select",
+                                "name" :"status",
+                                "options":[
+                                        {"value":"request", "text" : "Request"},
+                                        {"value":"deliver", "text" : "Delivering"},
+                                        {"value":"pending", "text" : "Pending"}
+                                ]
                         },
                         "result" : {
                                 "type":"text",
@@ -77,7 +82,7 @@
                "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
                "getAll":"http://localhost:3000/allergy/getAllergy",
-               "acceptOrder":"",
+               "acceptOrder":"http://localhost:3000/lab/setAccept",
                "getNotAcceptedOrders" :"http://localhost:3000/lab/getOrder",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrderByPtId",

@@ -31,47 +31,50 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
     }
 
 
-    handleAccept = (id) =>{
-        var details = {
-          acceptedIds : this.state.acceptedIds,
-          labFdId : localStorage.getItem("userId"),
-          labId: localStorage.getItem("userId")
-        }
-  
-        
-        console.log("detilaas : " , details)
-  
-        var formBody = [];
-        for (var property in details) {
-          var encodedKey = encodeURIComponent(property);
-          var encodedValue = encodeURIComponent(details[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
-        }
-        formBody = formBody.join("&");
-        console.log("formging:     " , formBody)
-        console.log("formging:     " , JSON.stringify(details))
-        
-    fetch('http://localhost:3000/lab/setAccept', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          body: formBody
-        }).then((resp)=>{
-          console.log("Getting: " , resp);
-          resp.json().then((data)=>{
-            console.log("ddddddddddddddddd;  " , data[0])
-            this.setState({
-              TypeObj:data[0]
-            })
-            // object = data
-          })
-        }).catch(()=>{
-          console.log("errror")
-        })
-        this.props.history.push("./orderLabList");
-        // this.getData();
+    handleAccept = async (id) =>{
+      console.log("Accepted IDS:  " , this.state.acceptedIds )
+      var details = {
+        acceptedIds : id,
+        labFdId : localStorage.getItem("userId"),
+        labId: localStorage.getItem("labId")
       }
+
+      
+      console.log("detilaas : " , details)
+
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      formBody = formBody.join("&");
+      console.log("formging:     " , formBody)
+      console.log("formging:     " , JSON.stringify(details))
+      
+  await fetch(`${orderType[this.state.type].acceptOrder}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then((resp)=>{
+        console.log("Getting: " , resp);
+        resp.json().then((data)=>{
+          console.log("ddddddddddddddddd;  " , data[0])
+          this.setState({
+            TypeObj:data[0]
+          })
+          // object = data
+        })
+      }).catch(()=>{
+        console.log("errror")
+      })
+      // this.props.history.push("./orderLabList");
+      // this.getData();
+      // var temp = this.state.allNotAcceptedOrders.filter(row => row.id != id);
+      // this.setState({allNotAcceptedOrders : temp});
+    }
 
       getData = async(type)=>{ 
         var typeOrder = 0;
@@ -133,8 +136,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
               <div className="col-auto">
                 <button  className="btn btn-primary"
                   onClick={() => {  
-                    console.log("rooooow : " , row)
                       console.log("id:  " , row)
+                      // this.handleAccept(row.id)
                     }}>Accept</button>
               </div>
             
