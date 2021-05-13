@@ -26,7 +26,7 @@ class DataTableComp extends Component {
               
 
              <DataTable
-               title={`All ${this.props.title} Type `}
+               title={` ${this.props.title}`}
                columns={this.props.columns}
                data={this.props.data}
                pagination

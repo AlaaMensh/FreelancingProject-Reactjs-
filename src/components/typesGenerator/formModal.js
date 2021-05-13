@@ -5,7 +5,10 @@ class Form extends Component {
         super(props);
         this.state = {  }
     }
-    render() { 
+    componentDidMount(){
+        console.log("//////////******************/////////")
+    }
+    render() {  
         return (
             <form className="row justify-content-center">
                         <div className="col-10 align-items-center">

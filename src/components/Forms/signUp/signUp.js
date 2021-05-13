@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import userType from "../../usersDB.json";
 import FormGenerator from "../formGeneration"
+import axios from 'axios';
+import { ArrowForwardIosTwoTone } from '@material-ui/icons';
 
-
-
+const arr = [
+  {id:1 , name:"lab1" , abbreviation:"" ,description:""},
+  {id:3 , name:"lab1" , abbreviation:"" ,description:""},
+  {id:2 , name:"lab1" , abbreviation:"" ,description:""}
+]
 
 class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemist
     constructor(props) {
@@ -12,16 +17,23 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
             formInputs : [],
             type:"",
             addingUserObject : {},
+            list:[], //for labs or ....
+            options:[]
 
 
          }
     }
     async componentDidMount(){
-        this.setState({type: this.props.match.params.type})
-        await this.handleDataTableColumns();
+      var list = []
+      this.setState({type: this.props.match.params.type})
+      if(this.props.match.params.type === "labFD"){
+         await this.getDataForFD();
+      }
+      
     }
 
-    handleDataTableColumns = () => {
+    handleFormInputs = async (list) => {
+      console.log("list: " , this.state.list)
         var type = this.props.match.params.type;
 
         this.setState({type});
@@ -37,16 +49,26 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
        
     
         // if the page Will Contain modal
-        
+        var option ={}
+        var temp2=[]
         for(var p in userType[type].modalAdditionForms ){
-          // console.log("p : " , columns[type].modalForms[p]);
+          console.log("p : " , p);
           temp.push(userType[type].modalAdditionForms[p])
+          if(type === "labFD" && p=="labId" ){
+            for(var place of this.state.list){
+              var obj = {value : place.id , text : place.name}
+              temp2.push(obj);
+            }
+            this.setState({options : temp2})
+          
+          }
         } 
-        // console.log("temp : "  , temp)
         this.setState({formInputs : temp})
-    
+      
 
     }
+
+
     handleChange = (evt) =>{
         console.log("evnet " , evt.target.value)
         const value = evt.target.value;
@@ -54,25 +76,56 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
           [evt.target.name]: value
         });
       }
+    getLabsName = () =>{
+  // var options = {};
+  //     for(var p in userType[type].state ){
+  //       if(p === "labId"){
+  //         console.log("uuuuuuuuuuuuuuuuuuuu" ,p)
+  //         columns[type].columnsTable[p]["cell"] =  
+  //         temp.push(columns[type].columnsTable[p])
+  //       }
+  //       else{
+  
+  //         temp.push(columns[type].columnsTable[p])
+  //       }
+  //     }
+      // fetch(`http://localhost:3000/frontdisk/addLabFrontDisk`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      //   },
+      //   body: formBody
+      // }).then((resp)=>{
+      //    resp.text().then((text)=>{
+      //      console.log("text:  " , text)
+      //    });
+      // }).catch(()=>{
+      //   console.log("errror")
+      // })
 
+    }
+    getDataForFD =()=>{//Ex: get lab names for labFD
+      axios.get(`http://localhost:3000/labs/getAll` ,{
+      } ).then(async resp => {
+        console.log("resp : " ,resp)
+     
+        this.setState({list : resp.data})
+        console.log("resp.data: " , resp.data);
+        // return resp.data
+       this.handleFormInputs(resp.data);
+      
+      })
+    }
        handleSignup = async()=>{
        
      
-        var details = {
-          // 'firstName':this.state.firstName,
-          //  'lastName': this.state.lastName, 
-          //  'Date': this.state.Date,
-          //  'degree' : this.state.degree,
-          //  'userName': this.state.userName,
-          // 'password': this.state.password,
-          // 'Email': this.state.Email,
-          // 'phone' : this.state.phone,
-          // 'address': this.state.address,
-      };
+        var details = {};
+
       for(var property in userType[this.state.type].state ){
         // console.log("propertyyyy :  " , property)
         details[property] = this.state[property]; 
       }
+     console.log("details: " , details);
       
        
        var formBody = [];
@@ -83,6 +136,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
        }
        formBody = formBody.join("&");
        console.log("formBodu : " , formBody)
+
        fetch(`${userType[this.state.type].addUser}`, {
          method: 'POST',
          headers: {
@@ -90,11 +144,13 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
          },
          body: formBody
        }).then((resp)=>{
-         console.log("it is inserted", resp.text());
+          resp.text().then((text)=>{
+            console.log("text:  " , text)
+          });
        }).catch(()=>{
          console.log("errror")
        })
-    //    this.props.history.push("")
+       this.props.history.push("/login")
      
      }
 
@@ -108,6 +164,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 <FormGenerator  ModalInputs = {this.state.formInputs}
                 handleChange = {this.handleChange}
                 handleSubmit= {this.handleSignup}
+                options = {this.state.options}
                 buttonTitle = "Signup"/>
                 )
                 }

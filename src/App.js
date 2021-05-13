@@ -15,6 +15,7 @@ import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard'
 import PublicDashBoard from './components/publicDashBoard/publicDashBoard';
 import SignupList1 from './components/Forms/signUp/signUp';
 import UserCrud from './components/userCrud/userCrud';
+import Login from './components/Forms/login';
 
 
 
@@ -32,8 +33,9 @@ function App() {
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
       <Route  path="/publicDashBoard" component={PublicDashBoard}></Route>
-      <Route exact  path="/signUpList1/:type" component={SignupList1}></Route>
+      <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
+      <Route  path="/login" component={Login}></Route>
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>
   

@@ -1,0 +1,19 @@
+{
+    "state" :{
+        "userName" :"",
+        "Password" :""
+    },
+    "modalAdditionForms": {
+
+        "userName" : {
+                "type":"text",
+                "name" :"userName"
+        },
+        "Password" : {
+                "type":"password",
+                "name" :"Password"
+        }
+
+    },
+    "addUser":"http://localhost:3000/authenticate/login/"
+}

@@ -1,4 +1,3 @@
-
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import clsx from 'clsx';
@@ -19,47 +18,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import { useEffect } from 'react';
-
 import { useHistory } from "react-router-dom";
-// import "./Navbar.css";
-import CardMedia from '@material-ui/core/CardMedia';
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
-// import DashBoard from "../pages/DashBoard"
-
-import { BrowserRouter } from 'react-router-dom';
-// import Signup from './Forms/signUpForm';
-// import {useRoutes} from 'hookrouter';
-// import DashBoardComp from "./dashboardComp";
-// import Navbar from './Navbar';
-// import DashBoard from './../pages/DashBoard';
 import { useState } from 'react';
-// import LoginForm from './Forms/loginform';
-// import { connect } from "react-redux";
-// import { bindActionCreators } from "redux"; 
-// import {handleChangeOpen,setChangeOpen } from "../../actions";
-import { useSelector } from 'react-redux'
-// import PaientRegistration from './patientRegistration/importatntInfo';
-// import ptRegistration from './patientRegistration/ptRegistration';
-import OnGoingProblemStep from './patientOnGoingProblems';
 import "./index.css";
-import AllergyProblems from "./Allergy";
+import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
-// import onGoingProblemStep from '../patientRegistration/onGoingProblemStep';
-// import DashBoard from './../../pages/DashBoard';
 import PatientAppointement from './patientAppointements';
-// import OrderLabListForPt from '../OrdersForPatient/orderLabListForPatient';
-// import OrderPathologyForPatient from '../OrdersForPatient/orderPathologyForPatient';
-// import OrderRadioListForPt from '../OrdersForPatient/orderRadioForPatient';
-// import LabOrder from '../OrdersForPatient/LabOrder';
-// import LabOrder from './../Orders/order_lab';
-// import OrderGeneration from '../OrdersForPatient/orderGeneration';
-// import AdditionOrderForm from '../OrdersForPatient/additionOrderForm';
 import Visit from '../Visit/visit';
 import Prescription from "../Prescription/Prescription";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -198,48 +165,21 @@ const [ role , setRole] = useState("Doctor");
 const [ isLogin , setisLogin] = useState(false);
 const [ dropDownFunctions , setdropDownFunctions] = useState(["Dr.DahshBoard" 
                 , "appointments" ,"activityLog" ,"trash"]);
-// var appBarList = ["Alaa" , "Ahmed" , "Mohamed" , "lol"];
-const MainFunctions = [
-    {text: "New Doctor Appointement" , role :"doctor"},
-    {text: "New patient registration" , role :"doctor"},
-    {text: "EMR Electronic Medical Records" , role :"doctor"},
-    {text: "Lap Information System" , role :"doctor"},
-    {text: "Rediology information system" , role :"doctor"},
-    {text: "Path information system " , role :"doctor"},
-    {text: "Electronic proception ERX" , role :"doctor"},
-    {text: "Document Manegment" , role :"doctor"},
-    {text: "System Admin" , role :"doctor"},
-    // {text: "New Doctor Appointement" , role :"doctor"},
-]
-
-// const dispatch = useDispatch();
-
-  
 
 
   useEffect(()=>{ 
     console.log("herree dashBoard:" , localStorage.getItem("role"));
     var localStorageRole = parseInt(localStorage.getItem("role"));
-  
-    // if(localStorageRole !==8 ){
-    //   history.push("/notAuthorized");
-    // }
-    // console.log("‘hello’" ,  appBarList , role , dropDownFunctions ,isLogin , MainFunctions);
-    // setTimeout( ()=>{ alert(‘hello’); }, 2000);
+
  });
  
   const handleDrawerOpen = () => {
     setOpen(true);
-    // setChangeOpen(true);
-    // dispatch({ type: 'setOpen', payload: true })
-    // console.log("message :" , msg);
   };
   
 
   const handleDrawerClose = () => {
     setOpen(false);
-    // setChangeOpen(false);
-    // dispatch({ type: 'setOpen', payload: false })
   };
 
 
@@ -264,9 +204,12 @@ const MainFunctions = [
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          
+          {/* DashBoard Header */}
+          <Typography variant="h6" noWrap> 
             Our Clinical DashBoard
           </Typography>
+
           <Typography  component="div" style={{marginLeft :"auto",    marginRight: "1em" , display:"flex" , alignItems:"center"}}>
           <Button variant="contained" className={classes.loginLogoutButton}  onClick= {()=>{
                  localStorage.removeItem("userId");
@@ -284,7 +227,7 @@ const MainFunctions = [
             </span>
      
                  <FormControl className={classes.formControl}>
-        {/* <InputLabel htmlFor="age-native-simple">Age</InputLabel> */}
+
         
       </FormControl>
                 </Typography>
@@ -306,24 +249,14 @@ const MainFunctions = [
           </IconButton>
         </div>
         <Divider/>
+        {/* for SideBar of DashBoard */}
         <List>
           {appBarList.map((text, index) => (
             <ListItem button key={text} onClick = {()=>{
-              if(text === "OnGoingProblems"){
-                history.push(`${match.path}/OnGoingProblems`)
-              }
+     
             }}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text}  />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
@@ -340,21 +273,19 @@ const MainFunctions = [
       <Typography className="row">
       <div className="col-4 col-md-4 col-lg-3 ">
       <div class="wrapper">
-    
+    {/* Bootstrap SideBar */}
     <nav id="sidebar">
         <div className="sidebar-header">
             
         </div>
 
         <ul className="list-unstyled components">
-
-
             <li>
      
             {
-              parseInt(localStorage.getItem("role") == 8)?
+              parseInt(localStorage.getItem("role")) === 8?
               (
-                <Link to={match.path+"/clinicalDashBoard"} >
+                <Link to={match.path+"/clinicalDashBoard"} style={{cursor:"pointer"}} >
                 Clinical DashBoard
                 </Link>
               ):(
@@ -370,55 +301,31 @@ const MainFunctions = [
             </Link>
             </li>
             <li>
-            <Link to={match.path+"/OnGoingProblems"} >
+            <Link to={match.path+`/patientOnGoingProblems/${"onGoingProblems"}`}>
                         On Going Problems
                       </Link>
             </li>
             <li>
-            <Link to={match.path+"/Allergy"} >
-                        Allergy
+            <Link to={match.path+`/patientAllergyproblems/${"allergy"}`} >
+                        Allergy Problems
             </Link>
             </li>
-            {/* <li>
-            <Link to={match.path+`/orderGeneration/${ptId}/${"lab"}`} >
-                        Lab Orders
-            </Link>
-            </li> */}
             <li>
             <Link to={match.path+`/allLabOrders/${"lab"}/${ptId}`} >
                         Lab Orders
             </Link>
             </li>
-            {/* <li>
-            <Link to={match.path+`/labOrders/${ptId}`} >
-                        Lab Orders
-            </Link>
-            </li> */}
             <li>
             <Link to={match.path+`/allPathologyOrders/${"pathology"}/${ptId}`} >
                         Pathology Orders
             </Link>
             </li>
-            {/* <li>
-            <Link to={match.path+`/pathologyOrders/${ptId}`} >
-                        path Orders
-            </Link>
-            </li> */}
             <li>
             <Link to={match.path+`/allRadioOrders/${"radio"}/${ptId}`} >
                         radio Orders
             </Link>
             </li>
-            {/* <li>
-            <Link to={match.path+`/orderGeneration/${ptId}/${"pathology"}`} >
-                        Pathology Orders
-            </Link>
-            </li>
-            <li>
-            <Link to={match.path+`/orderGeneration/${ptId}/${"radio"}`} >
-                        Radiology Orders
-            </Link>
-            </li> */}
+
         
            
         </ul>
@@ -432,12 +339,12 @@ const MainFunctions = [
       </Typography>
       <Switch>  
       <Route exact path={match.path+"/clinicalDashBoard"} >
-        <OnGoingProblemStep />
-        <AllergyProblems />
+        <PatientProblems type={"allergy"} />
+        <PatientProblems type={"onGoingProblems"} />
         
         </Route> 
-      <Route exact path={match.path+"/OnGoingProblems"}  component={OnGoingProblemStep}/> 
-      <Route exact path={match.path+"/Allergy"}  component={AllergyProblems}/> 
+      <Route exact key={4} path={match.path+"/patientAllergyproblems/:type"}  component={PatientProblems}/> 
+      <Route exact key={5} path={match.path+"/patientOnGoingproblems/:type"}  component={PatientProblems}/> 
       <Route exact path={match.path+"/patientAppointement/:id"}  component={PatientAppointement}/> 
       
       

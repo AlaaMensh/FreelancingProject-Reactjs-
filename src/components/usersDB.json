@@ -128,7 +128,7 @@
                         }
 
                },
-               "addUser" :"http://localhost:3000/doctor/addDoctor",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
                "getAll":"http://localhost:3000/doctor/getAll" 
@@ -142,7 +142,8 @@
                         "phone" : "",
                         "address": "",
                         "establishment": "",
-                        "contactperson" : ""
+                        "contactPerson" : "",
+                        "labId":""
                        
                         
             },
@@ -185,9 +186,9 @@
                                 "type": "text",
                                 "name" : "establishment"
                         },
-                        "contactperson" :{
+                        "contactPerson" :{
                                 "type": "text",
-                                "name" : "contactperson"
+                                "name" : "contactPerson"
                         },
                         "userName" : {
                                 "type":"text",
@@ -209,17 +210,21 @@
                         "address" : {
                                 "type":"text",
                                 "name" :"address"
+                        },
+                        "labId" : {
+                                "type":"select",
+                                "name" :"labId"
                         }
-
-               },
-               "modalUpdateForms": {
+                        
+                },
+                "modalUpdateForms": {
                         "establishment" :{
                                 "type": "text",
                                 "name" : "establishment"
                         },
-                        "contactperson" :{
+                        "contactPerson" :{
                                 "type": "text",
-                                "name" : "contactperson"
+                                "name" : "contactPerson"
                         },
                         "userName" : {
                                 "type":"text",

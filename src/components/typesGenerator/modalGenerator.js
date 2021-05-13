@@ -10,12 +10,11 @@ class ModalComp extends Component {
         this.state = {  }
     }
     componentDidMount(){
-        console.log("///////////////////////////////")
-        console.log("props: " , this.props)
+        console.log("////////////////%%%%%%%%%%%%%%%%%%%%%%////////////")
+        console.log("props: " , this.props , "formType : " , this.props.formType)
     }
     renderForm = ()=>{
        return (
-
                 this.props.ModalInputs.map((input)=>{
                     return(
                         <input type={input.type} name={input.name} />
@@ -31,9 +30,9 @@ class ModalComp extends Component {
         return ( 
             <>
             {/* <h1>llll</h1> */}
-            <Modal show={this.props.show} onHide={this.props.onHide}>
+            <Modal show={this.props.show} onHide={this.props.onHide} style={{marginTop:"3em"}}>
                 <Modal.Header closeButton>
-                <Modal.Title>Login Form</Modal.Title>
+                <Modal.Title>{this.props.formType} Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {/* {console.log("hhhhhhheeeree   ",this.props.ModalInputs)} */}
@@ -47,13 +46,13 @@ class ModalComp extends Component {
                 </Modal.Body>
                 <Modal.Footer>
                     {
-                        this.props.formType === "edit" ? (
+                        this.props.formType === "edit" || this.props.formType === "uploadResult" ? (
                             <input type="button" className="btn btn-danger" value="Edit" onClick={()=>{
                                 this.props.handleUpdate()
                                       }} />
                         ):
                         (
-                            <input type="button" className="btn btn-primary" value="Add" onClick={()=>{
+                            <input type="button" className="btn btn-primary" value={this.props.value || "add"} onClick={()=>{
                                 this.props.handleAdding()
                                       }} />
                         )

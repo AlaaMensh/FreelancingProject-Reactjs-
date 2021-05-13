@@ -32,21 +32,25 @@ class FormGenerator extends Component {
                                                 
                                     />
                                         ):(<>
-                                            <InputLabel htmlFor="age-native-helper">Age</InputLabel>
+                                            <InputLabel htmlFor="age-native-helper">{input.name}</InputLabel>
                                             {console.log("options: " , input.options)}
                                             <NativeSelect
                                             // value={state.age}
-                                            onChange={this.props.handleChange}
+                                            onChange={this.props.handleChange} name={input.name}
                                             >
                                             {
-                                                input.options.map((option)=>{
-                                                    return <option value={option.value}>{option.text}</option>
-                                                })
+                                                input.options ? (
+                                                    input.options.map((option)=>{
+                                                        return <option value={option.value}>{option.text}</option>
+                                                    })
+                                                ):(
+                                                    this.props.options.map((option)=>{
+                                                        return <option value={option.value} >{option.text}</option>
+                                                    }
+                                                )
+                                                )
+
                                             }
-                                            {/* <option aria-label="" value="" />
-                                            <option value={10}>Ten</option>
-                                            <option value={20}>Twenty</option>
-                                            <option value={30}>Thirty</option> */}
                                             </NativeSelect>
                                             </>
                                             

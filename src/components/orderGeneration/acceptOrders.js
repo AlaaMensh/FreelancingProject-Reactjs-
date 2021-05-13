@@ -2,19 +2,8 @@ import React, { Component } from 'react';
 import orderType from "../ordersdb.json";
 import DataTableComp from "../typesGenerator/dataTable";
 import axios from 'axios';
+import SessionCode from './../sessionCode';
 
-const data1 = [
-    {id:"1",firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-    {firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-    {firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-    {firstName :"ali" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-]//
-const data2 =[
-    {id:"1",firstName :"Alaa" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-    {firstName :"Alaa" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-    {firstName :"Alaa" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-    {firstName :"Alaa" , lastName:"Ahmed" , date:"12/4/2020" , result:"undefiened" , status:"status"},
-]
 
 class AcceptOrders extends Component { // this Component to View All The Not Accepted Orders in our System
     constructor(props) {
@@ -139,6 +128,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
                       console.log("id:  " , row)
                       // this.handleAccept(row.id)
                     }}>Accept</button>
+                    {/* <SessionCode  buttonValue={"Accept"}/> */}
               </div>
             
             </div>
@@ -179,11 +169,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
                 <DataTableComp  data = {this.state.allNotAcceptedOrders}
                   columns = {this.state.columns}
                   title= "Allergy" />
-                  <div className="row justify-content-center mt-5">
-                    <button className="btn btn-primary" onClick={()=>{
-                      this.props.history.push(`${this.props.history.location.pathname}/allLabOrders`)
-                    }}>Get All Accepted Orders</button>
-                  </div>
+                
             </div>
          );
     }

@@ -60,6 +60,9 @@ import AllOrders from './../orderGeneration/allOrders';
 import AddOrderForm from "../orderGeneration/addOrderForm";
 
 
+import ChoicePage from "./choice";
+
+
 
 const drawerWidth = 250;
 
@@ -285,8 +288,9 @@ const MainFunctions = [
             history.push(match.path+"/patientsOnVisit");
           }
           else if( value.text == "Lap Information System" && value.role.includes(role)){
+            history.push(match.path+`/choice/${"lab"}`);
             // console.log("patient Register");
-            history.push(match.path+`/acceptOrders/${"lab"}`);
+            // history.push(match.path+`/acceptOrders/${"lab"}`);
           }
           else if( value.text == "Path Information System" && value.role.includes(role)){
             // console.log("patient Register");
@@ -452,6 +456,8 @@ const MainFunctions = [
       <Route exact path={match.path +"/appoint/visit/:id"} component = {Visit} />
       <Route exact path={match.path +"/appoint/visit/:id/prescription/:visitId"} component = {Prescription} />
       <Route exact path={match.path +"/profile"} component = {Profile} />
+      
+      
             
       <Route exact path={match.path} >
       <div className={classes.root}>
@@ -479,16 +485,17 @@ const MainFunctions = [
       <Route exact path={match.path+"/nurseVisit"} component={NurseVisit}/>
       <Route  path={match.path+"/appoint/visit"} component={Visit}/>
       
-      
-
+                {/* choose if you want single patient orders or all lab Orders */}
+      <Route exact path={match.path +"/choice/:type"} component = {ChoicePage} />
+           
                       {/* AcceptOrders */}
-      <Route exact path={match.path+"/acceptOrders/:type"} component={AcceptOrders}/>
+      <Route exact path={match.path+"/choice/:type/acceptOrders"} component={AcceptOrders}/>
       
                     {/* All Orders */}
-      <Route exact path={match.path+"/acceptOrders/:type/allLabOrders"} component={AllOrders}/>
+      <Route exact path={match.path+"/choice/:type/allLabOrders"} component={AllOrders}/>
       
                     {/* Add order Form */}
-      <Route exact  path={match.path+"/acceptOrders/:type/allLabOrders/addOrder"} component={AddOrderForm}/>        
+      <Route exact  path={match.path+"/acceptOrders/:type/choice/addOrder"} component={AddOrderForm}/>        
 
       
       </Switch>
