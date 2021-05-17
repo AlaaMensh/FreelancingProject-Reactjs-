@@ -224,8 +224,14 @@ await fetch(`${columns[this.state.type].addType}`, {
   <Container>
             <Row py-3>
                 <Col>
-                    <h3>here is the title</h3>
-                    <div>simple blah blah this the page and what it dose you know stuff...</div>
+                    {
+                      columns && this.state.type && (
+                        <>
+                        <h3>{columns[this.state.type].title}</h3>
+                        <div>{columns[this.state.type].description}</div>
+                        </>
+                      )
+                    }
                 </Col>
             </Row>
 

@@ -142,14 +142,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             }).catch(()=>{
               console.log("errror")
             })
-            // axios({
-            //   method: 'post',
-            //   url: 'http://localhost:3000/pt/addpt',
-            //   data: formBody,
-            //   headers: {
-            //     'content-type': 'application/x-www-form-urlencoded;charset=utf-8'
-            //   }
-            // })
+            
             
     }
 const getFirstName  = (name) =>{

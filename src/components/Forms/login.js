@@ -9,14 +9,17 @@ import axios from 'axios';
 class Login extends Component { //for Doctor - nurse - pathologist - chemist
     constructor(props) {
         super(props);
+     
         this.state = { 
             formInputs : [],
             type:"",
             addingUserObject : {},
 
+
          }
     }
     async componentDidMount(){
+      console.log("propsssss: " , this.props)
         await this.handleDataTableColumns();
     }
 
@@ -46,7 +49,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
         });
       }
 
-       handleSignup = async()=>{
+    handleSignup = async()=>{
         var details = {};
 
       for(var property in loginUser.state ){
@@ -66,16 +69,6 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
        formBody = formBody.join("&");
        console.log("formBodu : " , formBody);
 
-      //  axios.post(`${loginUser.addUser}` ,details).then((resp)=>{
-      //   console.log("data: " , resp.data);
-      //   localStorage.setItem('role', resp.data.role);
-      //   localStorage.setItem('userId', resp.data.userId);
-      //   localStorage.setItem('labId', resp.data.labId);
-
-      //         if(parseInt(resp.data.role) > 2 ){
-      //       this.props.history.push("/publicDashBoard")
-      //     }
-      //  })
        fetch(`${loginUser.addUser}`, {
          method: 'POST',
          headers: {
@@ -87,13 +80,13 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           console.log("data:  " , data);
           localStorage.setItem('role', data.role);
           localStorage.setItem('userId', data.userId);
-      
-          if(parseInt(data.role) > 2 ){
-            this.props.history.push("/publicDashBoard")
-          }
-          if(parseInt(data.role) == 1){
-            this.props.history.push("/welcomePage");
-          }
+          // this.props.history.push("/publicDashBoard")
+          // if(parseInt(data.role) > 2 ){
+          //   this.props.history.push("/publicDashBoard")
+          // }
+          // if(parseInt(data.role) == 1){
+          //   this.props.history.push("/welcomePage");
+          // }
           if(parseInt(data.role) == 2){
             console.log("heeereeeee")
             axios.post('http://localhost:3000/lab/getLabByUser' ,{
@@ -102,7 +95,8 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
             } ).then(async resp => {
               console.log("resppppppp : " ,resp);
               localStorage.setItem('labId', resp.data.labId);
-              this.props.history.push("/publicDashBoard")
+              this.props.getAuthorization(true);
+              // this.props.history.push("/publicDashBoard")
            
               // setLabs(resp.data)
               // console.log("resp.data: " , resp.data);

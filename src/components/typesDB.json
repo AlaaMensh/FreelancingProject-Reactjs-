@@ -27,6 +27,8 @@
                                 "width":"300px"
                         }
                },
+               "title":"All Allergy Types",
+                "description":"simple blah blah this the page and what it dose you know stuff..",
                "modalForms": {
                         "name" :{
                                 "type":"text",
@@ -88,6 +90,8 @@
                                 "name" :"abbreviation"
                         }
                },
+               "title":"All Allergy Types",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
                "addType" :"http://localhost:3000/diseases/addDiseases",
                "deleteType" : "http://localhost:3000/diseases/deleteDiseases",
                "updateType":"http://localhost:3000/diseases/updateDiseases",
