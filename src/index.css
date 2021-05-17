@@ -1,8 +1,13 @@
-.herrrro{
+@import-normalize; /* bring in normalize.css styles */
 
-}
+/* rest of app styles */
+
+
+
 body,html{
   height: 100%;
+  display: flex;
+  width: 100%;
 }
 .overlay{
     display: none;

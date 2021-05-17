@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-class Form extends Component {
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+class FormModal extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
@@ -10,41 +13,32 @@ class Form extends Component {
     }
     render() {  
         return (
-            <form className="row justify-content-center">
-                        <div className="col-10 align-items-center">
-                            <div className="row">
-                                <div className="col-10">
+            <Form>
+                <Row>
+                        <Col sm={10} className="pl-5">
                                 {this.props.ModalInputs.map((input) => (
-                                        <div className="row py-2">
-                                               <TextField  id="standard-basic" label={input.name}
-                                                            name={input.name}
-                                                            type={input.type}
-                                                            defaultValue={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
-                                                            onChange={(e)=>{
+                                        <Row className="p">
+                                            <Form.Group controlId={input.name}>
+                                                 <Form.Label>{input.name}</Form.Label>
+                                                      <Form.Control type={input.type} placeholder={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}  onChange={(e)=>{
                                                                 this.props.handleChange(e)}
 
-                                                            }
-                                                            
-                                                />
+                                                            }/>
+                                                            </Form.Group>
+    
 
-                                        </div>
+                                        </Row>
                             
                             ))}
-                                </div>
+                                </Col>
                           
                   
-                              </div>
-                                <div className="row">
-                                {/* <input type="button" value="Submit" onClick={()=>{
-                                  this.props.handleUpdate()
-                                        }} /> */}
-                            
-                                </div>
-                            </div>
 
-                    </form>
+                              
+                            </Row>
+                    </Form>
           );
     }
 }
  
-export default Form;
+export default FormModal;

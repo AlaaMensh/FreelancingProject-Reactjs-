@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import DataTableExtensions from "react-data-table-component-extensions";
 import DataTable from 'react-data-table-component';
 import "./dataTable.css";
 
@@ -14,8 +15,14 @@ class DataTableComp extends Component {
             data :this.props.data
           };
         return ( 
+            <DataTableExtensions {...tableData} //for filtering
+            export = {false}
+            print = {false}
+            style={{width: "90%" }}
+            
+            >
+              
 
-<div >
              <DataTable
                title={` ${this.props.title}`}
                columns={this.props.columns}
@@ -24,7 +31,8 @@ class DataTableComp extends Component {
                highlightOnHover
                responsive={true}
              />
-           </div>
+              </DataTableExtensions>
+           
          );
     }
 }

@@ -1,8 +1,7 @@
 import { Modal } from 'react-bootstrap'
-// import Modal from '@material-ui/core/Modal';
 import React, { Component } from 'react';
-
-import Form from "./formModal"
+import Button from 'react-bootstrap/Button';
+import FormModal from "./formModal"
 
 class ModalComp extends Component {
     constructor(props) {
@@ -36,7 +35,7 @@ class ModalComp extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     {/* {console.log("hhhhhhheeeree   ",this.props.ModalInputs)} */}
-                    <Form ModalInputs = {this.props.ModalInputs} 
+                    <FormModal ModalInputs = {this.props.ModalInputs} 
                           updatedTypeObj = {this.props.updatedTypeObj}
                           handleChange = {this.props.handleChange}
                           formType={this.props.formType}
@@ -47,17 +46,17 @@ class ModalComp extends Component {
                 <Modal.Footer>
                     {
                         this.props.formType === "edit" || this.props.formType === "uploadResult" ? (
-                            <input type="button" className="btn btn-danger" value="Edit" onClick={()=>{
+                            <Button variant="warning"   value="Edit" onClick={()=>{
                                 this.props.handleUpdate()
-                                      }} />
+                                      }} >Edit</Button>
                         ):
                         (
-                            <input type="button" className="btn btn-primary" value={this.props.value || "add"} onClick={()=>{
+                            <Button variant="primary"  value={this.props.value || "Add"} onClick={()=>{
                                 this.props.handleAdding()
-                                      }} />
+                                      }} >Add</Button>
                         )
                     }
-                <button onClick={this.props.onHide}>Close</button>
+                <Button variant="danger" onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
             </>

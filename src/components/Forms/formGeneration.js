@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import InputLabel from '@material-ui/core/InputLabel';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
+
+// this file will genrate the basic form groups to be loaded into a <form> element.
 
 
 class FormGenerator extends Component {
@@ -10,35 +13,26 @@ class FormGenerator extends Component {
         super(props);
         this.state = {  }
     }
-    render() { 
-        return (  
-            <div>
-                <form className="row justify-content-center">
-            <div className="col-10 align-items-center">
-                <div className="row">
-                    <div className="col-10">
-                    {this.props.ModalInputs.map((input) => (
-                            <div className="row py-2 justify-content-center">
-                                    {
+    
+render() { 
+    return (  
+        <Form>
+            <Col sm= {12}>
+                         <Row>
+                             <Col sm={12}>
+                                 {this.props.ModalInputs.map((input) => (
+                                     <Row  className="py-2 justify-content-center">
+                                      {
                                         input.type !== "select" ? (
-                                            <TextField size="small"  id="filled-basic"  variant="filled" label={input.name}
-                                                name={input.name}
-                                                type={input.type}
-                                                defaultValue={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
-                                                onChange={(e)=>{
-                                                   
-                                                    this.props.handleChange(e)}
-                                                }
-                                                
-                                    />
-                                        ):(<>
-                                            <InputLabel htmlFor="age-native-helper">{input.name}</InputLabel>
-                                            {console.log("options: " , input.options)}
-                                            <NativeSelect
-                                            // value={state.age}
-                                            onChange={this.props.handleChange} name={input.name}
-                                            >
-                                            {
+                                            <Form.Group controlId={input.name}>
+                                            <Form.Label>{input.name}</Form.Label>
+                                             <Form.Control type={input.type} placeholder={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
+                                                onChange={(e)=>{this.props.handleChange(e)} } /></Form.Group>):(<>
+                                        
+                                          <Form.Group controlId="exampleForm.SelectCustom">
+                                             <Form.Label>{input.name}</Form.Label>
+                                                <Form.Control as="select" onChange={this.props.handleChange} name={input.name} custom>
+                                                      {
                                                 input.options ? (
                                                     input.options.map((option)=>{
                                                         return <option value={option.value}>{option.text}</option>
@@ -51,33 +45,41 @@ class FormGenerator extends Component {
                                                 )
 
                                             }
-                                            </NativeSelect>
+                                                  </Form.Control></Form.Group>
+                                         
+                                            
+                                   
                                             </>
                                             
                                         )
                                     }
 
-                            </div>
+                            </Row>
                 
                 ))}
-                <input type="button" value={this.props.buttonTitle || "Add Order"} className="btn-primary btn" 
-                onClick={()=>{
-                    this.props.handleSubmit()
-                }}/>
-                    </div>
+                    </Col>
+              
                 
         
-                    </div>
-                    <div className="row">
+                    </Row>
+                    <Row className=" justify-content-end">
+                <Col sm={5}>
+                <Button variant="primary"  value={this.props.buttonTitle || "Add "}
+                onClick={()=>{
+                    this.props.handleSubmit()
+                }}>{this.props.buttonTitle || "Add "}</Button>
+                </Col>
+                    </Row>
+                    <Row>
                     {/* <input type="button" value="Submit" onClick={()=>{
                         this.props.handleUpdate()
                             }} /> */}
                 
-                    </div>
-                </div>
+                    </Row>
+                </Col>
 
-                    </form>
-            </div>
+                    </Form>
+            
         );
     }
 }

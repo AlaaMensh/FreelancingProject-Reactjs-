@@ -3,8 +3,8 @@ import loginUser from "../loginDB.json";
 import FormGenerator from "./formGeneration";
 import axios from 'axios';
 
-
-
+//todo 1- link forgoten pwd 2- add image 
+//log in page 
 
 class Login extends Component { //for Doctor - nurse - pathologist - chemist
     constructor(props) {
@@ -128,17 +128,30 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
 
 
     render() { 
-        return ( 
-            <div className="container">
+        return (
+          <div className="container-fluid" style={{height:'100%' }}>
+        <div className="row align-items-center" style={{height:'100%' }}>
+            <div className="col-4 justify-content-center no-gutter">
+      
+               <div className="row">
+                 <div className="col justfiy-content-center">
+
+                 <h3>Wellcome Back!</h3>
+                 </div>
+                 </div>
                 {console.log("state: " , this.state)}
                 {
                 this.state.formInputs && this.state.formInputs.length > 0 && (
                 <FormGenerator  ModalInputs = {this.state.formInputs}
                 handleChange = {this.handleChange}
                 handleSubmit= {this.handleSignup}
-                buttonTitle = "login"/>
+                buttonTitle = "Login"/>
                 )
                 }
+              
+            </div>
+            <div className="col-8 bg-primary"style={{height:'100%' }}></div>
+            </div>
             </div>
          );
     }

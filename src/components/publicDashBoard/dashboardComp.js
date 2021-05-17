@@ -1,51 +1,9 @@
-
-import Button from '@material-ui/core/Button';
-
-import MenuItem from '@material-ui/core/MenuItem';
-
-import Select from '@material-ui/core/Select';
-
 import React from 'react';
-import clsx from 'clsx';
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import { useEffect } from 'react';
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import "./Navbar.css";
-import CardMedia from '@material-ui/core/CardMedia';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux"; 
 
-// import Navbar from './Navbar';
-
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import ptRegistration from '../patientRegistration/ptRegistration';
-import Appointement from '../../pages/appointements';
 
 const drawerWidth = 300;
 

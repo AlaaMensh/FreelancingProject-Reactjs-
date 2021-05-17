@@ -20,7 +20,6 @@ import Login from './components/Forms/login';
 
 
 
-
 function App() {
 
   
@@ -36,6 +35,7 @@ function App() {
       <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
       <Route  path="/login" component={Login}></Route>
+      
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>
   

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import DataTableComp from "../typesGenerator/dataTable";
 import problemType from "./clinicalDB.json";
 
@@ -9,7 +8,7 @@ class PatientProblems extends Component {
     super(props);
     
     this.state = { 
-      pId:25, ///////////*******////////***it is fixed you must change it */
+      pId:25, ///////////*******////////*ToDO: it is fixed you must change it */
       columns:[],
       data:[],
       type:""

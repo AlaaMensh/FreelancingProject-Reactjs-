@@ -168,7 +168,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
                 {console.log(this.state.columns)}
                 <DataTableComp  data = {this.state.allNotAcceptedOrders}
                   columns = {this.state.columns}
-                  title= "Allergy" />
+                  />
                 
             </div>
          );

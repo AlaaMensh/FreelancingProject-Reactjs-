@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import appointements from '../appointements.json';
-import Modal from '@material-ui/core/Modal';
 import ModalComp from "../typesGenerator/modalGenerator";
 import axios from 'axios';
 import DataTableComp from "../typesGenerator/dataTable";
-import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import SessionCode from "../sessionCode";
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col'
+import Button from 'react-bootstrap/Button';
 class UserCrud extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,6 @@ class UserCrud extends Component {
       check : "", //which send to back ==>drId OR ==> drFDId,
       past :[], //for past appointements
       future:[], // for Future appointements
-      addingUserObject:{}
      }
   }
 
@@ -58,6 +58,7 @@ class UserCrud extends Component {
 
     
     var formBody = [];
+    // property is already declared so ??
     for (var property in details) {
       var encodedKey = encodeURIComponent(property);
       var encodedValue = encodeURIComponent(details[property]);
@@ -146,6 +147,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
        ptId:this.props.match.params.id
     }).then(async resp => {
               var dateNow1 = new Date();
+
           var d = new Date(dateNow1),
           mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
           day = ("0" + dateNow1.getDate()).slice(-2);
@@ -201,9 +203,9 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     for(var p in appointements[type].columnsTable ){ // for Adding actions Buttons to DataTable
       if(p === "actions"){
         appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
-        <div className = "row">
-          <div className="col-auto">
-            <button  className="btn btn-primary"
+        <Row>
+          <Col sm={10}>
+            <Button  variant="primary"
               // hidden={this.compareTimeForEditButton(row.date,row.startDate )}
               style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
               onClick={async () => {  
@@ -212,22 +214,22 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
                   await this.setUpdatedObj(row.id);
                   this.setState({formType :"edit"})
                   this.handleopenModal()
-                }}>Update</button>
-          </div>
-        <div className="col-auto">
-        <button  className="btn btn-danger"
+                }}>Update</Button>
+          </Col>
+        <Col>
+        <Button  variant="btn-danger"
               onClick={() => {
                   this.handleDelete(row.id)
                 }}>Delete
-        </button>
-        </div>
-        <div className="col-auto">
+        </Button>
+        </Col>
+        <Col>
 
         <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
         buttonValue="Make Visit" fromComponent="appointement"/>
-        </div>
+        </Col>
         
-        </div>
+        </Row>
         )
         }
         temp.push(appointements[type].columnsTable[p])
@@ -324,36 +326,36 @@ var details = {}
     };
  
     return (
-      <div className="container " >
+      < Container>
         {console.log("updateObject: " , this.state.updateUserObject)}
         {console.log("additionObject: " , this.addingUserObject)}
-        <div className="row  align-items-center"  style={{margin:"auto"}}>
-          <Fab className="col-auto" color="primary" aria-label="add"  onClick = {()=>{
+        <Row className=" align-items-center"  style={{margin:"auto"}}>
+          <Button className="col-auto" variant="primary" aria-label="add"  onClick = {()=>{
                    this.setState({formType :"add"})
                   this.handleopenModal();
                 }}>
                   <AddIcon />
-            </Fab> 
+            </Button> 
         <DataTableComp   data = {this.state.data}
                   columns = {this.state.columns}
                   tableData = {tableData}
                   title= {this.state.type === "ForPatient" ?"All Patient Appointements" :""}
          />
-         </div>
-         <div className="row mt-5">
+         </Row>
+         <Row calssName="mt-5">
         <DataTableComp   data = {this.state.past}
                   columns = {this.state.columns}
                   tableData = {tableData}
                   title= {this.state.type === "ForPatient" ?"All Past Appointements" :""}
          />
-         </div>
-         <div className="row mt-5">
+         </Row>
+         <Row calssName="mt-5">
         <DataTableComp   data = {this.state.future}
                   columns = {this.state.columns}
                   tableData = {tableData}
                   title= {this.state.type === "ForPatient" ?"All Future Appointements" :""}
          />
-      </div>
+      </Row>
      {  
       this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(
         <ModalComp show={this.state.openModal}
@@ -377,7 +379,7 @@ var details = {}
        />
        )
      }
-      </div>
+      </ Container>
     );
   }
 }

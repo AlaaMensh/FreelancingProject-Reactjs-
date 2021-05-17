@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
+import DataTable from 'react-data-table-component';
 import columns from '../typesDB.json';
+import Modal from '@material-ui/core/Modal';
 import ModalComp from "./modalGenerator";
 import axios from 'axios';
+import DataTableExtensions from "react-data-table-component-extensions";
+import { ButtonBase } from '@material-ui/core';
 import DataTableComp from "./dataTable";
 import "./dataTable.css";
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import AddBoxIcon from '@material-ui/icons/AddBox';
+import Fab from '@material-ui/core/Fab'
+import { withStyles } from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/Add';
 
 class TypesGenerator extends Component {
-
-  // the baisc set up for the state.
   constructor(props) {
     super(props);
     this.state = { 
@@ -25,7 +27,6 @@ class TypesGenerator extends Component {
       formType:"add"
      }
   }
-// modal handeling 
 
   handleClose = () => {
     this.setState({openModal : false})
@@ -219,33 +220,21 @@ await fetch(`${columns[this.state.type].addType}`, {
     };
  
     return (
-
-
-  <Container>
-            <Row py-3>
-                <Col>
-                    <h3>here is the title</h3>
-                    <div>simple blah blah this the page and what it dose you know stuff...</div>
-                </Col>
-            </Row>
-
-            <Row py-3 >
-            <Col sm={10}></Col>
-                <Col sm={2}><Button variant="success"  onClick = {()=>{
+      <div className="container " style={{height :"100%",display:"flex"}}>
+        {console.log("state: " , this.state)}
+        <div className="row  align-items-center"  style={{margin:"auto"}}>
+          <Fab className="col-auto" color="primary" aria-label="add"  onClick = {()=>{
                    this.setState({formType :"add"})
                   this.handleopenModal();
-                }}>Add New</Button>{' '}</Col>
-            </Row>
-            <Row py-3>
-
-                <Col sm={12} className="py-3">
+                }}>
+                  <AddIcon />
+            </Fab> 
         <DataTableComp   data = {this.state.data}
                   columns = {this.state.columns}
                   tableData = {tableData}
+                  title= "Allergy"
          />
-       </Col>
-            </Row>
-       
+      </div>
         
 
      {
@@ -261,7 +250,7 @@ await fetch(`${columns[this.state.type].addType}`, {
        />
        )
      }
- </Container>
+      </div>
     );
   }
 }

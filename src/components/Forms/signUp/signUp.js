@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import userType from "../../usersDB.json";
 import FormGenerator from "../formGeneration"
 import axios from 'axios';
-import { ArrowForwardIosTwoTone } from '@material-ui/icons';
+import Container from 'react-bootstrap/Container';
 
 const arr = [
   {id:1 , name:"lab1" , abbreviation:"" ,description:""},
@@ -157,7 +157,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
 
     render() { 
         return ( 
-            <div className="container">
+            <Container>
                 {console.log("state: " , this.state)}
                 {
                 this.state.formInputs && this.state.formInputs.length > 0 && (
@@ -168,7 +168,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 buttonTitle = "Signup"/>
                 )
                 }
-            </div>
+            </Container>
          );
     }
 }

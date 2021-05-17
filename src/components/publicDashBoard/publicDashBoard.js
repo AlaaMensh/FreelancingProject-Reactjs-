@@ -1,7 +1,5 @@
 
 import Button from '@material-ui/core/Button';
-
-import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import React from 'react';
 import clsx from 'clsx';
@@ -25,28 +23,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 // import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import { useEffect } from 'react';
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 import { useHistory } from "react-router-dom";
 import "./Navbar.css";
 import CardMedia from '@material-ui/core/CardMedia';
 import Appointement from '../../pages/appointements';
-import DashBoardComp from "./dashboardComp";
-import { BrowserRouter } from 'react-router-dom';
-// import Signup from './Forms/signUpForm';
 import { useState } from 'react';
-// import LoginForm from './Forms/loginform';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux"; 
-
-import { useSelector } from 'react-redux'
-// import PaientRegistration from './patientRegistration/importatntInfo';
 import ptRegistration from '../patientRegistration/ptRegistration';
 import NurseVisit from "../nurseModule/nursemodule";
 import Visit from "../Visit/visit";
@@ -54,12 +39,9 @@ import Prescription from "../Prescription/Prescription";
 import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
 import Profile from '../Profile/Profile';
-
 import AcceptOrders from './../orderGeneration/acceptOrders';
 import AllOrders from './../orderGeneration/allOrders';
 import AddOrderForm from "../orderGeneration/addOrderForm";
-
-
 import ChoicePage from "./choice";
 
 
