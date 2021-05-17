@@ -14,7 +14,6 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
             type:"",
             addingUserObject : {},
 
-
          }
     }
     async componentDidMount(){
