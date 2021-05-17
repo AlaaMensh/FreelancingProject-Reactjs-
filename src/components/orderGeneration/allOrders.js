@@ -3,7 +3,9 @@ import  { Component } from 'react';
 import DataTableComp from '../typesGenerator/dataTable';
 import orderType from "../ordersdb.json";
 import ModalComp from "../typesGenerator/modalGenerator";
-
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 var object  = {}
 
@@ -277,24 +279,24 @@ class AllOrders extends Component {
 
     rendering = () => {
         return(
-          <div className="container gridDataContent mt-5"> 
-          <div className="row">
-            <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">All Your {this.state.type} Orders</span>
-            </div>
-            <div className="col-10 overflow-hidden ">
-                <div className="row justify-content-lg-start">
 
-                </div>
-            </div>
-          </div>
-            <div className = "row  align-items-center" >
+<Container fluid>
+
+<Row py-3>
+    <Col>
+        <h3>{this.state.type} Orders</h3>
+        <div>From here you can see and update all of the accepted orders</div>
+    </Col>
+</Row>
+
+<Row py-3 >
+   <Col>
                 <DataTableComp  data = {this.state.orderlabList}
                   columns = {this.state.columns}
                   title= "All Accepted Orders for Your Lab" 
                 />
                 {console.log("inputs: " , this.state.formType)}
-            </div> 
+            </Col> 
             {
               this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
                 <ModalComp show={this.state.openModal}
@@ -318,11 +320,11 @@ class AllOrders extends Component {
                           <AddIcon  />
                         </Fab>                       */}
                       </div>
-                    </div>
+                    </Row>
         
+    </Container>
         )
     }
-
 
 
     handleChange = (e) => {

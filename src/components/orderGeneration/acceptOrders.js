@@ -4,7 +4,6 @@ import DataTableComp from "../typesGenerator/dataTable";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 
 
 class AcceptOrders extends Component { // this Component to View All The Not Accepted Orders in our System
