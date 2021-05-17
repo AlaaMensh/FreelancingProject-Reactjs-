@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import userType from '../usersDB.json';
-import Modal from '@material-ui/core/Modal';
 import ModalComp from "../typesGenerator/modalGenerator";
 import axios from 'axios';
 import DataTableComp from "../typesGenerator/dataTable";
-// import "./dataTable.css";
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 class UserCrud extends Component {
   constructor(props) {
@@ -254,22 +255,33 @@ var details = {}
     };
  
     return (
-      <div className="container " style={{height :"100%",display:"flex"}}>
-        {console.log("updateObject: " , this.state.updateUserObject)}
-        {console.log("additionObject: " , this.addingUserObject)}
-        <div className="row  align-items-center"  style={{margin:"auto"}}>
-          <Fab className="col-auto" color="primary" aria-label="add"  onClick = {()=>{
-                   this.setState({formType :"add"})
-                  this.handleopenModal();
-                }}>
-                  <AddIcon />
-            </Fab> 
+
+      <Container>
+      <Row className= "py-3">
+          <Col>
+              <h3>here is the title</h3>
+              <div>simple blah blah this the page and what it dose you know stuff...</div>
+          </Col>
+      </Row>
+
+      <Row className= "py-3" >
+      <Col sm={10}></Col>
+          <Col sm={2}><Button variant="success"  onClick = {()=>{
+             this.setState({formType :"add"})
+            this.handleopenModal();
+          }}>Add New</Button>{' '}</Col>
+      </Row>
+      <Row className= "py-3">
+
+          <Col sm={12} className="py-3">
         <DataTableComp   data = {this.state.data}
                   columns = {this.state.columns}
                   tableData = {tableData}
                   title= "Allergy"
          />
-      </div>
+     </Col>
+            </Row>
+       
         
       {/* {console.log("formType : "  ,this.state.formType ,"modalAddition inputs" , this.state.ModalAddtionInputs)} */}
      {
@@ -295,7 +307,7 @@ var details = {}
        />
        )
      }
-      </div>
+ </Container>
     );
   }
 }

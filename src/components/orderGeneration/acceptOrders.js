@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import orderType from "../ordersdb.json";
 import DataTableComp from "../typesGenerator/dataTable";
-import axios from 'axios';
-import SessionCode from './../sessionCode';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 class AcceptOrders extends Component { // this Component to View All The Not Accepted Orders in our System
@@ -164,13 +165,30 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
   
     render() { 
         return (     
-            <div>
+         
+<Container fluid>
+
+            <Row className= "py-3">
+                <Col>
+                    <h3>here is the title</h3>
+                    <div>simple blah blah this the page and what it dose you know stuff...</div>
+                </Col>
+            </Row>
+
+            <Row className= "py-3">
+               <Col>
                 {console.log(this.state.columns)}
                 <DataTableComp  data = {this.state.allNotAcceptedOrders}
                   columns = {this.state.columns}
                   />
-                
-            </div>
+               </Col> 
+           
+         </Row>
+         </Container>
+         
+
+
+
          );
     }
 }
