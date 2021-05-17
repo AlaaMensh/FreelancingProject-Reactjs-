@@ -168,14 +168,14 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
          
 <Container fluid>
 
-            <Row py-3>
+            <Row className= "py-3">
                 <Col>
                     <h3>here is the title</h3>
                     <div>simple blah blah this the page and what it dose you know stuff...</div>
                 </Col>
             </Row>
 
-            <Row py-3 >
+            <Row className= "py-3">
                <Col>
                 {console.log(this.state.columns)}
                 <DataTableComp  data = {this.state.allNotAcceptedOrders}

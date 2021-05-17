@@ -282,14 +282,14 @@ class AllOrders extends Component {
 
 <Container fluid>
 
-<Row py-3>
+<Row className= "py-3">
     <Col>
         <h3>{this.state.type} Orders</h3>
         <div>From here you can see and update all of the accepted orders</div>
     </Col>
 </Row>
 
-<Row py-3 >
+<Row className= "py-3" >
    <Col>
                 <DataTableComp  data = {this.state.orderlabList}
                   columns = {this.state.columns}

@@ -257,21 +257,21 @@ var details = {}
     return (
 
       <Container>
-      <Row py-3>
+      <Row className= "py-3">
           <Col>
               <h3>here is the title</h3>
               <div>simple blah blah this the page and what it dose you know stuff...</div>
           </Col>
       </Row>
 
-      <Row py-3 >
+      <Row className= "py-3" >
       <Col sm={10}></Col>
           <Col sm={2}><Button variant="success"  onClick = {()=>{
              this.setState({formType :"add"})
             this.handleopenModal();
           }}>Add New</Button>{' '}</Col>
       </Row>
-      <Row py-3>
+      <Row className= "py-3">
 
           <Col sm={12} className="py-3">
         <DataTableComp   data = {this.state.data}
