@@ -163,7 +163,6 @@ await fetch(`${userType[this.state.type].addUser}`, {
 
   async componentDidMount(){
     var type = this.props.match.params.type;
-
     this.setState({type});
     var temp = [];
     
@@ -259,8 +258,14 @@ var details = {}
       <Container>
       <Row className= "py-3">
           <Col>
-              <h3>here is the title</h3>
-              <div>simple blah blah this the page and what it dose you know stuff...</div>
+              {
+                userType && this.state.type && (
+                  <>
+                  <h3>{userType[this.state.type].title}</h3>
+                  <div>{userType[this.state.type].description}</div>
+                  </>
+                )
+              }
           </Col>
       </Row>
 
@@ -277,7 +282,7 @@ var details = {}
         <DataTableComp   data = {this.state.data}
                   columns = {this.state.columns}
                   tableData = {tableData}
-                  title= "Allergy"
+                  title= ""
          />
      </Col>
             </Row>

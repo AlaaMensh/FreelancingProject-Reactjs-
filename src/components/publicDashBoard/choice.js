@@ -9,7 +9,7 @@ class ChoicePage extends Component {
     }
     renderBody = ()=>{
         return (
-            <Card style={{ width: '18rem', height:"auto" }}>
+            <Card style={{ width: '18rem', height:"15em" }}>
             <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
             <Card.Body className="text-secodary mt-2 mx-auto">
                 <Card.Text>
@@ -21,10 +21,10 @@ class ChoicePage extends Component {
     }
     render() { 
         return (  
-            <div className="container">
-                <div className="row mt-5">
-                    <div className="col-6">
-                            <Card style={{ width: '18rem',height:"auto" }} className="bg-light text-secondary" 
+           
+                <div className="row mt-5 justify-content-center align-items-center">
+                    <div className="col-10 col-md-6">
+                            <Card style={{ width: '18rem',height:"15em" }} className="bg-light text-secondary" 
                             onClick={()=>{
                                 console.log("history: " , this.props);
                                 
@@ -38,7 +38,7 @@ class ChoicePage extends Component {
                                 </Card.Body>
                                 </Card>
                     </div>
-                    <div className="col-6">
+                    <div className="col-10 col-md-6 mt-5 mt-md-0">
 
                          
                                     <SessionCode buttonValue = "get patient Orders"
@@ -50,7 +50,7 @@ class ChoicePage extends Component {
                     </div>
                 </div>
 
-            </div>
+           
         );
     }
 }

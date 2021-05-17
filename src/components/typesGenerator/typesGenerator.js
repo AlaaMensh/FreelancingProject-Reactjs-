@@ -243,7 +243,6 @@ await fetch(`${columns[this.state.type].addType}`, {
                 }}>Add New</Button>{' '}</Col>
             </Row>
             <Row py-3>
-
                 <Col sm={12} className="py-3">
         <DataTableComp   data = {this.state.data}
                   columns = {this.state.columns}

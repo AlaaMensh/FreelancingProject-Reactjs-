@@ -61,7 +61,6 @@ function App() {
       <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
       <Route  path="/profile" component={Profile}></Route>
-      {/* <Route  path="/login" component={Login} getAuthorization = {getAuthorization()}></Route> */}
       <Route path="/login">
         <Login getAuthorization={getAuthorization} history={history}/>
       </Route>
