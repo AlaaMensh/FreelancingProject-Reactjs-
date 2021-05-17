@@ -2,12 +2,8 @@ import React, { Component } from 'react';
 import { Navbar } from 'react-bootstrap';
 import { NavDropdown } from 'react-bootstrap';
 import { Nav } from 'react-bootstrap';
-import { FormControl } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
-import { Form } from 'react-bootstrap';
-import { Row } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
-import { useState, useEffect } from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import "./navbar.css";
 
@@ -15,17 +11,7 @@ import "./navbar.css";
 
 const NavBar = (props) => {
     const history = useHistory();
-    const [login , setLogin] = useState(props.isAuth ? true : false);
     
-    useEffect(()=>{
-   
-        if(localStorage.getItem("role")){
-            setLogin(true)
-        }
-        else{
-            setLogin(false)
-        }
-    },[props.isAuth])
     return ( 
         <Navbar className="navbar" expand="lg"  style={{width:"100%"}}>
         <Navbar.Brand href="#home">Our Logo</Navbar.Brand>
@@ -35,8 +21,16 @@ const NavBar = (props) => {
             <Nav.Link href="/profile">
         <AccountCircleIcon  />
             </Nav.Link>
+            {/* *************check here on role *************/}
             <NavDropdown title="Our Functions" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/publicDashBoard">Dr.DashBoard</NavDropdown.Item>
+{
+    localStorage.getItem("role") ? (
+
+        <NavDropdown.Item href="/publicDashBoard">Dr.DashBoard</NavDropdown.Item>
+    ) :(
+        <NavDropdown.Item href="#" style={{cursor:"not-allowed"}}>Dr.DashBoard</NavDropdown.Item>
+    )
+}
            {
                parseInt(localStorage.getItem("role")) == 8 ? (
                 <NavDropdown.Item href="/publicDashBoard/appoint" >Appointements</NavDropdown.Item>
@@ -60,16 +54,15 @@ const NavBar = (props) => {
                     localStorage.removeItem("labId");
                     localStorage.removeItem("userId");
                     history.push("/login")
-                    // setLogin(false)
                     props.logout(false)
-                    // props.isAuth = false;
+
                 }}>
                     logout
                 </Button>   
                 </>
             ):(
                 <Button className="nav-btn" onClick={()=>{
-                    
+                    history.push("/login")
                 }}>
                     login
                 </Button>   
