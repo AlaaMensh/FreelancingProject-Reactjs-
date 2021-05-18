@@ -21,11 +21,12 @@
                    
             }
    },
+   "title":"All Allergy Problems",
+   "description":"simple blah blah this the page and what it dose you know stuff..",
    "getAllergyProblemsForPatient" : "http://localhost:3000/pt/getAllergyById"
+    },
 
-
-
-    },"onGoingProblems":{
+    "onGoingProblems":{
         "columnsTable" : {
             "problem": {
                     "name": "Problem",
@@ -47,6 +48,8 @@
                    
             }
    },
+   "title":"All OnGoingProblems Problems",
+   "description":"simple blah blah this the page and what it dose you know stuff..",
    "getAllergyProblemsForPatient" : "http://localhost:3000/pt/getProblemsById"
 
 

@@ -46,7 +46,7 @@
      }
 .gridDataHeader{
    box-shadow:  1px 5px 15px #8888;
-   width: 100%;
+   width: auto;
    
 }
 .hero{

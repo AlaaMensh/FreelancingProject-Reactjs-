@@ -1,7 +1,7 @@
 {
     "state" :{
         "userName" :"",
-        "Password" :""
+        "password" :""
     },
     "modalAdditionForms": {
 
@@ -9,11 +9,11 @@
                 "type":"text",
                 "name" :"userName"
         },
-        "Password" : {
+        "password" : {
                 "type":"password",
-                "name" :"Password"
+                "name" :"password"
         }
 
     },
-    "addUser":"http://localhost:3000/authenticate/login/"
+    "addUser":"http://localhost:8080/autho/login/"
 }

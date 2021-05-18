@@ -21,15 +21,14 @@ a, a:hover, a:focus {
 }
 
 #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #7f9ca9;
+    background: var(--main-color);
     color: #fff;
     transition: all 0.3s;
 }
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #395c6b;
+    background: var(--main-color-dark);
 }
 
 #sidebar ul.components {

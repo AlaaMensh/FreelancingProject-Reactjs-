@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DataTableComp from "../typesGenerator/dataTable";
 import problemType from "./clinicalDB.json";
+import {Container, Row , Col} from 'react-bootstrap'
 
 
 class PatientProblems extends Component {
@@ -14,21 +15,6 @@ class PatientProblems extends Component {
       type:""
           }
         }
-      
-    handleDataTableColumns = (type)=>{ // handle Columns from json file which sent to dataTable
-      var temp = [];
-      for(var p in problemType[type].columnsTable ){
-        temp.push(problemType[type].columnsTable[p]);
-      }
-      this.setState({columns : temp});
-
-    }
-        
-    getTypeByID = async(row) => {
-        console.log("dkkdkdkdkdkdkdkdkdk:    " , row);
-        this.setState({TypeObj : row});       
-        
-    }
     async componentDidMount(){
       ///////////////*****Fixed******//////////////////
       var type = "";  
@@ -45,6 +31,22 @@ class PatientProblems extends Component {
       await this.handleDataTableColumns(type);
       await this.getProblems(type);
     }
+      
+    handleDataTableColumns = (type)=>{ // handle Columns from json file which sent to dataTable
+      var temp = [];
+      for(var p in problemType[type].columnsTable ){
+        temp.push(problemType[type].columnsTable[p]);
+      }
+      this.setState({columns : temp});
+
+    }
+        
+    getTypeByID = async(row) => {
+        console.log("dkkdkdkdkdkdkdkdkdk:    " , row);
+        this.setState({TypeObj : row});       
+        
+    }
+
 
 
     getProblems = (type)=>{ // get all Allergy prolems for this patient from DB
@@ -80,20 +82,29 @@ class PatientProblems extends Component {
 
     rendering = () =>{
         return(
-          <div className="container mt-5"> 
-            {this.state.type && (
-              <h4 className="text-info">{this.state.type} Problems</h4>
-            )}
-            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
+          <Container className="container mt-5"> 
+                <Row className= "py-3">
+                    <Col>
+                        {
+                          problemType && this.state.type && (
+                            <>
+                            <h3>{problemType[this.state.type].title}</h3>
+                            <div>{problemType[this.state.type].description}</div>
+                            </>
+                          )
+                        }
+                    </Col>
+              </Row>
+
+      <Row className= "py-3" >
+            <div className = "row  align-items-center justify-content-center" >
             <DataTableComp  data = {this.state.data}
                   columns = {this.state.columns}
-                  title= {`All patient ${this.state.type} Problems`}
+                  title= ""
             />
             </div> 
-              <div className="row mt-4">
-                   
-                      </div>
-                    </div>
+      </Row>
+                    </Container>
         
         )
     }

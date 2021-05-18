@@ -1,9 +1,4 @@
-:root {
-    --main-color:rgb(108, 108, 158);
-    --main-color-btn-navbar:rgb(142, 142, 179);
-    --main-color-btn-navbar-hover:rgb(58, 58, 119);
-    --main-color-btn-navbar-border:rgb(27, 27, 73);
-}
+
 .navbar{
     /* background-color: rgb(108, 108, 158); */
     background-color: var(--main-color);
@@ -22,4 +17,7 @@
     background-color: var(--main-color-btn-navbar-hover);
     border: 1px solid var(--main-color-btn-navbar-border);
     
+}
+.username{
+    font-size: 0.9em;
 }

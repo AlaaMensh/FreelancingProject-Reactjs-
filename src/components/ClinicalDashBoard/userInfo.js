@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 class UserInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pId:25,
+            pId:1,
             user:{}
           }
     }
     async componentDidMount(){
       console.log("id: " , this.props.id)
-     await this.setState({pId : this.props.id});
+    //  await this.setState({pId : this.props.id});
         await this.getUserObj()
     }
     getUserObj = async()=>{
@@ -24,23 +25,12 @@ class UserInfo extends Component {
              formBody.push(encodedKey + "=" + encodedValue);
            }
            formBody = formBody.join("&");
-        //    fetch(`http://localhost:3000/pt/getProblemsById`, {
-          //  fetch(`http://localhost:3000/pt/getAllergyById`, {
-           await fetch(`http://localhost:3000/pt/getPtById`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then(async(resp)=>{
-            resp.json().then(async(data)=>{
-              console.log("Data:  " , data)
-              await this.setState({user: data[0]});
-          
-            })
-          }).catch(()=>{
-            console.log("error Getting Here")
+           await axios.post(`http://localhost:8080/pt/findPt`,formBody).then(async resp => {
+            // return resp.data;
+            await this.setState({user: resp.data[0]});
+            console.log("resp.data: " , resp.data);
           })
+
     }
      convertDate(inputFormat) {
       function pad(s) { return (s < 10) ? '0' + s : s; }
@@ -58,7 +48,9 @@ class UserInfo extends Component {
             <div className="col-8 col-md-4 col-lg-3 ">
                 <img style={{width:"100%"}} src="https://www.shareicon.net/data/512x512/2016/09/01/822711_user_512x512.png" />
             </div>
-            <div className="col-12 col-md-12 col-lg-9 border">
+            {
+              this.state.user && (
+                <div className="col-12 col-md-12 col-lg-9 border">
                 <div className="row  text-secondary p-2 text-center">
                     <div className="col-6 border-right">
                         Patient Name : {this.state.user.firstName} {this.state.user.lastName}
@@ -90,6 +82,8 @@ class UserInfo extends Component {
               
                 </div>
             </div>
+              )
+            }
 
         </div>
         )

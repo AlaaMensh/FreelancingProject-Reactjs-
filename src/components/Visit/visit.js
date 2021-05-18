@@ -114,12 +114,9 @@ export default function Visit({match}) {
       setPId(match.params.id);
       setPId(localStorage.getItem("userId"));
 
-      
-
-
     },[])
 
-    const handleSubmit = () =>{
+    const handleSubmit = () => {
         console.log("obj:  ", obj);
         console.log("step2obj :  " , objStep2);
         console.log("step3obj :  " , objStep3);

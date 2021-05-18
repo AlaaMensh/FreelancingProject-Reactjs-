@@ -1,13 +1,17 @@
 {
+
     "ForPatient":{
         "state":{
                "date" :"",
-               "startDate" :"",
-               "endDate":"",
+               "startTime" :"",
+               "endTime":"",
                "patientName":"",
                "reason":"",
-               "duration" : "" 
+               "duration" : "" ,
+               "check": "",
+               "id" : ""
         },
+
         "columnsTable" : {
             "patientName": {
                     "name": "Patient Name ",
@@ -57,13 +61,9 @@
                 "name" : "date"
         },
         
-        "startDate" : {
+        "startTime" : {
                 "type":"time",
-                "name" :"startDate"
-        },
-        "endDate" : {
-                "type":"time",
-                "name" :"endDate"
+                "name" :"startTime"
         },
         "reason" : {
                 "type":"text",
@@ -99,8 +99,30 @@
         }
 
     },
-        "addAppointement":"http://localhost:3000/appointment/addApointment",
-        "getAllAppointements" :"http://localhost:3000/appointment/getpation",
+    "updatedDetails" : {
+        "appId":"",
+        "patientName":"",
+        "reason": "",
+        "date": "",
+        "startDate": "",
+        "endDate": "",
+        "duration" : "",
+        "check": "",
+        "id" : ""
+    },
+    "addDetails" : {
+        "patientName": "",
+        "reason": "",
+        "startTime": "",
+        "duration" : "",
+        "date": "",
+        "check" :"",
+         "id" : ""
+    },
+    "title":"All Patient Appointements",
+    "description":"simple blah blah this the page and what it dose you know stuff..",
+        "addAppointement":"http://localhost:8080/appointment/addAppoinment",
+        "getAllAppointements" :"http://localhost:8080/appointment/getAppoinmentbyPtid",
         "updateAppointements" :"http://localhost:3000/appointment/updateAppointment",
         "deleteAppointements" :"http://localhost:3000/appointment/deleteAppoinment"
     }

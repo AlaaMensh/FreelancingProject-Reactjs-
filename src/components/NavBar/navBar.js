@@ -5,12 +5,18 @@ import { Nav } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import {useHistory} from "react-router-dom";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {useState , useEffect} from "react";
+import Row from 'react-bootstrap/Row'
 import "./navbar.css";
 
 
 
 const NavBar = (props) => {
     const history = useHistory();
+    const [userName , setUserName] = useState(localStorage.getItem("userName"));
+    var name = "AlaaMensh";
+
+    
     
     return ( 
         <Navbar className="navbar" expand="lg"  style={{width:"100%"}}>
@@ -18,10 +24,13 @@ const NavBar = (props) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto px-2">
-            <Nav.Link href="/profile">
-        <AccountCircleIcon  />
+            <Nav.Link href="/profile" className="pr-4">
+                <div className="row  align-items-center">
+                        <AccountCircleIcon  style={{fontSize:"1.6em"}} />
+                        <span className="username">{name}</span>
+                </div>
             </Nav.Link>
-            {/* *************check here on role *************/}
+            {/* *************check here on role on every Choice in the DropDown *************/}
             <NavDropdown title="Our Functions" id="basic-nav-dropdown">
 {
     localStorage.getItem("role") ? (

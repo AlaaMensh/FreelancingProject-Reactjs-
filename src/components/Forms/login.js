@@ -35,7 +35,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
         for(var p in loginUser.modalAdditionForms ){
           temp.push(loginUser.modalAdditionForms[p])
         } 
-        // console.log("temp : "  , temp)
+        console.log("temp : "  , temp)
         this.setState({formInputs : temp})
 
     }
@@ -44,6 +44,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
     handleChange = (evt) =>{
         console.log("evnet " , evt.target.value)
         const value = evt.target.value;
+        console.log("kkkkkkkk: ",  [evt.target.name])
         this.setState({
           [evt.target.name]: value
         });
@@ -56,6 +57,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
         details[property] = this.state[property]; 
         
       }
+      console.log("details : " , details)
       // details["password"]= this.state[property].toString();
       // console.log("passwordType:" , typeof(details["password"]));
       

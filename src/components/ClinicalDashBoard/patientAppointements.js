@@ -21,14 +21,95 @@ class UserCrud extends Component {
       typeObj : {},
       type:"",
       formType:"add",
-      addingUserObject : {},
-      updateAppointementObject : {},
       validRole:false, // if false ==> not Doctor or DoctorFD , if true ==> Doctor OR DoctorFD
-      check : "", //which send to back ==>drId OR ==> drFDId,
-      past :[], //for past appointements
+      check : "", // which send to back ==>drId OR ==> drFDId,
+      past :[], // for past appointements
       future:[], // for Future appointements
+      doctorOrPatientAppointemnt : true //--> if(true) ==> this for Patient appointements , false -->
+ 
      }
   }
+
+  async componentDidMount(){
+    var type="ForPatient";
+    
+      this.setState({type});
+      var temp = [];
+      
+      for(var p in appointements[type].columnsTable ){ // for Adding actions Buttons to DataTable
+        if(p === "actions"){
+          appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <Row>
+            <Col >
+              <Button  variant="primary"
+                style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
+                onClick={async () => {  
+                     this.setUpdatedObj(row.id);
+                    this.setState({formType :"edit"})
+                    this.handleopenModal()
+                  }}>Update</Button>
+            </Col>
+          <Col>
+          <Button  variant="btn-danger"
+                onClick={() => {
+                    this.handleDelete(row.id)
+                  }}>Delete
+          </Button>
+          </Col>
+          <Col>
+  
+          <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
+          buttonValue="Make Visit" fromComponent="appointement"/>
+          </Col>
+          
+          </Row>
+          )
+          }
+          temp.push(appointements[type].columnsTable[p])
+        }
+        else{
+  
+          temp.push(appointements[type].columnsTable[p])
+        }
+      }
+      this.setState({columns : temp})
+      temp = []
+  
+  ////////////////////////////////// / * ForAddition *////////////////////////////
+  var details = {}
+      for(var p in appointements[type].modalAdditionForms ){ // for Addition Form Inputs
+        temp.push(appointements[type].modalAdditionForms[p])
+        console.log("here: " ,appointements[type].modalAdditionForms[p]["name"] )
+      } 
+      this.setState({
+        ModalAddtionInputs : temp,
+      })
+      
+      
+  
+      
+  // ////////////////////////////////// / * ForUpdate *////////////////////////////
+      temp = [];
+        details = {}
+      for(var p in appointements[type].modalUpdateForms ){  // for Update Form Inputs
+        temp.push(appointements[type].modalUpdateForms[p])
+      } 
+      this.setState({
+        ModalInputs : temp,
+
+      })
+      console.log("details for updating: " , details)
+  
+  
+  ////////////////////////////////// / * setNew State With user attributes *////////////////////////////
+      var newState = this.state;
+      for(var property in appointements[type].state ){ // to put user attributes in Component's state
+        newState[property] = "" 
+      }
+      
+      await this.checkRole()
+      await this.getData(type);
+    }
 
   handleClose = () => {
     this.setState({openModal : false})
@@ -47,7 +128,7 @@ class UserCrud extends Component {
 
     var details = {}
 
-    for(var property in  this.state.updateAppointementObject){ 
+    for(var property in  appointements[this.state.type].updatedDetails){ 
       details[property] = this.state[property] || this.state.typeObj[property]; 
     }
     console.log("details on update : " ,  details)
@@ -113,11 +194,16 @@ class UserCrud extends Component {
   handleAdding = async()=>{
    
     var details = {}
-    for(var p in this.state.addingUserObject ){ // for Addition Form Inputs
+    for(var p in appointements[this.state.type].addDetails ){ // for Addition Form Inputs
       details[p] = this.state[p]
     } 
-    console.log("details on update : " ,  details)
-    console.log("detilaas : " , details)
+    details["id"] = localStorage.getItem("userId");
+    details["check"] = this.state.check;
+
+
+
+    console.log("details on add : " ,  details)
+
 
     var formBody = [];
     for (var property in details) {
@@ -187,6 +273,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
      }
      if(parseInt(localStorage.getItem("role")) == 8){
        this.setState({check : "drId"});
+       console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
      }
      else{
       this.setState({check : "drFDId"});
@@ -194,96 +281,10 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
 
   }
 
-  async componentDidMount(){
-  var type="ForPatient";
-    await this.checkRole()
-    this.setState({type});
-    var temp = [];
-    
-    for(var p in appointements[type].columnsTable ){ // for Adding actions Buttons to DataTable
-      if(p === "actions"){
-        appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
-        <Row>
-          <Col sm={10}>
-            <Button  variant="primary"
-              // hidden={this.compareTimeForEditButton(row.date,row.startDate )}
-              style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
-              onClick={async () => {  
-                // console.log("rooooow : " , row)
-                  // cnsole.log("id:  " , row)
-                  await this.setUpdatedObj(row.id);
-                  this.setState({formType :"edit"})
-                  this.handleopenModal()
-                }}>Update</Button>
-          </Col>
-        <Col>
-        <Button  variant="btn-danger"
-              onClick={() => {
-                  this.handleDelete(row.id)
-                }}>Delete
-        </Button>
-        </Col>
-        <Col>
-
-        <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
-        buttonValue="Make Visit" fromComponent="appointement"/>
-        </Col>
-        
-        </Row>
-        )
-        }
-        temp.push(appointements[type].columnsTable[p])
-      }
-      else{
-
-        temp.push(appointements[type].columnsTable[p])
-      }
-    }
-    this.setState({columns : temp})
-    temp = []
-
-////////////////////////////////// / * ForAddition *////////////////////////////
-var details = {}
-    for(var p in appointements[type].modalAdditionForms ){ // for Addition Form Inputs
-      temp.push(appointements[type].modalAdditionForms[p])
-      console.log("here: " ,appointements[type].modalAdditionForms[p]["name"] )
-  
-      details[appointements[type].modalAdditionForms[p]["name"]] = ""
-    } 
-    this.setState({
-      ModalAddtionInputs : temp,
-      addingUserObject : details
-    })
-    console.log("details for Addition: " , details)
-    
-    
-
-    
-// ////////////////////////////////// / * ForUpdate *////////////////////////////
-    temp = [];
-      details = {}
-    for(var p in appointements[type].modalUpdateForms ){  // for Update Form Inputs
-      temp.push(appointements[type].modalUpdateForms[p])
-      details[appointements[type].modalUpdateForms[p]["name"]] = ""
-    } 
-    this.setState({
-      ModalInputs : temp,
-      updateAppointementObject : details
-    })
-    console.log("details for updating: " , details)
 
 
-////////////////////////////////// / * setNew State With user attributes *////////////////////////////
-    var newState = this.state;
-    for(var property in appointements[type].state ){ // to put user attributes in Component's state
-      newState[property] = "" 
-    }
-    
-    await this.getData(type);
-  }
 
-
-      compareTimeForEditButton = (date , startTime ) =>{
+    compareTimeForEditButton = (date , startTime ) =>{
      
       var appDate2 = date;
       var dateNow1 = new Date();
@@ -315,46 +316,61 @@ var details = {}
 
   handleChange = (evt) =>{
     const value = evt.target.value;
+    console.log("name: " , evt.target.name , " value: " , evt.target.value)
     this.setState({
       [evt.target.name]: value
     });
   }
-  render() { 
-    const tableData = {
-      columns:this.state.columns,
-      data :this.state.data
-    };
- 
-    return (
-      < Container>
-        {console.log("updateObject: " , this.state.updateUserObject)}
-        {console.log("additionObject: " , this.addingUserObject)}
-        <Row className=" align-items-center"  style={{margin:"auto"}}>
-          <Button className="col-auto" variant="primary" aria-label="add"  onClick = {()=>{
-                   this.setState({formType :"add"})
-                  this.handleopenModal();
-                }}>
-                  <AddIcon />
-            </Button> 
-        <DataTableComp   data = {this.state.data}
-                  columns = {this.state.columns}
-                  tableData = {tableData}
-                  title= {this.state.type === "ForPatient" ?"All Patient Appointements" :""}
-         />
+  renderingForPatientAppointements = () =>{
+    return(
+      <>
+      {console.log("updateObject: " , this.state.ModalAddtionInputs)}
+        {console.log("state: " , this.state)}
+        <Row className= "py-3 mt-5">
+                    <Col>
+                        {
+                          appointements && this.state.type && (
+                            <>
+                            <h3>{appointements[this.state.type].title}</h3>
+                            <div>{appointements[this.state.type].description}</div>
+                            </>
+                          )
+                        }
+                    </Col>
+          </Row>
+          <Row className= "py-3" >
+            <Col sm={10}></Col>
+                <Col sm={2}><Button variant="success"  onClick = {()=>{
+                 this.setState({formType :"add"})
+                 this.handleopenModal();
+                }}>Add New</Button>{' '}
+            </Col>
+          </Row>
+        <Row className=" align-items-center">
+          <Col>
+                
+                <DataTableComp  data = {this.state.data} 
+                          columns = {this.state.columns}
+                          title= {""}
+                />
+          </Col>
          </Row>
-         <Row calssName="mt-5">
-        <DataTableComp   data = {this.state.past}
-                  columns = {this.state.columns}
-                  tableData = {tableData}
-                  title= {this.state.type === "ForPatient" ?"All Past Appointements" :""}
-         />
+         <Row className="mt-5">
+          <Col>
+            <DataTableComp   data = {this.state.past}
+                      columns = {this.state.columns}
+                      title= {"Past Appointements"}
+            />
+          </Col>
          </Row>
-         <Row calssName="mt-5">
-        <DataTableComp   data = {this.state.future}
-                  columns = {this.state.columns}
-                  tableData = {tableData}
-                  title= {this.state.type === "ForPatient" ?"All Future Appointements" :""}
-         />
+
+         <Row className="mt-5">
+            <Col>
+              <DataTableComp  data = {this.state.future}
+                        columns = {this.state.columns}
+                        title= {"Future Appointements"}
+              />
+          </Col>
       </Row>
      {  
       this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(
@@ -379,7 +395,19 @@ var details = {}
        />
        )
      }
-      </ Container>
+      </>
+    )
+  }
+  render() { 
+    const tableData = {
+      columns:this.state.columns,
+      data :this.state.data
+    };
+ 
+    return (
+      <>
+        {this.renderingForPatientAppointements()}
+      </ >
     );
   }
 }

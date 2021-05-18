@@ -1,5 +1,13 @@
 @import-normalize; /* bring in normalize.css styles */
 
+:root {
+  --main-color:rgb(108, 108, 158);
+  --main-color-btn-navbar:rgb(142, 142, 179);
+  --main-color-btn-navbar-hover:rgb(58, 58, 119);
+  --main-color-btn-navbar-border:rgb(27, 27, 73);
+  --main-color-dark:rgb(77, 77, 148);
+}
+
 /* rest of app styles */
 
 

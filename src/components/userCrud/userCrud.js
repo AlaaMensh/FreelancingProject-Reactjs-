@@ -26,6 +26,85 @@ class UserCrud extends Component {
       updateUserObject :{}
      }
   }
+  async componentDidMount(){
+    var type = this.props.match.params.type;
+    this.setState({type});
+    var temp = [];
+    
+    for(var p in userType[type].columnsTable ){ // for Adding actions Buttons to DataTable
+      if(p === "actions"){
+        userType[type].columnsTable[p]["cell"] =  (row) =>{ return(
+        <div className = "row">
+          <div className="col-auto">
+            <button  className="btn btn-primary"
+              onClick={async () => {  
+                // console.log("rooooow : " , row)
+                  // cnsole.log("id:  " , row)
+                  await this.setUpdatedObj(row.id);
+                  this.setState({formType :"edit"})
+                  this.handleopenModal()
+                }}>Update</button>
+          </div>
+        <div className="col-auto">
+        <button  className="btn btn-danger"
+              onClick={() => {
+                  this.handleDelete(row.id)
+                }}>Delete
+        </button>
+        </div>
+        
+        </div>
+        )
+        }
+        temp.push(userType[type].columnsTable[p])
+      }
+      else{
+
+        temp.push(userType[type].columnsTable[p])
+      }
+    }
+    this.setState({columns : temp})
+    temp = []
+
+////////////////////////////////// / * ForAddition *////////////////////////////
+var details = {}
+    for(var p in userType[type].modalAdditionForms ){ // for Addition Form Inputs
+      temp.push(userType[type].modalAdditionForms[p])
+      console.log("here: " ,userType[type].modalAdditionForms[p]["name"] )
+  
+      details[userType[type].modalAdditionForms[p]["name"]] = ""
+    } 
+    this.setState({
+      ModalAddtionInputs : temp,
+      addingUserObject : details
+    })
+    console.log("details for Addition: " , details)
+    
+    
+
+    
+////////////////////////////////// / * ForUpdate *////////////////////////////
+    temp = [];
+     details = {}
+    for(var p in userType[type].modalUpdateForms ){  // for Update Form Inputs
+      temp.push(userType[type].modalUpdateForms[p])
+      details[userType[type].modalUpdateForms[p]["name"]] = ""
+    } 
+    this.setState({
+      ModalUpdateInputs : temp,
+      updateUserObject : details
+    })
+    console.log("details for updating: " , details)
+
+
+////////////////////////////////// / * setNew State With user attributes *////////////////////////////
+    var newState = this.state;
+    for(var property in userType[type].state ){ // to put user attributes in Component's state
+      newState[property] = "" 
+    }
+    
+    await this.getData(type);
+  }
 
   handleClose = () => {
     this.setState({openModal : false})
@@ -161,85 +240,7 @@ await fetch(`${userType[this.state.type].addUser}`, {
     
   }
 
-  async componentDidMount(){
-    var type = this.props.match.params.type;
-    this.setState({type});
-    var temp = [];
-    
-    for(var p in userType[type].columnsTable ){ // for Adding actions Buttons to DataTable
-      if(p === "actions"){
-        userType[type].columnsTable[p]["cell"] =  (row) =>{ return(
-        <div className = "row">
-          <div className="col-auto">
-            <button  className="btn btn-primary"
-              onClick={async () => {  
-                // console.log("rooooow : " , row)
-                  // cnsole.log("id:  " , row)
-                  await this.setUpdatedObj(row.id);
-                  this.setState({formType :"edit"})
-                  this.handleopenModal()
-                }}>Update</button>
-          </div>
-        <div className="col-auto">
-        <button  className="btn btn-danger"
-              onClick={() => {
-                  this.handleDelete(row.id)
-                }}>Delete
-        </button>
-        </div>
-        
-        </div>
-        )
-        }
-        temp.push(userType[type].columnsTable[p])
-      }
-      else{
-
-        temp.push(userType[type].columnsTable[p])
-      }
-    }
-    this.setState({columns : temp})
-    temp = []
-
-////////////////////////////////// / * ForAddition *////////////////////////////
-var details = {}
-    for(var p in userType[type].modalAdditionForms ){ // for Addition Form Inputs
-      temp.push(userType[type].modalAdditionForms[p])
-      console.log("here: " ,userType[type].modalAdditionForms[p]["name"] )
-  
-      details[userType[type].modalAdditionForms[p]["name"]] = ""
-    } 
-    this.setState({
-      ModalAddtionInputs : temp,
-      addingUserObject : details
-    })
-    console.log("details for Addition: " , details)
-    
-    
-
-    
-////////////////////////////////// / * ForUpdate *////////////////////////////
-    temp = [];
-     details = {}
-    for(var p in userType[type].modalUpdateForms ){  // for Update Form Inputs
-      temp.push(userType[type].modalUpdateForms[p])
-      details[userType[type].modalUpdateForms[p]["name"]] = ""
-    } 
-    this.setState({
-      ModalUpdateInputs : temp,
-      updateUserObject : details
-    })
-    console.log("details for updating: " , details)
-
-
-////////////////////////////////// / * setNew State With user attributes *////////////////////////////
-    var newState = this.state;
-    for(var property in userType[type].state ){ // to put user attributes in Component's state
-      newState[property] = "" 
-    }
-    
-    await this.getData(type);
-  }
+ 
 
   handleChange = (evt) =>{
     const value = evt.target.value;

@@ -118,15 +118,17 @@
                         "name" : "result"
                 }
                },
+               "title":"All Lab Orders",
+               "description":"From here you can see and upload Results for all accepted orders",
                "addOrder" :"http://localhost:3000/lab/addOrder",
-               "deleteOrder" : "http://localhost:3000/lab/deleteOrder",
+               "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
                "getAll":"http://localhost:3000/allergy/getAllergy",
                "acceptOrder":"http://localhost:3000/lab/setAccept",
                "getNotAcceptedOrders" :"http://localhost:3000/lab/getOrder",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrdersByPtId",
-               "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"
+               "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab"
 
             },
     "pathology" : 
@@ -191,6 +193,8 @@
                         }
 
                },
+               "title":"All Pathology Orders",
+               "description":"From here you can see and upload Results for all accepted orders",
                "addOrder" :"http://localhost:3000/lab/addOrder",
                "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
