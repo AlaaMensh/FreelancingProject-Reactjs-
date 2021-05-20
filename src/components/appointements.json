@@ -76,10 +76,131 @@
 
     },
     "modalUpdateForms": {
+ 
+        "date" :{
+                "type": "date",
+                "name" : "date"
+        },
+        
+        "startDate" : {
+                "type":"time",
+                "name" :"startDate"
+        },
+        "endDate" : {
+                "type":"time",
+                "name" :"endDate"
+        },
+        "reason" : {
+                "type":"text",
+                "name" :"reason"
+        }
+
+    },
+    "updatedDetails" : {
+        "id":"",
+        "reason": "",
+        "startDate": "",
+        "endDate": ""
+
+    },
+    "addDetails" : {
+        "patientName": "",
+        "reason": "",
+        "startTime": "",
+        "duration" : "",
+        "date": "",
+        "check" :"",
+         "id" : ""
+    },
+    "title":"All Patient Appointements",
+    "description":"simple blah blah this the page and what it dose you know stuff..",
+        "addAppointement":"http://localhost:8080/appointment/addAppoinment",
+        "getAllAppointements" :"http://localhost:8080/appointment/getAppoinmentbyPtid",
+        "updateAppointements" :"http://localhost:8080/appointment/updateAppointment",
+        "deleteAppointements" :"http://localhost:8080/appointment/deleteAppointment"
+    },
+    "ForDoctor":{
+        "state":{
+               "date" :"",
+               "startTime" :"",
+               "endTime":"",
+               "patientName":"",
+               "reason":"",
+               "duration" : "" ,
+               "check": "",
+               "id" : ""
+        },
+        "getDataObject":{
+                "date":"",
+                "check": "", 
+                "id":""
+        },
+
+        "columnsTable" : {
+            "patientName": {
+                    "name": "Patient Name ",
+                    "selector": "patientName",
+                    "sortable": true,
+                    "center" : true
+            },
+            "endDate": {
+                    "name": "End Time",
+                    "selector": "endDate",
+                    "sortable": true,
+                    "center" : true
+            },
+            "startDate": {
+                    "name": "Start Time",
+                    "selector": "startDate",
+                    "sortable": true,
+                    "center" : true
+            },
+             "date": {
+                     "name": "Date",
+                     "selector": "date",
+                     "sortable": true,
+                     "center" : true
+             },
+             "reason": {
+                     "name": "Reason",
+                     "selector": "reason",
+                     "sortable": true,
+                     "center" : true
+             },
+             "actions" :{
+                     "name" :"actions",
+                     "selector" : "actions",
+                     "sortable":false,
+                     "center" : true,
+                     "width":"500px"
+             }
+    },
+    "modalAdditionForms": {
         "patientName" : {
                 "type":"text",
                 "name" :"patientName"
         },
+        "date" :{
+                "type": "date",
+                "name" : "date"
+        },
+        
+        "startTime" : {
+                "type":"time",
+                "name" :"startTime"
+        },
+        "reason" : {
+                "type":"text",
+                "name" :"reason"
+        },
+        "duration" : {
+                "type":"number",
+                "name" :"duration"
+        }
+
+    },
+    "modalUpdateForms": {
+
         "date" :{
                 "type": "date",
                 "name" : "date"
@@ -119,11 +240,12 @@
         "check" :"",
          "id" : ""
     },
-    "title":"All Patient Appointements",
+    "title":"All Doctor Appointements at Specific time",
     "description":"simple blah blah this the page and what it dose you know stuff..",
-        "addAppointement":"http://localhost:8080/appointment/addAppoinment",
-        "getAllAppointements" :"http://localhost:8080/appointment/getAppoinmentbyPtid",
+        "addAppointement" : "http://localhost:8080/appointment/addAppoinment",
+     
         "updateAppointements" :"http://localhost:3000/appointment/updateAppointment",
-        "deleteAppointements" :"http://localhost:3000/appointment/deleteAppoinment"
+        "deleteAppointements" :"http://localhost:3000/appointment/deleteAppoinment",
+        "getAllappointementsForDoctor":""
     }
 }

@@ -38,6 +38,7 @@ class AllOrders extends Component {
           this.setState({flagCompoenentType : false});
           flag = false;
           this.setState({ptId : this.props.match.params.id});
+          object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
         }
         else{
           console.log("no it it is not")
@@ -100,14 +101,13 @@ class AllOrders extends Component {
       if(!flag){ // for PatientID and only Accepted Orders
         var details = {
           ptId:this.props.match.params.id,
-          type:this.state.orderType,
-          labId : localStorage.getItem("labId")
+         
          }
          endPoint = `${orderType[type].getAllOrdersByPtID}`;
       }
       else{ // for LabId
         endPoint = `${orderType[type].getAllOrdersByLabId}`
-        var details = {
+        var details = { 
           labId:localStorage.getItem("labId")
          }
 
@@ -185,13 +185,15 @@ class AllOrders extends Component {
       details["id"] = this.state.typeObj["id"];
       details["drId"] = this.state.typeObj["drId"];
       details["ptId"] = this.state.typeObj["ptId"];
+      details["result"] = this.state.result
 
       var Form = new FormData();
-      for(var p in details){
-        Form.append(p , details[p])
-      }
+      // for(var p in details){
+      //   Form.append(p , details[p])
+      // }
 
       Form.append("result" ,this.state.result )
+      Form.append("orderId" , this.state.typeObj["id"])
       
       var formBody = [];
       for (var property in details) {
@@ -202,12 +204,13 @@ class AllOrders extends Component {
       formBody = formBody.join("&");
 
       console.log("formBody: ", details)
-      await fetch(`http://localhost:3000/${this.state.type}/updateOrder`, {
+      await fetch(`http://localhost:8080/visit/updateOrder`, {
         method: 'POST',
         body: Form
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
+          console.log("data: " , data)
         })
       }).catch(()=>{
         console.log("errror")
@@ -223,11 +226,12 @@ class AllOrders extends Component {
     // and this object from OrdersDB.json
     
     handleTableColumnsForAllAcceptedOrders = (type , object) => { 
-      
+      console.log("object : " , orderType[type][object])
       var temp = []
       for(var p in orderType[type][object] ){
         if(p === "actions"){
-          orderType[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          console.log("object : " , orderType[type][object][p])
+          orderType[type][object][p]["cell"] =  (row) =>{ return(
           <div className = "row">
             <div className="col-auto">
               <button  className="btn btn-primary"
@@ -252,14 +256,15 @@ class AllOrders extends Component {
           </div>
           )
           }
-          temp.push(orderType[type].columnsTable[p])
+          temp.push(orderType[type][object][p])
         }
         else{
   
-          temp.push(orderType[type].columnsTable[p])
+          temp.push(orderType[type][object][p])
         }
       }
       this.setState({columns : temp})
+      console.log("temp : ", temp)
       temp = []
       var newState = this.state;
       for(var property in orderType[type].state ){
@@ -283,7 +288,7 @@ class AllOrders extends Component {
         return(
 
               <Container fluid>
-
+                {console.log("state: " , this.state.columns)}
               <Row className= "py-3">
                   <Col>
                       {

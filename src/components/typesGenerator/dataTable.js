@@ -21,6 +21,7 @@ class DataTableComp extends Component {
                data={this.props.data}
                pagination
                highlightOnHover
+               
              />
            </div>
          );

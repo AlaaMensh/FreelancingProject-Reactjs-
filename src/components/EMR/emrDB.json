@@ -1,0 +1,42 @@
+{
+    "Search" :{
+        "getObject"  :{
+
+        },
+        "columnsTable" :{
+            "firstName": {
+                "name": "First Name",
+                "selector": "firstName",
+                "sortable": true
+        },
+            "secondName": {
+                "name": "Second Name",
+                "selector": "secondName",
+                "sortable": true
+        },
+            "lastName": {
+                "name": "lastName",
+                "selector": "LastName",
+                "sortable": true
+        },
+            "phone": {
+                "name": "phone",
+                "selector": "phone",
+                "sortable": true
+        },
+            "address": {
+                "name": "Address",
+                "selector": "address",
+                "sortable": true
+        },
+        "actions" :{
+            "name" :"actions",
+            "selector" : "actions",
+            "sortable":false,
+            "center" : true,
+            "width":"300px"
+    }
+        
+        }
+    }
+}

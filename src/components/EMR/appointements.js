@@ -3,13 +3,18 @@ import appointements from '../appointements.json';
 import ModalComp from "../typesGenerator/modalGenerator";
 import axios from 'axios';
 import DataTableComp from "../typesGenerator/dataTable";
-import AddIcon from '@material-ui/icons/Add';
 import SessionCode from "../sessionCode";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-class UserCrud extends Component {
+
+
+
+const Data = [
+  {patientName : "lol" , endData : "12:30" , startDate : "11:60" , date : "5-12-2021" , reason : "llllll"}
+]
+class Appointements extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -25,15 +30,16 @@ class UserCrud extends Component {
       check : "", // which send to back ==>drId OR ==> drFDId,
       past :[], // for past appointements
       future:[], // for Future appointements
-      doctorOrPatientAppointemnt : true //--> if(true) ==> this for Patient appointements , false -->
- 
+      doctorOrPatientAppointemnt : true, //--> if(true) ==> this for Patient appointements , false -->
+      appointementsType: ""
      }
   }
 
+
   async componentDidMount(){
-    var type="ForPatient";
-    
-      this.setState({type});
+    var type="ForDoctor";  /// in json file ForDoctor object handle all appointments of this doctor 
+    var appointementsType = this.props.match.params.type; /// here if future or current
+      this.setState({type : type , appointementsType : appointementsType});
       var temp = [];
       
       for(var p in appointements[type].columnsTable ){ // for Adding actions Buttons to DataTable
@@ -84,10 +90,7 @@ class UserCrud extends Component {
       this.setState({
         ModalAddtionInputs : temp,
       })
-      
-      
-  
-      
+   
   // ////////////////////////////////// / * ForUpdate *////////////////////////////
       temp = [];
         details = {}
@@ -103,12 +106,12 @@ class UserCrud extends Component {
   
   ////////////////////////////////// / * setNew State With user attributes *////////////////////////////
       var newState = this.state;
-      for(var property in appointements[type].state ){ // to put user attributes in Component's state
+      for(var property in appointements[type].state ){ // to put Appointements attributes in Component's state
         newState[property] = "" 
       }
       
       await this.checkRole()
-      await this.getData(type);
+      await this.getData(type, appointementsType);
     }
 
   handleClose = () => {
@@ -120,22 +123,22 @@ class UserCrud extends Component {
 
   setUpdatedObj = (id)=>{
     var obj =  this.state.data.find(row => row.id === id)
-    // console.log("obj: " , obj);
+    console.log("obj: " , obj);
     this.setState({typeObj : obj});
   }
 
   handleUpdate = async()=>{
-console.log("objjjject : " , this.state.typeObj)
+
     var details = {}
 
     for(var property in  appointements[this.state.type].updatedDetails){ 
       details[property] = this.state[property] || this.state.typeObj[property]; 
     }
-    details["id"] = this.state.typeObj.id;
-    // details["appId"] = this.state.typeObj.id;
-    // details["check"] = this.state.check;
-    
     console.log("details on update : " ,  details)
+    details["id"] = localStorage.getItem("userId");
+    details["appId"] = this.state.typeObj.id;
+    details["check"] = this.state.check;
+
 
     
     var formBody = [];
@@ -159,7 +162,7 @@ console.log("objjjject : " , this.state.typeObj)
           }).catch(()=>{
             console.log("errror")
           })
-             this.getData(this.state.type)
+             this.getData(this.state.type , this.state.appointementsType)
   }
 
   handleDelete= async(id)=>{
@@ -198,8 +201,7 @@ console.log("objjjject : " , this.state.typeObj)
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-    // details["check"] = this.state.check;
-    details["check"] = "drFDId";
+    details["check"] = this.state.check;
 
 
 
@@ -226,12 +228,12 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }).catch(()=>{
       console.log("errror")
     })
-    this.getData(this.state.type);
+    this.getData(this.state.type , this.state.appointementsType);
   }
-  getData = async(type)=>{
+  getData = async(type , appointementsType)=>{
 
-    await axios.post(`${appointements[type].getAllAppointements}`,{
-       ptId:this.props.match.params.id
+    await axios.post(`${appointements[type].getAllappointementsForDoctor}`,{
+       drId:localStorage.getItem("userId") ///heree you must change it according to back
     }).then(async resp => {
               var dateNow1 = new Date();
 
@@ -240,26 +242,27 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
           day = ("0" + dateNow1.getDate()).slice(-2);
           var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
 
+      if(appointementsType === "current"){
         var res = resp.data.filter(element => {
-          if(element.date < dateNow2){
+          if(element.date == dateNow2){
             return element;
           }
         });
-
         await this.setState({past : res})
         console.log("reeessssssssssssssss: " , res);
+      }
 
-        var future = resp.data.filter(element => {
-          if(element.date > dateNow2){
-            return element;
-          }
-        });
-        this.setState({future : future});
-        console.log("reeessssssssssssssss: " , future);
-       this.setState({  
-          data : resp.data,
-      })
-      console.log("resp.data: " , resp.data);
+
+    if(appointementsType === "future"){
+      var future = resp.data.filter(element => {
+        if(element.date > dateNow2){
+          return element;
+        }
+      });
+      this.setState({data : future});
+      console.log("reeessssssssssssssss: " , future);
+    }
+
     
     })
     
@@ -350,29 +353,14 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
         <Row className=" align-items-center">
           <Col>
                 
+                {/* <DataTableComp  data = {this.state.data}  */}
                 <DataTableComp  data = {this.state.data} 
                           columns = {this.state.columns}
                           title= {""}
                 />
           </Col>
          </Row>
-         <Row className="mt-5">
-          <Col>
-            <DataTableComp   data = {this.state.past}
-                      columns = {this.state.columns}
-                      title= {"Past Appointements"}
-            />
-          </Col>
-         </Row>
-
-         <Row className="mt-5">
-            <Col>
-              <DataTableComp  data = {this.state.future}
-                        columns = {this.state.columns}
-                        title= {"Future Appointements"}
-              />
-          </Col>
-      </Row>
+         
      {  
       this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(
         <ModalComp show={this.state.openModal}
@@ -413,4 +401,4 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
   }
 }
  
-export default UserCrud;
+export default Appointements;

@@ -51,7 +51,10 @@ class SessionCode extends Component {
   //from public DashBoard ==> choice page
   handleSubmitForChoice = () =>{ ///*** Edit the Endpoint when Abdo Finish it */
     console.log("submittttteeedddd" , this.props) ;
-    this.props.history.push(this.props.history.location.pathname+`/acceptOrders`)
+    this.props.history.push({
+      pathname : `${this.props.history.location.pathname}/acceptOrders`,
+      state: this.state.code
+    })
     // var details = {
     //   ptId: id,
     //   userId : this.state.userID 

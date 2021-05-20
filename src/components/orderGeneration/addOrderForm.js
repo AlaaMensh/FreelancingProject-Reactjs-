@@ -18,11 +18,13 @@ class AddOrderForm extends Component {
      }
   }
   componentDidMount(){
-    var type = this.props.match.params.type;
+    // var type = this.props.match.params.type;
+    var type = "lab";
     this.setState({type});
     this.setState();
     if(this.props.match.params.id){
-     this.setState({ptId: this.props.match.params.id});
+    //  this.setState({ptId: this.props.match.params.id});
+     this.setState({ptId: "2"});
       // setFlag(false);
     }
 
@@ -52,49 +54,49 @@ class AddOrderForm extends Component {
 
   handleSubmit = async()=>{
 
-    
       console.log("laaaaaaaaaaaaaaaaaaaab")
       var details = {
         // 'investigation_type' : investigation_type,
         'date': this.state.date,
         'comments': this.state.comments,
         'status' : this.state.status,
-        'ptId': this.state.PtId,
-        'drId': this.state.drId,
-        'labId' : localStorage.getItem("labId")
+        'ptId': 2,
+        // 'drId': this.state.drId,
+        'drId': "1",
+        'labId' : localStorage.getItem("labId") 
     };
 
   console.log("details", details)
-  // var formBody = [];
-  // for (var property in details) {
-  //   var encodedKey = encodeURIComponent(property);
-  //   var encodedValue = encodeURIComponent(details[property]);
-  //   formBody.push(encodedKey + "=" + encodedValue);
-  // }
-  // formBody = formBody.join("&");
-  // console.log("formBodu : " , formBody)
-  // fetch(`${inputs[type].addOrder}`, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-  //   },
-  //   body: formBody
-  // }).then((resp)=>{
-  //   console.log("resp: " , resp);
-  //   resp.text().then((msg)=>{
-  //     console.log("successfully added....." , msg);
-  //     if(msg == "1 record added" && flag){
-  //       // history.push("/labOrderForm");
-  //     }
+  var formBody = [];
+  for (var property in details) {
+    var encodedKey = encodeURIComponent(property);
+    var encodedValue = encodeURIComponent(details[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
+  console.log("formBodu : " , formBody)
+  fetch(`${inputs[this.state.type].addOrder}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: formBody
+  }).then((resp)=>{
+    console.log("resp: " , resp);
+    resp.text().then((msg)=>{
+      console.log("successfully added....." , msg);
+      // if(msg == "1 record added" && flag){
+        // history.push("/labOrderForm");
+      // }
 
-  //   })
+    })
 
 
    
-  // })
-  // .catch(()=>{
-  //   console.log("eror")
-  // })
+  })
+  .catch(()=>{
+    console.log("eror")
+  })
 
 
   

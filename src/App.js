@@ -7,7 +7,6 @@ import {Provider} from "react-redux";
 
 import TypesGenerator from "./components/typesGenerator/typesGenerator";
 import AcceptOrders from "./components/orderGeneration/acceptOrders";
-import AddOrderForm from "./components/orderGeneration/addOrderForm";
 import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard';
 import PublicDashBoard from './components/publicDashBoard/publicDashBoard';
 import SignupList1 from './components/Forms/signUp/signUp';
@@ -19,6 +18,7 @@ import {useState , useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import Appointement from './pages/appointements';
 import Profile from './components/Profile/Profile';
+import AddOrderForm from "./components/orderGeneration/addOrderForm"
 
 
 
@@ -54,6 +54,7 @@ function App() {
       </div>
       <Switch>
       <Route exact path="/typesGenerator" component={TypesGenerator}  ></Route>
+      <Route exact path="/addOrderForm" component={AddOrderForm}  ></Route>
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route exact path="/Appointement" component={Appointement}></Route>
       <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>

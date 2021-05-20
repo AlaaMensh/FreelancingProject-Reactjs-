@@ -1,15 +1,21 @@
 import React, { Component } from 'react';
-import appointements from '../appointements.json';
-import ModalComp from "../typesGenerator/modalGenerator";
+import appointements from '../components/appointements.json';
+import ModalComp from "../components/typesGenerator/modalGenerator";
 import axios from 'axios';
-import DataTableComp from "../typesGenerator/dataTable";
+import DataTableComp from "../components/typesGenerator/dataTable";
 import AddIcon from '@material-ui/icons/Add';
-import SessionCode from "../sessionCode";
+import SessionCode from "../components/sessionCode";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-class UserCrud extends Component {
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+  
+} from '@material-ui/pickers';  
+class Appointements extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -25,13 +31,14 @@ class UserCrud extends Component {
       check : "", // which send to back ==>drId OR ==> drFDId,
       past :[], // for past appointements
       future:[], // for Future appointements
-      doctorOrPatientAppointemnt : true //--> if(true) ==> this for Patient appointements , false -->
+      doctorOrPatientAppointemnt : true ,//--> if(true) ==> this for Patient appointements , false -->
+      date : "" // for Date Picker value
  
      }
   }
 
   async componentDidMount(){
-    var type="ForPatient";
+    var type="ForDoctor";
     
       this.setState({type});
       var temp = [];
@@ -108,7 +115,7 @@ class UserCrud extends Component {
       }
       
       await this.checkRole()
-      await this.getData(type);
+    //   await this.getData(type);
     }
 
   handleClose = () => {
@@ -125,15 +132,15 @@ class UserCrud extends Component {
   }
 
   handleUpdate = async()=>{
-console.log("objjjject : " , this.state.typeObj)
+
     var details = {}
 
     for(var property in  appointements[this.state.type].updatedDetails){ 
       details[property] = this.state[property] || this.state.typeObj[property]; 
     }
-    details["id"] = this.state.typeObj.id;
-    // details["appId"] = this.state.typeObj.id;
-    // details["check"] = this.state.check;
+    details["id"] = localStorage.getItem("userId");
+    details["appId"] = this.state.typeObj.id;
+    details["check"] = this.state.check;
     
     console.log("details on update : " ,  details)
 
@@ -198,8 +205,7 @@ console.log("objjjject : " , this.state.typeObj)
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-    // details["check"] = this.state.check;
-    details["check"] = "drFDId";
+    details["check"] = this.state.check;
 
 
 
@@ -228,40 +234,54 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     })
     this.getData(this.state.type);
   }
-  getData = async(type)=>{
+  getData = async()=>{
+      var type  = this.state.type;
+  
+    var details = {
+      'date':this.state.date,
+      check: this.state.check, // if He drId or FDId
+      id: localStorage.getItem("userId")
+    }
+    console.log("details: " , details);
+    for(var property in  appointements[type].getDataObject){
+      
+        details[property] = this.state[property] ; 
+      }
+      details["id"] = localStorage.getItem("userId")
+      var formBody = [];
 
-    await axios.post(`${appointements[type].getAllAppointements}`,{
-       ptId:this.props.match.params.id
-    }).then(async resp => {
-              var dateNow1 = new Date();
-
-          var d = new Date(dateNow1),
-          mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
-          day = ("0" + dateNow1.getDate()).slice(-2);
-          var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
-
-        var res = resp.data.filter(element => {
-          if(element.date < dateNow2){
-            return element;
-          }
-        });
-
-        await this.setState({past : res})
-        console.log("reeessssssssssssssss: " , res);
-
-        var future = resp.data.filter(element => {
-          if(element.date > dateNow2){
-            return element;
-          }
-        });
-        this.setState({future : future});
-        console.log("reeessssssssssssssss: " , future);
-       this.setState({  
-          data : resp.data,
-      })
-      console.log("resp.data: " , resp.data);
-    
+    for (var property in details) {
+      var encodedKey = encodeURIComponent(property);
+      var encodedValue = encodeURIComponent(details[property]);
+      formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    console.log("formBodu : " , formBody)
+    await fetch(`http://localhost:3000/appointment/getAppointment`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body:formBody
+    }) .then(response => response.json())
+    .then(
+      data => {
+        console.log("data: " , data)
+        this.setState({data : data})
+      }
+    )
+    .catch((e)=>{
+      console.log("errror" ,e)
     })
+
+    // await axios.post(`${appointements[type].getAllAppointements}`,).then(async resp => {
+
+    //    this.setState({  
+    //       data : resp.data,
+    //   })
+    //   console.log("resp.dataHere: " , resp.data);
+    
+    // })
     
   }
   checkRole = () =>{
@@ -281,8 +301,6 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
      }
 
   }
-
-
 
 
     compareTimeForEditButton = (date , startTime ) =>{
@@ -314,6 +332,20 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
         }
 
     }
+    handleDateChange = async(date) => {
+        console.log("kkkkkk: ",date);
+       await this.convert(date);
+        this.getData();
+       
+      }
+      convert = (str) => {
+        var date = new Date(str),
+          mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+          day = ("0" + date.getDate()).slice(-2);
+          var d = [date.getFullYear(), mnth, day].join("-");
+          this.setState({date : d});
+        console.log([date.getFullYear(), mnth, day].join("-"));
+      }
 
   handleChange = (evt) =>{
     const value = evt.target.value;
@@ -322,11 +354,23 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       [evt.target.name]: value
     });
   }
-  renderingForPatientAppointements = () =>{
+  renderingForDoctorAppointements = () =>{
     return(
       <>
       {console.log("updateObject: " , this.state.ModalAddtionInputs)}
         {console.log("state: " , this.state)}
+        <Row className="justify-content-center">
+            <Col className="text-center">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                        // label="Material Date Picker"
+                        value={this.state.date || ""}
+                        format="MM/dd/yyyy"
+                        onChange={this.handleDateChange}
+                        />
+              </MuiPickersUtilsProvider>
+            </Col>
+        </Row>
         <Row className= "py-3 mt-5">
                     <Col>
                         {
@@ -356,23 +400,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
                 />
           </Col>
          </Row>
-         <Row className="mt-5">
-          <Col>
-            <DataTableComp   data = {this.state.past}
-                      columns = {this.state.columns}
-                      title= {"Past Appointements"}
-            />
-          </Col>
-         </Row>
-
-         <Row className="mt-5">
-            <Col>
-              <DataTableComp  data = {this.state.future}
-                        columns = {this.state.columns}
-                        title= {"Future Appointements"}
-              />
-          </Col>
-      </Row>
+        
      {  
       this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(
         <ModalComp show={this.state.openModal}
@@ -407,10 +435,10 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
  
     return (
       <>
-        {this.renderingForPatientAppointements()}
+        {this.renderingForDoctorAppointements()}
       </ >
     );
   }
 }
  
-export default UserCrud;
+export default Appointements;

@@ -56,7 +56,7 @@
                "columnsTableForPatientOrders": {
                  "date": {
                          "name": "Date",
-                         "selector": "date",
+                         "selector": "Date",
                          "sortable": true,
                          "center" : true
                  },
@@ -65,20 +65,10 @@
                          "selector": "comments",
                          "sortable": true,
                          "center" : true
+                 
                  },
-                 "phone": {
-                         "name": "Phone",
-                         "selector": "phone",
-                         "sortable": true,
-                         "center" : true
-                 },
-                 "result" :{
-                         "name" :"Result",
-                         "selector" : "result",
-                         "sortable":true,
-                         "center" : true
-                        
-                 },
+                 
+
                  "actions" :{
                          "name" :"actions",
                          "selector" : "actions",
@@ -105,10 +95,6 @@
                                         {"value":"deliver", "text" : "Delivering"},
                                         {"value":"pending", "text" : "Pending"}
                                 ]
-                        },
-                        "result" : {
-                                "type":"text",
-                                "name" :"result"
                         }
 
                },
@@ -120,14 +106,14 @@
                },
                "title":"All Lab Orders",
                "description":"From here you can see and upload Results for all accepted orders",
-               "addOrder" :"http://localhost:3000/lab/addOrder",
+               "addOrder" :"http://localhost:8080/order/addlabOrder",
                "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
                "getAll":"http://localhost:3000/allergy/getAllergy",
-               "acceptOrder":"http://localhost:3000/lab/setAccept",
-               "getNotAcceptedOrders" :"http://localhost:3000/lab/getOrder",
+               "acceptOrder":"http://localhost:8080/order/acceptOrder",
+               "getNotAcceptedOrders" :"http://localhost:8080/order/getlabOrderByPtCode",
                "getAllAcceptedOrders" :"",
-               "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrdersByPtId",
+               "getAllOrdersByPtID" : "http://localhost:8080/order/getlabOrderByPtId",
                "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab"
 
             },
@@ -195,12 +181,12 @@
                },
                "title":"All Pathology Orders",
                "description":"From here you can see and upload Results for all accepted orders",
-               "addOrder" :"http://localhost:3000/lab/addOrder",
+               "addOrder" :"http://localhost:8080/order/addlabOrder",
                "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
                "getAll":"http://localhost:3000/allergy/getAllergy",
                "acceptOrder":"",
-               "getNotAcceptedOrders" :"http://localhost:3000/lab/getOrder",
+               "getNotAcceptedOrders" :"http://localhost:8080/lab/getlabOrderByptId",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrdersByPtId",
                "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"

@@ -262,8 +262,8 @@ await fetch(`${userType[this.state.type].addUser}`, {
               {
                 userType && this.state.type && (
                   <>
-                  <h3>{userType[this.state.type].title}</h3>
-                  <div>{userType[this.state.type].description}</div>
+                    <h3>{userType[this.state.type].title}</h3>
+                    <div>{userType[this.state.type].description}</div>
                   </>
                 )
               }

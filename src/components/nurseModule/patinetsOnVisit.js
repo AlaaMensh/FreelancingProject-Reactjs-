@@ -11,6 +11,8 @@ import Container from '@material-ui/core/Container';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import EditIcon from '@material-ui/icons/Edit';
 import { withStyles } from '@material-ui/core/styles';
+import nurseModule from "../nurseDB.json";
+import DataTableComp from "../typesGenerator/dataTable"
 
 
 
@@ -60,81 +62,24 @@ const useStyles = (theme) => ({
 
 
 
-var id = 0;
-var rowsToKeep = [];
-var rowsToBeDeleted = [];
-const rows = [
-    {id:1 , firstName:"mohamed" , lastName:"ahmed" , phone :"1234" , address:"Giza" , email:"alaa@gmail.com" , birthDate :"12-10-2020"},
-    {id:2 , firstName:"mohamed" , lastName:"ahmed" , phone :"1234" , address:"Giza" , email:"alaa@gmail.com" , birthDate :"12-10-2020"},
-    {id:3 , firstName:"mohamed" , lastName:"ahmed" , phone :"1234" , address:"Giza" , email:"alaa@gmail.com" , birthDate :"12-10-2020"},
-    {id:4 , firstName:"mohamed" , lastName:"ahmed" , phone :"1234" , address:"Giza" , email:"alaa@gmail.com" , birthDate :"12-10-2020"}
-]
+
 
 class PatientsOnVisit extends Component {
   constructor(props) {
     super(props);
     
     this.state = { 
-      allergyList : [],
       typeId:0,
-      openModal1:false,
-      openModal2:false,
-      TypeObj : {},
-      name:"",
-      description :"",
-      patientsOnVisit : []  
+      patientsOnVisit:[],
+      columns:[]
           }
         }
         
-        getTypeByID = async(id) => {
-          console.log("dkkdkdkdkdkdkdkdkdk:    ")
-          var details = {
-            id:id
-          }
-          var formBody = [];
-          for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-          }
-          // formBody = formBody.join("&");
-          
-          fetch(`http://localhost:3000/allergy/getById`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then((resp)=>{
-            console.log("Getting: " , resp);
-            resp.json().then((data)=>{
-              console.log("ddddddddddddddddd;  " , data[0])
-              this.setState({
-                TypeObj:data[0]
-              })
-              object = data
-            })
-          }).catch(()=>{
-            console.log("errror")
-          })
-        }
-        getAllergyTypesList = (allergyList) =>{
-        for(var type in allergyList){
-            console.log("type: ", type.name);
-        }
-    }
-    handleopenModal1 = () => {
-      this.setState({openModal1 : true})
-    };
-  
-     handleClose = () => {
-      this.setState({openModal1 : false})
-    };
-    handleopenModal2 = () => {
-      this.setState({openModal2 : true})
-    };
-    getData = async()=>{
+ 
 
+    
+    getData = async()=>{
+    var type = "patientsOnVisit"
       var details = {
         date:new Date()
        }
@@ -145,9 +90,9 @@ class PatientsOnVisit extends Component {
          formBody.push(encodedKey + "=" + encodedValue);
        }
        formBody = formBody.join("&");
+   console.log("/.........................." ,nurseModule[type] )
    
-   
-       await fetch(`http://localhost:3000/session/getSessionByDate`, {
+       await fetch(`${nurseModule[type].getAll}`, {
          method: 'GET',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -168,90 +113,43 @@ class PatientsOnVisit extends Component {
      handleCloseModal2 = () => {
       this.setState({openModal2 : false})
     };
-    refreshAfterDeletion = (id)=>{
-     this.setState({
-      allergyList: this.state.allergyList.filter(row => row.id !== id)
-     })
-    }
+  
  
-    handleDelete= async(id)=>{
-      var details = {
-        id:id
-      }
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      // formBody = formBody.join("&");
-      
-      fetch('http://localhost:3000/allergy/deleteAllergy', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is deleted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-        // await axios.delete(`http://localhost:2400/allergy/deleteAllergy/${id}`)
-        // .then(res => {
-        //   console.log(res);
-        //   console.log(res.data);
-        // })
-        // .catch(err=>{console.log("nooooo")})
 
-         
-    }
    async componentDidMount(){
       this.getData()
+      this.handleDataTableColumns()
     }
-    handleUpdate = ()=>{
-
-      var details = {
-        id:this.state.TypeObj.id,
-        name: this.state.name,
-        description : this.state.description,
+    handleDataTableColumns = () =>{
+      var type = "patientsOnVisit";
+      var temp = [];
+    
+      for(var p in nurseModule[type].columnsTable ){ // for Adding actions Buttons to DataTable
+        if(p === "actions"){
+          nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+              <button  className="btn btn-info"
+                onClick={async () => {  
+                  console.log("rooooow : " , row)
+                  this.props.history.push(`${this.props.location.pathname}/nurseVisit/${row.ptId}`)
+                  }}>Fill Vitals</button>
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(nurseModule[type].columnsTable[p])
+        }
+        else{
+  
+          temp.push(nurseModule[type].columnsTable[p])
+        }
       }
-
-      if(!details.name){
-        details.name = this.state.TypeObj.name
-      }
-      if(!details.description){
-        details.description = this.state.TypeObj.description
-      }
-
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
-
-      // console.log("add: ", obj);
-      // axios.put(`http://localhost:3000/allergy/addAllergy` , obj)
-      //    .then(res => {
-      //      console.log(res);
-      //      console.log(res.data);
-      //    })
-      console.log("formBody: ", formBody)
-      fetch('http://localhost:3000/allergy/updateAllergy', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is inserted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-         this.getData()
+      this.setState({columns : temp})
+      temp = []
     }
+
 
     componentDidUpdate(){
         console.log("hhhhhhh")
@@ -267,56 +165,20 @@ class PatientsOnVisit extends Component {
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
-
+              
                 </div>
             </div>
           </div>
-            <div className = "row gridDataHeader align-items-center" style={{ height: 400, width: '100%' }}>
-               <DataGrid className="datagrid bg-light  rounded MuiDataGrid-cellCenter" style={{textAlign:"center"}} rows={this.state.patientsOnVisit} columns={[
-                 { field: 'id', headerName: 'id', width: 70 },
-              { field: 'firstName', headerName: 'firstName', width: 200 },
-              { field: 'phone', headerName: 'phone', width: 100 },
-              { field: 'address', headerName: 'address', width: 100 },
-              { field: 'maritalStatus', headerName: 'Marital Status', width: 200 },
-            
-              { 
-                field: 'Actions',
-                headerName: 'Actions',
-                width: 250,
-                renderCell: (params) => (
-                  <strong>
-                    {/* {params.value.getFullYear()} */}
-                    <Button
-                      variant="contained"
-                      color="default"
-                      size="small"
-                      className={this.props.classes.button}
-                      startIcon={<EditIcon />}
-                     
-                      style={{ marginLeft: 16 }}
-                      onClick={()=>{ 
-                          console.log("props:  " ,params.row);
-                          this.props.history.push(`${this.props.location.pathname}/nurseVisit/${params.row.ptId}`)
-                        // this.getTypeByID(params.row.id); 
-                      }}>
+            <div className = "row align-items-center" >
+            {console.log("columns : "  , this.state.columns)}
+            {
+        this.state.patientsOnVisit &&(
+          <DataTableComp data={this.state.patientsOnVisit}
+          columns = {this.state.columns} 
+          title= ""/>
 
-                       Fill Vitals
-                       
-                    </Button>
-
-                  </strong>
-                ),
-              }]} pageSize={5}
-                checkboxSelection  onRowSelected={async (row) => {
-                  console.log("yes" , this.state.typeId);
-                  }} getRowId ={(row) =>{
-                      
-                  }}
-                  onRowClick = {(row)=>{
-                      console.log("yyyys" , row);
-                      id = row.row.id;
-                      this.setState({typeId : row.row.id});
-                  }} />
+        )
+      }
             </div> 
               <div className="row mt-4">
                        
@@ -325,42 +187,7 @@ class PatientsOnVisit extends Component {
         
         )
     }
-    handleAdding = () =>{
-      var details = {
-        name: this.state.name,
-        description : this.state.description,
-      }
 
-      // console.log("type: ", obj);
-      // axios.post(`http://localhost:3000/allergy/addAllergy`,  obj )
-      // .then(res => {
-      //   console.log(res);
-      //   console.log(res.data);
-      // })
-      console.log("detilaas : " , details)
-
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
-      console.log("formging:     " , formBody)
-      
-      fetch('http://localhost:3000/allergy/addAllergy', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is inserted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-      this.getData();
-    }
 
 
     render() { 
@@ -368,171 +195,9 @@ class PatientsOnVisit extends Component {
         
   return (
     <div className="hero">
+     
         {this.rendering()}
 
-<Modal
-  open={this.state.openModal1}
-  onClose={this.handleClose}
-  aria-labelledby="simple-modal-title"
-  aria-describedby="simple-modal-description"
->
-<Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <EditIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Edit
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-               InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                // label="Name"
-                name="name" 
-                type="text"
-                autoComplete="Name"
-                placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  console.log("kkkk;   ", this.state.TypeObj.name)
-                  this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="description"
-                // label="description"
-                type="text"
-                id="description"
-                autoComplete="current-password"
-                placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
-                }}
-                
-              />
-            </Grid>
-           
-          </Grid>
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={()=>{
-              this.handleUpdate();
-              this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
-            }}
-          >
-           
-            Edit
-          </Button>
-          
-        </form>
-
-      </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
- 
-    </Container>
-</Modal>
-
-
-<Modal
-key="1"
-  open={this.state.openModal2}
-  onClose={this.handleCloseModal2}
-  aria-labelledby="simple-modal-title1"
-  aria-describedby="simple-modal-description2"
->
-<Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <AddBoxIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Add
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                label="Name"
-                name="name" 
-                type="text"
-                autoComplete="Name"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                  this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                name="description"
-                label="description"
-                type="text"
-                id="description"
-                autoComplete="current-password"
-                // placeholder={this.state.TypeObj.description}
-                onChange = {(event) =>{
-                  // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                  this.setState({description : event.target.value});
-                }}
-                
-              />
-            </Grid>
-           
-          </Grid>
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            fullWidth
-            className={classes.submit}
-            onClick={()=>{
-              this.handleAdding();
-              this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
-            }}
-          >
-            Add
-          </Button>
-          
-        </form>
-      </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
-    </Container>
-</Modal>
     </div>
  
   );

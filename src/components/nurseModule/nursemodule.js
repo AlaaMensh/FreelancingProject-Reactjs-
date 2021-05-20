@@ -1,74 +1,15 @@
-// import * as React from 'react';
 import React, { Component } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
 import "./nursemodule.css";
-// import NurseModule from './nursemodule';
-import Button from '@material-ui/core/Button';
-import EditIcon from '@material-ui/icons/Edit';
 import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
-import Modal from '@material-ui/core/Modal';
-import Avatar from '@material-ui/core/Avatar';
-import Container from '@material-ui/core/Container';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-
-
-
-
-
-const sortModel = [
-  {
-    field: 'time',
-    sort: 'desc',
-  },
-];
-
-const useStyles = (theme) => ({
-    paper: {
-      // marginTop: theme.spacing(1),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      backgroundColor : "white",
-      padding:"1em",
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-      fontSize:"1.1em",
-      fontFamily:"Dosis"
-    },
-    input2 :{
-      height:"10px"
-    },
-    iconPlus:{
-      margin: "auto",
-      textAlign:"center"
-      // float:"right",
-    },
-    button: {
-      margin: theme.spacing(1),
-      fontFamily: 'Roboto Slab'
-    },
-    deleteButton: {
-      backgroundColor:"#c94c4c"
-    },
-    editButton: {
-      backgroundColor:"#c94c4c"
-    }
-  });
-
+import nurseModule from "../nurseDB.json";
+import DataTableComp from "../typesGenerator/dataTable";
+import ModalComp from "../typesGenerator/modalGenerator";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 
 
@@ -78,26 +19,82 @@ class NurseVisit extends Component {
         super(props);
         this.state = {
             timeDate:[],
-            temp:"",
-            pulse:"",
-            respiratoryRate:"",
-            oxygenSaturation:"",
-            height:"",
-            weight:"",
-            BMI:"",
-            pain:"",
-            smokingStatus:"",
-            headCircumference:"",    
-            openModal1:false ,
-            key:0,
-            pId:4,
-            patientName:""  
+            openModal:false ,
+            pId:"",
+            columns:[],
+            ModalAddtionInputs :[],
+            type : "" //from JsonFile in nurseModule json File 
           }
+    }
+    async componentDidMount(){
+      var type = "nurseVitals";
+      this.setState({type});
+      console.log("parmas.:   ",  this.props.match.params.id)
+      this.setState({pId : this.props.match.params.id}); // set here the patientId from the url 
+      this.handleDataTableColumns(type);
+      this.handleFormModuleInput(type);
+      this.handleState(type);
+      await this.getLastVisits(type);
+     
+    }
+    handleState = (type) =>{
+      var newState = this.state;
+      for(var property in nurseModule[type].state ){ // to put nurseVisit attributes in Component's state
+        newState[property] = "" 
+      }
     }
     handleChange = (event)=>{
         this.setState({
             [event.target.name] :event.target.value
         })
+    }
+    handleDataTableColumns = (type) =>{
+      var temp = [];
+    
+      for(var p in nurseModule[type].columnsTable ){ // for Adding actions Buttons to DataTable
+        if(p === "actions"){
+          nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+              <button  className="btn btn-danger"
+                onClick={async () => {  
+                  this.handleDelete(row.id);
+                  }}>Delete</button>
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(nurseModule[type].columnsTable[p])
+        }
+        else if(p === "time"){
+          nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+            <p className="span">{row.date}</p>
+               <p className="span">{row.time}</p>
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(nurseModule[type].columnsTable[p])
+        }
+        else{
+  
+          temp.push(nurseModule[type].columnsTable[p])
+        }
+      }
+      this.setState({columns : temp})
+      temp = []
+    }
+    handleFormModuleInput = (type) =>{
+      var temp = [];
+    
+      for(var p in nurseModule[type].modalAdditionForm ){ // for Adding actions Buttons to DataTable
+        temp.push(nurseModule[type].modalAdditionForm[p]);
+      }
+      this.setState({ModalAddtionInputs : temp})
     }
     handleDelete =(id) =>{
       var details = {
@@ -111,7 +108,7 @@ class NurseVisit extends Component {
       }
       // formBody = formBody.join("&");
       
-      fetch('http://localhost:3000/nurse/delete', {
+      fetch(`${nurseModule[this.state.type].deleteVital}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -149,11 +146,7 @@ class NurseVisit extends Component {
         var joined = this.state.timeDate.concat(obj2);
         this.setState({ timeDate: joined });
     }
-    sortAfterAdding = () => {
-      const sorted = this.state.timeDate.sort((a, b) => a.id - b.id);
-      console.log("sorted: " , sorted);
-      this.setState({timeDate : sorted})
-    }
+ 
     sorting =()=>{
       var Temp = []
       this.state.timeDate.map((time, index)=>{
@@ -235,7 +228,7 @@ class NurseVisit extends Component {
       var time = d.getHours()+":"+d.getMinutes()
       return (time);
     }
-    getLastVisits = async()=>{
+    getLastVisits = async(type)=>{
       var details = {
       pId : this.props.match.params.id
       }
@@ -247,7 +240,7 @@ class NurseVisit extends Component {
           }
           formBody = formBody.join("&");
          
-         await fetch(`http://localhost:3000/nurse/getByPId`, {
+         await fetch(`${nurseModule[type].getAll}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -280,8 +273,6 @@ class NurseVisit extends Component {
             // this.setState({ timeDate: joined });
             console.log("joined: " , joined)
 
-
-
               this.setState({
                 timeDate:joined
               })
@@ -293,7 +284,6 @@ class NurseVisit extends Component {
           })
     }
     handleAddition = async()=>{
-
           var details = {
             pId:this.state.pId,
             date: this.getDate(),
@@ -320,7 +310,7 @@ class NurseVisit extends Component {
           }
           formBody = formBody.join("&");
          
-          await fetch(`http://localhost:3000/nurse/add`, {
+          await fetch(`${nurseModule[this.state.type].addVital}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -364,429 +354,85 @@ class NurseVisit extends Component {
 
     }
 
-    handleopenModal1 = () => {
-        this.setState({openModal1 : true})
+    handleopenModal = () => {
+        this.setState({openModal : true})
       };
     
-       handleClose = () => {
-        this.setState({openModal1 : false})
-      };
+    handleClose = () => {
+    this.setState({openModal : false})
+  };
   
 
-    getDate = ()=>{
-      var d = new Date();
-      var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
-      return date
-      }
-
-    async componentDidMount(){
-      console.log("parmas.:   ",  this.props.match.params.id)
-      this.setState({pId : this.props.match.params.id});
-      await this.getLastVisits();
-     
+  getDate = ()=>{
+    var d = new Date();
+    var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    return date
     }
+
+
     rendering = () => {
       return(
-        <DataGrid   
-        sortModel={[
-          {
-            field: 'date',
-            sort: 'desc',
-          },
-          {
-            field: 'time',
-            sort: 'desc',
-          },
-        ]}
-          rows={this.state.timeDate} columns={[
-          { 
-           field: 'time',
-           type: 'dateTime',
-           headerName: 'Date',
-           width: 250,
-          //  valueGetter: (params) =>
-          //  console.log("params", params)
-          //  `${params.getValue('time') || 'unknown'}`,
-        //  sortComparator: (v1, v2, param1, param2) => param1.row.time - param2.row.time,
-          
-           renderCell: (params) => (       
-            <>
-                 {/* {console.log("parammmmms:    " , params.row.date)} */}
-                 {/* {console.log("parammmmms:    " , params.row.time)} */}
-               <p className="span">{params.row.date}</p>
-               <p className="span">{params.row.time}</p>
-               </>
-           
-           ),
+        <Container >
+        <Row className= "py-3">
+        <Col>
+            {
+              nurseModule && this.state.type && (
+                <>
+                  <h3>{nurseModule[this.state.type].title}</h3>
+                  <div>{nurseModule[this.state.type].description}</div>
+                </>
+              )
+            }
+        </Col>
+    </Row>
+    <Row className= "py-3" >
+      <Col sm={10}></Col>
+          <Col sm={2}><Button variant="success"  onClick = {()=>{
+             this.setState({formType :"add"})
+            this.handleopenModal();
+          }}>Add New</Button>{' '}</Col>
+      </Row>
+      <Row>
+        <Col>
+        <DataTableComp data = {this.state.timeDate} 
+        columns={this.state.columns}
+        title = ""
+        /></Col>
 
-         },
-       
-         { field: 'temp',
-          headerName: "Tempreture (f)"
-          , width: 200 },
-         { field: 'date',
-          headerName: "Date"
-          , width: 200,
-          hide: "true" 
-        },
-         {
-           field: 'pulse',
-           headerName: 'pulse(bpm)',
-           type: 'number',
-           width: 150,
-         },
-
-         {
-           field: 'bloodPressure',
-           headerName: 'Blood Pressure(mmHg)',
-           width: 300,
-         },
-         {
-           field: 'pain',
-           headerName: 'Pain (1-10)',
-           width: 150,
-         },
-         {
-           field: 'respiratoryRate',
-           headerName: 'Respiratory Rate(rpm)',
-           width: 200,
-         },
-         {
-           field: 'OXSat',
-           headerName: 'Oxygen Saturation(%)',
-           width: 200,
-         },
+      </Row>
+        </Container>
         
-         {
-           field: 'height',
-           headerName: 'Height (in)',
-           width: 150,
-         },
-         {
-           field: 'weight',
-           headerName: 'weight(lbs)',
-           width: 150,
-         },
-       
-         {
-           field: 'BMI',
-           headerName: 'BMI (Kg/m2)',
-           width: 150,
-         },
-       
-         {
-           field: 'smokingStatus',
-           headerName: 'smokingStatus',
-           width: 200,
-         },
-         {
-           field: 'headC',
-           headerName: 'headCircumfrence(in)',
-           width: 200,
-         },
-         { 
-           field: 'Actions',
-           headerName: 'Actions',
-           width: 150,
-           renderCell: (params) => (
-             <strong>
-               {/* {params.value.getFullYear()} */}
-               
-               <Button
-                 variant="contained"
-                 color="secondary"
-                 size="small"
-                 className={this.props.classes.button , this.props.classes.deleteButton}
-                 startIcon={<EditIcon />}
-                 style={{ marginLeft: 16 }}
-                 onClick={async ()=>{
-                    console.log("delete function: " , params.row.id);
-                   this.handleDelete(params.row.id);
-                   // this.refreshAfterDeletion(params.row.id);
-                 }}
-               >
-                 delete
-               </Button>
-             </strong>
-           ),
-         }
-        ]} pageSize={5} checkboxSelection rowHeight={90} />
       )
     }
-    componentDidUpdate () {
-      this.rendering();
-      // this.sortAfterAdding();
-    }
+ 
     render() { 
-        const { classes } = this.props;
+   
         return (
     <div className="container" style={{ height: 400, width: '100%' }}>
-      {console.log(this.state.timeDate)}
+      {console.log("hereeeee : ",this.state.columns)}
+      {console.log("state : ",this.state)}
           {this.rendering()}
-       <Fab color="primary" aria-label="add" className ={this.props.classes.iconPlus} onClick = {()=>{
-                          this.handleopenModal1()
+       {/* <Fab color="primary" aria-label="add"  onClick = {()=>{
+                          this.handleopenModal()
                         }} >
             <AddIcon  />
-        </Fab> 
-<Modal
-key = "1"
-  open={this.state.openModal1}
-  onClose={this.handleClose}
-  aria-labelledby="simple-modal-title1"
-  aria-describedby="simple-modal-description2"
->
-<Container component="main" maxWidth="xs">
-      {/* <CssBaseline /> */}
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <AddBoxIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Add
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="temp"
-                label="Temp"
-                name="temp" 
-                type="number"
-                autoComplete="temp"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    // console.log(event.target);
-                    this.handleChange(event);
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="pulse"
-                label="pulse"
-                name="pulse" 
-                type="number"
-                autoComplete="pulse"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="bloodPressure"
-                label="Blood Pressure"
-                name="bloodPressure" 
-                type="number"
-                autoComplete="bloodPressure"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="respiratoryRate"
-                label="Respiratory Rate"
-                name="respiratoryRate" 
-                type="number"
-                autoComplete="RespiratoryRate"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="OXYgenSaturation"
-                label="Oxygen Saturation"
-                name="oxygenSaturation" 
-                type="number"
-                autoComplete="OXYgenSaturation"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="Height"
-                label="Height"
-                name="height" 
-                type="number"
-                autoComplete="Height"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="weight"
-                label="Weight"
-                name="weight" 
-                type="number"
-                autoComplete="weight"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="BMI"
-                label="BMI"
-                name="BMI" 
-                type="number"
-                autoComplete="BMI"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="Pain"
-                label="Pain"
-                name="Pain" 
-                type="number"
-                autoComplete="Pain"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="smokingStatus"
-                label="smokingStatus"
-                name="smokingStatus" 
-                type="number"
-                autoComplete="smokingStatus"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-              InputProps={{ classes: { input: this.props.classes.input2 } }}
-                variant="outlined"
-                required
-                fullWidth
-                id="headCircumference"
-                label="Head Circumference"
-                name="headCircumference" 
-                type="number"
-                autoComplete="headCircumference"
-                // placeholder={this.state.TypeObj.name}
-                onChange = {(event) =>{
-                    this.handleChange(event);
-
-                //   this.setState({name : event.target.value});
-                }}
-              />
-            </Grid>
-            
-           
-          </Grid>
-          <Button
-            type="button"
-            variant="contained"
-            color="primary"
-            fullWidth
-            className={classes.submit}
-            onClick={()=>{
-                this.handleAddition()
-              
-            //   this.handleAdding();
-            //   this.getData();
-              // console.log("user: " , obj);
-              // handleSignup()
-            }}
-          >
-            Add
-          </Button>
-          
-        </form>
-      </div>
-      {/* <Box mt={5}>
-        <Copyright />
-      </Box> */}
-    </Container>
-</Modal>
+        </Fab>  */}
+        {
+       this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 &&(
+        <ModalComp show={this.state.openModal}
+        onHide={this.handleClose}
+        ModalInputs={this.state.ModalAddtionInputs}
+        updatedTypeObj = {this.state.typeObj}
+        handleChange = {this.handleChange}
+        handleUpdate = {this.handleUpdate}
+        handleAdding={this.handleAddition}
+        formType = {this.state.formType}
+       />
+       )
+     }
     </div>
           );
     }
 }
  
-export default withStyles(useStyles) (NurseVisit);
+export default NurseVisit;

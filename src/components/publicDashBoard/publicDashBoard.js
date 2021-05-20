@@ -2,7 +2,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
 import { useEffect ,useState} from 'react';
 import { useHistory } from "react-router-dom";
-import Appointement from '../../pages/appointements';
+import Appointement from '../../pages/newAppointments';
 import ptRegistration from '../patientRegistration/ptRegistration';
 import NurseVisit from "../nurseModule/nursemodule";
 import Visit from "../Visit/visit";
@@ -15,8 +15,11 @@ import AllOrders from './../orderGeneration/allOrders';
 import { Col } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import ChoicePage from "./choice";
+import EMR from "../EMR/emr";
 import React from 'react';
 import "./Navbar.css";
+import Search from "../EMR/searchModule/search";
+import Appointements from "../EMR/appointements";
 
 
 const PublicDashBoard = ({match}) => {
@@ -77,6 +80,9 @@ const MainFunctions = [ // Cards content and its role
             else if( value.text == "Radiology Information System" && value.role.includes(role)){
               history.push(match.path+`/acceptOrders/${"radio"}`);
             }
+            else if( value.text == "EMR Electronic Medical Records" && value.role.includes(role)){
+              history.push(match.path+`/EMR`);
+            }
           }}
           >
             <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
@@ -110,6 +116,11 @@ const MainFunctions = [ // Cards content and its role
             <Route exact path={match.path +"/appoint/visit/:id/prescription/:visitId"} component = {Prescription} />
             <Route exact path={match.path +"/profile"} component = {Profile} />
           
+                                  {/* ***EMR**** */}
+            <Route exact path={match.path+"/EMR"}  component={EMR}/> 
+            <Route exact path={match.path+"/EMR/search"}  component={Search}/> 
+            <Route exact key = {1} path={match.path+"/EMR/Futureappointements/:type"}  component={Appointements}/> 
+            <Route exact key = {2}  path={match.path+"/EMR/currentAppointements/:type"}  component={Appointements}/> 
             
             <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/>
             <Route exact path={match.path+"/nurseVisit"} component={NurseVisit}/>

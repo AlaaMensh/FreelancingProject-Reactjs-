@@ -9,8 +9,8 @@ class ModalComp extends Component {
         this.state = {  }
     }
     componentDidMount(){
-        console.log("////////////////%%%%%%%%%%%%%%%%%%%%%%////////////")
-        console.log("props: " , this.props , "formType : " , this.props.formType)
+        // console.log("////////////////%%%%%%%%%%%%%%%%%%%%%%////////////")
+        // console.log("props: " , this.props , "formType : " , this.props.formType)
     }
     renderForm = ()=>{
        return (

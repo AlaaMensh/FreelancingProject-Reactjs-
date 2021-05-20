@@ -16,6 +16,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
          }
     }
     async componentDidMount(){
+      console.log("000000000000000: " , this.props.history.location.state)
         await this.handleDataTableColumns()
         await this.getData(this.props.match.params.type)
     }
@@ -24,9 +25,9 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
     handleAccept = async (id) =>{
       console.log("Accepted IDS:  " , this.state.acceptedIds )
       var details = {
-        acceptedIds : id,
-        labFdId : localStorage.getItem("userId"),
-        labId: localStorage.getItem("labId")
+        id : id,
+        labFDId : localStorage.getItem("labId"),
+        // labId: localStorage.getItem("labId")
       }
 
       
@@ -80,7 +81,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
               break;
       }
         var details = {     
-          type : typeOrder,
+          ptCode : this.props.history.location.state,
         }
         var formBody = [];
         for (var property in details) {
@@ -127,7 +128,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
                 <button  className="btn btn-primary"
                   onClick={() => {  
                       console.log("id:  " , row)
-                      // this.handleAccept(row.id)
+                      this.handleAccept(row.id)
                     }}>Accept</button>
                     {/* <SessionCode  buttonValue={"Accept"}/> */}
               </div>

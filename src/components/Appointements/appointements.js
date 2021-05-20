@@ -9,7 +9,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
-class UserCrud extends Component {
+class Appointments extends Component {
   constructor(props) {
     super(props);
     this.state = { 
@@ -25,13 +25,15 @@ class UserCrud extends Component {
       check : "", // which send to back ==>drId OR ==> drFDId,
       past :[], // for past appointements
       future:[], // for Future appointements
-      doctorOrPatientAppointemnt : true //--> if(true) ==> this for Patient appointements , false -->
+      
+      doctorOrPatientAppointemnt : true, //--> if(true) ==> this for Patient appointements , false -->
  
      }
   }
 
   async componentDidMount(){
-    var type="ForPatient";
+      console.log("props: " , this.props)
+    var type=this.props.type;
     
       this.setState({type});
       var temp = [];
@@ -108,7 +110,9 @@ class UserCrud extends Component {
       }
       
       await this.checkRole()
-      await this.getData(type);
+      if(type === "ForPatient"){
+        await this.getDataForPatient(type);
+      }
     }
 
   handleClose = () => {
@@ -125,17 +129,17 @@ class UserCrud extends Component {
   }
 
   handleUpdate = async()=>{
-console.log("objjjject : " , this.state.typeObj)
+
     var details = {}
 
     for(var property in  appointements[this.state.type].updatedDetails){ 
       details[property] = this.state[property] || this.state.typeObj[property]; 
     }
-    details["id"] = this.state.typeObj.id;
-    // details["appId"] = this.state.typeObj.id;
-    // details["check"] = this.state.check;
-    
     console.log("details on update : " ,  details)
+    details["id"] = localStorage.getItem("userId");
+    details["appId"] = this.state.typeObj.id;
+    details["check"] = this.state.check;
+
 
     
     var formBody = [];
@@ -159,7 +163,9 @@ console.log("objjjject : " , this.state.typeObj)
           }).catch(()=>{
             console.log("errror")
           })
-             this.getData(this.state.type)
+          if(this.state.type === "ForPatient"){
+             this.getDataForPatient(this.state.type)
+          }
   }
 
   handleDelete= async(id)=>{
@@ -198,8 +204,7 @@ console.log("objjjject : " , this.state.typeObj)
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-    // details["check"] = this.state.check;
-    details["check"] = "drFDId";
+    details["check"] = this.state.check;
 
 
 
@@ -226,12 +231,14 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }).catch(()=>{
       console.log("errror")
     })
-    this.getData(this.state.type);
+    if(this.state.type === "ForPatient"){
+    this.getDataForPatient(this.state.type);
+    }
   }
-  getData = async(type)=>{
+  getDataForPatient = async(type)=>{
 
     await axios.post(`${appointements[type].getAllAppointements}`,{
-       ptId:this.props.match.params.id
+       ptId:this.props.props.match.params.id
     }).then(async resp => {
               var dateNow1 = new Date();
 
@@ -322,83 +329,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       [evt.target.name]: value
     });
   }
-  renderingForPatientAppointements = () =>{
-    return(
-      <>
-      {console.log("updateObject: " , this.state.ModalAddtionInputs)}
-        {console.log("state: " , this.state)}
-        <Row className= "py-3 mt-5">
-                    <Col>
-                        {
-                          appointements && this.state.type && (
-                            <>
-                            <h3>{appointements[this.state.type].title}</h3>
-                            <div>{appointements[this.state.type].description}</div>
-                            </>
-                          )
-                        }
-                    </Col>
-          </Row>
-          <Row className= "py-3" >
-            <Col sm={10}></Col>
-                <Col sm={2}><Button variant="success"  onClick = {()=>{
-                 this.setState({formType :"add"})
-                 this.handleopenModal();
-                }}>Add New</Button>{' '}
-            </Col>
-          </Row>
-        <Row className=" align-items-center">
-          <Col>
-                
-                <DataTableComp  data = {this.state.data} 
-                          columns = {this.state.columns}
-                          title= {""}
-                />
-          </Col>
-         </Row>
-         <Row className="mt-5">
-          <Col>
-            <DataTableComp   data = {this.state.past}
-                      columns = {this.state.columns}
-                      title= {"Past Appointements"}
-            />
-          </Col>
-         </Row>
 
-         <Row className="mt-5">
-            <Col>
-              <DataTableComp  data = {this.state.future}
-                        columns = {this.state.columns}
-                        title= {"Future Appointements"}
-              />
-          </Col>
-      </Row>
-     {  
-      this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(
-        <ModalComp show={this.state.openModal}
-        onHide={this.handleClose}
-        ModalInputs={this.state.ModalAddtionInputs}
-        updatedTypeObj = {this.state.typeObj}
-        handleChange = {this.handleChange}
-        handleUpdate = {this.handleUpdate}
-        handleAdding={this.handleAdding}
-        formType = {this.state.formType}
-       />
-       ):(
-        <ModalComp show={this.state.openModal}
-        onHide={this.handleClose}
-        ModalInputs={this.state.ModalInputs}
-        updatedTypeObj = {this.state.typeObj}
-        handleChange = {this.handleChange}
-        handleUpdate = {this.handleUpdate}
-        handleAdding={this.handleAdding}
-        formType = {this.state.formType}
-       />
-       )
-     }
-      </>
-    )
-  }
   render() { 
     const tableData = {
       columns:this.state.columns,
@@ -407,10 +338,10 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
  
     return (
       <>
-        {this.renderingForPatientAppointements()}
+        {this.props.body}
       </ >
     );
   }
 }
  
-export default UserCrud;
+export default Appointments;

@@ -26,7 +26,7 @@ render() {
                                         input.type !== "select" ? (
                                             <Form.Group controlId={input.name}>
                                             <Form.Label>{input.name}</Form.Label>
-                                             <Form.Control type={input.type} placeholder={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
+                                             <Form.Control type={input.type} name={input.name} placeholder={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
                                                 onChange={(e)=>{this.props.handleChange(e)} } /></Form.Group>):(<>
                                         
                                           <Form.Group controlId="exampleForm.SelectCustom">
