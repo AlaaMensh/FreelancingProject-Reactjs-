@@ -1,24 +1,20 @@
+import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 import './App.css';
-
-import {BrowserRouter as Router , Route, Switch } from "react-router-dom";
-
-import {Provider} from "react-redux";
-
-
-import TypesGenerator from "./components/typesGenerator/typesGenerator";
-import AcceptOrders from "./components/orderGeneration/acceptOrders";
 import ClinicalDashBoard from './components/ClinicalDashBoard/clinicalDashBoard';
-import PublicDashBoard from './components/publicDashBoard/publicDashBoard';
-import SignupList1 from './components/Forms/signUp/signUp';
-import UserCrud from './components/userCrud/userCrud';
 import Login from './components/Forms/login';
-import Container from 'react-bootstrap/Container';
+import SignupList1 from './components/Forms/signUp/signUp';
 import NavBar from "./components/NavBar/navBar";
-import {useState , useEffect} from "react";
-import {useHistory} from "react-router-dom";
-import Appointement from './pages/appointements';
+import AddOrderForm from "./components/orderGeneration/addOrderForm";
 import Profile from './components/Profile/Profile';
-import AddOrderForm from "./components/orderGeneration/addOrderForm"
+import PublicDashBoard from './components/publicDashBoard/publicDashBoard';
+import TypesGenerator from "./components/typesGenerator/typesGenerator";
+import UserCrud from './components/userCrud/userCrud';
+import ProtecteRoute from './guards/ProtectedRoute';
+import Appointement from './pages/appointements';
+
+
+
 
 
 
@@ -35,7 +31,9 @@ function App() {
         }
 
     },[localStorage.getItem("role")])
-    
+  const isLoggedIn = ()=>{
+    return localStorage.getItem("userId")?true:false
+  }  
   const getAuthorization = (value) =>{
 
     setLoggedIn(value);
@@ -58,7 +56,8 @@ function App() {
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route exact path="/Appointement" component={Appointement}></Route>
       <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
-      <Route   path="/publicDashBoard" component={PublicDashBoard}></Route>
+      {/* <Route   path="/publicDashBoard" component={PublicDashBoard}></Route> */}
+      <ProtecteRoute Guard={isLoggedIn()}  path="/publicDashBoard" component={PublicDashBoard}/>
       <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
       <Route  path="/profile" component={Profile}></Route>

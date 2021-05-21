@@ -1,25 +1,21 @@
-import CssBaseline from '@material-ui/core/CssBaseline';
-import { BrowserRouter as Router, Route, Switch,Link } from "react-router-dom";
-import { useEffect ,useState} from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Card, Col } from 'react-bootstrap';
+import { Route, Switch, useHistory } from "react-router-dom";
 import Appointement from '../../pages/newAppointments';
-import ptRegistration from '../patientRegistration/ptRegistration';
-import NurseVisit from "../nurseModule/nursemodule";
-import Visit from "../Visit/visit";
-import Profile from '../Profile/Profile';
-import Prescription from "../Prescription/Prescription";
-import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
-import AcceptOrders from './../orderGeneration/acceptOrders';
-import AddOrderForm from "../orderGeneration/addOrderForm";
-import AllOrders from './../orderGeneration/allOrders';
-import { Col } from 'react-bootstrap';
-import { Card } from 'react-bootstrap';
-import ChoicePage from "./choice";
-import EMR from "../EMR/emr";
-import React from 'react';
-import "./Navbar.css";
-import Search from "../EMR/searchModule/search";
 import Appointements from "../EMR/appointements";
+import EMR from "../EMR/emr";
+import Search from "../EMR/searchModule/search";
+import NurseVisit from "../nurseModule/nursemodule";
+import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
+import AddOrderForm from "../orderGeneration/addOrderForm";
+import ptRegistration from '../patientRegistration/ptRegistration';
+import Prescription from "../Prescription/Prescription";
+import Profile from '../Profile/Profile';
+import Visit from "../Visit/visit";
+import AcceptOrders from './../orderGeneration/acceptOrders';
+import AllOrders from './../orderGeneration/allOrders';
+import ChoicePage from "./choice";
+import "./Navbar.css";
 
 
 const PublicDashBoard = ({match}) => {
