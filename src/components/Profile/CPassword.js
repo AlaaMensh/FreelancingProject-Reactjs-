@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width:'100%'
   },
 }));
-export default function BasicTextFields({userId}) {
+export default function BasicTextFields({userId,modalClose}) {
   const classes = useStyles();
   const change_password = (values)=>{
     axios.post('http://localhost:3000/authenticate/change_password',{
@@ -30,7 +30,8 @@ export default function BasicTextFields({userId}) {
         password:values.password,
         userId:userId
     }).then(res=>{
-        alert(res)
+        alert("Success")
+        modalClose()
     }).catch(err=>{
         console.log(err)
     })
@@ -42,7 +43,7 @@ export default function BasicTextFields({userId}) {
 })
   return (
     <form className={classes.root} noValidate autoComplete="off">
-        <h1 style={{textAlign:'center'}}>Drugs</h1>
+        <h1 style={{textAlign:'center'}}>Change Password</h1>
         <Formik 
         validationSchema={PasswordSchema}
         initialValues={{old_password:'',password:'',re_password:''}}
@@ -55,6 +56,8 @@ export default function BasicTextFields({userId}) {
                 <div>
             <FormControl className={classes.formControl}>
             <TextField
+                    type="password"
+
               label="Enter the old Password"
                 helperText={formikprops.touched.old_password && formikprops.errors.old_password}
                error={(formikprops.touched.old_password && formikprops.errors.old_password)?true:false} id="standard-basic"
@@ -64,6 +67,8 @@ export default function BasicTextFields({userId}) {
             </FormControl>
             <FormControl className={classes.formControl}>
             <TextField
+                    type="password"
+
              helperText={formikprops.touched.password && formikprops.errors.password}
              error={(formikprops.touched.password && formikprops.errors.password)?true:false}
             id="standard-basic"
@@ -75,6 +80,7 @@ export default function BasicTextFields({userId}) {
             </FormControl>
             <FormControl className={classes.formControl}>
                 <TextField
+                    type="password"
                     helperText={formikprops.touched.re_password && formikprops.errors.re_password}
                     id="standard-basic"
                     label="Re-Password"
