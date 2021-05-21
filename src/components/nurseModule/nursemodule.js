@@ -230,7 +230,7 @@ class NurseVisit extends Component {
     }
     getLastVisits = async(type)=>{
       var details = {
-      pId : this.props.match.params.id
+        ptId : this.props.match.params.id
       }
       var formBody = [];
           for (var property in details) {
@@ -240,7 +240,7 @@ class NurseVisit extends Component {
           }
           formBody = formBody.join("&");
          
-         await fetch(`${nurseModule[type].getAll}`, {
+         await fetch(`${nurseModule[type].getPatientLastVisits}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -285,7 +285,7 @@ class NurseVisit extends Component {
     }
     handleAddition = async()=>{
           var details = {
-            pId:this.state.pId,
+            ptId:this.state.pId,
             date: this.getDate(),
             time: this.getTime(),
             temp:this.state.temp,

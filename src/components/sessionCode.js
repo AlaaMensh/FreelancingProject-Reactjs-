@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ModalComp from "./typesGenerator/modalGenerator";
-import axios from 'axios';
+
 
 
 class SessionCode extends Component {
@@ -55,74 +55,16 @@ class SessionCode extends Component {
       pathname : `${this.props.history.location.pathname}/acceptOrders`,
       state: this.state.code
     })
-    // var details = {
-    //   ptId: id,
-    //   userId : this.state.userID 
-    //   }
-   
-
-    // console.log("formBody:  " , details)
-
-    // var formBody = [];
-    // for (var property in details) {
-    //   var encodedKey = encodeURIComponent(property);
-    //   var encodedValue = encodeURIComponent(details[property]);
-    //   formBody.push(encodedKey + "=" + encodedValue);
-    // }
-    // formBody = formBody.join("&");
-    // console.log("formBody:  " , formBody)
-
-    // fetch('http://localhost:3000/session/addSession', {
-    //   method: 'POST',
-    //    headers: {
-    //      'Content-Type': 'application/json'
-    //    },
-    //   body: JSON.stringify(details)
-    // }).then((resp)=>{
-    //   resp.json().then((data)=>{
-    //     // if(data == true){
-    //     //   history.push("/")
-    //     // }
-    //   })
-    // }).catch(()=>{
-    //   console.log("errror")
-    // }) 
+    
   }
   // from Visit component
   handleSubmitForVisit = () =>{ ///*** edit it when adding sessionCode in Visit Module */
+    console.log("here: " , this.props);
+    this.props.history.push({
+      pathname : `${this.props.history.location.pathname}/visit`,
+      state: this.state.code
+    })
 
-    // var details = {
-    //   ptId: id,
-    //   userId : this.state.userID 
-    //   }
-   
-
-    // console.log("formBody:  " , details)
-
-    // var formBody = [];
-    // for (var property in details) {
-    //   var encodedKey = encodeURIComponent(property);
-    //   var encodedValue = encodeURIComponent(details[property]);
-    //   formBody.push(encodedKey + "=" + encodedValue);
-    // }
-    // formBody = formBody.join("&");
-    // console.log("formBody:  " , formBody)
-
-    // fetch('http://localhost:3000/session/addSession', {
-    //   method: 'POST',
-    //    headers: {
-    //      'Content-Type': 'application/json'
-    //    },
-    //   body: JSON.stringify(details)
-    // }).then((resp)=>{
-    //   resp.json().then((data)=>{
-    //     // if(data == true){
-    //     //   history.push("/")
-    //     // }
-    //   })
-    // }).catch(()=>{
-    //   console.log("errror")
-    // })
   }
 
   render() { 

@@ -246,6 +246,6 @@
      
         "updateAppointements" :"http://localhost:3000/appointment/updateAppointment",
         "deleteAppointements" :"http://localhost:3000/appointment/deleteAppoinment",
-        "getAllappointementsForDoctor":""
+        "getAllappointementsForDoctor":"http://localhost:8080/appointment/getAppoinmentbyDrId"
     }
 }

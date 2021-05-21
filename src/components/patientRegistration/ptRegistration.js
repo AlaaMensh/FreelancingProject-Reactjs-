@@ -101,7 +101,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             var result=JSON.stringify(familyHistoryList);  
             var json =  JSON.parse(result); 
 
-            var details = {
+            var details = { // this object will be sent to back to add patient
             firstName: firstName,
             lastName: lastName,
             secondName: secondName,
@@ -129,7 +129,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             formBody = formBody.join("&");
             console.log("formBody:  " , formBody)
 
-            fetch('http://localhost:3000/pt/addpt', {
+            fetch('http://localhost:3000/pt/addpt', { //** this will add patient */
               method: 'POST',
                headers: {
                  'Content-Type': 'application/json'
@@ -145,40 +145,32 @@ export default function HorizontalLabelPositionBelowStepper() {
             
             
     }
+    // these function to get the value from Children in this parent to handleSubmit here
 const getFirstName  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setFirstName(name);
 } 
 const getSecondName  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setSecondName(name);
 } 
 const getLastName  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setLastName(name);
 } 
 const getAddress  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setAddress(name);
 } 
 const getEmail  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setEmail(name);
 } 
 const getPhone  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setPhone(name);
 } 
 const getStatus  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setStatus(name);
 } 
 const getBloodGroup  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setbloodGroup(name);
 } 
 const getBirthDate  = (name) =>{
-    // console.log("fiffffff:   " , name);
     setbirthDate(name);
 } 
 const obj = {
@@ -193,23 +185,18 @@ const obj = {
   bloodGroup :  bloodGroup
 }
 const getAllergyList = (List)=>{
-console.log("kllllllllllllll:    " , List);
 setAllergyList(List);
 }
 const getfamilyHistoryList = (List)=>{
-console.log("Family history:    " , List);
 setFamilyHistoryList(List);
 }
 const getSurgeriesList = (List)=>{
-console.log("Family history:    " , List);
 setsurgeriesList(List);
 }
 const getinterventionsList  = (List)=>{
-console.log("Family history:    " , List);
 setinterventionsList(List);
 }
 const getonGoingProblemList  = (List)=>{
-console.log("onGoing history:    " , List);
 setonGoingProblemList(List);
 }
 
@@ -324,15 +311,8 @@ setonGoingProblemList(List);
                 type="button"
                 size ="small"
                 variant="contained"
-                // color="primary"
                 style={styles.submit}
                 onClick={()=>{
-                // var obj = {
-                //   userName:username,
-                //   password:pass,
-                //   email:email,
-                // }
-                // console.log("user: " , obj);
                 handleSubmit()
                 }}
             >

@@ -67,12 +67,7 @@
                 "sortable":true,
                 "center" : true
         },
-        "date" :{
-                "name" :"date",
-                "selector" : "date",
-                
-                "center" : true
-        },
+
         "pulse" :{
                 "name" :"pulse",
                 "selector" : "pulse",
@@ -186,12 +181,13 @@
                     "name" :"headC"
             }
 
-   },
+        },
         "title":"All Patient last Visits",
         "description":"From here you can see and upload Results for all accepted orders",
         "getAll":"http://localhost:8080/session/getSessionByDate",
+        "getPatientLastVisits":"http://localhost:8080/nurse/getByPtId",
         "deleteVital" : "http://localhost:3000/nurse/delete",
-        "addVital" :"http://localhost:3000/nurse/add"
+        "addVital" :"http://localhost:8080/nurse/addRecord"
 
      }
             

@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Procedures({getProcedures ,getSurgeries,  getInterventions,getInterventionsDate,getSurgeryDate , obj} ) {
   const classes = useStyles();
 
-
+//  this Component will handle Surgies and interventions
   return (
       <div className="form-hero row">
                  <Container component="main" maxWidth="xs">
@@ -74,9 +74,9 @@ export default function Procedures({getProcedures ,getSurgeries,  getInterventio
                                     defaultValue= {obj.surgeries}
                                     onChange = {(event) =>{
                                         getSurgeries(event.target.value);
-                                        console.log("yyyyys" , event.target.value);
+                                      
                                     }}
-                                    // defaultValue={obj.lastName}
+                                  
                                  
                                     />
                                 </Grid>
@@ -144,10 +144,7 @@ export default function Procedures({getProcedures ,getSurgeries,  getInterventio
                            
                             <Grid container justify="flex-end">
                               <Grid item>
-                                
-                                {/* <Link href="#" variant="body2">
-                                  Forgot Password
-                                </Link> */}
+                              
                               </Grid>
                             </Grid>
                           </form>

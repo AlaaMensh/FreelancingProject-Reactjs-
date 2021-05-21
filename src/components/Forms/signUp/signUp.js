@@ -28,7 +28,13 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       this.setState({type: this.props.match.params.type})
       if(this.props.match.params.type === "labFD"){
          await this.getDataForFD();
+         console.log("yes")
       }
+      else{
+        console.log("yes")
+        await this.handleFormInputs()
+      }
+
       
     }
 
@@ -62,6 +68,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
             this.setState({options : temp2})
           
           }
+
         } 
         this.setState({formInputs : temp})
       
@@ -117,9 +124,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       })
     }
        handleSignup = async()=>{
-       
-     
-        var details = {};
+         var details = {};
 
       for(var property in userType[this.state.type].state ){
         // console.log("propertyyyy :  " , property)
@@ -137,7 +142,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
        formBody = formBody.join("&");
        console.log("formBodu : " , formBody)
 
-       fetch(`${userType[this.state.type].addUser}`, {
+       await fetch(`${userType[this.state.type].addUser}`, {
          method: 'POST',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -150,14 +155,13 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
        }).catch(()=>{
          console.log("errror")
        })
-       this.props.history.push("/login")
-     
+      //  this.props.history.push("/login")
      }
 
 
     render() { 
         return ( 
-            <Container>
+            <Container >
                 {console.log("state: " , this.state)}
                 {
                 this.state.formInputs && this.state.formInputs.length > 0 && (

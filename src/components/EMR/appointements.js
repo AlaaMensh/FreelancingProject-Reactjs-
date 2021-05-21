@@ -10,10 +10,6 @@ import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
 
 
-
-const Data = [
-  {patientName : "lol" , endData : "12:30" , startDate : "11:60" , date : "5-12-2021" , reason : "llllll"}
-]
 class Appointements extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +24,7 @@ class Appointements extends Component {
       formType:"add",
       validRole:false, // if false ==> not Doctor or DoctorFD , if true ==> Doctor OR DoctorFD
       check : "", // which send to back ==>drId OR ==> drFDId,
-      past :[], // for past appointements
+      current :[], // for current appointements
       future:[], // for Future appointements
       doctorOrPatientAppointemnt : true, //--> if(true) ==> this for Patient appointements , false -->
       appointementsType: ""
@@ -112,6 +108,42 @@ class Appointements extends Component {
       
       await this.checkRole()
       await this.getData(type, appointementsType);
+    }
+    getData = async(type , appointementsType)=>{
+
+      await axios.post(`${appointements[type].getAllappointementsForDoctor}`,{
+         drId:localStorage.getItem("userId") ///heree you must change it according to back
+      }).then(async resp => {
+            var dateNow1 = new Date();
+            var d = new Date(dateNow1),
+            mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
+            day = ("0" + dateNow1.getDate()).slice(-2);
+            var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
+  
+        if(appointementsType === "current"){
+          var res = resp.data.filter(element => {
+            if(element.date == dateNow2){
+              return element;
+            }
+          });
+          await this.setState({current : res})
+          console.log("Current Response: " , res);
+        }
+  
+  
+      if(appointementsType === "future"){
+        var future = resp.data.filter(element => {
+          if(element.date > dateNow2){
+            return element;
+          }
+        });
+        this.setState({data : future});
+        console.log("Future Response: " , future);
+      }
+  
+      
+      })
+      
     }
 
   handleClose = () => {
@@ -203,10 +235,7 @@ class Appointements extends Component {
     details["id"] = localStorage.getItem("userId");
     details["check"] = this.state.check;
 
-
-
     console.log("details on add : " ,  details)
-
 
     var formBody = [];
     for (var property in details) {
@@ -230,54 +259,17 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     })
     this.getData(this.state.type , this.state.appointementsType);
   }
-  getData = async(type , appointementsType)=>{
 
-    await axios.post(`${appointements[type].getAllappointementsForDoctor}`,{
-       drId:localStorage.getItem("userId") ///heree you must change it according to back
-    }).then(async resp => {
-              var dateNow1 = new Date();
-
-          var d = new Date(dateNow1),
-          mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
-          day = ("0" + dateNow1.getDate()).slice(-2);
-          var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
-
-      if(appointementsType === "current"){
-        var res = resp.data.filter(element => {
-          if(element.date == dateNow2){
-            return element;
-          }
-        });
-        await this.setState({past : res})
-        console.log("reeessssssssssssssss: " , res);
-      }
-
-
-    if(appointementsType === "future"){
-      var future = resp.data.filter(element => {
-        if(element.date > dateNow2){
-          return element;
-        }
-      });
-      this.setState({data : future});
-      console.log("reeessssssssssssssss: " , future);
-    }
-
-    
-    })
-    
-  }
   checkRole = () =>{
     if(parseInt(localStorage.getItem("role")) != 8 && parseInt(localStorage.getItem("role")) != 2){
       this.setState({validRole : true});
      }
      else{
-      console.log("jjjjjjjjjjjjjj") 
+  
        this.setState({validRole: false})
      }
      if(parseInt(localStorage.getItem("role")) == 8){
        this.setState({check : "drId"});
-       console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
      }
      else{
       this.setState({check : "drFDId"});
@@ -325,7 +317,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       [evt.target.name]: value
     });
   }
-  renderingForPatientAppointements = () =>{
+  renderingForDoctorAppointements = () =>{
     return(
       <>
       {console.log("updateObject: " , this.state.ModalAddtionInputs)}
@@ -333,10 +325,10 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
         <Row className= "py-3 mt-5">
                     <Col>
                         {
-                          appointements && this.state.type && (
+                          appointements && this.state.appointementsType && (
                             <>
-                            <h3>{appointements[this.state.type].title}</h3>
-                            <div>{appointements[this.state.type].description}</div>
+                            <h3>All Doctor {this.state.appointementsType} Appointements</h3>
+                            <div> you will see here your {this.state.appointementsType} Appointments</div>
                             </>
                           )
                         }
@@ -395,7 +387,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
  
     return (
       <>
-        {this.renderingForPatientAppointements()}
+        {this.renderingForDoctorAppointements()}
       </ >
     );
   }

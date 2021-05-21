@@ -38,6 +38,12 @@ import DataGridTable from "./dataGrid"
 // import EditIcon from '@material-ui/icons/Edit';
 import emrFile from "../emrDB.json";
 import DataTableComp from "../../typesGenerator/dataTable";
+// import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
+
 
 var object  = {}
 const useStyles = (theme) => ({
@@ -102,7 +108,7 @@ class Search extends Component {
     this.state = { 
 
       searchWord:"",
-      list :row  ,
+      list :[]  ,
       openModal1:false,
       result :"",
       id:"",
@@ -111,55 +117,59 @@ class Search extends Component {
         }
         
 
-     
-    filterData = (name) =>{
-      var firstName = this.state.list.filter(row => row.firstname.includes(name))
-      this.setState({list : firstName})
-      console.log("pppppp : " , firstName);
-      this.setState({filtered : this.state.list})
-    }
 
     getData = async()=>{
       var type = "Search";
-      await axios.post('http://localhost:3000/lab/getOrdersByLabFdId' ,{ // get All patients of this doctor
-        labId : localStorage.getItem("labId")
-      }).then(async resp => {
-        console.log("resp.data: " , resp.data);
-        this.setState({list: resp.data})
-        this.setState({filtered:resp.data})
-        
+      this.setState({list: row});
+
+      var details = {
+        drId:localStorage.getItem("userId")
+      }
+      var formBody = [];
+      for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+      }
+      console.log("///////////////////////// , " , emrFile["Search"].getAllDoctorPatients)
+      await fetch(`${emrFile["Search"].getAllDoctorPatients}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+      }).then((resp)=>{
+        resp.json().then((data)=>{
+          console.log("resp.data: " , data);
+          this.setState({list: data})
+          this.setState({filtered:data})
+        })
+      }).catch(()=>{
+        console.log("errror")
       })
-      this.setState({list: row})
+
+      // await axios.post(`${emrFile["Search"].getAllDoctorPatients}` ,{ // get All patients of this doctor
+      //   drId : localStorage.getItem("userId")
+      // }).then(async resp => {
+      //   console.log("resp.data: " , resp.data);
+      //   this.setState({list: resp.data})
+      //   this.setState({filtered:resp.data})
+        
+      // })
+    //  this.setState({list:row})
+     
       
     }
 
-  
-
-    refreshAfterDeletion = (id)=>{
-     this.setState({
-      allergyList: this.state.allergyList.filter(row => row.id !== id)
-     })
-    }
- 
 
    async componentDidMount(){
-    this.setState({filtered:this.state.list})
-      this.getData()
+     await this.getData()
+     this.setState({filtered:this.state.list})
     }
-      
-    handleopenModal1 = () => {
-      this.setState({openModal1 : true})
-    };
-  
-     handleClose = () => {
-      this.setState({openModal1 : false})
-    };
 
 
-    componentDidUpdate(){
-        console.log("hhhhhhh")
-        this.rendering();
-    }
+
+
     getSearchName = (name) =>{
       console.log("name : " , name);
       this.setState({searchWord:name});   
@@ -179,53 +189,35 @@ class Search extends Component {
 
     rendering = () =>{
         return(
-          <div className="container gridDataContent mt-5"> 
-            <SearchForm  getSearchName = {this.getSearchName} />
-           {/* <input class="form-control border-secondary rounded-pill pr-5" type="search"  id="example-search-input2" onChange={(e)=>{
-            this.setState({searchWord : e.target.value})
-            this.filterData(e.target.value);
-          }}></input> */}
-          <div className="row mt-5">
+        <Container>
+            <Row className="mt-5 justify-content-center">
+                  <SearchForm  getSearchName = {this.getSearchName} />
+            </Row>
+          <Row>
+            <Col>
+                <Row>
+                  <Col>
+                    {
+                        this.state.list && this.state.list.length>0 &&
+                        <DataGridTable location={this.props.location} 
+                          filtered={this.state.filtered.length>0 ? this.state.filtered: this.state.list} 
+                          history={this.props.history}
+                          list={this.state.list}
+                        />
+                    }
+                  </Col>
+                </Row>
+            </Col>
+          </Row>
            
-            <div className="col-10 overflow-hidden ">
-                <div className="row justify-content-lg-start">
-                {this.state.list &&
-                 <DataGridTable location={this.props.location} 
-                 filtered={this.state.filtered} 
-                 history={this.props.history}
-                 list={this.state.list}
-                 />
-                 }
-                </div>
-            </div>
-          </div>
-
-              <div className="row mt-4">
-                  
-                      </div>
-                    </div>
+        </Container>
         
         )
     }
     
-     fileChangedHandler = (event) => {
-    this.setState({result : event.target.value})
-      }
 
-      handleUpdate = () =>{
-        console.log("state.id : " , this.state.id); 
-        var form = new FormData();
-        form.append("id", this.state.id);
-        form.append("result", this.state.result);
 
-        axios.post('http://localhost:3000/lab/uploadFile' ,form).then( resp => {
-          console.log("resp : " ,resp)
-       
-          // setLabs(resp.data)
-          // console.log("resp.data: " , resp.data);
-        
-        })
-      }
+
 
     render() { 
       const { classes } = this.props;

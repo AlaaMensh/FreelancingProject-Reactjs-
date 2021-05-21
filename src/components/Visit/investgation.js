@@ -175,28 +175,14 @@ class Investgation extends Component {
     this.getRadioByPId()
 
   }
-  getAllLabs =()=>{
 
-  }
-  getLabsByPId = ()=> {
-    var details = {
-     type:0,
-     ptId:1
-    }
-    var formBody = [];
-    for (var property in details) {
-      var encodedKey = encodeURIComponent(property);
-      var encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
+  getLabsByPId = ()=> {// that will get all labs names to view in multiChoices
 
     fetch(`http://localhost:3000/labs/getAll`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      // body: formBody
+      }
     }).then((resp)=>{
       resp.json().then((data)=>{
         console.log("alaaLaps;  " , data)
@@ -207,7 +193,7 @@ class Investgation extends Component {
     })
 
   }
-  getPathologyByPId = ()=> {
+  getPathologyByPId = ()=> { // that will get all pathologies names to view in multiChoices
  
      fetch(`http://localhost:3000/patho/getAll`, {
        method: 'GET',
@@ -226,7 +212,7 @@ class Investgation extends Component {
      })
 
   }
-  getRadioByPId = ()=> {
+  getRadioByPId = ()=> { // that will get all Radioes names to view in multiChoices
     fetch(`http://localhost:3000/radios/getAll`, {
       method: 'GET',
       headers: {
@@ -246,16 +232,14 @@ class Investgation extends Component {
   }
 
 
-  handleUpdating = (name,type) =>{
-    // console.log("updating:   " , name);
-    // console.log("TypeObj:   " , this.state.TypeObj);
+  handleUpdating = (name,type) =>{ // I handeled the update in one function (lab - pathology - radio)
 
     switch(this.state.typeUpdate){
       case "lab":
-        var details = {
+        var details = { // that object will send to backend when update lab
           name:name,
-          ptId:1,
-          drId:1,
+          ptId:1, //**change it with the code from Appointements */
+          drId:1, // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments : this.state.notes,
           status : this.state.TypeObj.status,
@@ -268,20 +252,14 @@ class Investgation extends Component {
         
           this.setState({allOrdersLabs});
       
-          var details = {
-            name : name,
-            result : this.state.TypeObj.result,
-            notes : this.state.notes,
-            status : this.state.TypeObj.status,
-            date : this.getDate()
-            }
+
 
         break;
       case "pathology":
-        var details = {
+        var details = { // that object will send to backend when update pathology
           name:name,
-          ptId:1,
-          drId:1,
+          ptId:1,//**change it with the code from Appointements */
+          drId:1, // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments : this.state.notes,
           status : this.state.TypeObj.status,
@@ -295,10 +273,10 @@ class Investgation extends Component {
           this.setState({allPathologyOrders});
         break;
       case "radio":
-        var details = {
+        var details = { // that object will send to backend when update radio
           name:name,
-          ptId:1,
-          drId:1,
+          ptId:1,//**change it with the code from Appointements */
+          drId:1, // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments : this.state.notes,
           status : this.state.TypeObj.status,
@@ -315,9 +293,7 @@ class Investgation extends Component {
     
   }
 
-  componentDidUpdate(){
 
-  }
   getDate = ()=>{
     const date = new Date();
     
@@ -325,6 +301,7 @@ class Investgation extends Component {
       date.toISOString()
       )
   }
+  
   handleChange = (panel) => (event, newExpanded) => {
     if(newExpanded){
       this.setState({expanded : panel})

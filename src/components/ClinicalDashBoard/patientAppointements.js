@@ -59,7 +59,7 @@ class UserCrud extends Component {
           <Col>
   
           <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
-          buttonValue="Make Visit" fromComponent="appointement"/>
+          buttonValue="Make Visit" fromComponent="appointement" history={this.props.history}/>
           </Col>
           
           </Row>

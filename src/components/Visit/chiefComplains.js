@@ -54,7 +54,7 @@ export default function ChiefComplains({getPatientName,getChiefComplains ,getDia
   const [deseases, setDeases] = useState([]);
   const classes = useStyles();
   useEffect(() => { 
-    fetch(`http://localhost:3000/diseases/getAll`, {
+    fetch(`http://localhost:3000/diseases/getAll`, { // will get all desease names to show in multiChoice
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -72,7 +72,7 @@ export default function ChiefComplains({getPatientName,getChiefComplains ,getDia
   
 
   },[])
-       // Update the document title using the browser API    document.title = `You clicked ${count} times`;  });
+  
 
 
   return (
@@ -133,7 +133,6 @@ export default function ChiefComplains({getPatientName,getChiefComplains ,getDia
                                     id="tags-standard"
                                     options={deseases}
                                     getOptionLabel={(option) => option.name}
-                                    // defaultValue={[top100Films[0]]}
                                     
                                     renderInput={(params) => (
                                     <TextField
@@ -147,25 +146,7 @@ export default function ChiefComplains({getPatientName,getChiefComplains ,getDia
                                         getDD(value);
                                     }}
                                 />
-                                    {/* <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    size="small"
-                                    id="DD"
-                                    label="DD"
-                                    name="DD"
-                                    type="text"
-                                    autoComplete="DD"
-                                    defaultValue= {obj.DD}
-                                    onChange = {(event) =>{
-                                    getDD(event.target.value);
-                                        // console.log("yyyyys" , username);
-                                    }}
-                                    // defaultValue={obj.email}
-                              
-                                    /> */}
-                                
+                                    
                                 </Grid>
                               <Grid item xs={12}>
                                     <TextField
@@ -208,10 +189,3 @@ export default function ChiefComplains({getPatientName,getChiefComplains ,getDia
   );
 }
 
-const top100Films = [
-    { title: 'DD1' },
-    { title: 'DD2' },
-    { title: 'DD3', year: 1974 },
-    { title: 'DD4', year: 2008 },
-    { title: 'DD4', year: 1957 },
-];

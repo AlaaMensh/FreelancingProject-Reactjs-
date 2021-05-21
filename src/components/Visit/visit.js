@@ -11,8 +11,6 @@ import Procedures from './procedures';
 import Investgation from './investgation';
 import {useHistory} from "react-router-dom";
 import ChiefComplains from './chiefComplains'
-// import Investgation from './Prescription';
-// import Procedures from "./procedures"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,7 +65,7 @@ const styles = {
       },
 }
 
-function getSteps() {
+function getSteps() { //steps in the Top  
   return ['Fill Important Info', 'Investigation', 'Procedures'  , 'finished' ];
 }
 
@@ -121,7 +119,7 @@ export default function Visit({match}) {
         console.log("step2obj :  " , objStep2);
         console.log("step3obj :  " , objStep3);
 
-        var details = {
+        var details = { // ************this object will be Sent to BackEnd to add a Visit
           ptId:match.params.id,
           drId:drId,
           chiefComplains : chiefComplains,
@@ -148,7 +146,7 @@ export default function Visit({match}) {
         formBody = formBody.join("&");
         console.log("formBody:  " , formBody)
 
-        fetch('http://localhost:3000/visit/addvisit', {
+        fetch('http://localhost:3000/visit/addvisit', { // ***********endpoint For Add Visit Change it with the new url
           method: 'POST',
            headers: {
              'Content-Type': 'application/json'
@@ -157,7 +155,7 @@ export default function Visit({match}) {
         }).then((resp)=>{
           resp.json().then((data) =>{
             console.log("my Data:   " , data);
-            history.push(`${match.url}/prescription/${data.id}`);
+            history.push(`${match.url}/prescription/${data.id}`);  //****After making Visit you should redirect to Prescription */
            
 
           })
@@ -165,17 +163,13 @@ export default function Visit({match}) {
           console.log("errror")
         })
         // history.push(`${match.url}/prescription/1`);
-
-
-
-            
+          
     }
+    //  All these function to send the value from children to this parent to handleSubmit and add new Visit
     const getPatientName = (value)=>{
-        console.log("value:  ",value);
         setPatientName(value);
     }
     const getChiefComplains = (value)=>{
-        console.log("value:  ",value);
         setChiefComplains(value);
     }
     const getDiagnosis = (value)=>{
@@ -190,59 +184,37 @@ export default function Visit({match}) {
 
 
     const getSurgeryDate = (list)=>{
-      console.log("Home Lab Orders:      " , list);
       setSurgeryDate(list);
     }
     const getInterventionsDate = (list)=>{
-      console.log("Home Lab Orders:      " , list);
       setInterventionDate(list);
     }
 
     const getLabOrders = (list)=>{
-      console.log("Home Lab Orders:      " , list);
       setLabOrders(list);
     }
 
     const getPathologyOrders = (list)=>{
-      console.log("Home Pathology Orders:      " , list);
       setPathologyOrders(list);
     }
     const getLabOrdersHome = (list)=>{
-      console.log("orderss from hierree:      " , list);
       setLabOrdersHome(list);
     }
   
-    const obj = {
-        patientName : patientName,
-        chiefComplains : chiefComplains,
-        diagnosis : diagnosis,
-        DD : DD,
-        notes : notes
-    }
-
-    const objStep2 = {
-        surgeries : surgeries,
-        surgeryDate : surgeryDate,
-        interventions : interventions,
-        interventionsDate : interventionDate
-    }
 
     const getProcedures = (value) =>{
         setProcedures(value);
     }
 
-    const getSurgeries = (value) =>{
-      console.log("surgies: " , value);
-        setSurgeries(value);
+    const getSurgeries = (value) =>{        
+      setSurgeries(value);
     }
 
     const getInterventions = (value) =>{
-      console.log("Interventions : " , value);
         setInterventions(value);
     }
 
     const getInvestigation = (value) =>{
-      console.log("invest:   " , value);
         setInvestigation(value);
     }
 
@@ -261,9 +233,22 @@ export default function Visit({match}) {
         setRadioOrders(list);
     }
 
+    const obj = { // To keep the value you write when go to  another steps
+      patientName : patientName,
+      chiefComplains : chiefComplains,
+      diagnosis : diagnosis,
+      DD : DD,
+      notes : notes
+  }
 
+  const objStep2 = {// To keep the value you write when go to  another steps
+      surgeries : surgeries,
+      surgeryDate : surgeryDate,
+      interventions : interventions,
+      interventionsDate : interventionDate
+  }
  
-    const objStep3 = {
+    const objStep3 = {// To keep the value you write when go to  another steps
       investigation : investigation,
       labsChoices : labsChoices,
       pathologyChoices : pathologyChoices,
