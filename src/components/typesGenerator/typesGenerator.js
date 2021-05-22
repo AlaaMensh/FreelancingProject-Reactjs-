@@ -148,7 +148,7 @@ await fetch(`${columns[this.state.type].addType}`, {
 
 
   async componentDidMount(){
-    var type = "disease";
+    var type = "LRP";
     this.setState({type});
     
     var temp = []
@@ -247,6 +247,7 @@ await fetch(`${columns[this.state.type].addType}`, {
         <DataTableComp   data = {this.state.data}
                   columns = {this.state.columns}
                   tableData = {tableData}
+                  title=""
          />
        </Col>
             </Row>

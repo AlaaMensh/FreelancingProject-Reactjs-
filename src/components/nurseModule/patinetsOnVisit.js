@@ -1,64 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
-import Button from '@material-ui/core/Button';
 import  { Component } from 'react';
-import Modal from '@material-ui/core/Modal';
-import Avatar from '@material-ui/core/Avatar';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import EditIcon from '@material-ui/icons/Edit';
-import { withStyles } from '@material-ui/core/styles';
 import nurseModule from "../nurseDB.json";
 import DataTableComp from "../typesGenerator/dataTable"
-
-
-
-var object  = {}
-const useStyles = (theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor : "white",
-    padding:"1em",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-    
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    fontSize:"1.1em",
-    fontFamily:"Dosis"
-  },
-  input2 :{
-    height:"10px"
-  },
-  iconPlus:{
-    margin: "auto",
-    textAlign:"center"
-    // float:"right",
-  },
-  button: {
-    margin: theme.spacing(1),
-    fontFamily: 'Roboto Slab'
-  },
-  deleteButton: {
-    backgroundColor:"#c94c4c"
-  },
-  editButton: {
-    backgroundColor:"#c94c4c"
-  }
-});
 
 
 
@@ -169,7 +112,7 @@ class PatientsOnVisit extends Component {
                 </div>
             </div>
           </div>
-            <div className = "row align-items-center" >
+           
             {console.log("columns : "  , this.state.columns)}
             {
         this.state.patientsOnVisit &&(
@@ -180,10 +123,8 @@ class PatientsOnVisit extends Component {
         )
       }
             </div> 
-              <div className="row mt-4">
-                       
-                      </div>
-                    </div>
+            
+                    
         
         )
     }
@@ -204,4 +145,4 @@ class PatientsOnVisit extends Component {
     }
 }
  
-export default withStyles(useStyles)(PatientsOnVisit); 
+export default PatientsOnVisit; 

@@ -9,7 +9,7 @@ class ChoicePage extends Component {
     }
     renderBody = ()=>{
         return (
-            <Card style={{ width: '18rem', height:"15em" }}>
+            <Card style={{ width: '18rem', height:"15em" ,  }} className="bg-dark">
             <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
             <Card.Body className="text-secodary mt-2 mx-auto">
                 <Card.Text>
@@ -27,8 +27,13 @@ class ChoicePage extends Component {
                             <Card style={{ width: '18rem',height:"15em" }} className="bg-light text-secondary" 
                             onClick={()=>{
                                 console.log("history: " , this.props);
-                                
-                                this.props.history.push(`${this.props.location.pathname}/allLabOrders`)
+                                if(this.props.match.params.type === "lab"){
+                                    this.props.history.push(`${this.props.location.pathname}/allLabOrders`)
+                                }
+                                else if(this.props.match.params.type === "pathology"){
+                                    console.log("yes");
+                                    this.props.history.push(`${this.props.location.pathname}/allPathologyOrders`)
+                                }
                             }}>
                                 <Card.Img variant="top" style={{cursor:"pointer"}} src={window.location.origin + '/images/img1.svg'} />
                                 <Card.Body className="text-secondary mt-2 mx-auto">

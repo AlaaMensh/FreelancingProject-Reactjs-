@@ -6,7 +6,7 @@
                     "Date": "",
                     "degree" : "",
                     "userName": "",
-                    "password": "",
+                    "Password": "",
                     "Email": "",
                     "phone" : "",
                     "address": ""
@@ -122,9 +122,9 @@
                                 "type":"text",
                                 "name" :"userName"
                         },
-                        "password" : {
+                        "Password" : {
                                 "type":"password",
-                                "name" :"password"
+                                "name" :"Password"
                         }
 
                },
@@ -133,7 +133,8 @@
                "addUser" :"http://localhost:8080/doctor/addDoctor",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll" 
+               "getAll":"http://localhost:3000/doctor/getAll"
+               
 
             },
         "nurse" : {  
@@ -143,7 +144,7 @@
                     "Date": "",
                     "degree" : "",
                     "userName": "",
-                    "password": "",
+                    "Password": "",
                     "Email": "",
                     "phone" : "",
                     "address": ""
@@ -259,9 +260,9 @@
                                 "type":"text",
                                 "name" :"userName"
                         },
-                        "password" : {
+                        "Password" : {
                                 "type":"password",
-                                "name" :"password"
+                                "name" :"Password"
                         }
 
                },
@@ -270,386 +271,13 @@
                "addUser" :"http://localhost:8080/doctor/addDoctor",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll" 
-
-            },
-        "chemist" :{
-                   "state":{
-                    "firstName":"",
-                    "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
-                    "userName": "",
-                    "password": "",
-                    "Email": "",
-                    "phone" : "",
-                    "Address": ""
-                    
-            },
-               "columnsTable" : {
-                        "date": {
-                                "name": "Date",
-                                "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "status": {
-                                "name": "Status",
-                                "selector": "status",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "firstName" :{
-                                "type": "text",
-                                "name" : "firstName"
-                        },
-                        "lastName" :{
-                                "type": "text",
-                                "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },
-                        "userName" : {
-                                "type":"text",
-                                "name" :"userName"
-                        },
-                        
-                        "password" : {
-                                "type":"password",
-                                "name" :"password"
-                        },
-                        "Email" : {
-                                "type":"email",
-                                "name" :"Email"
-                        },
-                        "phone" : {
-                                "type":"text",
-                                "name" :"phone"
-                        },
-                        "Address" : {
-                                "type":"text",
-                                "name" :"Address"
-                        }
-
-               },
-               "addUser" :"http://localhost:3000/nurse/addNurse",
-               "deleteUser" : "",
-               "updateUser":"",
-               "getAll":""
-               
-
-            },
-        "radiogist" :{
-                   "state":{
-                    "firstName":"",
-                    "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
-                    "userName": "",
-                    "password": "",
-                    "Email": "",
-                    "phone" : "",
-                    "Address": ""
-                    
-            },
-               "columnsTable" : {
-                        "date": {
-                                "name": "Date",
-                                "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "status": {
-                                "name": "Status",
-                                "selector": "status",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "firstName" :{
-                                "type": "text",
-                                "name" : "firstName"
-                        },
-                        "lastName" :{
-                                "type": "text",
-                                "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },
-                        "userName" : {
-                                "type":"text",
-                                "name" :"userName"
-                        },
-                        
-                        "password" : {
-                                "type":"password",
-                                "name" :"password"
-                        },
-                        "Email" : {
-                                "type":"email",
-                                "name" :"Email"
-                        },
-                        "phone" : {
-                                "type":"text",
-                                "name" :"phone"
-                        },
-                        "Address" : {
-                                "type":"text",
-                                "name" :"Address"
-                        }
-
-               },
-               "addUser" :"http://localhost:3000/nurse/addNurse",
-               "deleteUser" : "",
-               "updateUser":"",
-               "getAll":""
-               
-
-            },
-        "pathologist" :{
-                   "state":{
-                    "firstName":"",
-                    "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
-                    "userName": "",
-                    "password": "",
-                    "Email": "",
-                    "phone" : "",
-                    "Address": ""
-                    
-            },
-               "columnsTable" : {
-                        "date": {
-                                "name": "Date",
-                                "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "status": {
-                                "name": "Status",
-                                "selector": "status",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "firstName" :{
-                                "type": "text",
-                                "name" : "firstName"
-                        },
-                        "lastName" :{
-                                "type": "text",
-                                "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },
-                        "userName" : {
-                                "type":"text",
-                                "name" :"userName"
-                        },
-                        
-                        "password" : {
-                                "type":"password",
-                                "name" :"password"
-                        },
-                        "Email" : {
-                                "type":"email",
-                                "name" :"Email"
-                        },
-                        "phone" : {
-                                "type":"text",
-                                "name" :"phone"
-                        },
-                        "Address" : {
-                                "type":"text",
-                                "name" :"Address"
-                        }
-
-               },
-               "addUser" :"http://localhost:3000/nurse/addNurse",
-               "deleteUser" : "",
-               "updateUser":"",
-               "getAll":""
-               
-
-            },
-        "assistant" :{
-                   "state":{
-                    "firstName":"",
-                    "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
-                    "userName": "",
-                    "password": "",
-                    "Email": "",
-                    "phone" : "",
-                    "Address": ""
-                    
-            },
-               "columnsTable" : {
-                        "date": {
-                                "name": "Date",
-                                "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "status": {
-                                "name": "Status",
-                                "selector": "status",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "firstName" :{
-                                "type": "text",
-                                "name" : "firstName"
-                        },
-                        "lastName" :{
-                                "type": "text",
-                                "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },
-                        "userName" : {
-                                "type":"text",
-                                "name" :"userName"
-                        },
-                        
-                        "password" : {
-                                "type":"password",
-                                "name" :"password"
-                        },
-                        "Email" : {
-                                "type":"email",
-                                "name" :"Email"
-                        },
-                        "phone" : {
-                                "type":"text",
-                                "name" :"phone"
-                        },
-                        "Address" : {
-                                "type":"text",
-                                "name" :"Address"
-                        }
-
-               },
-               "addUser" :"http://localhost:3000/nurse/addNurse",
-               "deleteUser" : "",
-               "updateUser":"",
-               "getAll":""
-               
+               "getAll":"http://localhost:3000/doctor/getAll",
+               "getAllDataFD" :"http://localhost:8080/lab/getAll" 
 
             },
 
+       
+       
 
         "labFD" : { 
                 "state":{
@@ -771,7 +399,9 @@
              "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
              "deleteUser" : "",
              "updateUser":"",
-             "getAll":""
+             "getAll":"",
+             "getAllDataFD" :"http://localhost:8080/lab/getAll",
+             "getLabIdInSession":"" 
              
 
           },
@@ -784,7 +414,7 @@
                       "address": "",
                       "establishment": "",
                       "contactPerson" : "",
-                      "labId":""
+                      "radioId":""
                      
                       
           },
@@ -852,9 +482,9 @@
                               "type":"text",
                               "name" :"address"
                       },
-                      "labId" : {
+                      "radioId" : {
                               "type":"select",
-                              "name" :"labId"
+                              "name" :"radioId"
                       }
                       
               },
@@ -908,7 +538,7 @@
                       "address": "",
                       "establishment": "",
                       "contactPerson" : "",
-                      "labId":""
+                      "pathologyId":""
                      
                       
           },

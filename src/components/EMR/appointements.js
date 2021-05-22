@@ -114,6 +114,7 @@ class Appointements extends Component {
       await axios.post(`${appointements[type].getAllappointementsForDoctor}`,{
          drId:localStorage.getItem("userId") ///heree you must change it according to back
       }).then(async resp => {
+        console.log("resp : "  ,resp)
             var dateNow1 = new Date();
             var d = new Date(dateNow1),
             mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
@@ -233,6 +234,7 @@ class Appointements extends Component {
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
+    // details["check"] = "drFDId";
     details["check"] = this.state.check;
 
     console.log("details on add : " ,  details)

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import loginUser from "../loginDB.json";
+import userType from "../usersDB.json";
 import FormGenerator from "./formGeneration";
 import axios from 'axios';
 
@@ -35,16 +36,14 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
         for(var p in loginUser.modalAdditionForms ){
           temp.push(loginUser.modalAdditionForms[p])
         } 
-        console.log("temp : "  , temp)
+
         this.setState({formInputs : temp})
 
     }
 
 
     handleChange = (evt) =>{
-        console.log("evnet " , evt.target.value)
         const value = evt.target.value;
-        console.log("kkkkkkkk: ",  [evt.target.name])
         this.setState({
           [evt.target.name]: value
         });
@@ -58,10 +57,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
         
       }
       console.log("details : " , details)
-      // details["password"]= this.state[property].toString();
-      // console.log("passwordType:" , typeof(details["password"]));
-      
-       
+
        var formBody = [];
        for (var property in details) {
          var encodedKey = encodeURIComponent(property);
@@ -84,27 +80,24 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           localStorage.setItem('userId', data.userId);
           this.props.getAuthorization(true);
           // this.props.history.push("/publicDashBoard")
-          if(parseInt(data.role) > 2 ){
-            this.props.history.push("/publicDashBoard")
-          }
+
           // if(parseInt(data.role) == 1){
           //   this.props.history.push("/welcomePage");
           // }
-          if(parseInt(data.role) == 2){
+          if(parseInt(data.role) == 2 ||  parseInt(data.role) == 3 || parseInt(data.role) == 4 || parseInt(data.role) == 5){
             console.log("heeereeeee")
-            axios.post('http://localhost:3000/lab/getLabByUser' ,{
+            axios.post(`${userType[this.state.type].getLabIdInSession}` ,{
               userId: data.userId
             } ,{
             } ).then(async resp => {
               console.log("resppppppp : " ,resp);
               localStorage.setItem('labId', resp.data.labId);
-             
-              // this.props.history.push("/publicDashBoard")
-           
-              // setLabs(resp.data)
-              // console.log("resp.data: " , resp.data);
             
             })
+          }
+
+          if(parseInt(data.role) > 2 ){
+            this.props.history.push("/publicDashBoard")
           }
         //   if(data.role == "done"){
         //     history.push("/welcomePage");

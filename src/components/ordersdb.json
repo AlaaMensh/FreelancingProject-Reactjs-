@@ -109,7 +109,7 @@
                "addOrder" :"http://localhost:8080/order/addlabOrder",
                "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
-               "getAll":"http://localhost:3000/allergy/getAllergy",
+               "getAll":"http://localhost:8080/lab/getAll",
                "acceptOrder":"http://localhost:8080/order/acceptOrder",
                "getNotAcceptedOrders" :"http://localhost:8080/order/getlabOrderByPtCode",
                "getAllAcceptedOrders" :"",
@@ -117,8 +117,8 @@
                "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab"
 
             },
-    "pathology" : 
-            {   "state":{
+    "pathology" : {
+               "state":{
                     "date":"",
                     "comments":"",
                     "status":"",

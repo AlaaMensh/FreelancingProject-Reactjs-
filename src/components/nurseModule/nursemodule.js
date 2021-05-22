@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import "./nursemodule.css";
-import Fab from '@material-ui/core/Fab'
-import { withStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
 import nurseModule from "../nurseDB.json";
 import DataTableComp from "../typesGenerator/dataTable";
 import ModalComp from "../typesGenerator/modalGenerator";
@@ -320,10 +317,7 @@ class NurseVisit extends Component {
             console.log("Getting: " , resp);
             resp.json().then((data)=>{
               console.log("ddddddddddddddddd;  " , data[0])
-              // this.setState({
-              //   TypeObj:data[0]
-              // })
-              // object = data
+        
             })
           }).catch(()=>{
             console.log("errror")

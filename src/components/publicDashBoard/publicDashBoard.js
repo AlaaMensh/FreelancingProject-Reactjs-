@@ -17,7 +17,7 @@ import AllOrders from './../orderGeneration/allOrders';
 import ChoicePage from "./choice";
 import "./Navbar.css";
 import PharmacyModule from "../pharmacyModule/pharmacyModule";
-import SessionCode from "../sessionCode"
+import SessionCode from "../sessionCode";
 
 
 
@@ -26,13 +26,13 @@ const PublicDashBoard = ({match}) => {
 
 const [ role , setRole] = useState("");
 const MainFunctions = [ // Cards content and its role
-    {text: "New Doctor Appointement" , role :["8"]},
-    {text: "New patient registration" , role :["8" , "6"]},
-    {text: "EMR Electronic Medical Records" , role :["8"]},
-    {text: "Nursing Assessment" , role :["8" , "7"]},
-    {text: "Lap Information System" , role :["2"]},
-    {text: "Radiology Information System" , role :["3"]},
-    {text: "Path information system " , role :["4"]},
+    {text: "New Doctor Appointement" , role :["8"]},          //doctor
+    {text: "New patient registration" , role :["8" , "6"]},   //doctor and our GP
+    {text: "EMR Electronic Medical Records" , role :["8"]},   // doctor
+    {text: "Nursing Assessment" , role :["8" , "7"]},         // nurse and doctor
+    {text: "Lap Information System" , role :["3"]},           // lab FD
+    {text: "Radiology Information System" , role :["4"]},     // radio
+    {text: "Path information system" , role :["5"]},         // pathology
     {text: "Electronic procreption ERX" , role :["13" , "8"]}, //doctor or pharmacist
     {text: "System Admin" , role :["admin"]},
     {text: "Document Manegment" , role :["" , ""]},
@@ -70,9 +70,7 @@ const renderBodyForSessionCode = (value, role) =>{
    const renderMainCards = ()=>{  
      var role = localStorage.getItem("role"); // to check  the card's authontication by this
      return MainFunctions.map((value,index) => { // Map cards Contents
-      console.log("yyyyyyyyyyyy: " , value)
       if(value.text === "Electronic procreption ERX" && parseInt(role) === 13){
-        console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
         return(
           <SessionCode buttonValue = "get patient Orders"
           fromComponent={"pharmacy"} 
@@ -99,8 +97,8 @@ const renderBodyForSessionCode = (value, role) =>{
               else if( value.text == "Lap Information System" && value.role.includes(role)){
                 history.push(match.path+`/choice/${"lab"}`);
               }
-              else if( value.text == "Path Information System" && value.role.includes(role)){
-                history.push(match.path+`/acceptOrders/${"pathology"}`);
+              else if( value.text === "Path information system" && value.role.includes(role)){
+                history.push(match.path+`/pathologyChoice/${"pathology"}`);
               }
               else if( value.text == "Radiology Information System" && value.role.includes(role)){
                 history.push(match.path+`/acceptOrders/${"radio"}`);
@@ -157,17 +155,25 @@ const renderBodyForSessionCode = (value, role) =>{
             <Route  path={match.path+"/appoint/visit"} component={Visit}/>
             
                       {/* choose if you want single patient orders or all lab Orders */}
-            <Route exact path={match.path +"/choice/:type"} component = {ChoicePage} />
+            <Route key={15} exact path={match.path +"/choice/:type"} component = {ChoicePage} />
+            <Route key={5} exact path={match.path +"/pathologyChoice/:type"} component = {ChoicePage} />
+            <Route key={25} exact path={match.path +"/radioChoice/:type"} component = {ChoicePage} />
                 
                             {/* AcceptOrders */}
             <Route exact path={match.path+"/choice/:type/acceptOrders"} component={AcceptOrders}/>
+            <Route exact path={match.path+"/pathologyChoice/:type/acceptPathologyOrders"} component={AcceptOrders}/>
+            <Route exact path={match.path+"/radioChoice/:type/acceptRadioChoices"} component={AcceptOrders}/>
             
                           {/* All Orders */}
-            <Route exact path={match.path+"/choice/:type/allLabOrders"} component={AllOrders}/>
-            
+            <Route key={13} exact path={match.path+"/choice/:type/allLabOrders"} component={AllOrders}/>
+            <Route key={14} exact path={match.path+"/pathologyChoice/:type/allPathologyOrders"} component={AllOrders}/>
+            <Route key={12} exact path={match.path+"/radioChoice/:type/allRadioChoice"} component={AllOrders}/>
+                          
                           {/* Add order Form */}
-            <Route exact  path={match.path+"/acceptOrders/:type/choice/addOrder"} component={AddOrderForm}/>        
-            
+            <Route key={17}  path={match.path+"/choice/:type/allLabOrders/addOrder"} component={AddOrderForm}/>
+            <Route key={18} exact path={match.path+"/pathologyChoice/:type/allPathologyOrders/addOrder"} component={AddOrderForm}/>
+            <Route key={19} exact path={match.path+"/radioChoice/:type/allRadioChoice/addOrder"} component={AddOrderForm}/>
+
               
                             {/* PharmacyModule   */}
             <Route exact  path={match.path+"/pharmacyModule"} component={PharmacyModule}/>        

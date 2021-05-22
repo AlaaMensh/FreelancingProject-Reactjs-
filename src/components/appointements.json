@@ -121,14 +121,14 @@
     },
     "ForDoctor":{
         "state":{
-               "date" :"",
-               "startTime" :"",
-               "endTime":"",
-               "patientName":"",
-               "reason":"",
-               "duration" : "" ,
-               "check": "",
-               "id" : ""
+                "date" :"",
+                "startTime" :"",
+                "endTime":"",
+                "patientName":"",
+                "reason":"",
+                "duration" : "" ,
+                "check": "",
+                "id" : ""
         },
         "getDataObject":{
                 "date":"",
@@ -136,44 +136,44 @@
                 "id":""
         },
 
-        "columnsTable" : {
-            "patientName": {
-                    "name": "Patient Name ",
-                    "selector": "patientName",
-                    "sortable": true,
-                    "center" : true
-            },
-            "endDate": {
-                    "name": "End Time",
-                    "selector": "endDate",
-                    "sortable": true,
-                    "center" : true
-            },
-            "startDate": {
-                    "name": "Start Time",
-                    "selector": "startDate",
-                    "sortable": true,
-                    "center" : true
-            },
-             "date": {
-                     "name": "Date",
-                     "selector": "date",
-                     "sortable": true,
-                     "center" : true
-             },
-             "reason": {
-                     "name": "Reason",
-                     "selector": "reason",
-                     "sortable": true,
-                     "center" : true
-             },
-             "actions" :{
-                     "name" :"actions",
-                     "selector" : "actions",
-                     "sortable":false,
-                     "center" : true,
-                     "width":"500px"
-             }
+    "columnsTable" : {
+                "patientName": {
+                        "name": "Patient Name ",
+                        "selector": "patientName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "endDate": {
+                        "name": "End Time",
+                        "selector": "endDate",
+                        "sortable": true,
+                        "center" : true
+                },
+                "startDate": {
+                        "name": "Start Time",
+                        "selector": "startDate",
+                        "sortable": true,
+                        "center" : true
+                },
+                        "date": {
+                                "name": "Date",
+                                "selector": "date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "reason": {
+                                "name": "Reason",
+                                "selector": "reason",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"500px"
+                        }
     },
     "modalAdditionForms": {
         "patientName" : {
@@ -200,7 +200,7 @@
 
     },
     "modalUpdateForms": {
-
+ 
         "date" :{
                 "type": "date",
                 "name" : "date"
@@ -221,15 +221,10 @@
 
     },
     "updatedDetails" : {
-        "appId":"",
-        "patientName":"",
+        "id":"",
         "reason": "",
-        "date": "",
         "startDate": "",
-        "endDate": "",
-        "duration" : "",
-        "check": "",
-        "id" : ""
+        "endDate": ""
     },
     "addDetails" : {
         "patientName": "",
@@ -243,9 +238,8 @@
     "title":"All Doctor Appointements at Specific time",
     "description":"simple blah blah this the page and what it dose you know stuff..",
         "addAppointement" : "http://localhost:8080/appointment/addAppoinment",
-     
-        "updateAppointements" :"http://localhost:3000/appointment/updateAppointment",
-        "deleteAppointements" :"http://localhost:3000/appointment/deleteAppoinment",
+        "updateAppointements" :"http://localhost:8080/appointment/updateAppointment",
+        "deleteAppointements" :"http://localhost:8080/appointment/deleteAppointment",
         "getAllappointementsForDoctor":"http://localhost:8080/appointment/getAppoinmentbyDrId"
     }
 }

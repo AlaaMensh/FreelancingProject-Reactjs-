@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 var object  = {}
 
@@ -97,7 +98,7 @@ class AllOrders extends Component {
 
     getData = async (flag ,type) => {
       var endPoint = "";
-      console.log("orderType: " , type)
+      console.log("orderType: " , type , ".............. " ,orderType[type])
       if(!flag){ // for PatientID and only Accepted Orders
         var details = {
           ptId:this.props.match.params.id,
@@ -301,6 +302,25 @@ class AllOrders extends Component {
                       }
                   </Col>
               </Row>
+            {
+              this.state.flagCompoenentType &&(
+                <Row className= "py-3" >
+                <Col sm={10}></Col>
+                    <Col sm={2}><Button variant="success"  onClick = {()=>{
+                        console.log("prosp : " , this.props.match.url)
+                        if(this.props.match.params.type === "lab"){
+                           this.props.history.push(`${this.props.match.url}/addOrder`)
+                      }
+                      else if(this.props.match.params.type=== "pathology"){
+                        this.props.history.push(`${this.props.match.url}/addOrder`)
+                      }
+                      else{
+                             this.props.history.push(`${this.props.match.url}/addOrder`)
+                      }
+                    }}>Add New</Button>{' '}</Col>
+                </Row>
+              )
+            }
 
       <Row className= "py-3" >
          <Col>

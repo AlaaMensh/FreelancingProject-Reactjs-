@@ -86,45 +86,60 @@ class Appointement extends Component {
       check:"",
           }
         }
+      async componentDidMount(){
+        if(parseInt(localStorage.getItem("role")) != 8 && parseInt(localStorage.getItem("role")) != 2){
+          console.log("jjjjjjjjjjjjjj") 
+          this.setState({flag : true});
+        }
+        else{
+          console.log("jjjjjjjjjjjjjj") 
+          this.setState({flag: false})
+        }
+        if(parseInt(localStorage.getItem("role") == 8)){
+          this.setState({check : "drId"});
+        }
+        else{
+          this.setState({check : "drFDId"});
+        }
+        this.setState({FD: localStorage.getItem("userId")});
+        this.setState({userID : localStorage.getItem("userId")});
+          // this.getData()
+        }
+      
+      getTypeByID = async(id) => {
+        var details = {
+          id:id
+        }
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + "=" + encodedValue);
+        }
+        formBody = formBody.join("&");
         
-        getTypeByID = async(id) => {
-          var details = {
-            id:id
-          }
-          var formBody = [];
-          for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-          }
-          formBody = formBody.join("&");
-          
-          fetch(`http://localhost:3000/appointment/getById`, {
-            method: 'POST',
-            headers: {  
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then((resp)=>{
-            console.log("Getting: " , resp);
-            resp.json().then((data)=>{
-              console.log("ddddddddddddddddd;  " , data[0])
-              this.setState({
-                TypeObj:data[0]
-              })
-              // object = data
+        fetch(`http://localhost:3000/appointment/getById`, {
+          method: 'POST',
+          headers: {  
+            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          },
+          body: formBody
+        }).then((resp)=>{
+          console.log("Getting: " , resp);
+          resp.json().then((data)=>{
+            console.log("ddddddddddddddddd;  " , data[0])
+            this.setState({
+              TypeObj:data[0]
             })
-          }).catch(()=>{
-            console.log("errror")
+            // object = data
           })
+        }).catch(()=>{
+          console.log("errror")
+        })
 
 
-        }
-        getAllergyTypesList = (allergyList) =>{
-        for(var type in allergyList){
-            console.log("type: ", type.name);
-        }
-    }
+      }
+    
     handleopenModal1 = () => {
       this.setState({openModal1 : true})
     };
@@ -136,12 +151,10 @@ class Appointement extends Component {
       this.setState({openModal2 : true})
     };
     getData = async()=>{
-      console.log("hhhhhhhoekehgogg      ");
-      
+      console.log("hhhhhhhoekehgogg      "); 
       var details = {
         'date':this.state.date,
-        check: this.state.check, // if He drId or FDId
-        id:this.state.FD
+        drId: localStorage.getItem("userId"), // if He drId or FDId
     };
     
     var formBody = [];
@@ -152,7 +165,7 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:3000/appointment/getAppointment`, {
+    await fetch(`http://localhost:8080/appointment/getByDate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -188,7 +201,7 @@ class Appointement extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
-      fetch("http://localhost:3000/appointment/deleteAppoinment", {
+      fetch("http://localhost:8080/appointment/deleteAppointment", {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -203,25 +216,7 @@ class Appointement extends Component {
 
          
     }
-   async componentDidMount(){
-     if(parseInt(localStorage.getItem("role")) != 8 && parseInt(localStorage.getItem("role")) != 2){
-      console.log("jjjjjjjjjjjjjj") 
-      this.setState({flag : true});
-     }
-     else{
-      console.log("jjjjjjjjjjjjjj") 
-       this.setState({flag: false})
-     }
-     if(parseInt(localStorage.getItem("role") == 8)){
-       this.setState({check : "drId"});
-     }
-     else{
-      this.setState({check : "drFDId"});
-     }
-     this.setState({FD: localStorage.getItem("userId")});
-     this.setState({userID : localStorage.getItem("userId")});
-      // this.getData()
-    }
+
 
     compareTimeForEditButton = (date , startTime , type) =>{
      
@@ -293,31 +288,26 @@ class Appointement extends Component {
     }
     handleUpdate = ()=>{
       var obj = {
-        appId:this.state.TypeObj.id,
-        patientName: this.state.patientName,
+        id:this.state.TypeObj.id,
         reason: this.state.reason,
-        date: this.state.date,
         startDate: this.state.startDate,
-        endDate: this.state.endDate,
-        duration : this.state.duration,
-        check:this.state.check,
-        id : this.state.FD
+       
       }
-      if(!obj.patientName){
-        obj.patientName = this.state.TypeObj.patientName
-      }
-      if(!obj.reason){
-        obj.reason = this.state.TypeObj.reason
-      }
-      if(!obj.date){
-        obj.date = this.state.TypeObj.date
-      }
-      if(!obj.startDate){
-        obj.startDate = this.state.TypeObj.startDate
-      }
-      if(!obj.endDate){
-        obj.endDate = this.state.TypeObj.endDate
-      }
+      // if(!obj.patientName){
+      //   obj.patientName = this.state.TypeObj.patientName
+      // }
+      // if(!obj.reason){
+      //   obj.reason = this.state.TypeObj.reason
+      // }
+      // if(!obj.date){
+      //   obj.date = this.state.TypeObj.date
+      // }
+      // if(!obj.startDate){
+      //   obj.startDate = this.state.TypeObj.startDate
+      // }
+      // if(!obj.endDate){
+      //   obj.endDate = this.state.TypeObj.endDate
+      // }
       console.log("type: ", obj);
 
     var formBody = [];
@@ -328,7 +318,7 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-     fetch(`http://localhost:3000/appointment/updateAppointment`, {
+     fetch(`http://localhost:8080/appointment/updateAppointment`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -524,7 +514,7 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-     fetch(`http://localhost:3000/appointment/addApointment`, {
+     fetch(`http://localhost:8080/appointment/addAppoinment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

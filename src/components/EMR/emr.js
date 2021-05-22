@@ -16,7 +16,7 @@ class EMR extends Component {
        <Container >
            <Row className="mt-5 justify-content-center">
                <Col sm={6} md={4} >
-                 <Card style={{height : "15em" , cursor:"pointer"}} 
+                 <Card className="bg-dark" style={{height : "15em" , cursor:"pointer"}} 
                         onClick={()=>{
                                 this.props.history.push(`${this.props.history.location.pathname}/search`)
                         }}>
@@ -42,7 +42,7 @@ class EMR extends Component {
                     </Card>
                </Col>
                <Col md={4}  className="mt-3 mt-md-0">
-                 <Card style={{height : "15em" , cursor:"pointer"}}
+                 <Card className="bg-dark" style={{height : "15em" , cursor:"pointer"}}
                         onClick={()=>{
                             this.props.history.push(`${this.props.history.location.pathname}/currentAppointements/${"current"}`)
                         }}>

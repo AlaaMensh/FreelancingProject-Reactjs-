@@ -26,7 +26,8 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
     async componentDidMount(){
       var list = []
       this.setState({type: this.props.match.params.type})
-      if(this.props.match.params.type === "labFD"){
+      var type = this.props.match.params.type;
+      if(type === "labFD" || type === "radioFD" || type === "pathologyFD" || type === "doctorFD" ){
          await this.getDataForFD();
          console.log("yes")
       }
@@ -83,36 +84,10 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
           [evt.target.name]: value
         });
       }
-    getLabsName = () =>{
-  // var options = {};
-  //     for(var p in userType[type].state ){
-  //       if(p === "labId"){
-  //         console.log("uuuuuuuuuuuuuuuuuuuu" ,p)
-  //         columns[type].columnsTable[p]["cell"] =  
-  //         temp.push(columns[type].columnsTable[p])
-  //       }
-  //       else{
-  
-  //         temp.push(columns[type].columnsTable[p])
-  //       }
-  //     }
-      // fetch(`http://localhost:3000/frontdisk/addLabFrontDisk`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      //   },
-      //   body: formBody
-      // }).then((resp)=>{
-      //    resp.text().then((text)=>{
-      //      console.log("text:  " , text)
-      //    });
-      // }).catch(()=>{
-      //   console.log("errror")
-      // })
 
-    }
     getDataForFD =()=>{//Ex: get lab names for labFD
-      axios.get(`http://localhost:3000/labs/getAll` ,{
+      // axios.get(`${userType[this.state.type].getAllDataFD}` ,{
+      axios.get(`http://localhost:8080/lab/getAll` ,{
       } ).then(async resp => {
         console.log("resp : " ,resp)
      

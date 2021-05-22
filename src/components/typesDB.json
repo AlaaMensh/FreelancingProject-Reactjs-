@@ -40,10 +40,10 @@
                         }
 
                },
-               "addType" :"http://localhost:3000/allergy/addAllergy",
-               "deleteType" : "http://localhost:3000/allergy/deleteAllergy",
-               "updateType":"http://localhost:3000/allergy/updateAllergy",
-               "getAll":"http://localhost:3000/allergy/getAllergy"
+               "addType" :"http://localhost:8080/allergy/addAllergy",
+               "deleteType" : "http://localhost:8080/allergy/deleteAllergy",
+               "updateType":"http://localhost:8080/allergy/updateAllergy",
+               "getAll":"http://localhost:8080/allergy/getAllergy"
 
             },
     "disease" : 
@@ -90,12 +90,138 @@
                                 "name" :"abbreviation"
                         }
                },
-               "title":"All Allergy Types",
+               "title":"All Diseases Types",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addType" :"http://localhost:3000/diseases/addDiseases",
-               "deleteType" : "http://localhost:3000/diseases/deleteDiseases",
-               "updateType":"http://localhost:3000/diseases/updateDiseases",
-               "getAll":"http://localhost:3000/diseases/getAll"
+               "addType" :"http://localhost:8080/diseases/addDiseases",
+               "deleteType" : "http://localhost:8080/diseases/deleteDiseases",
+               "updateType":"http://localhost:8080/diseases/updateDiseases",
+               "getAll":"http://localhost:8080/diseases/getAll"
+
+            },
+    "drug" : 
+            {   "state":{
+                    "genricName":"",
+                    "tradeName":"",
+                    "form":"",
+                    "dose":"",
+                    "family":""
+            },
+               "columnsTable" : {
+                        "genricName": {
+                                "name": "genricName",
+                                "selector": "genricName",
+                                "sortable": true
+                        },
+                        "tradeName" :{
+                                "name" :"tradeName",
+                                "selector" : "tradeName",
+                                "sortable":true
+                        },
+                        "form" :{
+                                "name" :"form",
+                                "selector" : "form",
+                                "sortable":true
+                        },
+                        "dose" :{
+                                "name" :"dose",
+                                "selector" : "dose",
+                                "sortable":true
+                        },
+                        "family" :{
+                                "name" :"family",
+                                "selector" : "family",
+                                "sortable":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "genricName" :{
+                                "type":"text",
+                                "name" :"genricName"
+                        },
+                        "tradeName" : {
+                                "type":"text",
+                                "name" :"tradeName"
+                        },
+                        "form" : {
+                                "type":"text",
+                                "name" :"form"
+                        },
+                        "dose" : {
+                                "type":"text",
+                                "name" :"dose"
+                        },
+                        "family" : {
+                                "type":"text",
+                                "name" :"family"
+                        }
+               },
+               "title":"All Drugs Types",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addType" :"http://localhost:8080/drug/addDrug",
+               "deleteType" : "http://localhost:8080/drug/deleteDrug",
+               "updateType":"http://localhost:8080/drug/updateDrugs",
+               "getAll":"http://localhost:8080/drug/getAll"
+
+            },
+    "LRP" : 
+            {   "state":{
+                    "abbreviation":"",
+                    "name":"",
+                    "description":""
+            
+            },
+               "columnsTable" : {
+                        "abbreviation": {
+                                "name": "abbreviation",
+                                "selector": "abbreviation",
+                                "sortable": true
+                        },
+                        "name" :{
+                                "name" :"name",
+                                "selector" : "name",
+                                "sortable":true
+                        },
+                        "description" :{
+                                "name" :"description",
+                                "selector" : "description",
+                                "sortable":true
+                        },
+                      
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "abbreviation" :{
+                                "type":"text",
+                                "name" :"abbreviation"
+                        },
+                        "name" : {
+                                "type":"text",
+                                "name" :"name"
+                        },
+                        "description" : {
+                                "type":"text",
+                                "name" :"description"
+                        }
+               },
+               "title":"All LRP Types",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addType" :"http://localhost:8080/lpr/addLpr",
+               "deleteType" : "http://localhost:8080/lpr/deleteLpr",
+               "updateType":"http://localhost:8080/lpr/updateLpr",
+               "getAll":"http://localhost:8080/lpr/getLpr"
 
             }
             

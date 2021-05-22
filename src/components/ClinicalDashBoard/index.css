@@ -11,7 +11,7 @@ p {
     font-size: 1.1em;
     font-weight: 300;
     line-height: 1.7em;
-    color: #999;
+    color: #999;  
 }
 
 a, a:hover, a:focus {
@@ -22,7 +22,7 @@ a, a:hover, a:focus {
 
 #sidebar {
     background: var(--main-color);
-    color: #fff;
+    color: #fff !important;
     transition: all 0.3s;
 }
 
@@ -39,6 +39,12 @@ a, a:hover, a:focus {
 #sidebar ul p {
     color: #fff;
     padding: 10px;
+}
+#sidebar ul li a {
+    color:#fff;
+}
+#sidebar ul li  {
+        border-bottom: 0.5 solid whitesmoke;
 }
 
 #sidebar ul li a {

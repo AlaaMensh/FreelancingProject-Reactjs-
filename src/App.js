@@ -55,15 +55,17 @@ console.log("value from App: " , value)
       <Route exact path="/addOrderForm" component={AddOrderForm}  ></Route>
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route exact path="/Appointement" component={Appointement}></Route>
-      <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
+      {/* <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route> */}
+      <ProtecteRoute Guard={isLoggedIn()} path="/clinicalDashBoard" component={ClinicalDashBoard}/>
       {/* <Route   path="/publicDashBoard" component={PublicDashBoard}></Route> */}
       <Route exact path="/login">
         <Login getAuthorization={getAuthorization} history={history}/>
       </Route>
       <ProtecteRoute Guard={isLoggedIn()} path="/publicDashBoard" component={PublicDashBoard}/>
+      <ProtecteRoute Guard={isLoggedIn()} path="/profile" component={Profile}/>
       <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
-      <Route  path="/profile" component={Profile}></Route>
+      {/* <Route  path="/profile" component={Profile}></Route> */}
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>
   

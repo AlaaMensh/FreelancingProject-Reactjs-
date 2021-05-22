@@ -41,10 +41,13 @@ class SessionCode extends Component {
     });
   }
   handleSubmit = () =>{
-    if(this.props.fromComponent === "choice"){
+    if(this.props.fromComponent === "choice"){ // from Orders
       this.handleSubmitForChoice()
     }
     else if(this.props.fromComponent==="visit"){
+      this.handleSubmitForVisit()
+    }
+    else if(this.props.fromComponent==="appointement"){
       this.handleSubmitForVisit()
     }
     else{
@@ -55,10 +58,24 @@ class SessionCode extends Component {
   //from public DashBoard ==> choice page
   handleSubmitForChoice = () =>{ ///*** Edit the Endpoint when Abdo Finish it */
     console.log("submittttteeedddd" , this.props) ;
-    this.props.history.push({
-      pathname : `${this.props.history.location.pathname}/acceptOrders`,
-      state: this.state.code
-    })
+    if(this.props.orderType === "lab"){
+      this.props.history.push({
+        pathname : `${this.props.history.location.pathname}/acceptOrders`,
+        state: this.state.code
+      })
+    }
+    else if(this.props.orderType === "pathology"){
+      this.props.history.push({
+        pathname : `${this.props.history.location.pathname}/acceptPathologyOrders`,
+        state: this.state.code
+      })
+    }
+    else{
+      this.props.history.push({
+        pathname : `${this.props.history.location.pathname}/acceptRadioOrders`,
+        state: this.state.code
+      })
+    }
     
   }
   // from Visit component
@@ -76,16 +93,57 @@ class SessionCode extends Component {
       state: this.state.code
     })
   }
+  rendering = () =>{
+    switch(this.props.fromComponent){
+      case "appointement":{
+        return (
+          <button  className="btn btn-primary" hidden={this.props.hidden} style={{display: this.props.hidden ? "none" :"block"}}
+          onClick={() => {  
+                this.handleopenModal()
+            }}>{this.props.buttonValue}</button>
+        )
+      }
+      case "visit" :{
+        return (
+          <button  className="btn btn-primary" hidden={this.props.hidden} style={{display: this.props.hidden ? "none" :"block"}}
+            onClick={() => {  
+                  this.handleopenModal()
+              }}>{this.props.buttonValue}</button>
+        )
+      }
+      case "pharmacy" :{
+        return (
+          <Col xs={10} md={4} lg={3} className="my-4" onClick={()=>{
+            this.handleopenModal()
+          }}>
+          {this.props.body}
+          </Col>
+        )
+      }
+      case "choice" :{
+        return (
+          <div  style={{cursor:"pointer"}} onClick={()=>{
+            this.handleopenModal()
+          }}>
+          {this.props.body}
+          </div>
+        )
+      }
+    }
+
+  }
 
   render() { 
     const tableData = {
       columns:this.state.columns,
       data :this.state.data
     };
+    
  
     return (
       <>
-      {
+      {this.rendering()}
+      {/* {
         this.props.fromComponent === "pharmacy" && (
           <Col xs={10} md={4} lg={3} className="my-4" onClick={()=>{
             this.handleopenModal()
@@ -96,7 +154,7 @@ class SessionCode extends Component {
       }
         {
           
-          this.props.body && this.props.fromComponent !== "pharmacy" && (
+          this.props.body && this.props.fromComponent === "appointement" && (
             <div  style={{cursor:"pointer"}} onClick={()=>{
               this.handleopenModal()
             }}>
@@ -111,7 +169,7 @@ class SessionCode extends Component {
                   this.handleopenModal()
               }}>{this.props.buttonValue}</button>
           )
-        }
+        } */}
      
 
      {

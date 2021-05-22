@@ -198,8 +198,8 @@ console.log("objjjject : " , this.state.typeObj)
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-    // details["check"] = this.state.check;
-    details["check"] = "drFDId";
+    details["check"] = this.state.check;
+    // details["check"] = "drFDId";
 
 
 

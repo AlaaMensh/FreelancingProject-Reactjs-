@@ -205,7 +205,8 @@ class Appointements extends Component {
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-    details["check"] = this.state.check;
+    // details["check"] = this.state.check;
+    details["check"] = "drFDId";
 
 
 
@@ -219,7 +220,7 @@ class Appointements extends Component {
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-    // console.log("formging:     " , formBody)
+    console.log("formgingggg:     " , appointements[this.state.type].addAppointement)
     
 await fetch(`${appointements[this.state.type].addAppointement}`, {
       method: 'POST',
@@ -227,8 +228,11 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: formBody
-    }).then(()=>{
-      console.log("it is inserted");
+    }).then((resp)=>{
+      resp.json().then((data)=>{
+        console.log("data: " , data)
+      })
+      
     }).catch(()=>{
       console.log("errror")
     })
