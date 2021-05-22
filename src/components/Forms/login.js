@@ -82,10 +82,11 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           console.log("data:  " , data);
           localStorage.setItem('role', data.role);
           localStorage.setItem('userId', data.userId);
+          this.props.getAuthorization(true);
           // this.props.history.push("/publicDashBoard")
-          // if(parseInt(data.role) > 2 ){
-          //   this.props.history.push("/publicDashBoard")
-          // }
+          if(parseInt(data.role) > 2 ){
+            this.props.history.push("/publicDashBoard")
+          }
           // if(parseInt(data.role) == 1){
           //   this.props.history.push("/welcomePage");
           // }
@@ -97,7 +98,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
             } ).then(async resp => {
               console.log("resppppppp : " ,resp);
               localStorage.setItem('labId', resp.data.labId);
-              this.props.getAuthorization(true);
+             
               // this.props.history.push("/publicDashBoard")
            
               // setLabs(resp.data)

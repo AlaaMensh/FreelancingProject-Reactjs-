@@ -16,6 +16,9 @@ import AcceptOrders from './../orderGeneration/acceptOrders';
 import AllOrders from './../orderGeneration/allOrders';
 import ChoicePage from "./choice";
 import "./Navbar.css";
+import PharmacyModule from "../pharmacyModule/pharmacyModule";
+import SessionCode from "../sessionCode"
+
 
 
 const PublicDashBoard = ({match}) => {
@@ -30,11 +33,26 @@ const MainFunctions = [ // Cards content and its role
     {text: "Lap Information System" , role :["2"]},
     {text: "Radiology Information System" , role :["3"]},
     {text: "Path information system " , role :["4"]},
-    {text: "Electronic procreption ERX" , role :["13" , ""]},
+    {text: "Electronic procreption ERX" , role :["13" , "8"]}, //doctor or pharmacist
     {text: "System Admin" , role :["admin"]},
     {text: "Document Manegment" , role :["" , ""]},
     
 ]
+const renderBodyForSessionCode = (value, role) =>{
+  return (
+  
+            <Card className="bg-light"  
+            style={{height:"15em" ,cursor : value.role.includes(role)?"pointer":"not-allowed" }}
+            >
+              <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
+              <Card.Body className="text-secondary ">
+                <Card.Title className="text-center">{value.text}</Card.Title>
+              </Card.Body>
+            </Card>
+            
+       
+        )
+}
 
 
   useEffect(()=>{ // set role with localStorage and check if logged in user is patient or not
@@ -52,43 +70,59 @@ const MainFunctions = [ // Cards content and its role
    const renderMainCards = ()=>{  
      var role = localStorage.getItem("role"); // to check  the card's authontication by this
      return MainFunctions.map((value,index) => { // Map cards Contents
-      return(   
-        <Col xs={10} md={4} lg={3} className="my-4 ">
-          <Card className="bg-light"  
-          style={{height:"15em" ,cursor : value.role.includes(role)?"pointer":"not-allowed" }}
-          onClick={()=>{
-            if(value.role.includes(role) && value.text === "New Doctor Appointement"){
-              history.push(match.path+"/appoint");
-            }
-            else if(value.role.includes(role) && value.text == "New patient registration"){
-              history.push(match.path+"/ptRegistration");
-            }
-          
-            else if( value.text == "Nursing Assessment" && value.role.includes(role)){
-              history.push(match.path+"/patientsOnVisit");
-            }
-            else if( value.text == "Lap Information System" && value.role.includes(role)){
-              history.push(match.path+`/choice/${"lab"}`);
-            }
-            else if( value.text == "Path Information System" && value.role.includes(role)){
-              history.push(match.path+`/acceptOrders/${"pathology"}`);
-            }
-            else if( value.text == "Radiology Information System" && value.role.includes(role)){
-              history.push(match.path+`/acceptOrders/${"radio"}`);
-            }
-            else if( value.text == "EMR Electronic Medical Records" && value.role.includes(role)){
-              history.push(match.path+`/EMR`);
-            }
-          }}
-          >
-            <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
-            <Card.Body className="text-secondary ">
-              <Card.Title className="text-center">{value.text}</Card.Title>
-            </Card.Body>
-          </Card>
-          
-        </Col>
-        )
+      console.log("yyyyyyyyyyyy: " , value)
+      if(value.text === "Electronic procreption ERX" && parseInt(role) === 13){
+        console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+        return(
+          <SessionCode buttonValue = "get patient Orders"
+          fromComponent={"pharmacy"} 
+          history = {history}
+          body={renderBodyForSessionCode(value , role)}/>
+          )
+      }
+      else{
+        return(   
+          <Col xs={10} md={4} lg={3} className="my-4 ">
+            <Card className="bg-light"  
+            style={{height:"15em" ,cursor : value.role.includes(role)?"pointer":"not-allowed" }}
+            onClick={()=>{
+              if(value.role.includes(role) && value.text === "New Doctor Appointement"){
+                history.push(match.path+"/appoint");
+              }
+              else if(value.role.includes(role) && value.text == "New patient registration"){
+                history.push(match.path+"/ptRegistration");
+              }
+            
+              else if( value.text == "Nursing Assessment" && value.role.includes(role)){
+                history.push(match.path+"/patientsOnVisit");
+              }
+              else if( value.text == "Lap Information System" && value.role.includes(role)){
+                history.push(match.path+`/choice/${"lab"}`);
+              }
+              else if( value.text == "Path Information System" && value.role.includes(role)){
+                history.push(match.path+`/acceptOrders/${"pathology"}`);
+              }
+              else if( value.text == "Radiology Information System" && value.role.includes(role)){
+                history.push(match.path+`/acceptOrders/${"radio"}`);
+              }
+              else if( value.text == "EMR Electronic Medical Records" && value.role.includes(role)){
+                history.push(match.path+`/EMR`);
+              }
+              else if( value.text == "Electronic procreption ERX" && value.role.includes(role)){
+                history.push(match.path+`/pharmacyModule`);
+              }
+            }}
+            >
+              <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
+              <Card.Body className="text-secondary ">
+                <Card.Title className="text-center">{value.text}</Card.Title>
+              </Card.Body>
+            </Card>
+            
+          </Col>
+          )
+      }
+    
       }
      )
    }
@@ -133,6 +167,11 @@ const MainFunctions = [ // Cards content and its role
             
                           {/* Add order Form */}
             <Route exact  path={match.path+"/acceptOrders/:type/choice/addOrder"} component={AddOrderForm}/>        
+            
+              
+                            {/* PharmacyModule   */}
+            <Route exact  path={match.path+"/pharmacyModule"} component={PharmacyModule}/>        
+            <Route exact  path={match.path+"/pharmacyModule/prescription"} component={Prescription}/>        
 
           
           </Switch>

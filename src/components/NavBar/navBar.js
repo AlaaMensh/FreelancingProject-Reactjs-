@@ -51,11 +51,12 @@ const NavBar = (props) => {
             <NavDropdown.Item href="#action/3.4">trash</NavDropdown.Item>
             </NavDropdown>
         </Nav>
-
+           {console.log("props.auth: " , props.isAuth )}
 
         {
              props.isAuth  ?(
                 <>
+                
               
                 <Button className="nav-btn" onClick={()=>{
                    

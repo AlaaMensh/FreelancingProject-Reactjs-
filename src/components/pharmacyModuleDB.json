@@ -1,0 +1,100 @@
+{
+    "pharmacyModule" : 
+            {   "state":{
+                    "quantity":"",
+                    "notes":"",
+                    "drug":"",
+                    "duration":""
+                    
+            },
+               "columnsTable" : {
+                       "quantity": {
+                               "name": "Quantity",
+                               "selector": "quantity",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "notes": {
+                               "name": "Notes",
+                               "selector": "notes",
+                               "sortable": true,
+                               "center" : true
+                       },
+                        "drug": {
+                                "name": "Drug",
+                                "selector": "drug",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "duration": {
+                                "name": "Duration",
+                                "selector": "duration",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "columnsTableForDoctor" : {
+                       "quantity": {
+                               "name": "Quantity",
+                               "selector": "quantity",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "notes": {
+                               "name": "Notes",
+                               "selector": "notes",
+                               "sortable": true,
+                               "center" : true
+                       },
+                        "drug": {
+                                "name": "Drug",
+                                "selector": "drug",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "duration": {
+                                "name": "Duration",
+                                "selector": "duration",
+                                "sortable": true,
+                                "center" : true
+                        }
+               },
+               
+               "modalForms": {
+                        "quantity" :{
+                                "type": "number",
+                                "name" : "quantity"
+                        },
+                        "notes" : {
+                                "type":"text",
+                                "name" :"notes"
+                        },
+                        
+                        "drug" : {
+                                "type":"text",
+                                "name" :"drug"
+                        },
+                        "duration" : {
+                                "type":"number",
+                                "name" :"duration"
+                        }
+
+               },
+               "getLastTenPrescription" : "",
+               "decpinceDrug":""
+               
+
+            }
+   
+    
+            
+            
+    
+}

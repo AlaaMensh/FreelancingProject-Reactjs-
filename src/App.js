@@ -35,7 +35,7 @@ function App() {
     return localStorage.getItem("userId")?true:false
   }  
   const getAuthorization = (value) =>{
-
+console.log("value from App: " , value)
     setLoggedIn(value);
   } 
   const logout = (value) =>{
@@ -57,13 +57,13 @@ function App() {
       <Route exact path="/Appointement" component={Appointement}></Route>
       <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route>
       {/* <Route   path="/publicDashBoard" component={PublicDashBoard}></Route> */}
-      <ProtecteRoute Guard={isLoggedIn()}  path="/publicDashBoard" component={PublicDashBoard}/>
+      <Route exact path="/login">
+        <Login getAuthorization={getAuthorization} history={history}/>
+      </Route>
+      <ProtecteRoute Guard={isLoggedIn()} path="/publicDashBoard" component={PublicDashBoard}/>
       <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
       <Route  path="/profile" component={Profile}></Route>
-      <Route path="/login">
-        <Login getAuthorization={getAuthorization} history={history}/>
-      </Route>
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>
   

@@ -65,29 +65,3 @@ class ModalComp extends Component {
     }
     
 export default ModalComp;
-
-// import React from 'react';
-// const ModalComp = ({show , onHide}) => {
-//     return (  
-//         <>
-//         {/* <Modal
-//         open={open}
-//         onClose={onClose}
-     
-//       >
-//       </Modal> */}
-//       <Modal show={show} onHide={onHide}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Login Form</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           <></>
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <button onClick={onHide}>Close Modal</button>
-//         </Modal.Footer>
-//       </Modal>
-//         </>
-//     );
-// }
- 
