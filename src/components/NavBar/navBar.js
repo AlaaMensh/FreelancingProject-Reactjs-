@@ -14,6 +14,7 @@ import "./navbar.css";
 const NavBar = (props) => {
     const history = useHistory();
     const [userName , setUserName] = useState(localStorage.getItem("userName"));
+    // const [userName , setUserName] = useState("");
     var name = "AlaaMensh";
 
     
@@ -27,7 +28,7 @@ const NavBar = (props) => {
             <Nav.Link href="/profile" className="pr-4">
                 <div className="row  align-items-center">
                         <AccountCircleIcon  style={{fontSize:"1.6em"}} />
-                        <span className="username">{name}</span>
+                        <span className="username">{userName||""}</span>
                 </div>
             </Nav.Link>
             {/* *************check here on role on every Choice in the DropDown *************/}

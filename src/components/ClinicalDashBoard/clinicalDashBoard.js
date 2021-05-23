@@ -40,7 +40,7 @@ const ClinicalDashBoard = ({match}) => {
               {
                 parseInt(localStorage.getItem("role")) === 8?
                 (
-                  <Link to={match.path+"/clinicalDashBoard"} style={{cursor:"pointer"}} >
+                  <Link to={match.path+`/clinicalDashBoard/${ptId}`} style={{cursor:"pointer"}} >
                   Clinical DashBoard
                   </Link>
                 ):(
@@ -93,9 +93,9 @@ const ClinicalDashBoard = ({match}) => {
           <UserInfo id={ptId} />
         </Row>        
       <Switch>  
-      <Route exact path={match.path+"/clinicalDashBoard"} >
-        <PatientProblems type={"allergy"} />
-        <PatientProblems type={"onGoingProblems"} />
+      <Route exact path={match.path+"/clinicalDashBoard/:id"} >
+        <PatientProblems type={"allergy"} id={ptId} />
+        <PatientProblems type={"onGoingProblems"} id={ptId}/>
       </Route> 
       <Route exact key={4} path={match.path+"/patientAllergyproblems/:type"}  component={PatientProblems}/> 
       <Route exact key={5} path={match.path+"/patientOnGoingproblems/:type"}  component={PatientProblems}/> 

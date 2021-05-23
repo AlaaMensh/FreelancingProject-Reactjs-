@@ -27,19 +27,30 @@ render() {
                                             <Form.Group controlId={input.name}>
                                             <Form.Label>{input.name}</Form.Label>
                                              <Form.Control type={input.type} name={input.name} placeholder={this.props.formType === "edit" ?this.props.updatedTypeObj[input.name] : ""}
-                                                onChange={(e)=>{this.props.handleChange(e)} } /></Form.Group>):(<>
+                                                onChange={(e)=>{this.props.handleChange(e)} } /></Form.Group>)
+                                                :(<>
                                         
                                           <Form.Group controlId="exampleForm.SelectCustom">
                                              <Form.Label>{input.name}</Form.Label>
-                                                <Form.Control as="select" onChange={this.props.handleChange} name={input.name} custom>
+                                             {console.log("input: ", input)}
+                                                <Form.Control as="select" name={input.name} onChange={(e)=>{
+                                                    console.log("e: " , e)
+                                                    this.props.handleChange(e)}} custom>
                                                       {
                                                 input.options ? (
                                                     input.options.map((option)=>{
+                                                        // return <option value={option.value} >{option.text}</option>
                                                         return <option value={option.value}>{option.text}</option>
                                                     })
                                                 ):(
                                                     this.props.options.map((option)=>{
-                                                        return <option value={option.value} >{option.text}</option>
+                                                        return (
+                                                       <>
+                                                         <option>Choose your option</option>
+                                                        <option value={option.value}>{option.text}</option>
+                                                       </>
+                                                        
+                                                            )
                                                     }
                                                 )
                                                 )

@@ -63,7 +63,8 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
           temp.push(userType[type].modalAdditionForms[p])
           if(type === "labFD" && p=="labId" ){
             for(var place of this.state.list){
-              var obj = {value : place.id , text : place.name}
+              console.log("id: " , place.id)
+              var obj = {value : place.id , text : place.name }
               temp2.push(obj);
             }
             this.setState({options : temp2})
@@ -137,7 +138,9 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
     render() { 
         return ( 
             <Container >
-                {console.log("state: " , this.state)}
+                {
+                console.log("state: " , this.state)
+                }
                 {
                 this.state.formInputs && this.state.formInputs.length > 0 && (
                 <FormGenerator  ModalInputs = {this.state.formInputs}

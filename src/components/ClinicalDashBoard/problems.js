@@ -26,6 +26,7 @@ class PatientProblems extends Component {
         type = this.props.match.params.type; 
       }
       this.setState({type: type})
+      this.setState({pId : this.props.id})
       
 
       await this.handleDataTableColumns(type);
@@ -83,6 +84,7 @@ class PatientProblems extends Component {
     rendering = () =>{
         return(
           <Container className="container mt-5"> 
+          {console.log("here id : " , this.state.pId)}
                 <Row className= "py-3">
                     <Col>
                         {

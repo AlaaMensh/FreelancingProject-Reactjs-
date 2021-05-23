@@ -12,6 +12,9 @@ import TypesGenerator from "./components/typesGenerator/typesGenerator";
 import UserCrud from './components/userCrud/userCrud';
 import ProtecteRoute from './guards/ProtectedRoute';
 import Appointement from './pages/appointements';
+import ChangePassword from "./components/Forms/changePassword";
+import ForgotPasswordForm from './components/Forms/ForgotPasswordForm';
+import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
 
 
 
@@ -65,6 +68,10 @@ console.log("value from App: " , value)
       <ProtecteRoute Guard={isLoggedIn()} path="/profile" component={Profile}/>
       <Route exact  path="/signUp/:type" component={SignupList1}></Route>
       <Route  path="/userCrud/:type" component={UserCrud}></Route>
+
+      <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
+      <Route exact path="/forgetPasswordCode" component={ForgotPasswordCode}></Route>
+      <Route exact path="/changePassword" component={ChangePassword}></Route>
       {/* <Route  path="/profile" component={Profile}></Route> */}
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>

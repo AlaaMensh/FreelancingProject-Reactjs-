@@ -396,7 +396,7 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
+             "addUser" :"http://localhost:8080/frontdisk/addLabFrontDisk",
              "deleteUser" : "",
              "updateUser":"",
              "getAll":"",
