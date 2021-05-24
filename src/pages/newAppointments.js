@@ -66,7 +66,7 @@ class Appointements extends Component {
           <Col>
   
           <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
-          buttonValue="Make Visit" fromComponent="appointement"/>
+          buttonValue="Make Visit" fromComponent="appointement" history= {this.props.history}/>
           </Col>
           
           </Row>
@@ -361,21 +361,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
   renderingForDoctorAppointements = () =>{
     return(
       <>
-      {console.log("updateObject: " , this.state.ModalAddtionInputs)}
-        {console.log("state: " , this.state)}
-        <Row className="justify-content-center">
-            <Col className="text-center">
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                        // label="Material Date Picker"
-                        value={this.state.date || ""}
-                        format="MM/dd/yyyy"
-                        onChange={this.handleDateChange}
-                        />
-              </MuiPickersUtilsProvider>
-            </Col>
-        </Row>
-        <Row className= "py-3 mt-5">
+              <Row className= "py-3 mt-5">
                     <Col>
                         {
                           appointements && this.state.type && (
@@ -387,6 +373,19 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
                         }
                     </Col>
           </Row>
+        <Row className="justify-content-center mt-5">
+            <Col className="text-center">
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                        // label="Material Date Picker"
+                        value={this.state.date || "05/25/2021"}
+                        format="MM/dd/yyyy"
+                        onChange={this.handleDateChange}
+                        />
+              </MuiPickersUtilsProvider>
+            </Col>
+        </Row>
+
           <Row className= "py-3" >
             <Col sm={10}></Col>
                 <Col sm={2}><Button variant="success"  onClick = {()=>{
@@ -406,8 +405,8 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
          </Row>
         
      {  
-      this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(
-        <ModalComp show={this.state.openModal}
+      this.state.formType === "add" && this.state.ModalAddtionInputs && this.state.ModalAddtionInputs.length > 0 ?(
+        <ModalComp show={this.state.openModal} 
         onHide={this.handleClose}
         ModalInputs={this.state.ModalAddtionInputs}
         updatedTypeObj = {this.state.typeObj}

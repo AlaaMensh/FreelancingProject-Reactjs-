@@ -15,6 +15,8 @@ import Appointement from './pages/appointements';
 import ChangePassword from "./components/Forms/changePassword";
 import ForgotPasswordForm from './components/Forms/ForgotPasswordForm';
 import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
+import ErrorHandeling from "./components/ErrorHandling/errorHandeling";
+import ptRegistration from "./components/patientRegistration/ptRegistration"
 
 
 
@@ -72,6 +74,10 @@ console.log("value from App: " , value)
       <Route exact path="/forgetPassword" component={ForgotPasswordForm}></Route>
       <Route exact path="/forgetPasswordCode" component={ForgotPasswordCode}></Route>
       <Route exact path="/changePassword" component={ChangePassword}></Route>
+      
+      <Route exact path="/errorHandeling" component={ErrorHandeling}></Route>
+      
+      <Route exact path="/ptRegistration" component={ptRegistration}></Route>
       {/* <Route  path="/profile" component={Profile}></Route> */}
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>

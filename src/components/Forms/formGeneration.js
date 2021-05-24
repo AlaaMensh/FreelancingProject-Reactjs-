@@ -36,6 +36,7 @@ render() {
                                                 <Form.Control as="select" name={input.name} onChange={(e)=>{
                                                     console.log("e: " , e)
                                                     this.props.handleChange(e)}} custom>
+                                                        <option>Choose your option</option>
                                                       {
                                                 input.options ? (
                                                     input.options.map((option)=>{
@@ -46,7 +47,7 @@ render() {
                                                     this.props.options.map((option)=>{
                                                         return (
                                                        <>
-                                                         <option>Choose your option</option>
+                                                         
                                                         <option value={option.value}>{option.text}</option>
                                                        </>
                                                         

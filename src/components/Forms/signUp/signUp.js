@@ -27,12 +27,11 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       var list = []
       this.setState({type: this.props.match.params.type})
       var type = this.props.match.params.type;
-      if(type === "labFD" || type === "radioFD" || type === "pathologyFD" || type === "doctorFD" ){
-         await this.getDataForFD();
-         console.log("yes")
+      if(type === "labFD" || type === "radioFD" || type === "pathologyFD" || type === "doctorFD"  ){
+         await this.getDataForFD(type);
+
       }
       else{
-        console.log("yes")
         await this.handleFormInputs()
       }
 
@@ -46,7 +45,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         this.setState({type});
         
         var temp = []
-        console.log("file: ", userType)
+        // console.log("file: ", userType)
     
         var newState = this.state;
         for(var property in userType[type].state ){
@@ -61,13 +60,16 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         for(var p in userType[type].modalAdditionForms ){
           console.log("p : " , p);
           temp.push(userType[type].modalAdditionForms[p])
-          if(type === "labFD" && p=="labId" ){
+          if(( p=="labId") || p=="radioId" || p =="pathoId" || p =="doctorFD"){
+            console.log("//////////////////////////////////////")
             for(var place of this.state.list){
-              console.log("id: " , place.id)
+              console.log("id: " , place.id , " obj:" , place)
               var obj = {value : place.id , text : place.name }
               temp2.push(obj);
             }
+            console.log("options : " , temp2)
             this.setState({options : temp2})
+            temp2=[]
           
           }
 
@@ -86,14 +88,14 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         });
       }
 
-    getDataForFD =()=>{//Ex: get lab names for labFD
+    getDataForFD =(type)=>{//Ex: get lab names for labFD
       // axios.get(`${userType[this.state.type].getAllDataFD}` ,{
-      axios.get(`http://localhost:8080/lab/getAll` ,{
+      axios.get(`${userType[type].getAllDataFD}` ,{
       } ).then(async resp => {
         console.log("resp : " ,resp)
      
         this.setState({list : resp.data})
-        console.log("resp.data: " , resp.data);
+        console.log("AllData: " , resp.data);
         // return resp.data
        this.handleFormInputs(resp.data);
       
@@ -139,7 +141,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         return ( 
             <Container >
                 {
-                console.log("state: " , this.state)
+        
                 }
                 {
                 this.state.formInputs && this.state.formInputs.length > 0 && (

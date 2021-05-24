@@ -405,7 +405,7 @@
              
 
           },
-        "radioFD" : { 
+          "radioFD" : { 
                 "state":{
                       "userName":"",
                       "password": "",
@@ -414,8 +414,7 @@
                       "address": "",
                       "establishment": "",
                       "contactPerson" : "",
-                      "radioId":""
-                     
+                      "radioId":""   
                       
           },
              "columnsTable" : {
@@ -522,14 +521,16 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
+             "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
              "deleteUser" : "",
              "updateUser":"",
-             "getAll":"http://localhost:8080/radio/getAll"
+             "getAll":"",
+             "getAllDataFD" : "https://mvb1.herokuapp.com/radio/getAll",
+             "getLabIdInSession":"" 
              
 
           },
-        "pathologyFD" : { 
+          "pathologyFD" : { 
                 "state":{
                       "userName":"",
                       "password": "",
@@ -538,7 +539,7 @@
                       "address": "",
                       "establishment": "",
                       "contactPerson" : "",
-                      "pathologyId":""
+                      "pathoId":""
                      
                       
           },
@@ -606,9 +607,9 @@
                               "type":"text",
                               "name" :"address"
                       },
-                      "labId" : {
+                      "pathoId" : {
                               "type":"select",
-                              "name" :"labId"
+                              "name" :"pathoId"
                       }
                       
               },
@@ -646,14 +647,16 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
+             "addUser" :"http://localhost:8080/frontdisk/addpathoFrontDisk",
              "deleteUser" : "",
              "updateUser":"",
-             "getAll":""
+             "getAll":"",
+             "getAllDataFD" :"https://mvb1.herokuapp.com/patho/getAll",
+             "getLabIdInSession":"" 
              
 
           },
-        "doctorFD" : { 
+          "DoctorFD" : { 
                 "state":{
                       "userName":"",
                       "password": "",
@@ -770,10 +773,12 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
+             "addUser" :"http://localhost:8080/frontdisk/addLabFrontDisk",
              "deleteUser" : "",
              "updateUser":"",
-             "getAll":""
+             "getAll":"",
+             "getAllDataFD" :"http://localhost:8080/lab/getAll",
+             "getLabIdInSession":"" 
              
 
           }

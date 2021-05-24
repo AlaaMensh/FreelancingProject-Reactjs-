@@ -3,6 +3,9 @@ import loginUser from "../loginDB.json";
 import userType from "../usersDB.json";
 import FormGenerator from "./formGeneration";
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ErrorHandeling from "../ErrorHandling/errorHandeling"
 
 //todo 1- link forgoten pwd 2- add image 
 //log in page 
@@ -15,6 +18,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
             formInputs : [],
             type:"",
             addingUserObject : {},
+            errorMessage :""
 
 
          }
@@ -48,6 +52,22 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           [evt.target.name]: value
         });
       }
+      setRoleName =(role)=>{
+        switch(role){
+          case 2 :{
+            return "doctorFD"
+          }
+          case 3 :{
+            return "labFD"
+          }
+          case 4 :{
+            return "radioFD"
+          }
+          case 5 :{
+            return "pathologyFD"
+          }
+        }
+      }
 
     handleSignup = async()=>{
         var details = {};
@@ -74,25 +94,41 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
          },
          body: formBody
        }).then((resp)=>{
+         console.log("resp.type: " ,typeof(resp) , resp.data)
         resp.json().then((data)=>{
+          // setData on LocalStorage
           console.log("data:  " , data);
           localStorage.setItem('role', data.role);
           localStorage.setItem('userId', data.userId);
-          this.props.getAuthorization(true);
+
+          this.props.getAuthorization(true); // for App to flip the Login and logout button
           // this.props.history.push("/publicDashBoard")
 
           // if(parseInt(data.role) == 1){
           //   this.props.history.push("/welcomePage");
           // }
+
+
+          var roleName = this.setRoleName(data.role); // to get if he is LabFD or pathologyFD or doctorFD or radioFD
           if(parseInt(data.role) == 2 ||  parseInt(data.role) == 3 || parseInt(data.role) == 4 || parseInt(data.role) == 5){
-            console.log("heeereeeee")
-            axios.post(`${userType[this.state.type].getLabIdInSession}` ,{
+            console.log("heeereeeee" , roleName ," data.role: " , typeof(data.role))
+            axios.post(`${userType[roleName].getLabIdInSession}` ,{
               userId: data.userId
             } ,{
             } ).then(async resp => {
               console.log("resppppppp : " ,resp);
               localStorage.setItem('labId', resp.data.labId);
             
+            }).catch((e)=>{
+              toast('🦄 can not get this FrontDisk Lab....', {
+                position: "top-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                });
             })
           }
 
@@ -109,7 +145,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           // resp.json();
           
         }).catch(()=>{
-         console.log("errror")
+          this.setState({errorMessage :"SomethingWrong...."})
        })
     //    this.props.history.push("")
      
@@ -119,6 +155,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
     render() { 
         return (
           <div className="container-fluid" style={{height:'100%' }}>
+        <ToastContainer/>
         <div className="row align-items-center" style={{height:'100%' }}>
             <div className="col-4 justify-content-center no-gutter">
       
@@ -141,6 +178,10 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
             </div>
             <div className="col-8 bg-primary"style={{height:'100%' }}></div>
             </div>
+            { this.state.errorMessage &&(
+              <ErrorHandeling errorMessage={this.state.errorMessage}/>
+              )
+            }
             </div>
          );
     }

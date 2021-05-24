@@ -112,7 +112,7 @@ const renderBodyForSessionCode = (value, role) =>{
             }}
             >
               <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
-              <Card.Body className="text-secondary ">
+              <Card.Body className="text-secondary">
                 <Card.Title className="text-center">{value.text}</Card.Title>
               </Card.Body>
             </Card>
