@@ -138,11 +138,12 @@ class Appointements extends Component {
     for(var property in  appointements[this.state.type].updatedDetails){ 
       details[property] = this.state[property] || this.state.typeObj[property]; 
     }
-    details["id"] = localStorage.getItem("userId");
-    details["appId"] = this.state.typeObj.id;
-    details["check"] = this.state.check;
+    details["id"] =  this.state.typeObj.id;
+    //details["appId"] = this.state.typeObj.id;
+    //details["check"] = this.state.check;
     
     console.log("details on update : " ,  details)
+
     
     var formBody = [];
     // property is already declared so ??
@@ -151,8 +152,8 @@ class Appointements extends Component {
       var encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
     formBody = formBody.join("&");
+
           console.log("formBody: ",formBody)
           await fetch(`${appointements[this.state.type].updateAppointements}`, {
             method: 'PUT',
@@ -204,8 +205,8 @@ class Appointements extends Component {
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-    // details["check"] = this.state.check;
-    details["check"] = "drFDId";
+     details["check"] = this.state.check;
+    //details["check"] = "drFDId";
 
 
 
@@ -260,7 +261,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:3000/appointment/getAppointment`, {
+    await fetch(`http://localhost:8080/appointment/getAppointment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
