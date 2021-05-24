@@ -143,7 +143,6 @@ class Appointements extends Component {
     details["check"] = this.state.check;
     
     console.log("details on update : " ,  details)
-
     
     var formBody = [];
     // property is already declared so ??
@@ -152,8 +151,8 @@ class Appointements extends Component {
       var encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-    formBody = formBody.join("&");
 
+    formBody = formBody.join("&");
           console.log("formBody: ",formBody)
           await fetch(`${appointements[this.state.type].updateAppointements}`, {
             method: 'PUT',

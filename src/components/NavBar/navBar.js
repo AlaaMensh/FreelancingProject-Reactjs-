@@ -28,7 +28,7 @@ const NavBar = (props) => {
             <Nav.Link href="/profile" className="pr-4">
                 <div className="row  align-items-center">
                         <AccountCircleIcon  style={{fontSize:"1.6em"}} />
-                        <span className="username">{userName||""}</span>
+                        <span className="username">{localStorage.getItem("userName")||""}</span>
                 </div>
             </Nav.Link>
             {/* *************check here on role on every Choice in the DropDown *************/}
@@ -64,6 +64,7 @@ const NavBar = (props) => {
                     localStorage.removeItem("role");
                     localStorage.removeItem("labId");
                     localStorage.removeItem("userId");
+                    localStorage.removeItem("userName");
                     history.push("/login")
                     props.logout(false)
 

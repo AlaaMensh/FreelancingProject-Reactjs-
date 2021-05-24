@@ -78,7 +78,8 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           console.log("data:  " , data);
           localStorage.setItem('role', data.role);
           localStorage.setItem('userId', data.userId);
-          this.props.getAuthorization(true);
+          localStorage.setItem('userName', this.state.userName);
+          this.props.getAuthorization(true , this.state.userName);
           // this.props.history.push("/publicDashBoard")
 
           // if(parseInt(data.role) == 1){

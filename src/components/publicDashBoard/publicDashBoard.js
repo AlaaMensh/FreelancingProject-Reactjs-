@@ -18,6 +18,7 @@ import ChoicePage from "./choice";
 import "./Navbar.css";
 import PharmacyModule from "../pharmacyModule/pharmacyModule";
 import SessionCode from "../sessionCode";
+import PharmacistPharmacyModule from "../pharmacyModule/pharmacyModuleForPharmacy"
 
 
 
@@ -178,6 +179,7 @@ const renderBodyForSessionCode = (value, role) =>{
                             {/* PharmacyModule   */}
             <Route exact  path={match.path+"/pharmacyModule"} component={PharmacyModule}/>        
             <Route exact  path={match.path+"/pharmacyModule/prescription"} component={Prescription}/>        
+            <Route exact  path={match.path+"/PharmacistPharmacyModule"} component={PharmacistPharmacyModule}/>        
 
           
           </Switch>

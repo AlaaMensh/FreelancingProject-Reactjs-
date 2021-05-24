@@ -20,6 +20,7 @@ const ClinicalDashBoard = ({match}) => {
 
   useEffect(()=>{ 
     console.log("herree dashBoard:" , localStorage.getItem("role"));
+    setPtId(match.params.id);
  });
  
 
@@ -40,7 +41,7 @@ const ClinicalDashBoard = ({match}) => {
               {
                 parseInt(localStorage.getItem("role")) === 8?
                 (
-                  <Link to={match.path+`/clinicalDashBoard/${ptId}`} style={{cursor:"pointer"}} >
+                  <Link to={match.url+`/clinicalDashBoard/${ptId}`} style={{cursor:"pointer"}} >
                   Clinical DashBoard
                   </Link>
                 ):(
@@ -51,32 +52,32 @@ const ClinicalDashBoard = ({match}) => {
               }
               </li>
               <li>
-              <Link to={match.path+`/patientAppointement/${ptId}`}>
+              <Link to={match.url+`/patientAppointement`}>
                         Patient Appointement
               </Link>
               </li>
               <li>
-              <Link to={match.path+`/patientOnGoingProblems/${"onGoingProblems"}`}>
+              <Link to={match.url+`/patientOnGoingProblems/${"onGoingProblems"}`}>
                           On Going Problems
                         </Link>
               </li>
               <li>
-              <Link to={match.path+`/patientAllergyproblems/${"allergy"}`} >
+              <Link to={match.url+`/patientAllergyproblems/${"allergy"}`} >
                           Allergy Problems
               </Link>
               </li>
               <li>
-              <Link to={match.path+`/allLabOrders/${"lab"}/${ptId}`} >
+              <Link to={match.url+`/allLabOrders/${"lab"}`} >
                           Lab Orders
               </Link>
               </li>
               <li>
-              <Link to={match.path+`/allPathologyOrders/${"pathology"}/${ptId}`} >
+              <Link to={match.url+`/allPathologyOrders/${"pathology"}`} >
                           Pathology Orders
               </Link>
               </li>
               <li>
-              <Link to={match.path+`/allRadioOrders/${"radio"}/${ptId}`} >
+              <Link to={match.url+`/allRadioOrders/${"radio"}`} >
                           radio Orders
               </Link>
               </li>
@@ -99,15 +100,15 @@ const ClinicalDashBoard = ({match}) => {
       </Route> 
       <Route exact key={4} path={match.path+"/patientAllergyproblems/:type"}  component={PatientProblems}/> 
       <Route exact key={5} path={match.path+"/patientOnGoingproblems/:type"}  component={PatientProblems}/> 
-      <Route exact path={match.path+"/patientAppointement/:id"}  component={PatientAppointement}/> 
+      <Route exact path={match.path+"/patientAppointement"}  component={PatientAppointement}/> 
       
       
   
       
-      <Route exact key={1} path={match.path+"/allLabOrders/:type/:id"}  component={AllOrders}/> 
+      <Route exact key={1} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
       <Route exact key={11} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
-      <Route exact key={2} path={match.path+"/allPathologyOrders/:type/:id"}  component={AllOrders}/> 
-      <Route exact key={3} path={match.path+"/allRadioOrders/:type/:id"}  component={AllOrders}/> 
+      <Route exact key={2} path={match.path+"/allPathologyOrders/:type"}  component={AllOrders}/> 
+      <Route exact key={3} path={match.path+"/allRadioOrders/:type"}  component={AllOrders}/> 
       
      
       <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 

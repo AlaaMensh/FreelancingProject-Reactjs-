@@ -23,6 +23,8 @@ import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem("role"));
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
+  
     const history = useHistory();
 
     useEffect (()=>{
@@ -37,14 +39,16 @@ function App() {
   const isLoggedIn = ()=>{
     return localStorage.getItem("userId")?true:false
   }  
-  const getAuthorization = (value) =>{
-console.log("value from App: " , value)
+  const getAuthorization = (value , userName) =>{
+// console.log("value from App: " , value)
     setLoggedIn(value);
+    setUserName(userName);
   } 
   const logout = (value) =>{
 
     setLoggedIn(false)
   }
+
   console.log("App: " , history)
 
   return (
@@ -59,7 +63,7 @@ console.log("value from App: " , value)
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route exact path="/Appointement" component={Appointement}></Route>
       {/* <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route> */}
-      <ProtecteRoute Guard={isLoggedIn()} path="/clinicalDashBoard" component={ClinicalDashBoard}/>
+      <ProtecteRoute Guard={isLoggedIn()} path="/clinicalDashBoard/:id" component={ClinicalDashBoard}/>
       {/* <Route   path="/publicDashBoard" component={PublicDashBoard}></Route> */}
       <Route exact path="/login">
         <Login getAuthorization={getAuthorization} history={history}/>
