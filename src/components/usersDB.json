@@ -525,7 +525,7 @@
              "addUser" :"http://localhost:3000/lFrontDisk/addPerson",
              "deleteUser" : "",
              "updateUser":"",
-             "getAll":""
+             "getAll":"http://localhost:8080/radio/getAll"
              
 
           },

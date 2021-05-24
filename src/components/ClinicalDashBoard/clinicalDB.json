@@ -18,6 +18,7 @@
                     "selector" : "type",
                     "sortable":true,
                     "center" : true
+                   
             }
    },
    "title":"All Allergy Problems",
@@ -50,5 +51,8 @@
    "title":"All OnGoingProblems Problems",
    "description":"simple blah blah this the page and what it dose you know stuff..",
    "getAllergyProblemsForPatient" : "http://localhost:3000/pt/getProblemsById"
+
+
+
     }
 }

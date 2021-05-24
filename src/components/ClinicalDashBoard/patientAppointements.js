@@ -32,6 +32,7 @@ class UserCrud extends Component {
 
   async componentDidMount(){
     var type="ForPatient";
+    
       this.setState({type});
       var temp = [];
       
@@ -78,6 +79,7 @@ class UserCrud extends Component {
   var details = {}
       for(var p in appointements[type].modalAdditionForms ){ // for Addition Form Inputs
         temp.push(appointements[type].modalAdditionForms[p])
+        console.log("here: " ,appointements[type].modalAdditionForms[p]["name"] )
       } 
       this.setState({
         ModalAddtionInputs : temp,
@@ -227,6 +229,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     this.getData(this.state.type);
   }
   getData = async(type)=>{
+
     await axios.post(`${appointements[type].getAllAppointements}`,{
        ptId:this.props.match.params.id
     }).then(async resp => {
@@ -244,7 +247,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
         });
 
         await this.setState({past : res})
-        // console.log("reeessssssssssssssss: " , res);
+        console.log("reeessssssssssssssss: " , res);
 
         var future = resp.data.filter(element => {
           if(element.date > dateNow2){
@@ -252,7 +255,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
           }
         });
         this.setState({future : future});
-        // console.log("reeessssssssssssssss: " , future);
+        console.log("reeessssssssssssssss: " , future);
        this.setState({  
           data : resp.data,
       })
@@ -266,10 +269,12 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       this.setState({validRole : true});
      }
      else{
+      console.log("jjjjjjjjjjjjjj") 
        this.setState({validRole: false})
      }
      if(parseInt(localStorage.getItem("role")) == 8){
        this.setState({check : "drId"});
+       console.log("yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
      }
      else{
       this.setState({check : "drFDId"});
@@ -280,7 +285,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
 
 
 
-    compareTimeForEditButton = (date , startTime ) =>{ // to hide it if the time is pased
+    compareTimeForEditButton = (date , startTime ) =>{
      
       var appDate2 = date;
       var dateNow1 = new Date();
@@ -294,7 +299,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
         if (appDate2 === dateNow2)
         {
           var time2 = dateNow1.getHours() +":" + dateNow1.getMinutes() +":"+ dateNow1.getSeconds()
-          // console.log("time1 " , time2 , "time2: " , startTime);
+          console.log("time1 " , time2 , "time2: " , startTime);
           if(startTime > time2){
             console.log("not Accepted....");
             return true
@@ -312,7 +317,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
 
   handleChange = (evt) =>{
     const value = evt.target.value;
-    // console.log("name: " , evt.target.name , " value: " , evt.target.value)
+    console.log("name: " , evt.target.name , " value: " , evt.target.value)
     this.setState({
       [evt.target.name]: value
     });
@@ -320,7 +325,8 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
   renderingForPatientAppointements = () =>{
     return(
       <>
-
+      {console.log("updateObject: " , this.state.ModalAddtionInputs)}
+        {console.log("state: " , this.state)}
         <Row className= "py-3 mt-5">
                     <Col>
                         {

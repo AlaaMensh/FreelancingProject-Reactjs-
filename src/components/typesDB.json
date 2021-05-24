@@ -92,10 +92,10 @@
                },
                "title":"All Diseases Types",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addType" :"http://localhost:8080/diseases/addDiseases",
-               "deleteType" : "http://localhost:8080/diseases/deleteDiseases",
+               "addType" :"http://localhost:8080/disease/addDiseases",
+               "deleteType" : "http://localhost:8080/disease/deleteDiseases",
                "updateType":"http://localhost:8080/diseases/updateDiseases",
-               "getAll":"http://localhost:8080/diseases/getAll"
+               "getAll":"http://localhost:8080/disease/getAll"
 
             },
     "drug" : 

@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import  { Component } from 'react';
 import nurseModule from "../nurseDB.json";
-import DataTableComp from "../typesGenerator/dataTable";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import DataTableComp from "../typesGenerator/dataTable"
 
 
 
@@ -102,21 +99,19 @@ class PatientsOnVisit extends Component {
         this.rendering();
     }
 
-    rendering = () => {
+    rendering = () =>{
         return(
-          <Container>
-              <Row className= "py-3">
-                <Col>
-                    {
-                  
-                        <>
-                          <h3>All Patient In Active Visit</h3>
-                          <div>Get all patient in active visit now and if you want to fill vitals for them</div>
-                        </>
-                      
-                    }
-                </Col>
-              </Row>
+          <div className="container gridDataContent mt-5"> 
+          <div className="row">
+            <div className="col-auto px-2 py-2 text-center rounded  header">
+                <span className="">All Patient in Active Visit</span>
+            </div>
+            <div className="col-10 overflow-hidden ">
+                <div className="row justify-content-lg-start">
+              
+                </div>
+            </div>
+          </div>
            
             {console.log("columns : "  , this.state.columns)}
             {
@@ -127,7 +122,7 @@ class PatientsOnVisit extends Component {
 
         )
       }
-            </Container> 
+            </div> 
             
                     
         

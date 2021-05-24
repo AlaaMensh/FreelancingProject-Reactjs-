@@ -24,13 +24,17 @@ class PharmacyModule extends Component { // this Component to View All The Not A
         this.setState({type: "pharmacyModule"});
         var type = "pharmacyModule";
         console.log("props: " , this.props)
-      // for Doctor view
+        if(parseInt(localStorage.getItem("role")) === 13){ // for Pharmacist to get PatientData with code
+            await this.getDataForPatientPrescriptions();
+            await this.handleDataTableColumnsForPharmacist(type)
+        }
+        else{ // for Doctor view
             await this.getDataForDoctorPrescriptions()
             await this.handleDataTableColumnsForDoctor(type)
-        
+        }
         // await this.getData(type)
     }
-     handleDataTableColumnsForDoctor = (type) => {
+     handleDataTableColumnsForDoctor = (type) =>{
         var temp = []
         for(var p in pharmacyModule[type].columnsTableForDoctor ){
             temp.push(pharmacyModule[type].columnsTableForDoctor[p])     
@@ -120,6 +124,86 @@ class PharmacyModule extends Component { // this Component to View All The Not A
           })
     }
 
+    getDataForPatientPrescriptions = async(type)=>{  // *****Change it with end point get last 10 prescription
+    var details = {     
+        ptCode : this.props.history.location.state,
+    }
+    var formBody = [];
+    for (var property in details) {
+        var encodedKey = encodeURIComponent(property);
+        var encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
+    }
+    formBody = formBody.join("&");
+    
+        
+    fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        },
+        body: formBody
+    }).then((resp)=>{
+        resp.json().then((data)=>{
+        console.log("All Incomming Data;  " , data)
+
+
+        this.setState({ 
+            allNotAcceptedOrders:data
+        })
+    
+        })
+    }).catch(()=>{
+        console.log("errror")
+    })
+    
+    }
+
+    handleDataTableColumnsForPharmacist = (type) => {
+        
+        var temp = []
+        for(var p in pharmacyModule[type].columnsTable ){
+          if(p === "actions"){
+            pharmacyModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
+            <div className = "row">
+              <div className="col-auto">
+                <button  className="btn btn-primary"
+                  onClick={() => {  
+                      console.log("id:  " , row)
+                      this.handleAccept(row.id)
+                    }}>decpline</button>
+                    {/* <SessionCode  buttonValue={"Accept"}/> */}
+              </div>
+            
+            </div>
+            )
+            }
+            temp.push(pharmacyModule[type].columnsTable[p])
+          }
+          else{
+    
+            temp.push(pharmacyModule[type].columnsTable[p])
+          }
+        }
+        this.setState({columns : temp})
+        temp = []
+        var newState = this.state;
+        for(var property in pharmacyModule[type].state ){
+          newState[property] = "" 
+        }
+        this.setState({newState})
+    
+        // if the page Will Contain modal
+        
+        // for(var p in columns[type].modalForms ){
+        //   // console.log("p : " , columns[type].modalForms[p]);
+        //   temp.push(columns[type].modalForms[p])
+        // } 
+        // // console.log("temp : "  , temp)
+        // this.setState({ModalInputs : temp})
+    
+
+    }
   
     render() { 
         return (     
@@ -128,8 +212,8 @@ class PharmacyModule extends Component { // this Component to View All The Not A
             
             <Row className= "py-3">
                 <Col>
-                    <h3>All Doctor Prescriptions</h3>
-                    <div>You will Get All your Prescriptions....</div>
+                    <h3>All patient Drugs</h3>
+                    <div>simple blah blah this the page and what it dose you know stuff...</div>
                 </Col>
             </Row>
             <Row className= "py-3" >
