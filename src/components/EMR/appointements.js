@@ -8,6 +8,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'
 import Button from 'react-bootstrap/Button';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class Appointements extends Component {
@@ -247,17 +249,35 @@ class Appointements extends Component {
     }
     formBody = formBody.join("&");
     // console.log("formging:     " , formBody)
-    
+    var mes = "yes";
 await fetch(`${appointements[this.state.type].addAppointement}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
       },
       body: formBody
-    }).then(()=>{
-      console.log("it is inserted");
-    }).catch(()=>{
-      console.log("errror")
+    }).then((resp)=>{
+      resp.Text().then((r)=>{
+        console.log("r: " , r);
+      })
+      // console.log("data : " , data)
+
+      if(mes === "yes"){
+        this.props.history.push("/ptRegistration")
+      }
+    
+    }).catch((e)=>{
+      console.log("error on Adding..." , e)
+      this.props.history.push("/ptRegistration")
+      toast('🦄 SomeThing Wrong.....', {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        });
     })
     this.getData(this.state.type , this.state.appointementsType);
   }
@@ -267,7 +287,6 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       this.setState({validRole : true});
      }
      else{
-  
        this.setState({validRole: false})
      }
      if(parseInt(localStorage.getItem("role")) == 8){
@@ -322,9 +341,8 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
   renderingForDoctorAppointements = () =>{
     return(
       <>
-      {console.log("updateObject: " , this.state.ModalAddtionInputs)}
-        {console.log("state: " , this.state)}
         <Row className= "py-3 mt-5">
+        <ToastContainer/>
                     <Col>
                         {
                           appointements && this.state.appointementsType && (
