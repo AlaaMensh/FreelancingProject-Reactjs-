@@ -1,73 +1,128 @@
-import { Button } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
+import Fab from '@material-ui/core/Fab';
+import PrintIcon from '@material-ui/icons/Print';
 import React from 'react';
-// import '../../styles/pdf.css';
+import BackImage from '../../assets/images/back.png';
+
+const styles={
+    parentDiv:{
+        borderRadius:6,
+        elevation:3,//how much comes away from screen
+        backgroundImage: `url(${BackImage})`,
+        shadowOffset:{width:1,height:1},
+        shadowColor:'#333',
+        shadowOpacity:0.3,
+        marginHorizontal:4,
+        marginVertical:6,
+        shadowRadius:2,
+        position:'relative',
+        marginTop:10,
+        paddingBottom: 40,
+    },
+    prescriptionDesign:{
+        display: 'block',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: '50%',
+        height:400,
+        position:'relative',
+        backgroundColor:'#fff',
+    },
+
+    headerImage:{
+        position:'relative',
+        top:0,
+        left:0, 
+        width:'100%',
+        height:'20%'
+    }
+    ,
+    footerImage:{
+        position:'absolute',
+        bottom:0,
+        left:0, 
+        width:'100%',
+        height:'20%'
+    }
+}
+
 const { forwardRef, useRef, useImperativeHandle } = React;
 const PDF =  forwardRef((props,ref)=>
 {
-  const [data,setData] = React.useState([])
+  const [rows,setRows] = React.useState([])
+  React.useEffect(() => {
+      if(props.prescription_rows && props.prescription_rows.length > 0)
+      {
+        setRows([...props.prescription_rows])
+
+      }
+
+}, []);
+
   useImperativeHandle(ref, () => ({
-    addRow(row) {
-      //alert(data)
-        var max = 0
-        if(data.length > 0)
-        {
-            max = data[data.length-1].id
-        }
-        console.log(row.drug)
-        console.log(row)
-        data.push({id:parseInt(max+1),drugName:row.drug.split(",")[1],drug:row.drug.split(",")[0],Quantity:row.quantity,Duration:row.duration});
-        setData([...data]);
+    addRow(data) {
+      setRows([...data]);
     },
-    updateData(rows) {
-        setData([...rows]);
+    updateData(data) {
+      setRows([...data]);
     }
 }));
-const prinDiv = ()=>{
-        var divContents = document.getElementById("pdf").innerHTML;
-        var a = window.open('', '', 'height=500, width=500');
-        a.document.write('<html>');
-        a.document.write('<body>');
-        a.document.write(divContents);
-        a.document.write('</body></html>');
-        a.document.close();
-        a.print();
+const printDiv = ()=>{
+  var printContents = document.getElementById("printDiv").innerHTML;
+  let w=window.open();
+
+  w.document.write(printContents);
+ 
+  w.print();
+  w.close();
 }
     return (
-        <div>
-        <div className="pdf" id="pdf">
-            <table className="rtable">
-            <thead>
-                <tr>
-                <th>Drug Name</th>
-                <th>Quantity</th>
-                <th>Duration</th>
-                </tr>
-            </thead>
-            <tbody>
-            {data.map(row=>{
-                return (
-                    <tr key={row.id}>
-                    <td>{row.drugName}</td>
-                    <td>{row.Quantity}</td>
-                    <td>{row.Duration}</td>
-                    </tr>
-                )
-            })}
-            </tbody>
-            </table>
-        </div>
-        <Button
-            variant="contained"
-            color="primary"
-            size="large"
-            style={{width:'420px',margin:10}}
-            startIcon={<SaveIcon />}
-            onClick={prinDiv}
-          >
-            Print
-          </Button>
-        </div>
+        <div className="mg20">
+
+
+        {/* White Shadow Div Start */}
+          <div style={styles.parentDiv} id="myDiv">
+                <Fab 
+                    color="primary"
+                    aria-label="add"
+                    onClick={()=>printDiv()}
+                    >
+                        <PrintIcon  />
+                </Fab> 
+              {/* Image Div Parent Start */}
+              <div id="printDiv" style={styles.prescriptionDesign}>
+
+                {props.header &&
+                             <img  style={styles.headerImage}
+                             src={URL.createObjectURL(props.header)}  /> }
+                {/* Drugs List Start */}
+                <div style={{display:'flex',flexDirection:'column',margin:40}}>
+                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                      <span>Drug</span>
+                      <span>Quantity Per Day</span>
+                      <span>Duration</span>
+                    </div>
+                  {rows.map(row=>{
+                    return (
+                    <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+                      <span>{row.drugName}</span>
+                      <span>{row.Quantity}</span>
+                      <span>{row.Duration}</span>
+                    </div>
+                    )
+                  })}
+              </div>
+              {/* Drugs List End */}
+                {props.footer &&   <img  style={styles.footerImage}
+              src={URL.createObjectURL(props.footer)}  /> 
+                }
+
+            </div>
+            {/* Image Div Parent End */}
+
+
+          </div>
+
+      </div >
     );
 })
 export default PDF;

@@ -5,48 +5,79 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import { Modal, ModalBody } from 'react-bootstrap'
 
 
 const row = [
-    {quantity : "one" , drug :"one" , notes:"one" , duration:"one"},
-    {quantity : "two" , drug :"two" , notes:"two" , duration:"two"},
+    {date : "one" , patientName :"one" , notes:"one" },
+    {date : "one" , patientName :"one" , notes:"one" },
+    {date : "one" , patientName :"one" , notes:"one" },
 ]
-class PharmacyModule extends Component { // this Component to View All The Not Accepted Orders in our System
+const drugs = [
+    {drugName : "one" , quantity :"one" , duration:"one",refialCount:"" },
+    {drugName : "one" , quantity :"one" , duration:"one",refialCount:"" },
+]
+class PharmacyModuleForPharmacist extends Component { // this Component to View All The Not Accepted Orders in our System
     constructor(props) {
         super(props);
         this.state = { 
             type:"",
             columns:[],
-            Drugs:[] // this will be viewed in DataTable Component
+            drugs_columns:[{
+              "name" :"Drug Name",
+              "selector" : "drugName",
+              "sortable":true
+            },
+            {
+              "name" :"Quantity",
+              "selector" : "quantity",
+              "sortable":true
+            },
+            {
+              "name" :"Duration",
+              "selector" : "duration",
+              "sortable":true
+            },
+            {
+              "name" :"Refail Count",
+              "selector" : "refailCount",
+              "sortable":true
+            },
+            {
+              "name" :"actions",
+              "selector" : "actions",
+              "sortable":true
+            },
+            {
+              "name" :"input",
+              "selector" : "input",
+              "sortable":true
+            },
+          ],
+            Drugs:[] ,// this will be viewed in DataTable Component
+            openModal:false,
+            drugQuantity:""
          }
     }
     async componentDidMount(){
         this.setState({type: "pharmacyModule"});
         var type = "pharmacyModule";
         console.log("props: " , this.props)
-        if(parseInt(localStorage.getItem("role")) === 13){ // for Pharmacist to get PatientData with code
+   // for Pharmacist to get PatientData with code
             await this.getDataForPatientPrescriptions();
             await this.handleDataTableColumnsForPharmacist(type)
-        }
-        else{ // for Doctor view
-            await this.getDataForDoctorPrescriptions()
-            await this.handleDataTableColumnsForDoctor(type)
-        }
+
+
+            this.handleDaTaTableModel()
         // await this.getData(type)
     }
-     handleDataTableColumnsForDoctor = (type) =>{
-        var temp = []
-        for(var p in pharmacyModule[type].columnsTableForDoctor ){
-            temp.push(pharmacyModule[type].columnsTableForDoctor[p])     
-        }
-        this.setState({columns : temp})
-        temp = []
-        var newState = this.state;
-        for(var property in pharmacyModule[type].state ){
-          newState[property] = "" 
-        }
-        this.setState({newState})
-    }
+    handleClose = () => {
+      this.setState({openModal : false})
+    };
+    handleopenModal = () => {
+      this.setState({openModal : true})
+    };
+
 
 
     handleAccept = async (id) =>{
@@ -90,39 +121,39 @@ class PharmacyModule extends Component { // this Component to View All The Not A
       })
    
     }   
-    getDataForDoctorPrescriptions = () =>{ // getData for Doctor Prescriptions
-        var details = {     
-            ptCode : this.props.history.location.state,
-          }
-          var formBody = [];
-          for (var property in details) {
-            var encodedKey = encodeURIComponent(property);
-            var encodedValue = encodeURIComponent(details[property]);
-            formBody.push(encodedKey + "=" + encodedValue);
-          }
-          formBody = formBody.join("&");
+    // getDataForDoctorPrescriptions = () =>{ // getData for Doctor Prescriptions
+    //     var details = {     
+    //         ptCode : this.props.history.location.state,
+    //       }
+    //       var formBody = [];
+    //       for (var property in details) {
+    //         var encodedKey = encodeURIComponent(property);
+    //         var encodedValue = encodeURIComponent(details[property]);
+    //         formBody.push(encodedKey + "=" + encodedValue);
+    //       }
+    //       formBody = formBody.join("&");
         
            
-        fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then((resp)=>{
-            resp.json().then((data)=>{
-              console.log("All Incomming Data;  " , data)
+    //     fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}`, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    //         },
+    //         body: formBody
+    //       }).then((resp)=>{
+    //         resp.json().then((data)=>{
+    //           console.log("All Incomming Data;  " , data)
   
   
-              this.setState({ 
-                Drugs:data
-              })
+    //           this.setState({ 
+    //             Drugs:data
+    //           })
         
-            })
-          }).catch(()=>{
-            console.log("errror")
-          })
-    }
+    //         })
+    //       }).catch(()=>{
+    //         console.log("errror")
+    //       })
+    // }
 
     getDataForPatientPrescriptions = async(type)=>{  // *****Change it with end point get last 10 prescription
     var details = {     
@@ -170,8 +201,9 @@ class PharmacyModule extends Component { // this Component to View All The Not A
                 <button  className="btn btn-primary"
                   onClick={() => {  
                       console.log("id:  " , row)
-                      this.handleAccept(row.id)
-                    }}>decpline</button>
+                      // this.handleAccept(row.id)
+                      this.handleopenModal()
+                    }}>Show prescription</button>
                     {/* <SessionCode  buttonValue={"Accept"}/> */}
               </div>
             
@@ -204,6 +236,58 @@ class PharmacyModule extends Component { // this Component to View All The Not A
     
 
     }
+    handleDaTaTableModel = () => {
+      console.log("Drugs_columns :" , this.state.drugs_columns)
+      var temp =[] ;
+      for(var pp of this.state.drugs_columns ){
+        var p = pp.name;
+        console.log("p :" , p)
+        if(p === "actions"){
+          pp["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+              <button  className="btn btn-primary" style={{cursor :this.state.drugQuantity ? "pointer" : "not-allowed"}}
+                onClick={() => {  
+                    console.log("id:  " , row)
+                    // this.handleAccept(row.id)
+                    this.handleopenModal()
+                  }}>dispense</button>
+
+                  {/* <SessionCode  buttonValue={"Accept"}/> */}
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(pp[p])
+        }
+        else{
+  
+          temp.push(pp[p])
+        }
+        if(p === "input"){
+          pp["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+                  <input max="20" min="1" className="form-control" type="number" onChange={(e)=>{
+                    this.setState({drugQuantity: e.target.value})
+                  }}  />
+                  {/* <SessionCode  buttonValue={"Accept"}/> */}
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(pp[p])
+        }
+        else{
+  
+          temp.push(pp[p])
+        }
+     
+      }
+    }
+
   
     render() { 
         return (     
@@ -238,6 +322,23 @@ class PharmacyModule extends Component { // this Component to View All The Not A
                </Col> 
            
          </Row>
+
+              <Modal show={this.state.openModal} onHide={this.handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>{this.props.formType} Form</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+              <DataTableComp  data = {drugs} //change it to Drugs
+                  columns = {this.state.drugs_columns }
+                  title=""
+                  />
+              </Modal.Body>
+            
+
+
+             </Modal>
+            
+         
          </Container>
          
 
@@ -247,4 +348,4 @@ class PharmacyModule extends Component { // this Component to View All The Not A
     }
 }
  
-export default PharmacyModule;
+export default PharmacyModuleForPharmacist;

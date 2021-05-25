@@ -16,8 +16,10 @@ import AcceptOrders from './../orderGeneration/acceptOrders';
 import AllOrders from './../orderGeneration/allOrders';
 import ChoicePage from "./choice";
 import "./Navbar.css";
-import PharmacyModule from "../pharmacyModule/pharmacyModule";
+import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
 import SessionCode from "../sessionCode";
+import PharmacyModuleForPharmacist from '../pharmacyModule/pharmacyModuleForPharmacist';
+
 
 
 
@@ -176,9 +178,9 @@ const renderBodyForSessionCode = (value, role) =>{
 
               
                             {/* PharmacyModule   */}
-            <Route exact  path={match.path+"/pharmacyModule"} component={PharmacyModule}/>        
+            <Route exact  path={match.path+"/pharmacyModule"} component={PharmacyModuleForDoctor}/>        
             <Route exact  path={match.path+"/pharmacyModule/prescription"} component={Prescription}/>        
-
+            <Route exact  path={match.path+"/PharmacistPharmacyModule"} component={PharmacyModuleForPharmacist}/>        
           
           </Switch>
       </div>

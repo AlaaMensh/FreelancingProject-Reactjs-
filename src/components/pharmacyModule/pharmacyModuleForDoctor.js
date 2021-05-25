@@ -11,7 +11,7 @@ const row = [
     {quantity : "one" , drug :"one" , notes:"one" , duration:"one"},
     {quantity : "two" , drug :"two" , notes:"two" , duration:"two"},
 ]
-class PharmacyModuleForPharmacist extends Component { // this Component to View All The Not Accepted Orders in our System
+class PharmacyModuleForDoctor extends Component { // this Component to View All The Not Accepted Orders in our System
     constructor(props) {
         super(props);
         this.state = { 
@@ -25,14 +25,62 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
         var type = "pharmacyModule";
         console.log("props: " , this.props)
      // for Pharmacist to get PatientData with code
-            await this.getDataForPatientPrescriptions();
-            await this.handleDataTableColumnsForPharmacist(type)
+            await this.handleDataTableColumnsForDoctor(type);
+            await this.getDataForDoctorPrescriptions(type)
       
        
         // await this.getData(type)
     }
 
+    handleDaTaTableModel = () =>{
+      console.log("Drugs_columns :" , this.state.drugs_columns)
+      var temp =[]
+      for(var pp of this.state.drugs_columns ){
+        var p = pp.name;
+        console.log("p :" , p)
+        if(p === "actions"){
+          pp["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+              <button  className="btn btn-primary"
+                onClick={() => {  
+                    console.log("id:  " , row)
+                    // this.handleAccept(row.id)
+                    this.handleopenModal()
+                  }}>decpense</button>
 
+                  {/* <SessionCode  buttonValue={"Accept"}/> */}
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(pp[p])
+        }
+        else{
+  
+          temp.push(pp[p])
+        }
+        if(p === "input"){
+          pp["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+                  <input max="20" min="1" className="form-control" type="number"  />
+                  {/* <SessionCode  buttonValue={"Accept"}/> */}
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(pp[p])
+        }
+        else{
+  
+          temp.push(pp[p])
+        }
+     
+      }
+    }
 
     handleAccept = async (id) =>{
       console.log("Accepted IDS:  " , this.state.acceptedIds )
@@ -76,86 +124,55 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
    
     }   
 
-    getDataForPatientPrescriptions = async(type)=>{  // *****Change it with end point get last 10 prescription
+    handleDataTableColumnsForDoctor = (type) =>{
+      console.log("type: " , type ,"  ,,,,,,," ,)
+      var temp = []
+      for(var p in pharmacyModule[type].columnsTableForDoctor ){
+          temp.push(pharmacyModule[type].columnsTableForDoctor[p])     
+      }
+      this.setState({columns : temp})
+      temp = []
+      var newState = this.state;
+      for(var property in pharmacyModule[type].state ){
+        newState[property] = "" 
+      }
+      this.setState({newState})
+  }
+  getDataForDoctorPrescriptions = () =>{ // getData for Doctor Prescriptions
     var details = {     
         ptCode : this.props.history.location.state,
-    }
-    var formBody = [];
-    for (var property in details) {
+      }
+      var formBody = [];
+      for (var property in details) {
         var encodedKey = encodeURIComponent(property);
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
+      }
+      formBody = formBody.join("&");
     
-        
+       
     fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}`, {
         method: 'POST',
         headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         },
         body: formBody
-    }).then((resp)=>{
+      }).then((resp)=>{
         resp.json().then((data)=>{
-        console.log("All Incomming Data;  " , data)
+          console.log("All Incomming Data;  " , data)
 
 
-        this.setState({ 
-            allNotAcceptedOrders:data
-        })
+          this.setState({ 
+            Drugs:data
+          })
     
         })
-    }).catch(()=>{
+      }).catch(()=>{
         console.log("errror")
-    })
-    
-    }
+      })
+}
 
-    handleDataTableColumnsForPharmacist = (type) => {
-        
-        var temp = []
-        for(var p in pharmacyModule[type].columnsTable ){
-          if(p === "actions"){
-            pharmacyModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
-            <div className = "row">
-              <div className="col-auto">
-                <button  className="btn btn-primary"
-                  onClick={() => {  
-                      console.log("id:  " , row)
-                      this.handleAccept(row.id)
-                    }}>delivered</button>
-                    {/* <SessionCode  buttonValue={"Accept"}/> */}
-              </div>
-            
-            </div>
-            )
-            }
-            temp.push(pharmacyModule[type].columnsTable[p])
-          }
-          else{
-    
-            temp.push(pharmacyModule[type].columnsTable[p])
-          }
-        }
-        this.setState({columns : temp})
-        temp = []
-        var newState = this.state;
-        for(var property in pharmacyModule[type].state ){
-          newState[property] = "" 
-        }
-        this.setState({newState})
-    
-        // if the page Will Contain modal
-        
-        // for(var p in columns[type].modalForms ){
-        //   // console.log("p : " , columns[type].modalForms[p]);
-        //   temp.push(columns[type].modalForms[p])
-        // } 
-        // // console.log("temp : "  , temp)
-        // this.setState({ModalInputs : temp})
-    
 
-    }
   
     render() { 
         return (     
@@ -199,4 +216,4 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
     }
 }
  
-export default PharmacyModuleForPharmacist;
+export default PharmacyModuleForDoctor;

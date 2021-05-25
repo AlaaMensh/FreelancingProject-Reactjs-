@@ -89,7 +89,7 @@ class SessionCode extends Component {
   }
   handleSubmitForpharmacy = () =>{
     this.props.history.push({
-      pathname : `${this.props.history.location.pathname}/pharmacyModule`,
+      pathname : `${this.props.history.location.pathname}/PharmacistPharmacyModule`,
       state: this.state.code
     })
   }

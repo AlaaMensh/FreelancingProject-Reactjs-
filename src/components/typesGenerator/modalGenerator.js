@@ -53,7 +53,7 @@ class ModalComp extends Component {
                         (
                             <Button variant="primary"  value={this.props.value || "Add"} onClick={()=>{
                                 this.props.handleAdding()
-                                      }} >Add</Button>
+                            }} >Add</Button>
                         )
                     }
                 <Button variant="danger" onClick={this.props.onHide}>Close</Button>

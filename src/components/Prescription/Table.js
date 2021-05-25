@@ -1,73 +1,66 @@
-import { Button } from '@material-ui/core';
+'use strict';
+
+import Fab from '@material-ui/core/Fab';
 import { DataGrid, GridToolbar } from '@material-ui/data-grid';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import * as React from 'react';
+
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'drugName', headerName: 'Drug', width: 130 },
-  { field: 'Quantity', headerName: 'Quantity',type:'number', width: 130 },
+  { field: 'id', headerName: 'ID', hide:true },
+  { field: 'drugName', headerName: 'Drug', flex:1},
+  { field: 'Quantity', headerName: 'Quantity',type:'number', flex:1 },
   {
     field: 'Duration',
     headerName: 'Duration',
     type: 'number',
-    width: 130,
-  },
-//   {
-//     field: 'fullName',
-//     headerName: 'Full name',
-//     description: 'This column has a value getter and is not sortable.',
-//     sortable: false,
-//     width: 160,
-//     valueGetter: (params) =>
-//       `${params.getValue('firstName') || ''} ${params.getValue('lastName') || ''}`,
-//   },
+    flex:1
+  }
+
 ];
 const { forwardRef, useRef, useImperativeHandle } = React;
 const Table =  forwardRef((props,ref)=>{
+
+    //initialize slection array
+  const [selectionModel,setSelectionModel]=React.useState([]);
+
   let fromdata= new FormData()
-      // The component instance will be extended
-    // with whatever you return from the callback passed
-    // as the second argument
-    useImperativeHandle(ref, () => ({
-        addRow(data) {
-            var max = 0
-            if(rows.length > 0)
-            {
-                max = rows[rows.length-1].id
-            }
-            rows.push({id:parseInt(max+1),drugName:data.drug.split(",")[1],drug:data.drug.split(",")[0],Quantity:data.quantity,Duration:data.duration});
-            setRows([...rows]);
-        }
-    }));
-    const [rows,setRows] = React.useState([
-      ]);
-      const AddToDB = ()=>{
-        if(rows.length == 0){
-          alert("empty data");
-          return;
-        }else{
-          let postData = {}
-          postData.notes = "test notes"
-          postData.visit_id = props.visitId
-          postData.data = []
-          console.log(rows)
-          rows.map(row=>{
-            return postData.data.push({
-              drug_id : row.drug,
-              Quantity:row.Quantity,
-              Duration:row.Duration
-            })
-          })
-          console.log(postData.data)
-          axios.post('http://localhost:3000/visit/addPrescription_Drugs',postData).then(result=>{
-            setRows([])
-          }).catch(err=>{
-            console.log(err)
-          })
-        }
+  
+  const [rows,setRows] = React.useState([])
+  React.useEffect(() => {
+    console.log("rrrr")
+    console.log(props.prescription_rows)
+      if(props.prescription_rows && props.prescription_rows.length > 0)
+      {
+        setRows([...props.prescription_rows])
+
       }
-    const [selectionModel,setSelectionModel]=React.useState([]);
+
+}, [props.prescription_rows]);
+
+
+    useImperativeHandle(ref, () => ({
+      addRow(temp) {
+        // //alert(data)
+        // let temp = {}
+        // Object.preventExtensions(temp);
+
+        // temp['id'] = data.id
+        // temp['drugName'] = data.drug
+        // temp['Quantity'] = data.quantity
+        // temp['Duration'] = data.duration
+        // console.log("temp")
+        // rows.push(temp);
+        setRows([...temp]);
+      },
+    }));
+
+
+
+    //event on select row function
     const handleRowSelection = (e)=>{
+      alert("aa")
         if(e.isSelected)
         {
             // let temp = rows.filter(row=>row.id !== e.data.id)
@@ -82,43 +75,68 @@ const Table =  forwardRef((props,ref)=>{
             }
         }
     }
+    
+    //delete rows function
     const DeleteRows = ()=>{
-        let temp = rows
+      if(selectionModel.length <= 0){
+        return
+      }
+        let temp = [...rows]
         var index = -1
-        selectionModel.map(row=>{
-            index = temp.findIndex(r=>r.id == row.id)
-            console.log(index)
+        var arr = []
+        //remove the selection rows from all rows
+        selectionModel.map(id=>{
+          arr.push(id)
+            index = temp.findIndex(r=>r.id == id)
             if(index != -1)
             {
-                console.log('deleted')
                 temp.splice(index,1)
             }
-            return row
+            return id
+        })
+        console.log(arr)
+        //delete from database
+        axios.post('http://localhost:3000/visit/deletePrescription_Drugs',{
+          ids : arr
+        }).then(res=>{
+          setRows([...temp])
+          props.DelteFromPDF(temp)
+          alert("delted Successfully")
+        }).catch(err=>{
+          alert(err)
         })
         // console.log(temp)
-        setRows([...temp])
-        props.DelteFromPDF(rows)
-        console.log(rows)
+
     }
   return (
-    <div style={{ height: 400, width: '100%',backgroundColor:'#fff' }}>
+    <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
       <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection  components={{
     Toolbar: GridToolbar,
   }}
-  onRowSelected={handleRowSelection}
-//   selectionModel={selectionModel}
-//   onSelectionModelChange={(newSelection)=>{
-//       setSelectionModel(newSelection.selectionModel)
-//   }}
+  // onRowSelected={handleRowSelection}
+    //   selectionModel={selectionModel}
+      onSelectionModelChange={(newSelection)=>{
+          setSelectionModel(newSelection.selectionModel)
+      }}
 />
-<Button onClick={AddToDB}  variant="contained" color="primary"
+{/* <Button onClick={AddToDB}  variant="contained" color="primary"
   style={{width:'420px',margin:10}} >
             Save
-    </Button>
-  <Button onClick={DeleteRows}  variant="contained" color="secondary"
+    </Button> */}
+  {/* <Button onClick={DeleteRows}  variant="contained" color="secondary"
   style={{width:'420px',margin:10}} >
             Delete
-    </Button>
+    </Button> */}
+      <div style={{ margin: "0 auto",textAlign:"center"}}>
+          <Fab color="primary"  aria-label="add"  >
+             <AddIcon  />
+          </Fab> 
+        </div>
+        <div style={{ position:'absolute',top:0,right:0,textAlign:"center"}}>
+          <Fab color="primary"  aria-label="add" onClick={()=>DeleteRows()} >
+             <DeleteIcon  />
+          </Fab> 
+        </div>
     </div>
   );
 }) 
