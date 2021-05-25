@@ -16,7 +16,8 @@ import ChangePassword from "./components/Forms/changePassword";
 import ForgotPasswordForm from './components/Forms/ForgotPasswordForm';
 import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
 import ErrorHandeling from "./components/ErrorHandling/errorHandeling";
-import ptRegistration from "./components/patientRegistration/ptRegistration"
+import ptRegistration from "./components/patientRegistration/ptRegistration";
+import AllOrders from "./components/orderGeneration/addOrderForm";
 
 
 
@@ -78,6 +79,10 @@ console.log("value from App: " , value)
       <Route exact path="/errorHandeling" component={ErrorHandeling}></Route>
       
       <Route exact path="/ptRegistration" component={ptRegistration}></Route>
+      
+      
+      <Route exact path="/AllOrders" component={AllOrders}></Route>
+
       {/* <Route  path="/profile" component={Profile}></Route> */}
       {/* <Route exact path="**" component={Error}></Route> */}
     </Switch>

@@ -67,6 +67,12 @@
                          "center" : true
                  
                  },
+                 "result" :{
+                        "name": "result",
+                        "selector": "result",
+                        "sortable": true,
+                        "center" : true
+                 },
                  
 
                  "actions" :{

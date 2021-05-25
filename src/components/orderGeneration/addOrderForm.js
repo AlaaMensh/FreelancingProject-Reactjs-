@@ -23,15 +23,12 @@ class AddOrderForm extends Component {
     this.setState({type});
     this.setState();
     if(this.props.match.params.id){
-    //  this.setState({ptId: this.props.match.params.id});
      this.setState({ptId: "2"});
-      // setFlag(false);
     }
 
     var temp = []
 
     for(var p in inputs[type].modalForms ){
-      // console.log("p : " , columns[type].modalForms[p]);
       temp.push(inputs[type].modalForms[p])
     } 
     console.log("temp : "  , temp)
@@ -53,16 +50,12 @@ class AddOrderForm extends Component {
   }
 
   handleSubmit = async()=>{
-
-      console.log("laaaaaaaaaaaaaaaaaaaab")
       var details = {
-        // 'investigation_type' : investigation_type,
         'date': this.state.date,
         'comments': this.state.comments,
         'status' : this.state.status,
-        'ptId': 2,
-        // 'drId': this.state.drId,
-        'drId': "1",
+        'ptId': this.props.match.params.id,
+        'drId': localStorage.getItem("userId"),
         'labId' : localStorage.getItem("labId") 
     };
 
@@ -85,10 +78,9 @@ class AddOrderForm extends Component {
     console.log("resp: " , resp);
     resp.text().then((msg)=>{
       console.log("successfully added....." , msg);
-      // if(msg == "1 record added" && flag){
-        // history.push("/labOrderForm");
-      // }
-
+      if(typeof(msg)==="object"){ //// ****************** Change it when you know the backend message *******/////
+        this.props.history.goBack();
+      }
     })
 
 
@@ -97,6 +89,7 @@ class AddOrderForm extends Component {
   .catch(()=>{
     console.log("eror")
   })
+  
 
 
   
@@ -105,7 +98,7 @@ class AddOrderForm extends Component {
   render() { 
     return (  
       <div>
-        {console.log("state: " , this.state)}
+
         
       {
         this.state.formInputs && this.state.formInputs.length > 0 && (

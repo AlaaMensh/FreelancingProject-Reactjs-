@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
+import { Document, Page } from 'react-pdf';
 
 var object  = {}
 
@@ -23,8 +24,10 @@ class AllOrders extends Component {
       modalUploadResultInputs :[],
       openModal:false,
       typeObj:{},
-      formType:"uploadResult"
-
+      formType:"uploadResult",
+      numPages:null,
+      pageNumber:1,
+      fileResult:""
           }
         }
       async componentDidMount(){
@@ -79,6 +82,9 @@ class AllOrders extends Component {
         await this.getData(flag , this.props.match.params.type)
     
         }
+        onDocumentLoadSuccess({ numPages }) {
+          this.setState(numPages);
+        }
 
       getTypeByID = async(id) => { // to set object which will be updated       
         const labObj = this.state.orderlabList.filter(lab => lab.id === id);
@@ -88,7 +94,7 @@ class AllOrders extends Component {
         })
       }
   
-  
+
      handleClose = () => {
       this.setState({openModal : false})
     };
@@ -124,6 +130,7 @@ class AllOrders extends Component {
        axios.post(`${endPoint}`,formBody).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
+
         })
         .catch(err=>{
             console.log(err)
@@ -229,41 +236,81 @@ class AllOrders extends Component {
     handleTableColumnsForAllAcceptedOrders = (type , object) => { 
       console.log("object : " , orderType[type][object])
       var temp = []
-      for(var p in orderType[type][object] ){
-        if(p === "actions"){
-          console.log("object : " , orderType[type][object][p])
-          orderType[type][object][p]["cell"] =  (row) =>{ return(
-          <div className = "row">
-            <div className="col-auto">
-              <button  className="btn btn-primary"
-                onClick={() => {  
-                  console.log("rooooow : " , row)
-                    console.log("id:  " , row)
-                    this.handleopenModal();
-                    this.getTypeByID(row.id);
-                  }}>
-                    Upload Result
-                    </button>
-              <button className="ml-2 btn btn-danger"
-                  onClick = {() => {  
-                    // console.log("rooooow : " , row)
+      if(object === "columnsTable"){
+        for(var p in orderType[type][object] ){
+          if(p === "actions"  ){
+            // console.log("object : " , orderType[type][object][p])
+            orderType[type][object][p]["cell"] =  (row) =>{ return(
+            <div className = "row">
+              <div className="col-auto">
+                <button  className="btn btn-primary"
+                  onClick={() => {  
+                    console.log("rooooow : " , row)
                       console.log("id:  " , row)
-                      this.handleDelete(row.id);
+                      this.handleopenModal();
+                      this.getTypeByID(row.id);
                     }}>
-                      Delete
+                      Upload Result
                       </button>
+                <button className="ml-2 btn btn-danger"
+                    onClick = {() => {  
+                      // console.log("rooooow : " , row)
+                        console.log("id:  " , row)
+                        this.handleDelete(row.id);
+                      }}>
+                        Delete
+                        </button>
+              </div>
+            
             </div>
-          
-          </div>
-          )
+            )
+            }
+            temp.push(orderType[type][object][p])
           }
-          temp.push(orderType[type][object][p])
-        }
-        else{
-  
-          temp.push(orderType[type][object][p])
+          else{
+    
+            temp.push(orderType[type][object][p])
+          }
         }
       }
+      else {
+        for(var p in orderType[type][object] ){
+          if(p === "actions"){
+            // console.log("object : " , orderType[type][object][p])
+            orderType[type][object][p]["cell"] =  (row) =>{ return(
+            <div className = "row">
+              <div className="col-auto">
+                <button  className="btn btn-primary"
+                  onClick={() => {  
+                    console.log("rooooow : " , row)
+                      console.log("id:  " , row)
+                      this.setState({fileResult : row.result})
+                      this.getTypeByID(row.id);
+                    }}>
+                      Show Result
+                      </button>
+                <button className="ml-2 btn btn-danger"
+                    onClick = {() => {  
+                      // console.log("rooooow : " , row)
+                        console.log("id:  " , row)
+                        this.handleDelete(row.id);
+                      }}>
+                        Delete
+                        </button>
+              </div>
+            
+            </div>
+            )
+            }
+            temp.push(orderType[type][object][p])
+          }
+          else{
+    
+            temp.push(orderType[type][object][p])
+          }
+        }
+      }
+ 
       this.setState({columns : temp})
       console.log("temp : ", temp)
       temp = []
@@ -303,7 +350,7 @@ class AllOrders extends Component {
                   </Col>
               </Row>
             {
-              this.state.flagCompoenentType &&(
+              !this.state.flagCompoenentType &&(
                 <Row className= "py-3" >
                 <Col sm={10}></Col>
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
@@ -352,7 +399,21 @@ class AllOrders extends Component {
                         }}>
                           <AddIcon  />
                         </Fab>                       */}
-                      </div>
+                </div>
+                     
+            {
+              this.state.fileResult && (
+                <div>
+                  <Document
+                    file={this.state.fileResult}
+                    onLoadSuccess={this.onDocumentLoadSuccess}
+                  >
+                    <Page pageNumber={this.state.pageNumber} />
+                  </Document>
+                  <p>Page {this.state.pageNumber} of {this.state.numPages}</p>
+                </div>
+              )
+            }
       </Row>
         
     </Container>

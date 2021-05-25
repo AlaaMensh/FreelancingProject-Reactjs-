@@ -11,6 +11,7 @@ import Prescription from "../Prescription/Prescription";
 import AllOrders from "../orderGeneration/allOrders";
 import Row from 'react-bootstrap/Row'
 import "./index.css";
+import AddOrderForm from "../orderGeneration/addOrderForm"
 
 
 
@@ -105,6 +106,9 @@ const ClinicalDashBoard = ({match}) => {
   
       
       <Route exact key={1} path={match.path+"/allLabOrders/:type/:id"}  component={AllOrders}/> 
+      <Route exact  path={match.path+"/allLabOrders/:type/:id/addOrder"}  component={AddOrderForm}/> 
+      {/* <Route exact  path={match.path+"/allLabOrders/:type/:id/allOrders"}  component={AllOrders}/>  */}
+
       <Route exact key={11} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
       <Route exact key={2} path={match.path+"/allPathologyOrders/:type/:id"}  component={AllOrders}/> 
       <Route exact key={3} path={match.path+"/allRadioOrders/:type/:id"}  component={AllOrders}/> 

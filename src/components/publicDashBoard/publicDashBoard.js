@@ -169,7 +169,7 @@ const renderBodyForSessionCode = (value, role) =>{
             <Route key={14} exact path={match.path+"/pathologyChoice/:type/allPathologyOrders"} component={AllOrders}/>
             <Route key={12} exact path={match.path+"/radioChoice/:type/allRadioChoice"} component={AllOrders}/>
                           
-                          {/* Add order Form */}
+                          {/* Add order Form in publicDashBoard */} 
             <Route key={17}  path={match.path+"/choice/:type/allLabOrders/addOrder"} component={AddOrderForm}/>
             <Route key={18} exact path={match.path+"/pathologyChoice/:type/allPathologyOrders/addOrder"} component={AddOrderForm}/>
             <Route key={19} exact path={match.path+"/radioChoice/:type/allRadioChoice/addOrder"} component={AddOrderForm}/>
