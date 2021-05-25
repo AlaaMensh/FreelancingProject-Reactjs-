@@ -62,7 +62,7 @@ console.log("value from App: " , value)
       <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
       <Route exact path="/Appointement" component={Appointement}></Route>
       {/* <Route  path="/clinicalDashBoard" component={ClinicalDashBoard}></Route> */}
-      <ProtecteRoute Guard={isLoggedIn()} path="/clinicalDashBoard" component={ClinicalDashBoard}/>
+      <ProtecteRoute Guard={isLoggedIn()} path="/clinicalDashBoard/:id" component={ClinicalDashBoard}/>
       {/* <Route   path="/publicDashBoard" component={PublicDashBoard}></Route> */}
       <Route exact path="/login">
         <Login getAuthorization={getAuthorization} history={history}/>

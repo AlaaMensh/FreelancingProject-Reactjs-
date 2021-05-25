@@ -56,19 +56,21 @@ class DataGridTable extends Component {
       for(var p in emrFile[type].columnsTable ){ // for Adding actions Buttons to DataTable
         if(p === "actions"){ // change it if you want to add any button in Actions cell
 
-          // emrFile[type].columnsTable[p]["cell"] =  (row) =>{ return(
-          // <div className = "row">
-          //   <div className="col-auto">
-          //     <button  className="btn btn-danger"
-          //       onClick={async () => {  
-          //         this.handleDelete(row.id);
-          //         }}>Delete</button>
-          //   </div>
+          emrFile[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            <div className="col-auto">
+              <button  className="btn btn-info"
+                onClick={async () => {  
+                  this.props.history.push(`/ClinicalDashBoard/${row.id}`);
+                  // this.handleDelete(row.id);
+
+                  }}>Go to ClinicalDashBoard</button>
+            </div>
           
-          // </div>
-          // )
-          // }
-          // temp.push(emrFile[type].columnsTable[p])
+          </div>
+          )
+          }
+          temp.push(emrFile[type].columnsTable[p])
         }
         
         else{
