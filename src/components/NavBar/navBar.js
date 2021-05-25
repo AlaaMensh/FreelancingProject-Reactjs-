@@ -7,7 +7,7 @@ import {useHistory} from "react-router-dom";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {useState , useEffect} from "react";
 import Row from 'react-bootstrap/Row'
-import "./navbar.css";
+// import "./navbar.css";
 
 
 
@@ -20,7 +20,7 @@ const NavBar = (props) => {
     
     
     return ( 
-        <Navbar className="navbar" expand="lg"  style={{width:"100%"}}>
+        <Navbar className="navbar navbar-dark bg-dark" expand="lg"  style={{width:"100%"}}>
         <Navbar.Brand href="#home">Our Logo</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

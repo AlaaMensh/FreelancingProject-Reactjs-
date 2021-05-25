@@ -222,7 +222,7 @@ await fetch(`${columns[this.state.type].addType}`, {
 
 
   <Container>
-            <Row py-3>
+            <Row className="py-3">
                 <Col>
                     {
                       columns && this.state.type && (

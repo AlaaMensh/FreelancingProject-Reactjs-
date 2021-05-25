@@ -118,8 +118,8 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
 
     render() { 
         return (
-          <div className="container-fluid" style={{height:'100%' }}>
-        <div className="row align-items-center" style={{height:'100%' }}>
+          <div className="container-fluid" style={{height:'100%'  }}>
+        <div className="row align-items-center" style={{height:'100%'}}>
             <div className="col-4 justify-content-center no-gutter">
       
                <div className="row">
@@ -139,7 +139,8 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
                 }
               
             </div>
-            <div className="col-8 bg-primary"style={{height:'100%' }}></div>
+            <div className="col-8"style={{height:'100%', backgroundImage:"url('./images/disk-orginal.jpg') ",  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover"}}></div>
             </div>
             </div>
          );
