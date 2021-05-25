@@ -201,7 +201,6 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
                 <button  className="btn btn-primary"
                   onClick={() => {  
                       console.log("id:  " , row)
-                      // this.handleAccept(row.id)
                       this.handleopenModal()
                     }}>Show prescription</button>
                     {/* <SessionCode  buttonValue={"Accept"}/> */}
@@ -246,11 +245,16 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
           pp["cell"] =  (row) =>{ return(
           <div className = "row">
             <div className="col-auto">
-              <button  className="btn btn-primary" style={{cursor :this.state.drugQuantity ? "pointer" : "not-allowed"}}
+              <button  className="btn btn-primary" style={{cursor : "pointer"}}
                 onClick={() => {  
                     console.log("id:  " , row)
-                    // this.handleAccept(row.id)
-                    this.handleopenModal()
+                    if(this.state.drugQuantity){
+                      console.log("yes")
+                      this.handleAccept(row.id)
+                    }
+                    else{
+                      alert("you should enter quantity")
+                    }
                   }}>dispense</button>
 
                   {/* <SessionCode  buttonValue={"Accept"}/> */}
@@ -304,7 +308,6 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
                 <Col sm={10}></Col>
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
                         // this.setState({formType :"add"})
-                        console.log("this.props.history : " , this.props)
                    this.props.history.push({
                        pathname:`${this.props.history.location.pathname}/prescription`,
                        state:{}
@@ -314,7 +317,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
 
             <Row className= "py-3">
                <Col>
-                {console.log(this.state.columns)}
+                {console.log(this.state)}
                 <DataTableComp  data = {row} //change it to Drugs
                   columns = {this.state.columns}
                   title=""

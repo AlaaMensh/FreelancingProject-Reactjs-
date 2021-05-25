@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
+// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 var object  = {}
 
@@ -350,12 +351,12 @@ class AllOrders extends Component {
                   </Col>
               </Row>
             {
-              !this.state.flagCompoenentType &&(
+              !this.state.flagCompoenentType && (
                 <Row className= "py-3" >
                 <Col sm={10}></Col>
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
                         console.log("prosp : " , this.props.match.url)
-                        if(this.props.match.params.type === "lab"){
+                      if(this.props.match.params.type === "lab"){
                            this.props.history.push(`${this.props.match.url}/addOrder`)
                       }
                       else if(this.props.match.params.type=== "pathology"){
@@ -405,7 +406,8 @@ class AllOrders extends Component {
               this.state.fileResult && (
                 <div>
                   <Document
-                    file={this.state.fileResult}
+                    // file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
+                    file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
                     onLoadSuccess={this.onDocumentLoadSuccess}
                   >
                     <Page pageNumber={this.state.pageNumber} />
