@@ -26,6 +26,7 @@ class AllOrders extends Component {
       formType:"uploadResult"
 
           }
+          
         }
       async componentDidMount(){
 
