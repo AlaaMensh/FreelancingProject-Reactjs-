@@ -34,6 +34,10 @@ class ChoicePage extends Component {
                                     console.log("yes");
                                     this.props.history.push(`${this.props.location.pathname}/allPathologyOrders`)
                                 }
+                                else if(this.props.match.params.type === "radio"){
+                                    console.log("yes");
+                                    this.props.history.push(`${this.props.location.pathname}/allRadioChoice`)
+                                }
                             }}>
                                 <Card.Img variant="top" style={{cursor:"pointer"}} src={window.location.origin + '/images/img1.svg'} />
                                 <Card.Body className="text-secondary mt-2 mx-auto">
@@ -44,8 +48,6 @@ class ChoicePage extends Component {
                                 </Card>
                     </div>
                     <div className="col-10 col-md-6 mt-5 mt-md-0">
-
-                         
                                     <SessionCode buttonValue = "get patient Orders"
                                         fromComponent={"choice"} 
                                         orderType={this.props.match.params.type}

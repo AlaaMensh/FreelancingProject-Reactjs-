@@ -134,86 +134,286 @@
                "getNotAcceptedOrders" :"http://localhost:8080/order/getlabOrderByPtCode",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "http://localhost:8080/order/getlabOrderByPtId",
-               "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab"
+               "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab",
+               "getAllDoctorOrders":"http://localhost:8080/order/getDoctorLabOrders"
 
             },
     "pathology" : {
-               "state":{
-                    "date":"",
-                    "comments":"",
-                    "status":"",
-                    "result":""
-                    
-            },
-               "columnsTable" : {
-                        "date": {
-                                "name": "Date",
-                                "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "status": {
-                                "name": "Status",
-                                "selector": "status",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "date" :{
-                                "type": "date",
-                                "name" : "date"
-                        },
-                        "comments" : {
-                                "type":"text",
-                                "name" :"comments"
-                        },
-                        
-                        "status" : {
-                                "type":"text",
-                                "name" :"status"
-                        },
-                        "result" : {
-                                "type":"text",
-                                "name" :"result"
-                        }
+          "state":{
+                "Date":"",
+                "comments":"",
+                "status":"",
+                "result":""
+                
+        },
+           "columnsTable" : {
+                   "firstName": {
+                           "name": "First Name",
+                           "selector": "firstName",
+                           "sortable": true,
+                           "center" : true
+                   },
+                   "secondName": {
+                           "name": "Second Name",
+                           "selector": "secondName",
+                           "sortable": true,
+                           "center" : true
+                   },
+                    "Date": {
+                            "name": "Date",
+                            "selector": "Date",
+                            "sortable": true,
+                            "center" : true
+                    },
+                    "comments": {
+                            "name": "Comments",
+                            "selector": "comments",
+                            "sortable": true,
+                            "center" : true
+                    },
+                    "phone": {
+                            "name": "Phone",
+                            "selector": "phone",
+                            "sortable": true,
+                            "center" : true
+                    },
+                    "result" :{
+                            "name" :"Result",
+                            "selector" : "result",
+                            "sortable":true,
+                            "center" : true
+                           
+                    },
+                    "actions" :{
+                            "name" :"actions",
+                            "selector" : "actions",
+                            "sortable":false,
+                            "center" : true,
+                            "width":"300px"
+                    }
+           },
+           "columnsTableForPatientOrders": {
+             "Date": {
+                     "name": "Date",
+                     "selector": "Date",
+                     "sortable": true,
+                     "center" : true
+             },
+             "comments": {
+                     "name": "Comments",
+                     "selector": "comments",
+                     "sortable": true,
+                     "center" : true
+             
+             },
+             "result" :{
+                    "name": "result",
+                    "selector": "result",
+                    "sortable": true,
+                    "center" : true
+             },
+             
 
-               },
+             "actions" :{
+                     "name" :"actions",
+                     "selector" : "actions",
+                     "sortable":false,
+                     "center" : true,
+                     "width":"300px"
+             }
+    }           ,
+           "modalForms": {
+                    "Date" :{
+                            "type": "date",
+                            "name" : "Date"
+                    },
+                    "comments" : {
+                            "type":"text",
+                            "name" :"comments"
+                    },
+                    
+                    "status" : {
+                            "type":"select",
+                            "name" :"status",
+                            "options":[
+                                    {"value":"request", "text" : "Request"},
+                                    {"value":"deliver", "text" : "Delivering"},
+                                    {"value":"pending", "text" : "Pending"}
+                            ]
+                    }
+
+           },
+           "uploadResultForm" :{
+            "result" :{
+                    "type": "file",
+                    "name" : "result"
+            }
+           },
+           "AdditionObject":{
+            "Date": "",
+            "comments": "",
+            "status" : "",
+            "ptId": "",
+            "drId": "",
+            "pathoId" : "" 
+           },
+           "AcceptObject":{
+                   "id":"",
+                   "pathoFDId":""
+           },
                "titleForPatientOrders":"All Patients Orders",
                "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                "title":"All Pathology Orders",
                "description":"From here you can see and upload Results for all accepted orders",
-               "addOrder" :"http://localhost:8080/order/addlabOrder",
-               "deleteOrder" : "http://localhost:3000/allergy/deleteAllergy",
+               "addOrder" :"http://localhost:8080/order/addpathoOrder",
+               "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
                "updateOrder":"http://localhost:3000/allergy/updateAllergy",
                "getAll":"http://localhost:3000/allergy/getAllergy",
-               "acceptOrder":"",
-               "getNotAcceptedOrders" :"http://localhost:8080/lab/getlabOrderByptId",
+               "acceptOrder":"http://localhost:8080/order/acceptOrder",
+               "getNotAcceptedOrders" :"http://localhost:8080/order/getpathoOrderByPtCode",
                "getAllAcceptedOrders" :"",
-               "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrdersByPtId",
-               "getAllOrdersByLabId" : "http://localhost:8080/order/getpathoOrderbyLab"
-
-            }
+               "getAllOrdersByPtID" : "http://localhost:8080/order/getpathoOrderByPtId",
+               "getAllOrdersByLabId" : "http://localhost:8080/order/getpathoOrderbyLab",
+               "getAllDoctorOrders":"http://localhost:8080/order/getDoctorPathoOrders"
+            },
+            "radio" : {
+                "state":{
+                      "Date":"",
+                      "comments":"",
+                      "status":"",
+                      "result":""
+                      
+              },
+                 "columnsTable" : {
+                         "firstName": {
+                                 "name": "First Name",
+                                 "selector": "firstName",
+                                 "sortable": true,
+                                 "center" : true
+                         },
+                         "secondName": {
+                                 "name": "Second Name",
+                                 "selector": "secondName",
+                                 "sortable": true,
+                                 "center" : true
+                         },
+                          "Date": {
+                                  "name": "Date",
+                                  "selector": "Date",
+                                  "sortable": true,
+                                  "center" : true
+                          },
+                          "comments": {
+                                  "name": "Comments",
+                                  "selector": "comments",
+                                  "sortable": true,
+                                  "center" : true
+                          },
+                          "phone": {
+                                  "name": "Phone",
+                                  "selector": "phone",
+                                  "sortable": true,
+                                  "center" : true
+                          },
+                          "result" :{
+                                  "name" :"Result",
+                                  "selector" : "result",
+                                  "sortable":true,
+                                  "center" : true
+                                 
+                          },
+                          "actions" :{
+                                  "name" :"actions",
+                                  "selector" : "actions",
+                                  "sortable":false,
+                                  "center" : true,
+                                  "width":"300px"
+                          }
+                 },
+                 "columnsTableForPatientOrders": {
+                   "Date": {
+                           "name": "Date",
+                           "selector": "Date",
+                           "sortable": true,
+                           "center" : true
+                   },
+                   "comments": {
+                           "name": "Comments",
+                           "selector": "comments",
+                           "sortable": true,
+                           "center" : true
+                   
+                   },
+                   "result" :{
+                          "name": "result",
+                          "selector": "result",
+                          "sortable": true,
+                          "center" : true
+                   },
+                   
+      
+                   "actions" :{
+                           "name" :"actions",
+                           "selector" : "actions",
+                           "sortable":false,
+                           "center" : true,
+                           "width":"300px"
+                   }
+          }           ,
+                 "modalForms": {
+                          "Date" :{
+                                  "type": "date",
+                                  "name" : "Date"
+                          },
+                          "comments" : {
+                                  "type":"text",
+                                  "name" :"comments"
+                          },
+                          
+                          "status" : {
+                                  "type":"select",
+                                  "name" :"status",
+                                  "options":[
+                                          {"value":"request", "text" : "Request"},
+                                          {"value":"deliver", "text" : "Delivering"},
+                                          {"value":"pending", "text" : "Pending"}
+                                  ]
+                          }
+      
+                 },
+                 "uploadResultForm" :{
+                  "result" :{
+                          "type": "file",
+                          "name" : "result"
+                  }
+                 },
+                 "AdditionObject":{
+                  "Date": "",
+                  "comments": "",
+                  "status" : "",
+                  "ptId": "",
+                  "drId": "",
+                  "pathoId" : "" 
+                 },
+                 "AcceptObject":{
+                         "id":"",
+                         "pathoFDId":""
+                 },
+                     "titleForPatientOrders":"All Patients Orders",
+                     "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
+                     "title":"All Pathology Orders",
+                     "description":"From here you can see and upload Results for all accepted orders",
+                     "addOrder" :"http://localhost:8080/order/addradioOrder",
+                     "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
+                     "updateOrder":"http://localhost:3000/allergy/updateAllergy",
+                     "getAll":"http://localhost:3000/allergy/getAllergy",
+                     "acceptOrder":"http://localhost:8080/order/acceptOrder",
+                     "getNotAcceptedOrders" :"http://localhost:8080/order/getradioOrderByPtCode",
+                     "getAllAcceptedOrders" :"",
+                     "getAllOrdersByPtID" : "http://localhost:8080/order/getradioOrderByPtId",
+                     "getAllOrdersByLabId" : "http://localhost:8080/order/getradioOrderbyLab",
+                     "getAllDoctorOrders":"http://localhost:8080/order/getDoctorRadioOrders"
+                  }
     
             
             

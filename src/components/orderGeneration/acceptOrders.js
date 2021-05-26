@@ -170,8 +170,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
 
             <Row className= "py-3">
                 <Col>
-                    <h3>here is the title</h3>
-                    <div>simple blah blah this the page and what it dose you know stuff...</div>
+                    <h3>All Not Accepted Orders for this patient</h3>
+                    <div>You can accept orders for this patient from here...</div>
                 </Col>
             </Row>
 
@@ -180,6 +180,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
                 {console.log(this.state.columns)}
                 <DataTableComp  data = {this.state.allNotAcceptedOrders}
                   columns = {this.state.columns}
+                  title=""
                   />
                </Col> 
            

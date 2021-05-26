@@ -96,13 +96,13 @@ class DataGridTable extends Component {
                   }
               </Col>
           </Row>
-          <Row>
+
             {console.log("columns : " , this.state.columns)}
             <DataTableComp  data = {this.props.filtered}
             columns = {this.state.columns}
             title = ""
             />
-          </Row> 
+
      
         </Container>
         

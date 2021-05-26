@@ -20,7 +20,7 @@ const ClinicalDashBoard = ({match}) => {
   const [ptId, setPtId] = useState(41);
 
   useEffect(()=>{ 
-    console.log("herree dashBoard:" , localStorage.getItem("role"));
+    console.log("herree dashBoard:" ,match.params.id);
     setPtId(match.params.id);
  });
  
@@ -42,7 +42,7 @@ const ClinicalDashBoard = ({match}) => {
               {
                 parseInt(localStorage.getItem("role")) === 8?
                 (
-                  <Link to={match.url+`/clinicalDashBoard/${ptId}`} style={{cursor:"pointer"}} >
+                  <Link to={match.url+`/clinicalDashBoard`} style={{cursor:"pointer"}} >
                   Clinical DashBoard
                   </Link>
                 ):(
@@ -92,30 +92,29 @@ const ClinicalDashBoard = ({match}) => {
       </div>
       <div className="col-8 col-md-8 col-lg-9  ">
         <Row>
-          <UserInfo id={ptId} />
+          <UserInfo id={match.params.id} />
         </Row>        
       <Switch>  
-      <Route exact path={match.path+"/clinicalDashBoard"} >
-        <PatientProblems type={"allergy"} id={ptId} />
-        <PatientProblems type={"onGoingProblems"} id={ptId}/>
+      <Route exact path={match.url+`/clinicalDashBoard`} >
+        <PatientProblems type={"allergy"} id={match.params.id} />
+        <PatientProblems type={"onGoingProblems"} id={match.params.id}/>
       </Route> 
       <Route exact key={4} path={match.path+"/patientAllergyproblems/:type"}  component={PatientProblems}/> 
       <Route exact key={5} path={match.path+"/patientOnGoingproblems/:type"}  component={PatientProblems}/> 
       <Route exact path={match.path+"/patientAppointement"}  component={PatientAppointement}/> 
-      
-      
   
       
       <Route exact key={1} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
-      <Route exact  path={match.path+"/allLabOrders/:type/addOrder"}  component={AddOrderForm}/> 
       {/* <Route exact  path={match.path+"/allLabOrders/:type/:id/allOrders"}  component={AllOrders}/>  */}
 
       <Route exact key={11} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
-
       <Route exact key={2} path={match.path+"/allPathologyOrders/:type"}  component={AllOrders}/> 
-      <Route exact key={2} path={match.path+"/allPathologyOrders/:type/addOrder"}  component={AddOrderForm}/> 
-      
       <Route exact key={3} path={match.path+"/allRadioOrders/:type"}  component={AllOrders}/> 
+
+      <Route exact  path={match.path+"/allLabOrders/:type/addOrder"}  component={AddOrderForm}/> 
+      <Route exact key={2} path={match.path+"/allPathologyOrders/:type/addOrder"}  component={AddOrderForm}/> 
+      <Route exact key={7} path={match.path+"/allRadioOrders/:type/addOrder"}  component={AddOrderForm}/> 
+      
       
      
       <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 

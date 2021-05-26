@@ -27,7 +27,6 @@ class PatientProblems extends Component {
       }
       this.setState({type: type})
       this.setState({pId : this.props.id})
-      
 
       await this.handleDataTableColumns(type);
       await this.getProblems(type);
@@ -44,8 +43,7 @@ class PatientProblems extends Component {
         
     getTypeByID = async(row) => {
         console.log("dkkdkdkdkdkdkdkdkdk:    " , row);
-        this.setState({TypeObj : row});       
-        
+        this.setState({TypeObj : row});          
     }
 
 
@@ -84,7 +82,7 @@ class PatientProblems extends Component {
     rendering = () =>{
         return(
           <Container className="container mt-5"> 
-          {console.log("here id : " , this.state.pId)}
+     
                 <Row className= "py-3">
                     <Col>
                         {

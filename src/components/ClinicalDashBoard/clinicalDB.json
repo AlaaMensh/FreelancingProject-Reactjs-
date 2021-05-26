@@ -23,7 +23,7 @@
    },
    "title":"All Allergy Problems",
    "description":"simple blah blah this the page and what it dose you know stuff..",
-   "getAllergyProblemsForPatient" : "http://localhost:3000/pt/getAllergyById"
+   "getAllergyProblemsForPatient" : "http://localhost:8080/pt/getAllergyById"
     },
 
     "onGoingProblems":{
@@ -50,7 +50,7 @@
    },
    "title":"All OnGoingProblems Problems",
    "description":"simple blah blah this the page and what it dose you know stuff..",
-   "getAllergyProblemsForPatient" : "http://localhost:3000/pt/getProblemsById"
+   "getAllergyProblemsForPatient" : "http://localhost:8080/pt/getProblemsById"
 
 
 

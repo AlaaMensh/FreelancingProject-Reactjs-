@@ -13,7 +13,7 @@ import { Document, Page } from 'react-pdf';
 
 var object  = {}
 
-class AllOrders extends Component {
+class AllOrdersForDoctor extends Component {
   constructor(props) {
     super(props);
     
@@ -38,25 +38,16 @@ class AllOrders extends Component {
           
           this.setState({type : this.props.match.params.type});
           
-          if(this.props.match.params.id){ // for PatientId
-          console.log("yes here is it ")
-          this.setState({flagCompoenentType : false});
-          flag = false;
-          this.setState({ptId : this.props.match.params.id});
-          object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
-        }
-        else{
+
           console.log("no it it is not")
           this.setState({flagCompoenentType : true});
           flag = true;
-        }
+        
    
         if(flag){
           object = "columnsTable"; // to get Data with First Name and lastName of the patient for all orders of LabId
         }
-        else{
-          object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
-        }
+
         this.handleTableColumnsForAllAcceptedOrders(this.props.match.params.type , object)
           
           this.setState({drId : localStorage.getItem("userId")});
@@ -106,30 +97,13 @@ class AllOrders extends Component {
     getData = async (flag ,type) => {
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
-      if(!flag){ // for PatientID and only Accepted Order
-        var details = {
-          ptId:this.props.match.params.id,
-         }
-         endPoint = `${orderType[type].getAllOrdersByPtID}`;
-      }
-      else{ // for LabId or PathoId or labId
-        var details = { }
-        endPoint = `${orderType[type].getAllOrdersByLabId}`
-        switch(type){
-          case "lab":{
-            details["labId"] = localStorage.getItem("labId");
-          }
-          case "pathology":{
-            details["pathoId"] = localStorage.getItem("pathoId");
-          }
-          case "radio":{
-            details["radioId"] = localStorage.getItem("labId");
-          }
+
+   // for LabId or PathoId or labId
+        var details = { 
+            drId:localStorage.getItem("userId")
         }
 
 
-      }
-      console.log("endPoint: " , endPoint)
        var formBody = [];
        for (var property in details) {
          var encodedKey = encodeURIComponent(property);
@@ -137,7 +111,8 @@ class AllOrders extends Component {
          formBody.push(encodedKey + "=" + encodedValue);
        }
        formBody = formBody.join("&");
-       axios.post(`${endPoint}`,formBody).then(result=>{
+       console.log("endPoint: " , orderType[type].getAllDoctorOrders)
+       axios.post(`${orderType[type].getAllDoctorOrders}`,formBody).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
 
@@ -224,7 +199,7 @@ class AllOrders extends Component {
                       this.handleopenModal();
                       this.getTypeByID(row.id);
                     }}>
-                      Upload Result
+                      Show Result
                       </button>
                 <button className="ml-2 btn btn-danger"
                     onClick = {() => {  
@@ -313,19 +288,12 @@ class AllOrders extends Component {
                 {console.log("state: " , this.state.columns)}
               <Row className= "py-3">
                   <Col>
+
                       {
                         this.state.flagCompoenentType && this.state.type && orderType &&(
-                          <>
-                          <h3>{orderType[this.state.type].titleForPatientOrders}</h3>
-                          <div>{orderType[this.state.type].descriptionForPatientOrders}</div>
-                          </>
-                        )
-                      }
-                      {
-                        !this.state.flagCompoenentType && this.state.type && orderType &&(
                             <>
-                            <h3>All Patient Orders</h3>
-                            <div>You can Show result here....</div>
+                            <h3>All Doctor Orders</h3>
+                            <div>You can Show All you orders....</div>
                             </>
                         )
                       }
@@ -352,6 +320,7 @@ class AllOrders extends Component {
             }
 
       <Row className= "py-3" >
+          {console.log("columns: " , this.state.columns)}
          <Col>
                 <DataTableComp  data = {this.state.orderlabList}
                   columns = {this.state.columns}
@@ -423,4 +392,4 @@ class AllOrders extends Component {
     }
 }
  
-export default AllOrders; 
+export default AllOrdersForDoctor; 

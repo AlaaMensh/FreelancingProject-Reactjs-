@@ -19,8 +19,8 @@ class AddOrderForm extends Component {
      }
   }
   componentDidMount(){
-    // var type = this.props.match.params.type;
-    var type = "lab";
+    var type = this.props.match.params.type;
+    // var type = "lab";
     this.setState({type});
     this.setState();
     if(this.props.match.params.id){
@@ -63,18 +63,22 @@ class AddOrderForm extends Component {
     for(var property in  inputs[this.state.type].AdditionObject){ 
       details[property] = this.state[property] ; 
     }
+    details["ptId"] = this.props.match.params.id;
     details["drId"] = localStorage.getItem("userId");
-    details["labId"] = localStorage.getItem("labId") ;
+  
 
     switch(this.state.type){
       case "lab":{
-        details["ptId"] = this.props.match.params.id;
+        details["labId"] = localStorage.getItem("labId") ;
+        break;
       }
       case "pathology":{
-        details["pathoId"] = this.props.match.params.id;
+        details["pathoId"] = localStorage.getItem("pathoId");
+        break;
       }
       case "radio":{
-        details["radioId"] = this.props.match.params.id;
+        details["radioId"] = localStorage.getItem("radioId");
+        break;
       }
     }
 
@@ -88,6 +92,7 @@ class AddOrderForm extends Component {
   }
   formBody = formBody.join("&");
   console.log("formBodu : " , formBody)
+  console.log("endpoint: " ,inputs[this.state.type].addOrder )
   fetch(`${inputs[this.state.type].addOrder}`, {
     method: 'POST',
     headers: {

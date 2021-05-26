@@ -185,9 +185,8 @@ class Search extends Component {
                   <SearchForm  getSearchName = {this.getSearchName} />
             </Row>
           <Row>
-            <Col>
-                <Row>
-                  <Col>
+
+
                     {
                         this.state.list && this.state.list.length>0 &&
                         <DataGridTable location={this.props.location} 
@@ -196,9 +195,7 @@ class Search extends Component {
                           list={this.state.list}
                         />
                     }
-                  </Col>
-                </Row>
-            </Col>
+
           </Row>
            
         </Container>
