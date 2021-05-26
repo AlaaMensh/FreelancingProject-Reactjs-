@@ -5,6 +5,7 @@ import FormGenerator from "../Forms/formGeneration";
 
 
 
+
 class AddOrderForm extends Component {
   constructor(props) {
     super(props);
@@ -51,13 +52,32 @@ class AddOrderForm extends Component {
 
   handleSubmit = async()=>{
       var details = {
-        'date': this.state.date,
-        'comments': this.state.comments,
-        'status' : this.state.status,
-        'ptId': this.props.match.params.id,
-        'drId': localStorage.getItem("userId"),
-        'labId' : localStorage.getItem("labId") 
+        // 'date': this.state.date,
+        // 'comments': this.state.comments,
+        // 'status' : this.state.status,
+        // 'ptId': this.props.match.params.id,
+        // 'drId': localStorage.getItem("userId"),
+        // 'labId' : localStorage.getItem("labId") 
     };
+
+    for(var property in  inputs[this.state.type].AdditionObject){ 
+      details[property] = this.state[property] ; 
+    }
+    details["drId"] = localStorage.getItem("userId");
+    details["labId"] = localStorage.getItem("labId") ;
+
+    switch(this.state.type){
+      case "lab":{
+        details["ptId"] = this.props.match.params.id;
+      }
+      case "pathology":{
+        details["pathoId"] = this.props.match.params.id;
+      }
+      case "radio":{
+        details["radioId"] = this.props.match.params.id;
+      }
+    }
+
 
   console.log("details", details)
   var formBody = [];
@@ -78,9 +98,10 @@ class AddOrderForm extends Component {
     console.log("resp: " , resp);
     resp.text().then((msg)=>{
       console.log("successfully added....." , msg);
-      if(typeof(msg)==="object"){ //// ****************** Change it when you know the backend message *******/////
-        this.props.history.goBack();
-      }
+      this.props.history.goBack();
+      // if(typeof(msg)==="object"){ //// ****************** Change it when you know the backend message *******/////
+      //   this.props.history.goBack();
+      // }
     })
 
 

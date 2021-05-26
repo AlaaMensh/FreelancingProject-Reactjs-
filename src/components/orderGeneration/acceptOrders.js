@@ -29,8 +29,6 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         labFDId : localStorage.getItem("labId"),
         // labId: localStorage.getItem("labId")
       }
-
-      
       console.log("detilaas : " , details)
 
       var formBody = [];
@@ -63,8 +61,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       })
       // this.props.history.push("./orderLabList");
       // this.getData();
-      // var temp = this.state.allNotAcceptedOrders.filter(row => row.id != id);
-      // this.setState({allNotAcceptedOrders : temp});
+      var temp = this.state.allNotAcceptedOrders.filter(row => row.id != id);
+      this.setState({allNotAcceptedOrders : temp});
     }
 
       getData = async(type)=>{ 
@@ -111,6 +109,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         }).catch(()=>{
           console.log("errror")
         })
+
         
       }
 

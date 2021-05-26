@@ -106,7 +106,7 @@ class AllOrders extends Component {
     getData = async (flag ,type) => {
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
-      if(!flag){ // for PatientID and only Accepted Orders
+      if(!flag){ // for PatientID and only Accepted Order
         var details = {
           ptId:this.props.match.params.id,
          
@@ -114,10 +114,20 @@ class AllOrders extends Component {
          endPoint = `${orderType[type].getAllOrdersByPtID}`;
       }
       else{ // for LabId
+        var details = { }
         endPoint = `${orderType[type].getAllOrdersByLabId}`
-        var details = { 
-          labId:localStorage.getItem("labId")
-         }
+        switch(type){
+          case "lab":{
+            details["labId"] = localStorage.getItem("labId");
+          }
+          case "pathology":{
+            details["pathoId"] = localStorage.getItem("labId");
+          }
+          case "radio":{
+            details["radioId"] = localStorage.getItem("labId");
+          }
+        }
+
 
       }
 
@@ -187,45 +197,24 @@ class AllOrders extends Component {
   
     handleUpdate = async ()=>{  // Upload files Using updateOrder function
 
-      var details = {} ;
-      for(var p in orderType[this.state.type].state){
-        details[p] = this.state.typeObj[p];
-      }
-      details["id"] = this.state.typeObj["id"];
-      details["drId"] = this.state.typeObj["drId"];
-      details["ptId"] = this.state.typeObj["ptId"];
-      details["result"] = this.state.result
-
       var Form = new FormData();
-      // for(var p in details){
-      //   Form.append(p , details[p])
-      // }
-
       Form.append("result" ,this.state.result )
       Form.append("orderId" , this.state.typeObj["id"])
       
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      formBody = formBody.join("&");
 
-      console.log("formBody: ", details)
       await fetch(`http://localhost:8080/visit/updateOrder`, {
         method: 'POST',
         body: Form
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
-          console.log("data: " , data)
+          var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
+          this.setState({orderlabList : temp});
         })
       }).catch(()=>{
         console.log("errror")
       })
-      // //  var allergyObj = this.state.orderlabList.filter(row => row.id === this.state.TypeObj.id);
-      // this.getData(this.state.flagCompoenentType , this.props.match.params.type )
+
          
     }
 
@@ -343,8 +332,8 @@ class AllOrders extends Component {
                       {
                         this.state.type && orderType &&(
                           <>
-                          <h3>{orderType[this.state.type].title}</h3>
-                          <div>{orderType[this.state.type].description}</div>
+                          <h3>{orderType[this.state.type].titleForPatientOrders}</h3>
+                          <div>{orderType[this.state.type].descriptionForPatientOrders}</div>
                           </>
                         )
                       }

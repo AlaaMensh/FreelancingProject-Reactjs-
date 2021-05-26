@@ -10,7 +10,8 @@ import  { useState , useEffect } from 'react';
 import Procedures from './procedures';
 import Investgation from './investgation';
 import {useHistory} from "react-router-dom";
-import ChiefComplains from './chiefComplains'
+import ChiefComplains from './chiefComplains';
+import {useLocation} from "react-router-dom"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,6 +74,7 @@ function getSteps() { //steps in the Top
 
 export default function Visit({match}) {
   const history = useHistory();
+  const location = useLocation();
   
   const [ptId, setPId] = useState(1);
   const [drId, setDrId] = useState(1);
@@ -108,7 +110,8 @@ export default function Visit({match}) {
   
   
     useEffect(()=>{
-      console.log("this.props" , match );
+      console.log("this.props" , location );
+      var code = location.state;
       setPId(match.params.id);
       setPId(localStorage.getItem("userId"));
 

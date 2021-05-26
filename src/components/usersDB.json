@@ -1,4 +1,66 @@
 {
+        "user" : {  
+                "state":{
+                   "userName": "",
+                   "Password": "",
+                   "Email": ""  
+           },
+              "columnsTable" : {
+
+                       "userName": {
+                               "name": "User Name",
+                               "selector": "userName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "Email": {
+                               "name": "Email",
+                               "selector": "Email",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "actions" :{
+                               "name" :"actions",
+                               "selector" : "actions",
+                               "sortable":false,
+                               "center" : true,
+                               "width":"300px"
+                       }
+              },
+              "modalUpdateForms": {
+                       "userName" :{
+                               "type": "text",
+                               "name" : "userName"
+                       },
+                       "Email" :{
+                               "type": "text",
+                               "name" : "Email"
+                       }           
+              },
+              "modalAdditionForms": {
+                       "Email" : {
+                               "type":"email",
+                               "name" :"Email"
+                       },
+                       "userName" : {
+                               "type":"text",
+                               "name" :"userName"
+                       },
+                       "Password" : {
+                               "type":"password",
+                               "name" :"Password"
+                       }
+
+              },
+              "title":"All Doctors",
+              "description":"simple blah blah this the page and what it dose you know stuff..",
+              "addUser" :"http://localhost:8080/doctor/addDoctor",
+              "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
+              "updateUser":"http://localhost:3000/doctor/updateDoctor",
+              "getAll":"http://localhost:3000/doctor/getAll"
+              
+
+           },
         "doctor" : {  
                  "state":{
                     "firstName":"",
@@ -271,10 +333,563 @@
                "addUser" :"http://localhost:8080/doctor/addDoctor",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll",
-               "getAllDataFD" :"http://localhost:8080/lab/getAll" 
+               "getAll":"http://localhost:3000/doctor/getAll"
+               
 
             },
+        "pathologist" : {  
+                 "state":{
+                    "firstName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Doctors",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
+               "updateUser":"http://localhost:3000/doctor/updateDoctor",
+               "getAll":"http://localhost:3000/doctor/getAll"
+               
+
+            },
+        "radiogist" : {  
+                 "state":{
+                    "firstName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Doctors",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
+               "updateUser":"http://localhost:3000/doctor/updateDoctor",
+               "getAll":"http://localhost:3000/doctor/getAll"
+               
+
+            },
+        "chemist" : {  
+                 "state":{
+                    "firstName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Doctors",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
+               "updateUser":"http://localhost:3000/doctor/updateDoctor",
+               "getAll":"http://localhost:3000/doctor/getAll"
+               
+
+            },
+        "assistant" : {  
+                 "state":{
+                    "firstName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Doctors",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
+               "updateUser":"http://localhost:3000/doctor/updateDoctor",
+               "getAll":"http://localhost:3000/doctor/getAll"
+               
+
+            },
+
 
        
        

@@ -62,7 +62,7 @@ class Appointements extends Component {
           </Col>
           <Col>
   
-          <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
+          <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)} history ={this.props.history}
           buttonValue="Make Visit" fromComponent="appointement"/>
           </Col>
           
@@ -124,13 +124,13 @@ class Appointements extends Component {
             var dateNow2 = [dateNow1.getFullYear(), mnth, day].join("-");
   
         if(appointementsType === "current"){
-          var res = resp.data.filter(element => {
+          var current = resp.data.filter(element => {
             if(element.date == dateNow2){
               return element;
             }
           });
-          await this.setState({current : res})
-          console.log("Current Response: " , res);
+          await this.setState({data : current})
+          console.log("Current Response: " , current);
         }
   
   
@@ -170,14 +170,13 @@ class Appointements extends Component {
       details[property] = this.state[property] || this.state.typeObj[property]; 
     }
     console.log("details on update : " ,  details)
-    details["id"] = localStorage.getItem("userId");
-    details["appId"] = this.state.typeObj.id;
-    details["check"] = this.state.check;
+    details["id"] =  this.state.typeObj.id;
+    // details["appId"] = this.state.typeObj.id;
+    // details["check"] = this.state.check;
 
 
     
     var formBody = [];
-    // property is already declared so ??
     for (var property in details) {
       var encodedKey = encodeURIComponent(property);
       var encodedValue = encodeURIComponent(details[property]);
@@ -185,19 +184,19 @@ class Appointements extends Component {
     }
     formBody = formBody.join("&");
 
-          console.log("formBody: ",formBody)
-          await fetch(`${appointements[this.state.type].updateAppointements}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-            },
-            body: formBody
-          }).then(()=>{
-            console.log("it is inserted");
-          }).catch(()=>{
-            console.log("errror")
-          })
-             this.getData(this.state.type , this.state.appointementsType)
+    console.log("formBody: ",formBody)
+    await fetch(`${appointements[this.state.type].updateAppointements}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: formBody
+    }).then(()=>{
+      console.log("it is inserted");
+    }).catch(()=>{
+      console.log("errror")
+    })
+        this.getData(this.state.type , this.state.appointementsType)
   }
 
   handleDelete= async(id)=>{
@@ -262,13 +261,13 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       })
       // console.log("data : " , data)
 
-      if(mes === "yes"){
-        this.props.history.push("/ptRegistration")
-      }
+      // if(mes === "yes"){ ///*** according to BackEnd message go to patient Registration */
+      //   this.props.history.push("/ptRegistration")
+      // }
     
     }).catch((e)=>{
       console.log("error on Adding..." , e)
-      this.props.history.push("/ptRegistration")
+      // this.props.history.push("/ptRegistration")
       toast('🦄 SomeThing Wrong.....', {
         position: "top-center",
         autoClose: 2000,

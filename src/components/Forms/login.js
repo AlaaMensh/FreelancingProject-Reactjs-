@@ -102,16 +102,13 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           localStorage.setItem('userId', data.userId);
 
           this.props.getAuthorization(true); // for App to flip the Login and logout button
-          // this.props.history.push("/publicDashBoard")
-
-          // if(parseInt(data.role) == 1){
-          //   this.props.history.push("/welcomePage");
-          // }
-
+          
+          if(data.role ==""){ // if he is a just user
+            this.props.history.push("/welcomePage");
+          }
 
           var roleName = this.setRoleName(data.role); // to get if he is LabFD or pathologyFD or doctorFD or radioFD
           if(parseInt(data.role) == 2 ||  parseInt(data.role) == 3 || parseInt(data.role) == 4 || parseInt(data.role) == 5){
-            console.log("heeereeeee" , roleName ," data.role: " , typeof(data.role))
             axios.post(`${userType[roleName].getLabIdInSession}` ,{
               userId: data.userId
             } ,{
@@ -142,12 +139,10 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
         //   }
       
         })
-          // resp.json();
           
-        }).catch(()=>{
+        }).catch(()=>{ //***Toastify */
           this.setState({errorMessage :"SomethingWrong...."})
        })
-    //    this.props.history.push("")
      
      }
 
@@ -174,6 +169,7 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
                 buttonTitle = "Login"/>
                 )
                 }
+                <a style={{fontSize:"0.9em"}} href="/forgetPassword">Forget Password</a>
               
             </div>
             <div className="col-8 bg-primary"style={{height:'100%' }}></div>

@@ -131,7 +131,7 @@ class Search extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
-      console.log("///////////////////////// , " , emrFile["Search"].getAllDoctorPatients)
+
       await fetch(`${emrFile["Search"].getAllDoctorPatients}`, {
         method: 'POST',
         headers: {
@@ -148,15 +148,6 @@ class Search extends Component {
         console.log("errror")
       })
 
-      // await axios.post(`${emrFile["Search"].getAllDoctorPatients}` ,{ // get All patients of this doctor
-      //   drId : localStorage.getItem("userId")
-      // }).then(async resp => {
-      //   console.log("resp.data: " , resp.data);
-      //   this.setState({list: resp.data})
-      //   this.setState({filtered:resp.data})
-        
-      // })
-    //  this.setState({list:row})
      
       
     }

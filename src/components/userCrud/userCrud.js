@@ -194,10 +194,7 @@ var details = {}
   }
   handleAdding = async()=>{
    
-    var details = {
-      // name: this.state.name,
-      // description : this.state.description,
-    }
+    var details = {}
     for(var p in this.state.addingUserObject ){ // for Addition Form Inputs
       details[p] = this.state[p]
     } 
@@ -211,7 +208,6 @@ var details = {}
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-    // console.log("formging:     " , formBody)
     
 await fetch(`${userType[this.state.type].addUser}`, {
       method: 'POST',
@@ -227,9 +223,7 @@ await fetch(`${userType[this.state.type].addUser}`, {
     this.getData(this.state.type);
   }
   getData = async(type)=>{
-    // await axios.get(' http://localhost:2400/allergy').then(async resp => {
     await axios.get(`${userType[type].getAll}`).then(async resp => {
-      // return resp.data;
        this.setState({  
           data : resp.data,
           temp : resp.data

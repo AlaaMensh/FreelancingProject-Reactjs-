@@ -110,6 +110,20 @@
                         "name" : "result"
                 }
                },
+               "AdditionObject":{
+                "date": "",
+                "comments": "",
+                "status" : "",
+                "ptId": "",
+                "drId": "",
+                "labId" : "" 
+               },
+               "AcceptObject":{
+                       "id":"",
+                       "labFDId":""
+               },
+               "titleForPatientOrders":"All Patients Orders",
+               "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                "title":"All Lab Orders",
                "description":"From here you can see and upload Results for all accepted orders",
                "addOrder" :"http://localhost:8080/order/addlabOrder",
@@ -185,6 +199,8 @@
                         }
 
                },
+               "titleForPatientOrders":"All Patients Orders",
+               "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                "title":"All Pathology Orders",
                "description":"From here you can see and upload Results for all accepted orders",
                "addOrder" :"http://localhost:8080/order/addlabOrder",
@@ -195,7 +211,7 @@
                "getNotAcceptedOrders" :"http://localhost:8080/lab/getlabOrderByptId",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "http://localhost:3000/lab/getOrdersByPtId",
-               "getAllOrdersByLabId" : "http://localhost:3000/lab/getOrdersByLabId"
+               "getAllOrdersByLabId" : "http://localhost:8080/order/getpathoOrderbyLab"
 
             }
     

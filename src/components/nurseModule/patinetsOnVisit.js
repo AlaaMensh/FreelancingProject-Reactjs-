@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import  { Component } from 'react';
 import nurseModule from "../nurseDB.json";
-import DataTableComp from "../typesGenerator/dataTable"
-
-
+import DataTableComp from "../typesGenerator/dataTable";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 
 
@@ -17,10 +18,7 @@ class PatientsOnVisit extends Component {
       columns:[]
           }
         }
-        
- 
 
-    
     getData = async()=>{
     var type = "patientsOnVisit"
       var details = {
@@ -94,26 +92,20 @@ class PatientsOnVisit extends Component {
     }
 
 
-    componentDidUpdate(){
-        console.log("hhhhhhh")
-        this.rendering();
-    }
-
     rendering = () =>{
         return(
-          <div className="container gridDataContent mt-5"> 
-          <div className="row">
-            <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">All Patient in Active Visit</span>
-            </div>
-            <div className="col-10 overflow-hidden ">
-                <div className="row justify-content-lg-start">
-              
-                </div>
-            </div>
-          </div>
-           
-            {console.log("columns : "  , this.state.columns)}
+          <Container>
+          <Row className= "py-3">
+              <Col>
+                  {
+                      <>
+                        <h3>All Patients on Active Visit</h3>
+                        <div>You will see here all patients on visits....</div>
+                      </>
+                    
+                  }
+              </Col>
+          </Row>
             {
         this.state.patientsOnVisit &&(
           <DataTableComp data={this.state.patientsOnVisit}
@@ -122,7 +114,7 @@ class PatientsOnVisit extends Component {
 
         )
       }
-            </div> 
+            </Container> 
             
                     
         

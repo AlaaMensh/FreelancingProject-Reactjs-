@@ -113,7 +113,7 @@
          "id" : ""
     },
     "title":"All Patient Appointements",
-    "description":"simple blah blah this the page and what it dose you know stuff..",
+    "description":"Here you will see all patient appointements..",
         "addAppointement":"http://localhost:8080/appointment/addAppoinment",
         "getAllAppointements" :"http://localhost:8080/appointment/getAppoinmentbyPtid",
         "updateAppointements" :"http://localhost:8080/appointment/updateAppointment",
@@ -236,7 +236,7 @@
          "id" : ""
     },
     "title":"All Doctor Appointements at Specific time",
-    "description":"simple blah blah this the page and what it dose you know stuff..",
+    "description":"Here you will see all your Appointements...",
         "addAppointement" : "http://localhost:8080/appointment/addAppoinment",
         "updateAppointements" :"http://localhost:8080/appointment/updateAppointment",
         "deleteAppointements" :"http://localhost:8080/appointment/deleteAppointment",

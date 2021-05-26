@@ -42,7 +42,6 @@ const MainFunctions = [ // Cards content and its role
 ]
 const renderBodyForSessionCode = (value, role) =>{
   return (
-  
             <Card className="bg-light"  
             style={{height:"15em" ,cursor : value.role.includes(role)?"pointer":"not-allowed" }}
             >
@@ -179,8 +178,15 @@ const renderBodyForSessionCode = (value, role) =>{
               
                             {/* PharmacyModule   */}
             <Route exact  path={match.path+"/pharmacyModule"} component={PharmacyModuleForDoctor}/>        
-            <Route exact  path={match.path+"/pharmacyModule/prescription"} component={Prescription}/>        
             <Route exact  path={match.path+"/PharmacistPharmacyModule"} component={PharmacyModuleForPharmacist}/>        
+                           
+                            {/* from PharmacyModule To xprescription   */}
+            <Route exact  path={match.path+"/pharmacyModule/prescription"} component={Prescription}/>        
+            <Route exact  path={match.path+"/PharmacistPharmacyModule/prescription"} component={Prescription}/>        
+            
+                            {/* From Future and current Appointements in EMR to Visit */}
+            <Route exact  path={match.path+"/EMR/Futureappointements/future/visit"} component={Visit}/>        
+            <Route exact  path={match.path+"/EMR/currentAppointements/current/visit"} component={Visit}/>        
           
           </Switch>
       </div>

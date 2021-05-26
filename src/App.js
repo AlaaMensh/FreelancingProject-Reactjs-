@@ -18,7 +18,7 @@ import ForgotPasswordCode from './components/Forms/ForgotPasswordCode';
 import ErrorHandeling from "./components/ErrorHandling/errorHandeling";
 import ptRegistration from "./components/patientRegistration/ptRegistration";
 import AllOrders from "./components/orderGeneration/addOrderForm";
-
+import UserWelcomePage from "./pages/newAppointments";
 
 
 
@@ -82,6 +82,9 @@ console.log("value from App: " , value)
       
       
       <Route exact path="/AllOrders" component={AllOrders}></Route>
+      
+      
+      <Route exact path="/welcomePage" component={UserWelcomePage}></Route>
 
       {/* <Route  path="/profile" component={Profile}></Route> */}
       {/* <Route exact path="**" component={Error}></Route> */}

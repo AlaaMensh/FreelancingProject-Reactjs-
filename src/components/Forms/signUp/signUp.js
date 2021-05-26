@@ -63,7 +63,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
           if(( p=="labId") || p=="radioId" || p =="pathoId" || p =="doctorFD"){
             console.log("//////////////////////////////////////")
             for(var place of this.state.list){
-              console.log("id: " , place.id , " obj:" , place)
+              // console.log("id: " , place.id , " obj:" , place)
               var obj = {value : place.id , text : place.name }
               temp2.push(obj);
             }
@@ -89,7 +89,6 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       }
 
     getDataForFD =(type)=>{//Ex: get lab names for labFD
-      // axios.get(`${userType[this.state.type].getAllDataFD}` ,{
       axios.get(`${userType[type].getAllDataFD}` ,{
       } ).then(async resp => {
         console.log("resp : " ,resp)
@@ -129,8 +128,9 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
        }).then((resp)=>{
           resp.text().then((text)=>{
             console.log("text:  " , text)
+            this.props.history.push("/login")
           });
-       }).catch(()=>{
+       }).catch(()=>{ //**Toastify */
          console.log("errror")
        })
       //  this.props.history.push("/login")
