@@ -17,8 +17,9 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
     }
     async componentDidMount(){
       console.log("000000000000000: " , this.props.history.location.state)
-        await this.handleDataTableColumns()
-        await this.getData(this.props.match.params.type)
+      this.setState({type : this.props.match.params.type});
+        await this.handleDataTableColumns();
+        await this.getData(this.props.match.params.type);
     }
 
 
@@ -26,9 +27,20 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       console.log("Accepted IDS:  " , this.state.acceptedIds )
       var details = {
         id : id,
-        labFDId : localStorage.getItem("labId"),
+     
         // labId: localStorage.getItem("labId")
       }
+      switch(this.state.type){
+        case "lab":
+            details["labFDId"] = localStorage.getItem("labId");
+            break;
+        case "pathology":
+            details["pathoFDId"] = localStorage.getItem("pathoId");
+            break;
+        case "radio":
+            details["radioFDId"] = localStorage.getItem("radioId");
+            break;
+    }
       console.log("detilaas : " , details)
 
       var formBody = [];
@@ -39,7 +51,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       }
       formBody = formBody.join("&");
       console.log("formging:     " , formBody)
-      console.log("formging:     " , JSON.stringify(details))
+      console.log("Endpoint for accept:     " , orderType[this.state.type].acceptOrder)
       
   await fetch(`${orderType[this.state.type].acceptOrder}`, {
         method: 'PUT',
@@ -119,7 +131,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         this.setState({type});
         
         var temp = []
-        for(var p in orderType[type].columnsTable ){
+        console.log("uuuuuuuuuuuuuuuu: " ,orderType[type].columnsTableForPatientAcceptOrders  )
+        for(var p in orderType[type].columnsTableForPatientAcceptOrders ){
           if(p === "actions"){
             orderType[type].columnsTable[p]["cell"] =  (row) =>{ return(
             <div className = "row">
@@ -177,7 +190,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
 
             <Row className= "py-3">
                <Col>
-                {console.log(this.state.columns)}
+                {console.log("columns: ",this.state.columns)}
                 <DataTableComp  data = {this.state.allNotAcceptedOrders}
                   columns = {this.state.columns}
                   title=""

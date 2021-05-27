@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
+import ModalForView from "../pharmacyModule/modalForView"
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 var object  = {}
@@ -111,7 +112,7 @@ class AllOrdersForDoctor extends Component {
          formBody.push(encodedKey + "=" + encodedValue);
        }
        formBody = formBody.join("&");
-       console.log("endPoint: " , orderType[type].getAllDoctorOrders)
+       console.log("endPointttttttt: " , orderType[type].getAllDoctorOrders)
        axios.post(`${orderType[type].getAllDoctorOrders}`,formBody).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
@@ -278,6 +279,11 @@ class AllOrdersForDoctor extends Component {
   
 
   }
+  renderingModalBody = ()=>{
+    return (
+      <h1>Result</h1>
+    )
+  }
 
    
 
@@ -328,19 +334,7 @@ class AllOrdersForDoctor extends Component {
                 />
                 {console.log("inputs: " , this.state.formType)}
             </Col> 
-            {
-              this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
-                <ModalComp show={this.state.openModal}
-                  onHide={this.handleClose}
-                  ModalInputs={this.state.modalUploadResultInputs}
-                  updatedTypeObj = {this.state.typeObj}
-                  handleChange = {this.handleChange}
-                  handleUpdate = {this.handleUpdate}
-                  handleAdding={this.handleAdding}
-                  formType = {this.state.formType}
-                />
-              ) 
-            }
+            
             {/* for Plus Icon */}
             {/* if We Want to Add Order */}
               <div className="row mt-4">
@@ -351,6 +345,7 @@ class AllOrdersForDoctor extends Component {
                           <AddIcon  />
                         </Fab>                       */}
                 </div>
+                <ModalForView body={this.renderingModalBody()} show={this.state.openModal} onHide={this.handleClose} />
                      
             {
               this.state.fileResult && (

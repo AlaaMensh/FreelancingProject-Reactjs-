@@ -149,19 +149,19 @@ var details = {}
     }
     formBody = formBody.join("&");
 
-          // console.log("formBody: ",formBody)
-          // await fetch(`${userType[this.state.type].updateUser}`, {
-          //   method: 'PUT',
-          //   headers: {
-          //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          //   },
-          //   body: formBody
-          // }).then(()=>{
-          //   console.log("it is inserted");
-          // }).catch(()=>{
-          //   console.log("errror")
-          // })
-          //    this.getData(this.state.type)
+    console.log("formBody: ",formBody)
+    await fetch(`${userType[this.state.type].updateUser}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: formBody
+    }).then(()=>{
+      console.log("it is inserted");
+    }).catch(()=>{
+      console.log("errror")
+    })
+        this.getData(this.state.type)
   }
   handleDelete= async(id)=>{
     var details = {
@@ -223,6 +223,7 @@ await fetch(`${userType[this.state.type].addUser}`, {
     this.getData(this.state.type);
   }
   getData = async(type)=>{
+    console.log("UserEndpoint: " , userType[type].getAll);
     await axios.get(`${userType[type].getAll}`).then(async resp => {
        this.setState({  
           data : resp.data,

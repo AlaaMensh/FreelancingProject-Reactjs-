@@ -60,7 +60,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         for(var p in userType[type].modalAdditionForms ){
           console.log("p : " , p);
           temp.push(userType[type].modalAdditionForms[p])
-          if(( p=="labId") || p=="radioId" || p =="pathoId" || p =="doctorFD"){
+          if(( p=="labId") || p=="radioId" || p =="pathoId" ){
             console.log("//////////////////////////////////////")
             for(var place of this.state.list){
               // console.log("id: " , place.id , " obj:" , place)
@@ -71,6 +71,17 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
             this.setState({options : temp2})
             temp2=[]
           
+          }
+          if(p =="drId"){
+            console.log("DoctorFD Here ")
+            for(var doctor of this.state.list){
+              // console.log("id: " , place.id , " obj:" , place)
+              var obj = {value : doctor.id , text : doctor.firstName+" " +doctor.secondName +" "+ doctor.lastName }
+              temp2.push(obj);
+            }
+            console.log("options : " , temp2)
+            this.setState({options : temp2})
+            temp2=[]
           }
 
         } 
@@ -89,6 +100,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       }
 
     getDataForFD =(type)=>{//Ex: get lab names for labFD
+      console.log("endpointL " , userType[type].getAllDataFD)
       axios.get(`${userType[type].getAllDataFD}` ,{
       } ).then(async resp => {
         console.log("resp : " ,resp)
@@ -100,8 +112,8 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       
       })
     }
-       handleSignup = async()=>{
-         var details = {};
+    handleSignup = async()=>{
+      var details = {};
 
       for(var property in userType[this.state.type].state ){
         // console.log("propertyyyy :  " , property)

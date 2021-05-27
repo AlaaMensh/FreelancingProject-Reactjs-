@@ -123,7 +123,7 @@ class AllOrders extends Component {
             details["pathoId"] = localStorage.getItem("pathoId");
           }
           case "radio":{
-            details["radioId"] = localStorage.getItem("labId");
+            details["radioId"] = localStorage.getItem("radioId");
           }
         }
 

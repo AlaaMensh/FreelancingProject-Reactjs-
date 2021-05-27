@@ -107,7 +107,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             secondName: secondName,
             address: address,
             phone: phone,
-            email: email,
+            Email: email,
             birthDate: birthDate,
             status: status,
             BloodGroup : bloodGroup,
@@ -129,7 +129,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             formBody = formBody.join("&");
             console.log("formBody:  " , formBody)
 
-            fetch('http://localhost:3000/pt/addpt', { //** this will add patient */
+            fetch('http://localhost:8080/pt/addPT', { //** this will add patient */
               method: 'POST',
                headers: {
                  'Content-Type': 'application/json'

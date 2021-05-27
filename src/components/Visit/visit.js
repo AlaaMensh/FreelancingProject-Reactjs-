@@ -123,7 +123,7 @@ export default function Visit({match}) {
         console.log("step3obj :  " , objStep3);
 
         var details = { // ************this object will be Sent to BackEnd to add a Visit
-          ptId:match.params.id,
+          ptId:localStorage.getItem("ptId"),
           drId:drId,
           chiefComplains : chiefComplains,
           diagnosis : diagnosis,

@@ -108,35 +108,30 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
           }
 
           var roleName = this.setRoleName(data.role); // to get if he is LabFD or pathologyFD or doctorFD or radioFD
-          if(parseInt(data.role) == 2 ||  parseInt(data.role) == 3 || parseInt(data.role) == 4 || parseInt(data.role) == 5){
-            axios.post(`${userType[roleName].getLabIdInSession}` ,{
-              userId: data.userId
-            } ,{
-            } ).then(async resp => {
-              console.log("resppppppp : " ,resp);
-              localStorage.setItem('labId', resp.data.labId);
+          if(parseInt(data.role) == 3 ){
+            localStorage.setItem('labId', data.labId);
+          }
+
+          else if(parseInt(data.role) == 4   ){
+console.log(";;;;;;;;;;;;;;;;;;;;;")
+            localStorage.setItem('radioId',data.radioId);
+          }
+          else if(parseInt(data.role) == 5){
+            localStorage.setItem('pathoId',data.pathoId);
+          }
+          else if(parseInt(data.role) == 2){ /// for Doctor FrontDist *****Abdoooooo
             
-            }).catch((e)=>{
-              toast('🦄 can not get this FrontDisk Lab....', {
-                position: "top-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                });
-            })
           }
 
           if(parseInt(data.role) > 2 ){
             this.props.history.push("/publicDashBoard")
           }
+          
         //   if(data.role == "done"){
         //     history.push("/welcomePage");
-        //     console.log("heeereeeee")
-            
+        //     console.log("heeereeeee") 
         //   }
+
       
         })
           

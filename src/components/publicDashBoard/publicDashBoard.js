@@ -33,7 +33,7 @@ const MainFunctions = [ // Cards content and its role
     {text: "New patient registration" , role :["8" , "6"]},   //doctor and our GP
     {text: "EMR Electronic Medical Records" , role :["8"]},   // doctor
     {text: "Nursing Assessment" , role :["8" , "7"]},         // nurse and doctor
-    {text: "Lap Information System" , role :["3 ","8"]},           // lab FD
+    {text: "Lap Information System" , role :["3","8"]},           // lab FD
     {text: "Radiology Information System" , role :["4" , "8"]},     // radio
     {text: "Path information system" , role :["5" , "8"]},         // pathology
     {text: "Electronic procreption ERX" , role :["13" , "8"]}, //doctor or pharmacist
@@ -87,6 +87,7 @@ const renderBodyForSessionCode = (value, role) =>{
             <Card className="bg-light"  
             style={{height:"15em" ,cursor : value.role.includes(role)?"pointer":"not-allowed" }}
             onClick={()=>{
+         
               if(value.role.includes(role) && value.text === "New Doctor Appointement"){
                 history.push(match.path+"/appoint");
               }

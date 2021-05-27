@@ -57,13 +57,13 @@
               "addUser" :"http://localhost:8080/doctor/addDoctor",
               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-              "getAll":"http://localhost:3000/doctor/getAll"
+              "getAll":"http://localhost:8080/doctor/getAll"
               
-
            },
         "doctor" : {  
                  "state":{
                     "firstName":"",
+                    "secondName":"",
                     "lastName": "", 
                     "Date": "",
                     "degree" : "",
@@ -73,11 +73,17 @@
                     "phone" : "",
                     "address": ""
                     
-            },
+                },
                "columnsTable" : {
                         "firstName": {
                                 "name": "First Name",
                                 "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -129,6 +135,10 @@
                                 "type": "text",
                                 "name" : "firstName"
                         },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
@@ -155,6 +165,10 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
                         },
                         "lastName" :{
                                 "type": "text",
@@ -192,16 +206,17 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "addUser" :"https://mvb1.herokuapp.com/doctor/addDoctor",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll"
+               "getAll":"http://localhost:8080/doctor/getAll"
                
 
             },
         "nurse" : {  
-                 "state":{
+                "state":{
                     "firstName":"",
+                    "secondName":"",
                     "lastName": "", 
                     "Date": "",
                     "degree" : "",
@@ -216,6 +231,12 @@
                         "firstName": {
                                 "name": "First Name",
                                 "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -267,6 +288,10 @@
                                 "type": "text",
                                 "name" : "firstName"
                         },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
@@ -293,6 +318,10 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
                         },
                         "lastName" :{
                                 "type": "text",
@@ -330,16 +359,16 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "addUser" :"https://mvb1.herokuapp.com/nurse/addNurse",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
                "getAll":"http://localhost:3000/doctor/getAll"
                
-
             },
         "pathologist" : {  
                  "state":{
                     "firstName":"",
+                    "secondName":"",
                     "lastName": "", 
                     "Date": "",
                     "degree" : "",
@@ -349,11 +378,17 @@
                     "phone" : "",
                     "address": ""
                     
-            },
+                },
                "columnsTable" : {
                         "firstName": {
                                 "name": "First Name",
                                 "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -405,6 +440,10 @@
                                 "type": "text",
                                 "name" : "firstName"
                         },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
@@ -431,6 +470,10 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
                         },
                         "lastName" :{
                                 "type": "text",
@@ -468,16 +511,15 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "addUser" :"https://mvb1.herokuapp.com/patho/addPathology",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
                "getAll":"http://localhost:3000/doctor/getAll"
-               
-
             },
         "radiogist" : {  
                  "state":{
                     "firstName":"",
+                    "secondName":"",
                     "lastName": "", 
                     "Date": "",
                     "degree" : "",
@@ -492,6 +534,12 @@
                         "firstName": {
                                 "name": "First Name",
                                 "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -543,6 +591,10 @@
                                 "type": "text",
                                 "name" : "firstName"
                         },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
@@ -569,6 +621,10 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
                         },
                         "lastName" :{
                                 "type": "text",
@@ -606,7 +662,7 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "addUser" :"https://mvb1.herokuapp.com/radiology/addRadiology",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
                "getAll":"http://localhost:3000/doctor/getAll"
@@ -616,6 +672,7 @@
         "chemist" : {  
                  "state":{
                     "firstName":"",
+                    "secondName":"",
                     "lastName": "", 
                     "Date": "",
                     "degree" : "",
@@ -625,11 +682,17 @@
                     "phone" : "",
                     "address": ""
                     
-            },
+                },
                "columnsTable" : {
                         "firstName": {
                                 "name": "First Name",
                                 "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "second Name",
+                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -681,6 +744,10 @@
                                 "type": "text",
                                 "name" : "firstName"
                         },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
@@ -707,6 +774,10 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
                         },
                         "lastName" :{
                                 "type": "text",
@@ -744,7 +815,7 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "addUser" :"https://mvb1.herokuapp.com/chemist/addChemist",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
                "getAll":"http://localhost:3000/doctor/getAll"
@@ -754,6 +825,7 @@
         "assistant" : {  
                  "state":{
                     "firstName":"",
+                    "secondName":"",
                     "lastName": "", 
                     "Date": "",
                     "degree" : "",
@@ -768,6 +840,12 @@
                         "firstName": {
                                 "name": "First Name",
                                 "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -819,6 +897,10 @@
                                 "type": "text",
                                 "name" : "firstName"
                         },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
@@ -845,6 +927,10 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
                         },
                         "lastName" :{
                                 "type": "text",
@@ -882,7 +968,7 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
                "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
                "updateUser":"http://localhost:3000/doctor/updateDoctor",
                "getAll":"http://localhost:3000/doctor/getAll"
@@ -890,9 +976,6 @@
 
             },
 
-
-       
-       
 
         "labFD" : { 
                 "state":{
@@ -1011,10 +1094,10 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:8080/frontdisk/addLabFrontDisk",
+             "addUser" :"https://mvb1.herokuapp.com/frontdisk/addLabFrontDisk",
              "deleteUser" : "",
              "updateUser":"",
-             "getAll":"",
+             "getAll":"http://localhost:8080/frontdisk/getAll",
              "getAllDataFD" :"http://localhost:8080/lab/getAll",
              "getLabIdInSession":"" 
              
@@ -1023,7 +1106,7 @@
           "radioFD" : { 
                 "state":{
                       "userName":"",
-                      "password": "",
+                      "Password": "",
                       "Email": "",
                       "phone" : "",
                       "address": "",
@@ -1080,9 +1163,9 @@
                               "name" :"userName"
                       },
                       
-                      "password" : {
+                      "Password" : {
                               "type":"password",
-                              "name" :"password"
+                              "name" :"Password"
                       },
                       "Email" : {
                               "type":"email",
@@ -1116,9 +1199,9 @@
                               "name" :"userName"
                       },
                       
-                      "password" : {
+                      "Password" : {
                               "type":"password",
-                              "name" :"password"
+                              "name" :"Password"
                       },
                       "Email" : {
                               "type":"email",
@@ -1262,7 +1345,7 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:8080/frontdisk/addpathoFrontDisk",
+             "addUser" :"https://mvb1.herokuapp.com/frontdisk/addpathoFrontDisk",
              "deleteUser" : "",
              "updateUser":"",
              "getAll":"",
@@ -1271,16 +1354,16 @@
              
 
           },
-          "DoctorFD" : { 
+          "doctorFD" : { 
                 "state":{
                       "userName":"",
-                      "password": "",
+                      "Password": "",
                       "Email": "",
                       "phone" : "",
                       "address": "",
                       "establishment": "",
                       "contactPerson" : "",
-                      "labId":""
+                      "drId":""
                      
                       
           },
@@ -1332,9 +1415,9 @@
                               "name" :"userName"
                       },
                       
-                      "password" : {
+                      "Password" : {
                               "type":"password",
-                              "name" :"password"
+                              "name" :"Password"
                       },
                       "Email" : {
                               "type":"email",
@@ -1348,9 +1431,9 @@
                               "type":"text",
                               "name" :"address"
                       },
-                      "labId" : {
+                      "drId" : {
                               "type":"select",
-                              "name" :"labId"
+                              "name" :"drId"
                       }
                       
               },
@@ -1368,9 +1451,9 @@
                               "name" :"userName"
                       },
                       
-                      "password" : {
+                      "Password" : {
                               "type":"password",
-                              "name" :"password"
+                              "name" :"Password"
                       },
                       "Email" : {
                               "type":"email",
@@ -1388,11 +1471,11 @@
              },
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
-             "addUser" :"http://localhost:8080/frontdisk/addLabFrontDisk",
+             "addUser" :"http://localhost:8080/frontdisk/addDoctorFD",
              "deleteUser" : "",
              "updateUser":"",
              "getAll":"",
-             "getAllDataFD" :"http://localhost:8080/lab/getAll",
+             "getAllDataFD" :"https://mvb1.herokuapp.com/doctor/getDoctor",
              "getLabIdInSession":"" 
              
 
