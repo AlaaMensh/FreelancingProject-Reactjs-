@@ -150,6 +150,7 @@ class AllOrders extends Component {
     }
  
     handleDelete= async(id)=>{
+      console.log("iiiiiiiiiid"  ,id)
       var details = {
         id:id
       }
@@ -191,12 +192,12 @@ class AllOrders extends Component {
         body: Form
       }).then((resp)=>{
         console.log("Getting: " , resp);
-        resp.json().then((data)=>{
-          var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
-          this.setState({orderlabList : temp});
+        resp.json().then((data)=>{ //** */ if you want to delete the record with uploaded Result
+          // var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
+          // this.setState({orderlabList : temp});
         })
       }).catch(()=>{
-        console.log("errror")
+        console.log("error On Server")
       })
 
          

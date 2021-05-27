@@ -94,15 +94,31 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
          },
          body: formBody
        }).then((resp)=>{
-         console.log("resp.type: " ,typeof(resp) , resp.data)
+         console.log("resp.type: " ,typeof(resp) , resp)
+     
         resp.json().then((data)=>{
-          // setData on LocalStorage
-          console.log("data:  " , data);
-          localStorage.setItem('role', data.role);
-          localStorage.setItem('userId', data.userId);
+         
+          if(data.message ){ // if this user has wrong password or wrong UserName
+            toast(`🦄 ${data.message}`, {
+              position: "top-center",
+              autoClose: 2000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              })
+          }
+           // setData on LocalStorage
+           else{
+            console.log("data:  " , data);
+            localStorage.setItem('role', data.role);
+            localStorage.setItem('userId', data.userId);
+            localStorage.setItem('userName', this.state.userName);
+            this.props.getAuthorization(true , this.state.userName); // for App to flip the Login and logout button
+            
+           }
 
-          this.props.getAuthorization(true); // for App to flip the Login and logout button
-          
           if(data.role ==""){ // if he is a just user
             this.props.history.push("/welcomePage");
           }
@@ -112,8 +128,8 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
             localStorage.setItem('labId', data.labId);
           }
 
-          else if(parseInt(data.role) == 4   ){
-console.log(";;;;;;;;;;;;;;;;;;;;;")
+          else if(parseInt(data.role) == 4){
+            console.log(";;;;;;;;;;;;;;;;;;;;;")
             localStorage.setItem('radioId',data.radioId);
           }
           else if(parseInt(data.role) == 5){
@@ -137,6 +153,15 @@ console.log(";;;;;;;;;;;;;;;;;;;;;")
           
         }).catch(()=>{ //***Toastify */
           this.setState({errorMessage :"SomethingWrong...."})
+          toast(`🦄 SomethingWrong.... `, {
+            position: "top-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            })
        })
      
      }
@@ -169,10 +194,7 @@ console.log(";;;;;;;;;;;;;;;;;;;;;")
             </div>
             <div className="col-8 bg-primary"style={{height:'100%' }}></div>
             </div>
-            { this.state.errorMessage &&(
-              <ErrorHandeling errorMessage={this.state.errorMessage}/>
-              )
-            }
+
             </div>
          );
     }

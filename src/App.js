@@ -26,6 +26,7 @@ import UserWelcomePage from "./pages/newAppointments";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem("role"));
+  const [userName, setUserName] = useState(localStorage.getItem("userName"));
     const history = useHistory();
 
     useEffect (()=>{
@@ -40,7 +41,7 @@ function App() {
   const isLoggedIn = ()=>{
     return localStorage.getItem("userId")?true:false
   }  
-  const getAuthorization = (value) =>{
+  const getAuthorization = (value , userName) =>{
 console.log("value from App: " , value)
     setLoggedIn(value);
   } 

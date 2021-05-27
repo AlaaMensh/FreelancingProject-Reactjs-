@@ -268,15 +268,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }).catch((e)=>{
       console.log("error on Adding..." , e)
       // this.props.history.push("/ptRegistration")
-      toast('🦄 SomeThing Wrong.....', {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        });
+
     })
     this.getData(this.state.type , this.state.appointementsType);
   }

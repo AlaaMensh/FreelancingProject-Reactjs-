@@ -126,6 +126,7 @@ class AllOrdersForDoctor extends Component {
     }
  
     handleDelete= async(id)=>{
+      console.log("iiiiiiiiiid")
       var details = {
         id:id
       }

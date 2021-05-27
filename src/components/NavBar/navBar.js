@@ -60,9 +60,10 @@ const NavBar = (props) => {
                 
               
                 <Button className="nav-btn" onClick={()=>{
-                   
                     localStorage.removeItem("role");
                     localStorage.removeItem("labId");
+                    localStorage.removeItem("pathoId");
+                    localStorage.removeItem("radioId");
                     localStorage.removeItem("userId");
                     localStorage.removeItem("userName");
                     history.push("/login")

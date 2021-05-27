@@ -323,15 +323,15 @@
               },
               
                  "columnsTable" : {
-                         "firstName": {
+                         "firstname": {
                                  "name": "First Name",
-                                 "selector": "firstName",
+                                 "selector": "firstname",
                                  "sortable": true,
                                  "center" : true
                          },
-                         "secondName": {
+                         "secondname": {
                                  "name": "Second Name",
-                                 "selector": "secondName",
+                                 "selector": "secondname",
                                  "sortable": true,
                                  "center" : true
                          },
