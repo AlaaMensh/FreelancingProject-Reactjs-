@@ -189,10 +189,11 @@ class Login extends Component { //for Doctor - nurse - pathologist - chemist
                 buttonTitle = "Login"/>
                 )
                 }
-                <a style={{fontSize:"0.9em"}} href="/forgetPassword">Forget Password</a>
+                <a style={{fontSize:"0.9em"}} href="/forgetPassword">Forgot Password</a>
               
             </div>
-            <div className="col-8 bg-primary"style={{height:'100%' }}></div>
+            <div className="col-8 bg-primary"style={{height:'100%',backgroundImage:"url('./images/disk-orginal.jpg') ",  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover" }}></div>
             </div>
 
             </div>
