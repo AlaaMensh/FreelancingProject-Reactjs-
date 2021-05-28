@@ -102,7 +102,7 @@ const ClinicalDashBoard = ({match}) => {
       <Route exact key={4} path={match.path+"/patientAllergyproblems/:type"}  component={PatientProblems}/> 
       <Route exact key={5} path={match.path+"/patientOnGoingproblems/:type"}  component={PatientProblems}/> 
       <Route exact path={match.path+"/patientAppointement"}  component={PatientAppointement}/> 
-      <Route exact path={match.path+"/patientAppointement/visit"}  component={Visit}/> 
+      {/* <Route exact path={match.path+"/patientAppointement/visit"}  component={Visit}/>  */}
   
       
       <Route exact key={1} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 
@@ -117,8 +117,8 @@ const ClinicalDashBoard = ({match}) => {
       <Route exact key={7} path={match.path+"/allRadioOrders/:type/addOrder"}  component={AddOrderForm}/> 
 
      
-      <Route exact path={match.path+"/:id/patientAppointement/visit"}  component={Visit}/> 
-      <Route exact path={match.path+"/:id/patientAppointement/visit/prescription/:visitId"}  component={Prescription}/> 
+      <Route exact path={match.path+"/patientAppointement/visit"}  component={Visit}/> 
+      <Route exact path={match.path+"/patientAppointement/visit/prescription/:visitId"}  component={Prescription}/> 
       <Route exact path={match.path+"/profile"}  component={Prescription}/> 
      
     </Switch>
