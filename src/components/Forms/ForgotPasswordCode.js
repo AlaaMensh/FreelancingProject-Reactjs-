@@ -1,28 +1,12 @@
 
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
+
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import InputLabel from '@material-ui/core/InputLabel';
 import  { useState , useEffect } from 'react';
-import { NativeSelect } from '@material-ui/core';
-import axios from 'axios';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import LockIcon from '@material-ui/icons/Lock';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
+
 // import "./form.css";
 
 import { useHistory ,useLocation } from "react-router-dom";
@@ -120,52 +104,50 @@ const ForgotPasswordCode = ()=>{
 
     }
   return (
-      <div className="form-hero row" >
-            <Container component="main" maxWidth="xs" >
-    <div className={classes.paper}>
-                  <Avatar className={classes.avatar}>
-                    
-                  </Avatar>
-                  <Typography component="h6" variant="h6">
-                    Please Enter your the code we sent
-                  </Typography>
-              <form className={classes.form} noValidate>
-           <Grid container spacing={2} justify="center">
-             <Grid item xs={6}>
-               <TextField
-                variant="outlined"
-                required
-                size="small"
-                id="code"
+
+
+    <div className="container-fluid" style={{height:'100%' }}>
+    <div className="row align-items-center" style={{height:'100%' }}>
+        <div className="col-4 justify-content-center no-gutter">
+  
+           <div className="row">
+             <div className="col justfiy-content-center">
+             <div className="row">
+                 <div className="col justfiy-content-center">
+
+                 <h3>Verification of ownership</h3>
+                 </div>
+                 </div>
+
+                 <Form className={classes.form} noValidate>
+              <Form.Group controlId="formBasicEmail">
+                   <Form.Label>Recovery Code</Form.Label>
+                  <Form.Control type="email" id="code"
                 label="Code"
                 name="code"
                 autoComplete="Eamil"
                 onChange = {(event) =>{
                     setCode(event.target.value);
-                }}
-              />
-            </Grid>
-        </Grid>
-      <div className="row justify-content-center">
-      <Button variant="contained" className={classes.submit} onClick ={() =>{
+                }}placeholder="Enter Code" />
+                    <Form.Text className="text-muted">
+                      Check your inbox for the code .
+                    </Form.Text>
+                 </Form.Group>
+
+                 <Button variant="primary" className={classes.submit} onClick ={() =>{
                handleSubmit()
            }}>Verify</Button>
-      </div>
-           
-           {/* <Link
-            to={{
-              pathname: "/forgetPasswordCode",
-               // your data array of objects
-            }}
-          ><Button variant="contained" onClick ={() =>{
-               handleSubmit()
-           }}>Submit</Button>
-           </Link> */}
-        </form>
-                </div>
+</Form>
   
-      </Container>
-      </div>
+             </div>
+            
+        
+            </div>
+           </div>
+           <div className="col-8 bg-primary"style={{height:'100%',backgroundImage:"url('./images/side3.jpg') ",  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover" }}></div>
+            </div>
+           </div>
    
   );
 }
