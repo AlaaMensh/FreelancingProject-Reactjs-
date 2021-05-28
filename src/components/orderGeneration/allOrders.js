@@ -9,6 +9,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
+import ModalForView from "../pharmacyModule/modalForView"
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 var object  = {}
@@ -261,6 +262,7 @@ class AllOrders extends Component {
                       console.log("id:  " , row)
                       this.setState({fileResult : row.result})
                       this.getTypeByID(row.id);
+                      this.handleopenModal()
                     }}>
                       Show Result
                       </button>
@@ -305,7 +307,11 @@ class AllOrders extends Component {
 
   }
 
-   
+    renderModalBody = ()=>{
+      return (
+        <h1>Result</h1>
+      )
+    }
 
     rendering = () => {
         return(
@@ -360,19 +366,8 @@ class AllOrders extends Component {
                 />
                 {console.log("inputs: " , this.state.formType)}
             </Col> 
-            {
-              this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
-                <ModalComp show={this.state.openModal}
-                  onHide={this.handleClose}
-                  ModalInputs={this.state.modalUploadResultInputs}
-                  updatedTypeObj = {this.state.typeObj}
-                  handleChange = {this.handleChange}
-                  handleUpdate = {this.handleUpdate}
-                  handleAdding={this.handleAdding}
-                  formType = {this.state.formType}
-                />
-              ) 
-            }
+            <ModalForView  show={this.state.openModal} onHide={this.handleClose} body={this.renderModalBody()} />
+            
             {/* for Plus Icon */}
             {/* if We Want to Add Order */}
               <div className="row mt-4">

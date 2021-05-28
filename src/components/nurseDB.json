@@ -36,7 +36,7 @@
        },
                "title":"All patients On Active Visit",
                "description":"From here you can see All patients on Active visits",
-               "getAll":"http://localhost:8080/session/getSessionByDate"
+               "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate"
 
         },
      "nurseVitals" :{
@@ -184,10 +184,10 @@
         },
         "title":"All Patient last Visits",
         "description":"From here you can see and upload Results for all accepted orders",
-        "getAll":"http://localhost:8080/session/getSessionByDate",
-        "getPatientLastVisits":"http://localhost:8080/nurse/getByPtId",
-        "deleteVital" : "http://localhost:3000/nurse/delete",
-        "addVital" :"http://localhost:8080/nurse/addRecord"
+        "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate",
+        "getPatientLastVisits":"https://mvb1.herokuapp.com/nurse/getByPtId",
+        "deleteVital" : "https://mvb1.herokuapp.com/nurse/delete",
+        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord"
 
      }
             

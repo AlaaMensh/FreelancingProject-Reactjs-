@@ -102,6 +102,7 @@ const ClinicalDashBoard = ({match}) => {
       <Route exact key={4} path={match.path+"/patientAllergyproblems/:type"}  component={PatientProblems}/> 
       <Route exact key={5} path={match.path+"/patientOnGoingproblems/:type"}  component={PatientProblems}/> 
       <Route exact path={match.path+"/patientAppointement"}  component={PatientAppointement}/> 
+      <Route exact path={match.path+"/patientAppointement/visit"}  component={Visit}/> 
   
       
       <Route exact key={1} path={match.path+"/allLabOrders/:type"}  component={AllOrders}/> 

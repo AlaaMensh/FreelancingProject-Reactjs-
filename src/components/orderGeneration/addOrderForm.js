@@ -20,6 +20,7 @@ class AddOrderForm extends Component {
   }
   componentDidMount(){
     var type = this.props.match.params.type;
+    console.log("hhhhhhhhhhhhhhhhhhh: " , this.props.history.location.state)
     // var type = "lab";
     this.setState({type});
     this.setState();
@@ -100,10 +101,16 @@ class AddOrderForm extends Component {
     },
     body: formBody
   }).then((resp)=>{
+    console.log("///////////// , " , this.props.match)
     console.log("resp: " , resp);
     resp.text().then((msg)=>{
       console.log("successfully added....." , msg);
-      this.props.history.goBack();
+      if(!this.props.history.location.state){
+        this.props.history.goBack();
+      }
+      else{ 
+        this.props.history.push(`${this.props.match.url}/allOrdersForDoctor`)
+      }
       // if(typeof(msg)==="object"){ //// ****************** Change it when you know the backend message *******/////
       //   this.props.history.goBack();
       // }

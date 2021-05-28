@@ -203,8 +203,9 @@ const renderBodyForSessionCode = (value, role) =>{
           
           
             <Route exact  path={match.path+"/choiceForDoctor/:type"} component={ChoicePageForDoctor}/>        
-            <Route path={match.path+"/choiceForDoctor/:type/addOrder"} component={AddOrderForm}/>
-            <Route path={match.path+"/choiceForDoctor/:type/allOrdersForDoctor"} component={AllOrdersForDoctor}/>
+            <Route exact path={match.path+"/choiceForDoctor/:type/addOrder"} component={AddOrderForm}/>
+            <Route exact path={match.path+"/choiceForDoctor/:type/addOrder/allOrdersForDoctor"} component={AllOrdersForDoctor}/>
+            <Route exact path={match.path+"/choiceForDoctor/:type/allOrdersForDoctor"} component={AllOrdersForDoctor}/>
 
 
 

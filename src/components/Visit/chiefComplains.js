@@ -54,7 +54,7 @@ export default function ChiefComplains({getPatientName,getChiefComplains ,getDia
   const [deseases, setDeases] = useState([]);
   const classes = useStyles();
   useEffect(() => { 
-    fetch(`http://localhost:3000/diseases/getAll`, { // will get all desease names to show in multiChoice
+    fetch(`https://mvb1.herokuapp.com/disease/getAll`, { // will get all desease names to show in multiChoice
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

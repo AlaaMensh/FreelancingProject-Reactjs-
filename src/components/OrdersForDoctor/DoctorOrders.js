@@ -126,7 +126,7 @@ class AllOrdersForDoctor extends Component {
     }
  
     handleDelete= async(id)=>{
-      console.log("iiiiiiiiiid")
+
       var details = {
         id:id
       }
@@ -313,7 +313,10 @@ class AllOrdersForDoctor extends Component {
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
                         console.log("prosp : " , this.props.match.url)
                       if(this.props.match.params.type === "lab"){
-                           this.props.history.push(`${this.props.match.url}/addOrder`)
+                           this.props.history.push({
+                             pathname:`${this.props.match.url}/addOrder`,
+                             state:"DoctorOrders"
+                           })
                       }
                       else if(this.props.match.params.type=== "pathology"){
                         this.props.history.push(`${this.props.match.url}/addOrder`)

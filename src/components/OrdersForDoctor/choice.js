@@ -15,8 +15,12 @@ class ChoicePageForDoctor extends Component {
                     <div className="col-10 col-md-6">
                             <Card style={{ width: '18rem',height:"15em" }} className="bg-light text-secondary" 
                             onClick={()=>{
-                                this.props.history.push(`${this.props.location.pathname}/addOrder`);
-                                console.log("history: " , this.props);
+                                // this.props.history.push(`${this.props.location.pathname}/addOrder`);
+                                // console.log("history: " , this.props);
+                                this.props.history.push({
+                                    pathname:`${this.props.location.pathname}/addOrder`,
+                                    state:"DoctorOrders"
+                                  })
                                 
                             }}>
                                 <Card.Img variant="top" style={{cursor:"pointer"}} src={window.location.origin + '/images/img1.svg'} />

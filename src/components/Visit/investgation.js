@@ -178,7 +178,7 @@ class Investgation extends Component {
 
   getLabsByPId = ()=> {// that will get all labs names to view in multiChoices
 
-    fetch(`http://localhost:3000/labs/getAll`, {
+    fetch(`https://mvb1.herokuapp.com/lab/getAll`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -195,7 +195,7 @@ class Investgation extends Component {
   }
   getPathologyByPId = ()=> { // that will get all pathologies names to view in multiChoices
  
-     fetch(`http://localhost:3000/patho/getAll`, {
+     fetch(`https://mvb1.herokuapp.com/patho/getAll`, {
        method: 'GET',
        headers: {
          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -213,7 +213,7 @@ class Investgation extends Component {
 
   }
   getRadioByPId = ()=> { // that will get all Radioes names to view in multiChoices
-    fetch(`http://localhost:3000/radios/getAll`, {
+    fetch(`https://mvb1.herokuapp.com/radio/getAll`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -392,7 +392,7 @@ rendering = () =>{
                           var details = {
                             name:lab.name,
                             ptId:1,
-                            drId:1,
+                            drId:localStorage.getItem("userId"),
                             result: null,
                             comments : labb && labb.comments ? labb.comments : "" ,
                             status : "request",
@@ -511,7 +511,7 @@ rendering = () =>{
                           var details = {
                             name:lab.name,
                             ptId:1,
-                            drId:1,
+                            drId:localStorage.getItem("userId"),
                             result: null,
                             comments : labb && labb.comments ? labb.comments : "" ,
                             status : "request",
@@ -631,7 +631,7 @@ rendering = () =>{
                           var details = {
                             name:lab.name,
                             ptId:1,
-                            drId:1,
+                            drId:localStorage.getItem("userId"),
                             result: null,
                             comments : labb && labb.comments ? labb.comments : "" ,
                             status : "request",
