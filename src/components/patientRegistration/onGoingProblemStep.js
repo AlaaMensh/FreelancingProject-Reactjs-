@@ -86,7 +86,7 @@ class OnGoingProblemStep extends Component {
       status :"",  
       problem :"" , 
       diagnosisDate :"" , 
-      treatingDR:"" ,
+      treatingDr:"" ,
       key:1
           }
         }

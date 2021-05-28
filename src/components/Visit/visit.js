@@ -124,7 +124,7 @@ export default function Visit({match}) {
 
         var details = { // ************this object will be Sent to BackEnd to add a Visit
           ptId : location.state,
-          drId:drId,
+          drId:localStorage.getItem("userId"),
           chiefComplains : chiefComplains,
           diagnosis : diagnosis,
           surgeries : surgeries,

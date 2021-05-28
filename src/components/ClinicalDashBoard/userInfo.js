@@ -16,7 +16,7 @@ class UserInfo extends Component {
     getUserObj = async()=>{
       console.log("idddd: " , this.state.pId)
         var details = {
-            id:this.state.pId
+            id:this.props.id
            }
            var formBody = [];
            for (var property in details) {

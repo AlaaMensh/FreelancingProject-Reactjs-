@@ -98,6 +98,7 @@ export default function HorizontalLabelPositionBelowStepper() {
            phone , "email : " ,
             email , "Family History : " , familyHistoryList
             ,"Allergy  : " , allergyList)
+            console.log("onGoingproblems : ", onGoingProblemList)
             var result=JSON.stringify(familyHistoryList);  
             var json =  JSON.parse(result); 
 
@@ -136,8 +137,11 @@ export default function HorizontalLabelPositionBelowStepper() {
                },
               body: JSON.stringify(details)
             }).then((resp)=>{
-             resp.json().then((data)=>{
+             resp.text().then((data)=>{
               console.log("Message: " ,data);
+              if(data === "done"){
+                alert("added sucssessfully....")
+              }
              })
             }).catch(()=>{
               console.log("errror")
