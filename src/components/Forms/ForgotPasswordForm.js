@@ -1,29 +1,12 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Button from 'react-bootstrap/Button'
+
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import InputLabel from '@material-ui/core/InputLabel';
 import  { useState } from 'react';
-import { NativeSelect } from '@material-ui/core';
-import axios from 'axios';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import LockIcon from '@material-ui/icons/Lock';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 // import "./form.css";
 import { useHistory } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -108,34 +91,33 @@ const ForgotPassword = ()=>{
 
     }
   return (
-      <div className="form-hero row" >
-            <Container component="main" maxWidth="xs" >
-    <div className={classes.paper}>
-                  <Avatar className={classes.avatar}>
-                    
-                  </Avatar>
+   
+  <div className="container-fluid" style={{height:'100%' }}>
+    
+    <div className="row align-items-center" style={{height:'100%' }}>
+        <div className="col-4 justify-content-center ">
+           <div className="row">
+             <div className="col justfiy-content-center p-5">
                   <Typography component="h6" variant="h6">
                     please Enter your Email
                   </Typography>
-              <form className={classes.form} noValidate>
-           <Grid container spacing={2}>
-             <Grid item xs={12}>
-               <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="Email"
-                label="Email"
-                name="email"
+              <Form className={classes.form} noValidate>
+              <Form.Group controlId="formBasicEmail">
+                   <Form.Label>Email address</Form.Label>
+                  <Form.Control type="email"  id="Email"
+ name="email"
                 autoComplete="Eamil"
                 onChange = {(event) =>{
                     setemail(event.target.value);
-                }}
-              />
-            </Grid>
-        </Grid>
+                }} placeholder="Enter email" />
+                    <Form.Text className="text-muted">
+                      We'll never share your email with anyone else.
+                    </Form.Text>
+                 </Form.Group>
+              
+    
       <div className="row justify-content-center">
-      <Button variant="contained" className={classes.submit} onClick ={() =>{
+      <Button variant="primary" className={classes.submit} onClick ={() =>{
                handleSubmit()
            }}>Send Code</Button>
       </div>
@@ -149,11 +131,18 @@ const ForgotPassword = ()=>{
                handleSubmit()
            }}>Submit</Button>
            </Link> */}
-        </form>
+        </Form>
                 </div>
-  
-      </Container>
-      </div>
+          
+        </div>
+        
+        </div>
+        <div className="col-8 bg-primary"style={{height:'100%',backgroundImage:"url('./images/side2.jpg') ",  backgroundRepeat: "no-repeat",
+backgroundSize: "cover" }}></div>
+        </div>
+      
+        </div>
+
    
   );
 }
