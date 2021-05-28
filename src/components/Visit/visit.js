@@ -159,7 +159,6 @@ export default function Visit({match}) {
           resp.json().then((data) =>{
             console.log("my Data:   " , data);
             history.push(`${match.url}/prescription/${data.id}`);  //****After making Visit you should redirect to Prescription */
-          
           })
         }).catch(()=>{
           console.log("errror")

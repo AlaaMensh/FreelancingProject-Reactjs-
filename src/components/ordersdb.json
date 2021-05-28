@@ -150,7 +150,7 @@
                "getNotAcceptedOrders" :"https://mvb1.herokuapp.com/order/getlabOrderByPtCode",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getlabOrderByPtId",
-               "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getlabOrderbyLab",
+               "getAllOrdersByLabId" : "https://localhost:8080/order/getlabOrderbyLab",
                "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getlabOrderbyDrid"
 
             },

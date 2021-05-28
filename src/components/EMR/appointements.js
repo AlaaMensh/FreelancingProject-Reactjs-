@@ -256,14 +256,19 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       },
       body: formBody
     }).then((resp)=>{
-      resp.Text().then((r)=>{
-        console.log("r: " , r);
+      resp.json().then((data)=>{
+        console.log("nooooooooooooooooo" , data)
+      if(data.message === "date is not empty"){
+        console.log("nooooooooooooooooo")
+        alert("date is not empty")
+      }
+      else if(data.message === "no user with this Name"){
+        alert("no user with this Name")
+      }
+      else{
+        
+      }
       })
-      // console.log("data : " , data)
-
-      // if(mes === "yes"){ ///*** according to BackEnd message go to patient Registration */
-      //   this.props.history.push("/ptRegistration")
-      // }
     
     }).catch((e)=>{
       console.log("error on Adding..." , e)
