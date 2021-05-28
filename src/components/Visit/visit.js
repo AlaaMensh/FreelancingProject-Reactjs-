@@ -148,8 +148,7 @@ export default function Visit({match}) {
         }
         formBody = formBody.join("&");
         console.log("formBody:  " , formBody)
-        console.log("match.url :" , match.url)
-        history.push(`${match.url}/prescription/1`);
+
         fetch('https://mvb1.herokuapp.com/visit/addVisit', { // ***********endpoint For Add Visit Change it with the new url
           method: 'POST',
            headers: {
@@ -159,8 +158,7 @@ export default function Visit({match}) {
         }).then((resp)=>{
           resp.json().then((data) =>{
             console.log("my Data:   " , data);
-         
-            // history.push(`${match.url}/prescription/${data.id}`);  //****After making Visit you should redirect to Prescription */
+            history.push(`${match.url}/prescription/${data.id}`);  //****After making Visit you should redirect to Prescription */
           
           })
         }).catch(()=>{
