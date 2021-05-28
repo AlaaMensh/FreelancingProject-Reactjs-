@@ -88,7 +88,7 @@ export default function Prescription({match})
       case 2:
         return <Table prescription_rows={prescription_rows}  DelteFromPDF={DeleteRows} visitId = {match.params.visitId} ref={childRef}/>
       default:
-        return <PDF header={header} footer={footer} prescription_rows={prescription_rows} printableId='printme' ref={pdfRef}/>
+        return <PDF PID={PID} header={header} footer={footer} prescription_rows={prescription_rows} printableId='printme' ref={pdfRef}/>
 
     }
   }

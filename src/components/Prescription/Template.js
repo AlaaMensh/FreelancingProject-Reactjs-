@@ -34,7 +34,6 @@ const styles={
         marginLeft: 'auto',
         marginRight: 'auto',
         width: '50%',
-        height:400,
         position:'relative',
         backgroundColor:'#fff'
     },
@@ -68,15 +67,13 @@ const styles={
         top:0,
         left:0, 
         width:'100%',
-        height:'20%'
     }
     ,
     footerImage:{
-        position:'absolute',
+        position:'relative',
         bottom:0,
         left:0, 
         width:'100%',
-        height:'20%'
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ModalComp from "./typesGenerator/modalGenerator";
 import { Card, Col } from 'react-bootstrap';
+import axios from 'axios';
 
 
 
@@ -81,10 +82,17 @@ class SessionCode extends Component {
   // from Visit component
   handleSubmitForVisit = () =>{ ///*** edit it when adding sessionCode in Visit Module */
     console.log("here: " , this.props);
-    this.props.history.push({
-      pathname : `${this.props.history.location.pathname}/visit`,
-      state: this.state.code
-    })
+     axios.post(`https://mvb1.herokuapp.com/autho/getPtId`,{
+      ptCode:this.state.code
+   }).then(async resp => {
+            console.log("resp.data : " , resp.data);
+            this.props.history.push({
+              pathname : `${this.props.history.location.pathname}/visit`,
+              state: resp.data.id
+            })
+   })
+
+
 
   }
   handleSubmitForpharmacy = () =>{

@@ -94,22 +94,30 @@ const ForgotPasswordCode = ()=>{
         }
         formBody = formBody.join("&");
         
-        await fetch('http://localhost:3000/authenticate/getCode', {
+        await fetch('http://localhost:8080/autho/getCode', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
           },
           body: formBody
-        }).then(()=>{
-         
+        }).then((resp)=>{
+          resp.json().then((mes)=>{
+            
+            console.log("resp :" , mes)
+            if( mes.message === "done"){
+              history.push({
+                pathname:"/changePassword",
+                state:{email : email}
+              })
+            }
+            else{
+              console.log("please enter the code again")
+            }
+          })
         }).catch(()=>{
           console.log("no");
         })
-     
-        history.push({
-          pathname:"/changePassword",
-          state:{email : email}
-        })
+
     }
   return (
       <div className="form-hero row" >

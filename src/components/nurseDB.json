@@ -36,7 +36,7 @@
        },
                "title":"All patients On Active Visit",
                "description":"From here you can see All patients on Active visits",
-               "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate"
+               "getAll":"https://localhost:8080/session/getSessionByDate"
 
         },
      "nurseVitals" :{

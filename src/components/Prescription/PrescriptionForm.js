@@ -30,6 +30,7 @@ export default function BasicTextFields({add_row,PID}) {
   const DrugSchema = Yup.object({
     quantity:Yup.number().required().min(1),
     drug:Yup.string().required(),
+    notes:Yup.string().required(),
     duration:Yup.number().required()
 })
 
@@ -76,7 +77,7 @@ axios.get('http://localhost:3000/drug/getAll').then(res=>{
         <h1 style={{textAlign:'center'}}>Drugs</h1>
         <Formik 
         validationSchema={DrugSchema}
-        initialValues={{quantity:1,duration:7,drug:''}}
+        initialValues={{quantity:1,duration:7,drug:'',notes:''}}
         onSubmit={(values,actions)=>{
             AddToDB(values)
             actions.resetForm()
@@ -121,7 +122,18 @@ axios.get('http://localhost:3000/drug/getAll').then(res=>{
               onBlur={formikprops.handleBlur('duration')}
                />
             </FormControl>
-
+            <FormControl className={classes.formControl}>
+                <TextField
+                    id="standard-textarea"
+                    label="Notes"
+                    placeholder="Write Any thing"
+                    multiline
+                     error={(formikprops.touched.notes && formikprops.errors.notes)?true:false}
+                    value={formikprops.values.notes}
+                    onChange={formikprops.handleChange('notes')}
+                    onBlur={formikprops.handleBlur('notes')}
+                    />
+            </FormControl>
             <Button onClick={formikprops.handleSubmit}  className={classes.button} variant="contained" color="primary">
                 Add
             </Button>

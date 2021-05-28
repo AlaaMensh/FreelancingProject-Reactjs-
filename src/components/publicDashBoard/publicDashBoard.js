@@ -154,7 +154,7 @@ const renderBodyForSessionCode = (value, role) =>{
             <Route exact path={match.path +"/patientsOnVisit"} component = {PatientsOnVisit} />
             <Route exact path={match.path +"/patientsOnVisit/nurseVisit/:id"} component = {NurseVisit} />
             <Route exact path={match.path +"/appoint/visit/:id"} component = {Visit} />
-            <Route exact path={match.path +"/appoint/visit/:id/prescription/:visitId"} component = {Prescription} />
+            <Route exact path={match.path +"/appoint/visit/prescription/:visitId"} component = {Prescription} />
             <Route exact path={match.path +"/profile"} component = {Profile} />
           
                                   {/* ***EMR**** */}
@@ -165,7 +165,8 @@ const renderBodyForSessionCode = (value, role) =>{
             
             <Route exact path={match.path+"/ptRegistration"} component={ptRegistration}/>
             <Route exact path={match.path+"/nurseVisit"} component={NurseVisit}/>
-            <Route  path={match.path+"/appoint/visit"} component={Visit}/>
+            <Route path={match.path+"/appoint/visit"} component={Visit}/>
+            <Route path={match.path+"/appoint/visit/prescription/"} component={Visit}/>
             
                       {/* choose if you want single patient orders or all lab Orders */}
             <Route key={15} exact path={match.path +"/choice/:type"} component = {ChoicePage} />

@@ -115,11 +115,10 @@ const ClinicalDashBoard = ({match}) => {
       <Route exact  path={match.path+"/allLabOrders/:type/addOrder"}  component={AddOrderForm}/> 
       <Route exact key={2} path={match.path+"/allPathologyOrders/:type/addOrder"}  component={AddOrderForm}/> 
       <Route exact key={7} path={match.path+"/allRadioOrders/:type/addOrder"}  component={AddOrderForm}/> 
-      
-      
+
      
-      <Route exact path={match.path+"/patientAppointement/:id/visit"}  component={Visit}/> 
-      <Route exact path={match.path+"/patientAppointement/:id/visit/prescription/:visitId"}  component={Prescription}/> 
+      <Route exact path={match.path+"/:id/patientAppointement/visit"}  component={Visit}/> 
+      <Route exact path={match.path+"/:id/patientAppointement/visit/prescription/:visitId"}  component={Prescription}/> 
       <Route exact path={match.path+"/profile"}  component={Prescription}/> 
      
     </Switch>

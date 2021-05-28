@@ -231,10 +231,10 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
   getData = async(type)=>{
 
     await axios.post(`${appointements[type].getAllAppointements}`,{
-       ptId:this.props.match.params.id
+       ptId:this.props.match.params.id,
+       drId : localStorage.getItem("userId")
     }).then(async resp => {
-              var dateNow1 = new Date();
-
+          var dateNow1 = new Date();
           var d = new Date(dateNow1),
           mnth = ("0" + (dateNow1.getMonth() + 1)).slice(-2),
           day = ("0" + dateNow1.getDate()).slice(-2);

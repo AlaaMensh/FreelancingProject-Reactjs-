@@ -123,7 +123,7 @@ export default function Visit({match}) {
         console.log("step3obj :  " , objStep3);
 
         var details = { // ************this object will be Sent to BackEnd to add a Visit
-          ptId:localStorage.getItem("ptId"),
+          ptId : location.state,
           drId:drId,
           chiefComplains : chiefComplains,
           diagnosis : diagnosis,
@@ -149,7 +149,7 @@ export default function Visit({match}) {
         formBody = formBody.join("&");
         console.log("formBody:  " , formBody)
 
-        fetch('http://localhost:8080/visit/addVisit', { // ***********endpoint For Add Visit Change it with the new url
+        fetch('https://mvb1.herokuapp.com/visit/addVisit', { // ***********endpoint For Add Visit Change it with the new url
           method: 'POST',
            headers: {
              'Content-Type': 'application/json'
@@ -159,8 +159,7 @@ export default function Visit({match}) {
           resp.json().then((data) =>{
             console.log("my Data:   " , data);
             history.push(`${match.url}/prescription/${data.id}`);  //****After making Visit you should redirect to Prescription */
-           
-
+          
           })
         }).catch(()=>{
           console.log("errror")
@@ -274,6 +273,7 @@ export default function Visit({match}) {
                 getNotes = {getNotes}
                 getDD = {getDD}
                 obj ={obj}
+                ptId = {location.state}
               />
           );
         case 1:
@@ -288,6 +288,7 @@ export default function Visit({match}) {
             getRadioOrders = {getRadioOrders}
             getLabOrdersHome = {getLabOrdersHome}
             obj = {objStep3}
+            ptId = {location.state}
             /> 
         
           );
@@ -300,6 +301,7 @@ export default function Visit({match}) {
             getInterventionsDate = {getInterventionsDate}
             getSurgeryDate = {getSurgeryDate}
             obj = {objStep2}
+            ptId = {location.state}
              />    
           );
   

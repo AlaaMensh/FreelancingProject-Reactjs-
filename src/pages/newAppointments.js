@@ -229,10 +229,19 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       },
       body: formBody
     }).then((resp)=>{
-      resp.json().then((data)=>{
-        console.log("data: " , data)
-      })
-      
+      console.log("resp.type: "  , typeof(resp))
+
+        
+        resp.json().then((data)=>{
+          console.log("nooooooooooooooooo" , data)
+        if(data.message === "date is not empty"){
+          console.log("nooooooooooooooooo")
+          alert("date is not empty")
+        }
+        else{
+          alert("no user with this Name")
+        }
+        })
     }).catch(()=>{
       console.log("errror")
     })

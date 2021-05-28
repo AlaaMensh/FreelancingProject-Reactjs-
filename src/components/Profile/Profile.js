@@ -53,7 +53,7 @@ export default function Profile(props)
       };
       
       //Update Photo function
-    const updatePhoto = ()=>{
+    const updatePhoto = ()=> {
         let data = new FormData();
         if(!file)
         {
@@ -61,9 +61,9 @@ export default function Profile(props)
         }
         data.append('image',file)
         data.append('userId',userId)
-        // axios.post('http://localhost:3000/profile/photo',data).then(result=>{
-
-         axios.post('http://localhost:3000/authenticate/update_phote',data).then(result=>{
+        
+        // axios.post('http://localhost:3000/authenticate/update_phote',data).then(result=>{
+             axios.post('http://localhost:8080/profile/photo',data).then(result=>{
              console.log(result.data)
             setImg("http://localhost:3000/images/"+result.data)
         })

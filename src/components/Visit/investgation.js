@@ -391,7 +391,7 @@ rendering = () =>{
                           }
                           var details = {
                             name:lab.name,
-                            ptId:1,
+                            ptId:this.props.ptId,
                             drId:localStorage.getItem("userId"),
                             result: null,
                             comments : labb && labb.comments ? labb.comments : "" ,
@@ -510,7 +510,7 @@ rendering = () =>{
                           }
                           var details = {
                             name:lab.name,
-                            ptId:1,
+                            ptId:this.props.ptId,
                             drId:localStorage.getItem("userId"),
                             result: null,
                             comments : labb && labb.comments ? labb.comments : "" ,
@@ -630,7 +630,7 @@ rendering = () =>{
                           }
                           var details = {
                             name:lab.name,
-                            ptId:1,
+                            ptId:this.props.ptId,
                             drId:localStorage.getItem("userId"),
                             result: null,
                             comments : labb && labb.comments ? labb.comments : "" ,

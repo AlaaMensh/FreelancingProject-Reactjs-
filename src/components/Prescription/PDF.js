@@ -1,7 +1,11 @@
 import Fab from '@material-ui/core/Fab';
+import UploadIcon from '@material-ui/icons/CloudUploadRounded';
 import PrintIcon from '@material-ui/icons/Print';
+import axios from 'axios';
 import React from 'react';
+import { useReactToPrint } from 'react-to-print';
 import BackImage from '../../assets/images/back.png';
+import DivToPrint from './Print';
 
 const styles={
     parentDiv:{
@@ -23,7 +27,6 @@ const styles={
         marginLeft: 'auto',
         marginRight: 'auto',
         width: '50%',
-        height:400,
         position:'relative',
         backgroundColor:'#fff',
     },
@@ -32,22 +35,22 @@ const styles={
         position:'relative',
         top:0,
         left:0, 
-        width:'100%',
-        height:'20%'
-    }
-    ,
+        width:'100%'
+    },
+    HeaderButton:{ position:'absolute',top:0,right:0,textAlign:"center"},
     footerImage:{
-        position:'absolute',
+        position:'relative',
         bottom:0,
         left:0, 
-        width:'100%',
-        height:'20%'
+        width:'100%'
     }
 }
 
 const { forwardRef, useRef, useImperativeHandle } = React;
 const PDF =  forwardRef((props,ref)=>
 {
+  const componentRef = React.useRef();
+
   const [rows,setRows] = React.useState([])
   React.useEffect(() => {
       if(props.prescription_rows && props.prescription_rows.length > 0)
@@ -66,57 +69,66 @@ const PDF =  forwardRef((props,ref)=>
       setRows([...data]);
     }
 }));
-const printDiv = ()=>{
-  var printContents = document.getElementById("printDiv").innerHTML;
-  let w=window.open();
+let printDiv = null
+const handlePrint = useReactToPrint({
+  content: () => componentRef.current,
+});
 
-  w.document.write(printContents);
- 
-  w.print();
-  w.close();
+const selectHeaderFile=(event)=> {
+  let file = event.target.files[0]
+  alert("sasas")
+  let form = new FormData();
+  if(!file)
+  {
+    alert(file)
+      return;
+  }
+  form.append('result',file)
+  form.append('PID',props.PID)
+  console.log(form);
+  axios.post('http://localhost:3000/visit/UpdateResult',form)
+  .then(res=>{
+    console.log("success")
+  }).catch(err=>{
+  console.log(err);
+
+    alert(err)
+  })
+  
 }
+
     return (
         <div className="mg20">
 
 
         {/* White Shadow Div Start */}
-          <div style={styles.parentDiv} id="myDiv">
+          <div  style={styles.parentDiv} id="myDiv">
                 <Fab 
                     color="primary"
                     aria-label="add"
-                    onClick={()=>printDiv()}
+                    onClick={()=>handlePrint()}
                     >
                         <PrintIcon  />
                 </Fab> 
+                                {/* Header Image Button Start */}
+              <label style={styles.HeaderButton} htmlFor="btn-upload">
+                <input
+                    id="btn-upload"
+                    name="btn-upload"
+                    style={{ display: 'none' }}
+                    type="file"
+                    accept="image/*"
+                    onChange={selectHeaderFile} />
+                    <Fab color="primary"
+                        component="span"
+                        aria-label="add"
+                        >
+                        <UploadIcon  />
+                    </Fab> 
+                    </label>
+                {/* Header Image Button End */}
               {/* Image Div Parent Start */}
-              <div id="printDiv" style={styles.prescriptionDesign}>
-
-                {props.header &&
-                             <img  style={styles.headerImage}
-                             src={URL.createObjectURL(props.header)}  /> }
-                {/* Drugs List Start */}
-                <div style={{display:'flex',flexDirection:'column',margin:40}}>
-                <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-                      <span>Drug</span>
-                      <span>Quantity Per Day</span>
-                      <span>Duration</span>
-                    </div>
-                  {rows.map(row=>{
-                    return (
-                    <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
-                      <span>{row.drugName}</span>
-                      <span>{row.Quantity}</span>
-                      <span>{row.Duration}</span>
-                    </div>
-                    )
-                  })}
-              </div>
-              {/* Drugs List End */}
-                {props.footer &&   <img  style={styles.footerImage}
-              src={URL.createObjectURL(props.footer)}  /> 
-                }
-
-            </div>
+            <DivToPrint header={props.header} footer={props.footer} rows={rows} ref={componentRef}/>
             {/* Image Div Parent End */}
 
 

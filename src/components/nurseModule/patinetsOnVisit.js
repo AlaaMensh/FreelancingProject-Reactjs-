@@ -33,7 +33,8 @@ class PatientsOnVisit extends Component {
        formBody = formBody.join("&");
    console.log("/.........................." ,nurseModule[type] )
    
-       await fetch(`${nurseModule[type].getAll}`, {
+      //  await fetch(`${nurseModule[type].getAll}`, {
+       await fetch(`https://localhost:8080/session/getSessionByDate`, {
          method: 'GET',
          headers: {
            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

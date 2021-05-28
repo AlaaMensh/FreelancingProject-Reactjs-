@@ -81,24 +81,13 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "secondName": {
-                                "name": "Second Name",
-                                "selector": "secondName",
-                                "sortable": true,
-                                "center" : true
-                        },
                         "lastName": {
                                 "name": "Last Name",
                                 "selector": "lastName",
                                 "sortable": true,
                                 "center" : true
                         },
-                        "Date": {
-                                "name": "Date",
-                                "selector": "Date",
-                                "sortable": true,
-                                "center" : true
-                        },
+
                         "degree" :{
                                 "name" :"Degree",
                                 "selector" : "degree",
@@ -207,9 +196,9 @@
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
                "addUser" :"https://mvb1.herokuapp.com/doctor/addDoctor",
-               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
-               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:8080/doctor/getAll"
+               "deleteUser" : "http://localhost:8080/doctor/deleteDoctor",
+               "updateUser":"http://localhost:8080/doctor/updateDoctor",
+               "getAll":"http://localhost:8080/doctor/getDoctor"
                
 
             },
@@ -357,12 +346,12 @@
                         }
 
                },
-               "title":"All Doctors",
+               "title":"All Doctors",   
                "description":"simple blah blah this the page and what it dose you know stuff..",
                "addUser" :"https://mvb1.herokuapp.com/nurse/addNurse",
-               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
-               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll"
+               "deleteUser" : "http://localhost:8080/nurse/deleteNurse",
+               "updateUser":"http://localhost:8080/nurse/updateNurse",
+               "getAll":"http://localhost:8080/nurse/getNurse"
                
             },
         "pathologist" : {  
@@ -512,9 +501,9 @@
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
                "addUser" :"https://mvb1.herokuapp.com/patho/addPathology",
-               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
-               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll"
+               "deleteUser" : "http://localhost:8080/patho/deletePathology",
+               "updateUser":"http://localhost:8080/patho/updatePathology",
+               "getAll":"http://localhost:8080/patho/getPathology"
             },
         "radiogist" : {  
                  "state":{
@@ -663,9 +652,9 @@
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
                "addUser" :"https://mvb1.herokuapp.com/radiology/addRadiology",
-               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
-               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll"
+               "deleteUser" : "http://localhost:8080/radiology/deleteradiology",
+               "updateUser":"http://localhost:8080/radiology/updateradiology",
+               "getAll":"http://localhost:8080/radiology/getRadiology"
                
 
             },
@@ -816,9 +805,9 @@
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
                "addUser" :"https://mvb1.herokuapp.com/chemist/addChemist",
-               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
-               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll"
+               "deleteUser" : "http://localhost:8080/chemist/deleteChemist",
+               "updateUser":"http://localhost:8080/chemist/updateChemist",
+               "getAll":"http://localhost:8080/chemist/getChemist"
                
 
             },
@@ -969,9 +958,9 @@
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
                "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
-               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
-               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-               "getAll":"http://localhost:3000/doctor/getAll"
+               "deleteUser" : "http://localhost:8080/assistant/deleteAssistant",
+               "updateUser":"http://localhost:8080/assistant/updateAssistant",
+               "getAll":"http://localhost:8080/assistant/getAssistant"
                
 
             },
@@ -991,27 +980,27 @@
                       
           },
              "columnsTable" : {
-                      "date": {
-                              "name": "Date",
-                              "selector": "date",
+                      "address": {
+                              "name": "address",
+                              "selector": "address",
                               "sortable": true,
                               "center" : true
                       },
-                      "comments": {
-                              "name": "Comments",
-                              "selector": "comments",
+                      "establishment": {
+                              "name": "establishment",
+                              "selector": "establishment",
                               "sortable": true,
                               "center" : true
                       },
-                      "status": {
-                              "name": "Status",
-                              "selector": "status",
+                      "contactPerson": {
+                              "name": "contactPerson",
+                              "selector": "contactPerson",
                               "sortable": true,
                               "center" : true
                       },
-                      "result" :{
-                              "name" :"Result",
-                              "selector" : "result",
+                      "phone" :{
+                              "name" :"phone",
+                              "selector" : "phone",
                               "sortable":true,
                               "center" : true,
                               "hide":true
@@ -1095,9 +1084,9 @@
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
              "addUser" :"https://mvb1.herokuapp.com/frontdisk/addLabFrontDisk",
-             "deleteUser" : "",
-             "updateUser":"",
-             "getAll":"http://localhost:8080/frontdisk/getAll",
+             "deleteUser" : "http://localhost:8080/frontdisk/deletelabFD",
+             "updateUser":"http://localhost:8080/frontdisk/updatelabFD",
+             "getAll":"http://localhost:8080/frontdisk/getlabFD",
              "getAllDataFD" :"http://localhost:8080/lab/getAll",
              "getLabIdInSession":"" 
              
@@ -1115,40 +1104,40 @@
                       "radioId":""   
                       
           },
-             "columnsTable" : {
-                      "date": {
-                              "name": "Date",
-                              "selector": "date",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "comments": {
-                              "name": "Comments",
-                              "selector": "comments",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "status": {
-                              "name": "Status",
-                              "selector": "status",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "result" :{
-                              "name" :"Result",
-                              "selector" : "result",
-                              "sortable":true,
-                              "center" : true,
-                              "hide":true
-                      },
-                      "actions" :{
-                              "name" :"actions",
-                              "selector" : "actions",
-                              "sortable":false,
-                              "center" : true,
-                              "width":"300px"
-                      }
-             },
+          "columnsTable" : {
+                "address": {
+                        "name": "address",
+                        "selector": "address",
+                        "sortable": true,
+                        "center" : true
+                },
+                "establishment": {
+                        "name": "establishment",
+                        "selector": "establishment",
+                        "sortable": true,
+                        "center" : true
+                },
+                "contactPerson": {
+                        "name": "contactPerson",
+                        "selector": "contactPerson",
+                        "sortable": true,
+                        "center" : true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true,
+                        "center" : true,
+                        "hide":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+         },
              "modalAdditionForms": {
                       "establishment" :{
                               "type": "text",
@@ -1203,10 +1192,7 @@
                               "type":"password",
                               "name" :"Password"
                       },
-                      "Email" : {
-                              "type":"email",
-                              "name" :"Email"
-                      },
+
                       "phone" : {
                               "type":"text",
                               "name" :"phone"
@@ -1220,9 +1206,9 @@
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
              "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
-             "deleteUser" : "",
-             "updateUser":"",
-             "getAll":"",
+             "deleteUser" : "http://localhost:8080/frontdisk/deleteradioFD",
+             "updateUser":"http://localhost:8080/frontdisk/updateradioFD",
+             "getAll":"http://localhost:8080/frontdisk/getradioFD",
              "getAllDataFD" : "https://mvb1.herokuapp.com/radio/getAll",
              "getLabIdInSession":"" 
              
@@ -1241,40 +1227,40 @@
                      
                       
           },
-             "columnsTable" : {
-                      "date": {
-                              "name": "Date",
-                              "selector": "date",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "comments": {
-                              "name": "Comments",
-                              "selector": "comments",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "status": {
-                              "name": "Status",
-                              "selector": "status",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "result" :{
-                              "name" :"Result",
-                              "selector" : "result",
-                              "sortable":true,
-                              "center" : true,
-                              "hide":true
-                      },
-                      "actions" :{
-                              "name" :"actions",
-                              "selector" : "actions",
-                              "sortable":false,
-                              "center" : true,
-                              "width":"300px"
-                      }
-             },
+        "columnsTable" : {
+                "address": {
+                        "name": "address",
+                        "selector": "address",
+                        "sortable": true,
+                        "center" : true
+                },
+                "establishment": {
+                        "name": "establishment",
+                        "selector": "establishment",
+                        "sortable": true,
+                        "center" : true
+                },
+                "contactPerson": {
+                        "name": "contactPerson",
+                        "selector": "contactPerson",
+                        "sortable": true,
+                        "center" : true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true,
+                        "center" : true,
+                        "hide":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+                },
              "modalAdditionForms": {
                       "establishment" :{
                               "type": "text",
@@ -1346,9 +1332,9 @@
              "title":"All Lab FrontDisks",
              "description":"simple blah blah this the page and what it dose you know stuff..",
              "addUser" :"https://mvb1.herokuapp.com/frontdisk/addpathoFrontDisk",
-             "deleteUser" : "",
-             "updateUser":"",
-             "getAll":"",
+             "deleteUser" : "http://localhost:8080/frontdisk/deletepathobFD",
+             "updateUser":"http://localhost:8080/frontdisk/updatepathoFD",
+             "getAll":"http://localhost:8080/frontdisk/getpathoFD",
              "getAllDataFD" :"https://mvb1.herokuapp.com/patho/getAll",
              "getLabIdInSession":"" 
              
@@ -1367,40 +1353,40 @@
                      
                       
           },
-             "columnsTable" : {
-                      "date": {
-                              "name": "Date",
-                              "selector": "date",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "comments": {
-                              "name": "Comments",
-                              "selector": "comments",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "status": {
-                              "name": "Status",
-                              "selector": "status",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "result" :{
-                              "name" :"Result",
-                              "selector" : "result",
-                              "sortable":true,
-                              "center" : true,
-                              "hide":true
-                      },
-                      "actions" :{
-                              "name" :"actions",
-                              "selector" : "actions",
-                              "sortable":false,
-                              "center" : true,
-                              "width":"300px"
-                      }
-             },
+          "columnsTable" : {
+                "address": {
+                        "name": "address",
+                        "selector": "address",
+                        "sortable": true,
+                        "center" : true
+                },
+                "establishment": {
+                        "name": "establishment",
+                        "selector": "establishment",
+                        "sortable": true,
+                        "center" : true
+                },
+                "contactPerson": {
+                        "name": "contactPerson",
+                        "selector": "contactPerson",
+                        "sortable": true,
+                        "center" : true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true,
+                        "center" : true,
+                        "hide":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+         },
              "modalAdditionForms": {
                       "establishment" :{
                               "type": "text",
