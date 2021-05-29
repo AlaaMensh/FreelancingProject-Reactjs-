@@ -369,7 +369,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
                     <div>You can see all Patient prescriptions and drugs...</div>
                 </Col>
             </Row>
-            <Row className= "py-3" >
+            {/* <Row className= "py-3" >
                 <Col sm={10}></Col>
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
                    this.props.history.push({
@@ -377,7 +377,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
                        state:{}
                    })
                     }}>Add New</Button>{' '}</Col>
-            </Row>
+            </Row> */}
 
             <Row className= "py-3">
                <Col>
