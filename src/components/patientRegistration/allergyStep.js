@@ -183,7 +183,7 @@ class Allergy extends Component {
           <div className="container gridDataContent mt-5"> 
           <div className="row">
             <div className="col-auto px-2 py-2 text-center rounded  header">
-                <span className="">Ellergy Types</span>
+                <span className="">Allergy Types</span>
             </div>
             <div className="col-10 overflow-hidden ">
                 <div className="row justify-content-lg-start">
