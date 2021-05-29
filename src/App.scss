@@ -1,0 +1,76 @@
+@import "./styles/imports.scss";
+body {
+  font-family: "Roboto";
+}
+.dashboard-section-title {
+  font-weight: 300;
+  color: #a2a2a2;
+}
+.dashboard-card {
+  border: 0;
+  border-radius: 30px;
+  padding: 10px;
+  .card-title {
+    color: #6b6b6b;
+  }
+  .card-subtitle {
+    color: #929292 !important;
+    font-weight: 300;
+  }
+  &.green {
+    background: #d8ffc8;
+  }
+  &.light-blue {
+    background: #c8ebff;
+  }
+  &.purple {
+    background: #d8c8ff;
+  }
+  &.red {
+    background: #ffdac8;
+  }
+}
+.login,
+.image {
+  min-height: 100vh;
+}
+
+.bg-image {
+  background-image: url("https://source.unsplash.com/WEQbe2jBg40/600x1200");
+  background-size: cover;
+  background-position: center;
+}
+
+.MuiDataGrid-colCellTitle {
+  font-family: "Roboto" !important;
+}
+
+.gridDataHeader {
+  box-shadow: none !important;
+}
+.MuiStepConnector-lineVertical {
+  min-height: 49px !important;
+}
+.MuiStepLabel-label.MuiStepLabel-alternativeLabel {
+  margin-top: 4px !important;
+}
+.MuiStepConnector-alternativeLabel {
+  top: -24px !important;
+  left: 0 !important;
+  right: 0 !important;
+  position: absolute;
+}
+.MuiStepConnector-vertical {
+  // padding: 0 0 8px;
+  margin-left: 21px !important;
+}
+.MuiStepLabel-root.MuiStepLabel-alternativeLabel {
+  flex-direction: row !important;
+  padding: 25px 0px !important;
+}
+.MuiStepIcon-root.MuiStepIcon-completed {
+  color: #007bff !important;
+}
+.MuiStepIcon-root.MuiStepIcon-active {
+  color: #ff8100 !important;
+}
