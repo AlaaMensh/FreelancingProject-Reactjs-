@@ -71,7 +71,10 @@ export default function PaientRegistration({
   const classes = useStyles();
 
   return (
-    <div className=" row justify-content-center" style={{ marginTop: "50px" }}>
+    <div
+      className=" row justify-content-center small-labels"
+      style={{ marginTop: "50px" }}
+    >
       <Col>
         <div class="card">
           <Form className={classes.form} noValidate>
@@ -81,6 +84,7 @@ export default function PaientRegistration({
                   <Form.Label>First Name</Form.Label>
                   <Form.Control
                     variant="outlined"
+                    type="text"
                     required
                     fullWidth
                     size="small"
@@ -93,7 +97,7 @@ export default function PaientRegistration({
                       getFirstName(event.target.value);
                       console.log("yyyyys", firstName);
                     }}
-                    defaultValue={obj.secondName}
+                    defaultValue={obj.firstName}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -109,6 +113,7 @@ export default function PaientRegistration({
                     variant="outlined"
                     required
                     fullWidth
+                    type="text"
                     size="small"
                     id="secondName"
                     placeholder="Second Name"
@@ -119,7 +124,7 @@ export default function PaientRegistration({
                       getSecondName(event.target.value);
                       console.log("yyyyys", firstName);
                     }}
-                    defaultValue={obj.firstName}
+                    defaultValue={obj.secondName}
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
