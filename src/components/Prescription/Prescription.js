@@ -99,7 +99,7 @@ export default function Prescription({match})
 }, []);
 
   const addPrescription = ()=>{
-    axios.post('http://localhost:3000/visit/addPrescription',{
+    axios.post('http://localhost:8080/visit/addPrescription',{
       notes: notes,
       visit_id : match.params.visitId
     }).then(res=>{

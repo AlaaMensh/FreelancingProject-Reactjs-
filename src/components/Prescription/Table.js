@@ -96,7 +96,7 @@ const Table =  forwardRef((props,ref)=>{
         })
         console.log(arr)
         //delete from database
-        axios.post('http://localhost:3000/visit/deletePrescription_Drugs',{
+        axios.post('http://localhost:8080/visit/deletePrescription_Drugs',{
           ids : arr
         }).then(res=>{
           setRows([...temp])

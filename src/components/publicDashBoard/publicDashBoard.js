@@ -25,6 +25,7 @@ import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
 const PublicDashBoard = ({ match }) => {
   const history = useHistory();
 
+
   const [role, setRole] = useState("");
   const firstFunctionRow = [
     // Cards content and its role
@@ -96,6 +97,7 @@ const PublicDashBoard = ({ match }) => {
       </Card>
     );
   };
+
 
   useEffect(() => {
     // set role with localStorage and check if logged in user is patient or not
@@ -177,6 +179,7 @@ const PublicDashBoard = ({ match }) => {
                 }
               }}
             >
+
               <Card.Body>
                 <Card.Title>{value.text}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">

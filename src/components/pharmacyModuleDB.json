@@ -81,7 +81,8 @@
                         }
 
                },
-               "getLastTenPrescription" : "http://localhost:3000/visit/PrescriptionByPatient",
+               "getLastTenPrescription" : "http://localhost:8080/visit/PrescriptionByDoctor",
+               "getPatientPrescription" : "http://localhost:8080/visit/PrescriptionByPatient",
                "decpinceDrug":""
                
 

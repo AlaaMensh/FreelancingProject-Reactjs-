@@ -22,7 +22,7 @@
             }
    },
    "title":"All Allergy Problems",
-   "description":"simple blah blah this the page and what it dose you know stuff..",
+   "description":"You can see all Allergy broblems for this patient...",
    "getAllergyProblemsForPatient" : "http://localhost:8080/pt/getAllergyById"
     },
 
@@ -49,10 +49,8 @@
             }
    },
    "title":"All OnGoingProblems Problems",
-   "description":"simple blah blah this the page and what it dose you know stuff..",
+   "description":"You can see all OnGoingProblems broblems for this patient...",
    "getAllergyProblemsForPatient" : "http://localhost:8080/pt/getProblemsById"
-
-
 
     }
 }

@@ -173,6 +173,7 @@ class Allergy extends Component {
     this.props.getAllergyList(this.state.allergyList);
   }
 
+
   rendering = () => {
     return (
       <div className="container gridDataContent mt-5">
@@ -190,6 +191,7 @@ class Allergy extends Component {
               { field: "status", headerName: "Status", width: 200 },
               { field: "reaction", headerName: "Reaction", width: 200 },
               { field: "notes", headerName: "Notes", width: 400 },
+
 
               {
                 field: "Actions",

@@ -77,17 +77,56 @@ const PDF = forwardRef((props, ref) => {
     if (!file) {
       alert(file);
       return;
-    }
-    form.append("result", file);
-    form.append("PID", props.PID);
-    console.log(form);
-    axios
-      .post("http://localhost:3000/visit/UpdateResult", form)
-      .then((res) => {
-        console.log("success");
-      })
-      .catch((err) => {
-        console.log(err);
+  }
+  form.append('result',file)
+  form.append('PID',props.PID)
+  console.log(form);
+  axios.post('http://localhost:8080/visit/UpdateResult',form)
+  .then(res=>{
+    console.log("success")
+  }).catch(err=>{
+  console.log(err);
+
+    alert(err)
+  })
+  
+}
+
+    return (
+        <div className="mg20">
+
+
+        {/* White Shadow Div Start */}
+          <div  style={styles.parentDiv} id="myDiv">
+                <Fab 
+                    color="primary"
+                    aria-label="add"
+                    onClick={()=>handlePrint()}
+                    >
+                        <PrintIcon  />
+                </Fab> 
+                                {/* Header Image Button Start */}
+              <label style={styles.HeaderButton} htmlFor="btn-upload">
+                <input
+                    id="btn-upload"
+                    name="btn-upload"
+                    style={{ display: 'none' }}
+                    type="file"
+                    accept="image/*"
+                    onChange={selectHeaderFile} />
+                    <Fab color="primary"
+                        component="span"
+                        aria-label="add"
+                        >
+                        <UploadIcon  />
+                    </Fab> 
+                    </label>
+                {/* Header Image Button End */}
+              {/* Image Div Parent Start */}
+            <DivToPrint header={props.header} footer={props.footer} rows={rows} ref={componentRef}/>
+            {/* Image Div Parent End */}
+
+
 
         alert(err);
       });

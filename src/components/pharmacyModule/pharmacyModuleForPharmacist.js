@@ -223,7 +223,8 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
     formBody = formBody.join("&");
     
         ///*********** */ change it with patient Code
-    fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}/41`, { 
+        console.log("endPoint: " , pharmacyModule["pharmacyModule"].getPatientPrescription)
+    fetch(`${pharmacyModule["pharmacyModule"].getPatientPrescription}/1`, { 
         method: 'GET',
         headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
