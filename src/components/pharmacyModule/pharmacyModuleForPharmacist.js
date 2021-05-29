@@ -15,7 +15,7 @@ const data = {
               "notes": "null",
               "created_date": "2021-05-25T19:59:50.000Z",
               "genricName": "mm",
-              "PD_id": 57,
+              "PID": 57,
               "Quantity": "1",
               "Duration": "7",
               "refailCount": 1
@@ -25,7 +25,7 @@ const data = {
               "notes": "null",
               "created_date": "2021-05-25T19:59:50.000Z",
               "genricName": "vx",
-              "PD_id": 58,
+              "PID": 58,
               "Quantity": "1",
               "Duration": "7",
               "refailCount": 1
@@ -35,7 +35,7 @@ const data = {
               "notes": "null",
               "created_date": "2021-05-25T19:59:50.000Z",
               "genricName": "ccv",
-              "PD_id": 59,
+              "PID": 59,
               "Quantity": "1",
               "Duration": "7",
               "refailCount": 1
@@ -47,7 +47,7 @@ const data = {
               "notes": "null",
               "created_date": "2021-05-25T19:59:50.000Z",
               "genricName": "mm",
-              "PD_id": 57,
+              "PID": 57,
               "Quantity": "1",
               "Duration": "7",
               "refailCount": 1
@@ -57,7 +57,7 @@ const data = {
               "notes": "null",
               "created_date": "2021-05-25T19:59:50.000Z",
               "genricName": "vx",
-              "PD_id": 58,
+              "PID": 58,
               "Quantity": "1",
               "Duration": "7",
               "refailCount": 1
@@ -67,7 +67,7 @@ const data = {
               "notes": "null",
               "created_date": "2021-05-25T19:59:50.000Z",
               "genricName": "ccv",
-              "PD_id": 59,
+              "PID": 59,
               "Quantity": "1",
               "Duration": "7",
               "refailCount": 1
@@ -136,13 +136,15 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
             prescriptionDrugs:[] ,// this will be viewed in DataTable Component
             openModal:false,
             drugQuantity:"", // remove it if you don't use
-            prescriptions:""
+            prescriptions:"",
+            drugsList :[]
          }
     }
 
     getDrugsForPresctiption = (presciptionID) =>{
       var temp =[];
-      for(var p of data.drugs[presciptionID]){
+      console.log("All Drugs : " , this.state.drugsList)
+      for(var p of this.state.drugsList[presciptionID]){
           temp.push(p);
       }
       this.setState({prescriptionDrugs : temp});
@@ -152,6 +154,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
     async componentDidMount(){
         this.setState({type: "pharmacyModule"});
         var type = "pharmacyModule";
+        console.log("//////////////////" , this.props);
           // **for Pharmacist to get PatientData with code***
         await this.getDataForPatientPrescriptions(type);
         await this.handleDataTableColumnsForPharmacist(type)
@@ -170,7 +173,10 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
 
     handleAccept = async (id,value) =>{
       
-      console.log("Accepted IDS:  " , this.state.acceptedIds , " value: " , value )
+      console.log("Accepted IDS:  " , this.state.acceptedIds , " value: " , value)  
+    this.setState({
+      prescriptionDrugs: this.state.prescriptionDrugs.filter(row => row.PID !== id)
+     }) 
   //     var details = {
   //       id : id,  
   //       labFDId : localStorage.getItem("labId"),
@@ -224,7 +230,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
     
         ///*********** */ change it with patient Code
         console.log("endPoint: " , pharmacyModule["pharmacyModule"].getPatientPrescription)
-    fetch(`${pharmacyModule["pharmacyModule"].getPatientPrescription}/1`, { 
+    fetch(`${pharmacyModule["pharmacyModule"].getPatientPrescription}/${this.props.location.state}`, { 
         method: 'GET',
         headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -234,7 +240,9 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
         resp.json().then((data)=>{
         console.log("All Incomming Data;  " , data)
         this.setState({ 
-          prescriptions: data.prescriptions
+          prescriptions: data.prescriptions ,
+          drugsList : data.drugs
+
         })
         })
     }).catch(()=>{
@@ -299,9 +307,9 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
               <button  className="btn btn-primary" style={{cursor : "pointer"}}
                 onClick={() => {  
                     console.log("id:  " , row)
-                    if(document.getElementById(row.PD_id).value){
-                      this.handleAccept(row.PD_id , document.getElementById(row.PD_id).value)
-                      // console.log("documentByID:  " , document.getElementById(row.PD_id))
+                    if(document.getElementById(row.PID).value){
+                      this.handleAccept(row.PID , document.getElementById(row.PID).value)
+                      // console.log("documentByID:  " , document.getElementById(row.PID))
                     }
                     else{
                       alert("you should enter quantity")
@@ -323,7 +331,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
             return(
           <div className = "row">
             <div className="col-auto">
-                  <input max="20" min="1" id={row.PD_id}  className="form-control" type="number" onChange={(e)=>{
+                  <input max="20" min="1" id={row.PID}  className="form-control" type="number" onChange={(e)=>{
                     this.setState({drugQuantity: e.target.value})
                   }} />
                   {/* <SessionCode  buttonValue={"Accept"}/> */}
@@ -353,11 +361,12 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
         return (     
          
         <Container fluid>
-            
+              {console.log("presCriptions : " , this.state.prescriptions)}
+              {console.log("Columns : " , this.state.columns)}
             <Row className= "py-3">
                 <Col>
                     <h3>All patient Drugs</h3>
-                    <div>simple blah blah this the page and what it dose you know stuff...</div>
+                    <div>You can see all Patient prescriptions and drugs...</div>
                 </Col>
             </Row>
             <Row className= "py-3" >
@@ -372,7 +381,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
 
             <Row className= "py-3">
                <Col>
-                <DataTableComp  data = {data.prescriptions} //change it to Drugs
+                <DataTableComp  data = {this.state.prescriptions} //change it to Drugs
                   columns = {this.state.columns}
                   title=""
                   />

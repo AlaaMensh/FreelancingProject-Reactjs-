@@ -6,19 +6,95 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import ModalForView from './modalForView';
-import {  Page } from 'react-pdf';
-import { pdfjs } from 'react-pdf';
-// import { Worker } from '@react-pdf-viewer/core';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-import { Document } from 'react-pdf/dist/esm/entry.webpack';
-import samplePDF from "./Alaa_El-Menshawy.pdf";
-import MyPdfViewer from "./singlePage";
-pdfjs.GlobalWorkerOptions.workerSrc = 'pdf.worker.min.js';
 
-
+const data = {
+  "drugs": {
+      "44": [
+          {
+              "PID": 44,
+              "notes": "null",
+              "created_date": "2021-05-25T19:59:50.000Z",
+              "genricName": "mm",
+              "PID": 57,
+              "Quantity": "1",
+              "Duration": "7",
+              "refailCount": 1
+          },
+          {
+              "PID": 44,
+              "notes": "null",
+              "created_date": "2021-05-25T19:59:50.000Z",
+              "genricName": "vx",
+              "PID": 58,
+              "Quantity": "1",
+              "Duration": "7",
+              "refailCount": 1
+          },
+          {
+              "PID": 44,
+              "notes": "null",
+              "created_date": "2021-05-25T19:59:50.000Z",
+              "genricName": "ccv",
+              "PID": 59,
+              "Quantity": "1",
+              "Duration": "7",
+              "refailCount": 1
+          }
+      ],
+      "45": [
+          {
+              "PID": 45,
+              "notes": "null",
+              "created_date": "2021-05-25T19:59:50.000Z",
+              "genricName": "mm",
+              "PID": 57,
+              "Quantity": "1",
+              "Duration": "7",
+              "refailCount": 1
+          },
+          {
+              "PID": 45,
+              "notes": "null",
+              "created_date": "2021-05-25T19:59:50.000Z",
+              "genricName": "vx",
+              "PID": 58,
+              "Quantity": "1",
+              "Duration": "7",
+              "refailCount": 1
+          },
+          {
+              "PID": 45,
+              "notes": "null",
+              "created_date": "2021-05-25T19:59:50.000Z",
+              "genricName": "ccv",
+              "PID": 59,
+              "Quantity": "1",
+              "Duration": "7",
+              "refailCount": 1
+          }
+      ]
+  },
+  "prescriptions": [
+      {
+          "id": 44,
+          "created_date": "2021-05-25T19:59:50.000Z",
+          "notes": "null"
+      },
+      {
+          "id": 45,
+          "created_date": "2021-05-25T19:59:50.000Z",
+          "notes": "null"
+      }
+  ]
+}
 const row = [
-    {created_date : "one" , notes:"one" , duration:"one"},
-    {created_date : "two" , notes:"two" , duration:"two"},
+    {created_date : "one" , patientName :"one" , notes:"one" },
+    {created_date : "one" , patientName :"one" , notes:"one" },
+    {created_date : "one" , patientName :"one" , notes:"one" },
+]
+const drugs = [
+    {drugName : "one" , quantity :"one" , duration:"one",refialCount:"" },
+    {drugName : "one" , quantity :"one" , duration:"one",refialCount:"" },
 ]
 class PharmacyModuleForDoctor extends Component { // this Component to View All The Not Accepted Orders in our System
     constructor(props) {
@@ -26,22 +102,55 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
         this.state = { 
             type:"",
             columns:[],
-            Drugs:[], // this will be viewed in DataTable Component
+            drugs_columns:[{
+              "name" :"Genric Name",
+              "selector" : "genricName",
+              "sortable":true
+            },
+            {
+              "name" :"Quantity",
+              "selector" : "Quantity",
+              "sortable":true
+            },
+            {
+              "name" :"Duration",
+              "selector" : "Duration",
+              "sortable":true
+            },
+            {
+              "name" :"Refail Count",
+              "selector" : "refailCount",
+              "sortable":true
+            },
+        
+          ],
+            prescriptionDrugs:[] ,// this will be viewed in DataTable Component
             openModal:false,
-            numPages:null,
+            drugQuantity:"", // remove it if you don't use
+            prescriptions:"",
+            drugsList :[]
          }
     }
+
+    getDrugsForPresctiption = (presciptionID) =>{
+      var temp =[];
+      console.log("All Drugs : " , this.state.drugsList)
+      for(var p of this.state.drugsList[presciptionID]){
+          temp.push(p);
+      }
+      this.setState({prescriptionDrugs : temp});
+       temp =[];
+    }
+
     async componentDidMount(){
         this.setState({type: "pharmacyModule"});
         var type = "pharmacyModule";
-              //**** */ for Doctor to get PrescriptionData for this Doctor
-        await this.handleDataTableColumnsForDoctor(type);
-        await this.getDataForDoctorPrescriptions(type)
-  
+          // **for Pharmacist to get PatientData with code***
+        await this.getDataForDoctorPrescriptions(type);
+        await this.handleDataTableColumnsForDoctor(type)
+        this.handleDaTaTableModel()
     }
-    onDocumentLoadSuccess({ numPages }) {
-      this.setState(numPages);
-    }
+
     handleClose = () => {
       this.setState({openModal : false})
     };
@@ -51,40 +160,53 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
     };
 
 
-    handleDataTableColumnsForDoctor = (type) =>{
-        console.log("type: " , type ,"  ,,,,,,," ,)
-        var temp = []
-        for(var p in pharmacyModule[type].columnsTableForDoctor ){
-            if(p === "actions"){
-              pharmacyModule[type].columnsTableForDoctor[p]["cell"] =  (row) =>{ return(
-              <div className = "row">
-                <div className="col-auto">
-                  <button  className="btn btn-primary"
-                    onClick={() => {  
-                        console.log("id:  " , row)
-                        this.handleopenModal()
-                      }}>Show Prescription</button>
-                      {/* <SessionCode  buttonValue={"Accept"}/> */}
-                </div>
-              
-              </div>
-              )
-              }
-              temp.push(pharmacyModule[type].columnsTableForDoctor[p])
-            }
-            else{
-              temp.push(pharmacyModule[type].columnsTableForDoctor[p])
-            }     
-        }
-        this.setState({columns : temp})
-        temp = []
-        var newState = this.state;
-        for(var property in pharmacyModule[type].state ){
-          newState[property] = "" 
-        }
-        this.setState({newState})
-    }
-    getDataForDoctorPrescriptions = () =>{ // getData for Doctor Prescriptions
+
+    handleAccept = async (id,value) =>{
+      
+      console.log("Accepted IDS:  " , this.state.acceptedIds , " value: " , value)  
+    this.setState({
+      prescriptionDrugs: this.state.prescriptionDrugs.filter(row => row.PID !== id)
+     }) 
+  //     var details = {
+  //       id : id,  
+  //       labFDId : localStorage.getItem("labId"),
+  //     }
+
+      
+  //     console.log("detilaas : " , details)
+
+  //     var formBody = [];
+  //     for (var property in details) {
+  //       var encodedKey = encodeURIComponent(property);
+  //       var encodedValue = encodeURIComponent(details[property]);
+  //       formBody.push(encodedKey + "=" + encodedValue);
+  //     }
+  //     formBody = formBody.join("&");
+  //     console.log("formging:     " , formBody)
+  //     console.log("formging:     " , JSON.stringify(details))
+      
+  // await fetch(`${pharmacyModule[this.state.type].acceptOrder}`, {
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  //       },
+  //       body: formBody
+  //     }).then((resp)=>{
+  //       console.log("Getting: " , resp);
+  //       resp.json().then((data)=>{
+  //         console.log("ddddddddddddddddd;  " , data[0])
+  //         this.setState({
+  //           TypeObj:data[0]
+  //         })
+  //         // object = data
+  //       })
+  //     }).catch(()=>{
+  //       console.log("errror")
+  //     })
+   
+    }   
+
+    getDataForDoctorPrescriptions = (type) =>{ // getData for Doctor Prescriptions
       var details = {     
           ptCode : this.props.history.location.state,
         }
@@ -107,7 +229,9 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
           resp.json().then((data)=>{
             console.log("All Incomming Data;  " , data)
             this.setState({ 
-              Drugs:data
+              prescriptions: data.prescriptions ,
+              drugsList : data.drugs
+    
             })
       
           })
@@ -115,21 +239,56 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
           console.log("errror")
         })
     }
-    renderModalBody = ()=>{
+
+    handleDataTableColumnsForDoctor = (type) =>{
+      console.log("type: " , type ,"  ,,,,,,," ,)
+      var temp = []
+      for(var p in pharmacyModule[type].columnsTableForDoctor ){
+          if(p === "actions"){
+            pharmacyModule[type].columnsTableForDoctor[p]["cell"] =  (row) =>{ return(
+            <div className = "row">
+              <div className="col-auto">
+                <button  className="btn btn-primary"
+                  onClick={() => {  
+                      console.log("id:  " , row)
+                      this.handleopenModal()
+                      this.getDrugsForPresctiption(row.id);
+                    }}>Show Prescription</button>
+                    {/* <SessionCode  buttonValue={"Accept"}/> */}
+              </div>
+            
+            </div>
+            )
+            }
+            temp.push(pharmacyModule[type].columnsTableForDoctor[p])
+          }
+          else{
+            temp.push(pharmacyModule[type].columnsTableForDoctor[p])
+          }     
+      }
+      this.setState({columns : temp})
+      temp = []
+      var newState = this.state;
+      for(var property in pharmacyModule[type].state ){
+        newState[property] = "" 
+      }
+      this.setState({newState})
+  }
+
+    handleDaTaTableModel = () => { // handle DataTable for Modals
+      var temp =[] ;
+      for(var pp of this.state.drugs_columns ){
+        var p = pp.name;
+  
+     
+      }
+    }
+    renderModalBody = () =>{
       return (
-        <>
-         {/* <MyPdfViewer /> */}
-        {/* <Document
-          // file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
-          file="./Alaa_El-Menshawy.pdf"
-          onLoadSuccess={this.onDocumentLoadSuccess}
-        >
-          <Page pageNumber={this.state.pageNumber} />
-        </Document>
-        <p>Page {this.state.pageNumber} of {this.state.numPages}</p> */}
-          <iframe src="./test.pdf" height="200" width="300" title="Iframe Example"></iframe>
-        {/* <embed src='./test.pdf' type="application/pdf"/>  */}
-      </>
+            <DataTableComp  data = {this.state.prescriptionDrugs} //change it to Drugs
+        columns = {this.state.drugs_columns }
+        title=""
+        />
       )
     }
   
@@ -137,14 +296,15 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
         return (     
          
         <Container fluid>
-            
+              {console.log("presCriptions : " , this.state.prescriptions)}
+              {console.log("Columns : " , this.state.columns)}
             <Row className= "py-3">
                 <Col>
                     <h3>All Doctor Prescriptions</h3>
-                    <div>Get your Doctor Prescriptions...</div>
+                    <div>You will see all your prescriptions...</div>
                 </Col>
             </Row>
-            <Row className= "py-3">
+            <Row className= "py-3" >
                 <Col sm={10}></Col>
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
                    this.props.history.push({
@@ -156,20 +316,25 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
 
             <Row className= "py-3">
                <Col>
-                <DataTableComp  data = {row} //change it to Drugs
+                <DataTableComp  data = {this.state.prescriptions} //change it to Drugs
                   columns = {this.state.columns}
                   title=""
                   />
                </Col> 
            
          </Row>
-         {
-              
+            {
+              this.state.prescriptionDrugs && (
                 <ModalForView show={this.state.openModal} onHide={this.handleClose} body={this.renderModalBody()}  />
-              
+
+              )
             }
+             
+         
          </Container>
-        
+         
+
+
          );
     }
 }

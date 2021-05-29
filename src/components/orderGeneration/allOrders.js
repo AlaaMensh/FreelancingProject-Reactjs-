@@ -138,7 +138,7 @@ class AllOrders extends Component {
          formBody.push(encodedKey + "=" + encodedValue);
        }
        formBody = formBody.join("&");
-       axios.post(`${endPoint}`,formBody).then(result=>{
+       axios.post(`${endPoint}`,details).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
 
@@ -256,7 +256,9 @@ class AllOrders extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
+                
                 <button  className="btn btn-primary"
+                hidden={row.result == null ? true : false}
                   onClick={() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)

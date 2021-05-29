@@ -96,10 +96,16 @@ class SessionCode extends Component {
 
   }
   handleSubmitForpharmacy = () =>{
-    this.props.history.push({
-      pathname : `${this.props.history.location.pathname}/PharmacistPharmacyModule`,
-      state: this.state.code
-    })
+    axios.post(`https://mvb1.herokuapp.com/autho/getPtId`,{
+      ptCode:this.state.code
+   }).then(async resp => {
+            console.log("resp.data : " , resp.data);
+            this.props.history.push({
+              pathname : `${this.props.history.location.pathname}/PharmacistPharmacyModule`,
+              state: resp.data.id
+            })
+   })
+
   }
   rendering = () =>{
     switch(this.props.fromComponent){

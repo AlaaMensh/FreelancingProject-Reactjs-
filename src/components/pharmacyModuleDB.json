@@ -13,12 +13,6 @@
                                "sortable": true,
                                "center" : true
                        },
-                       "patientName": {
-                               "name": "patientName",
-                               "selector": "patientName",
-                               "sortable": true,
-                               "center" : true
-                       },
                         "notes": {
                                 "name": "Notes",
                                 "selector": "notes",
@@ -46,12 +40,6 @@
                                "sortable": true,
                                "center" : true
                        },
-                        "patientName": {
-                                "name": "Patient Name",
-                                "selector": "patientName",
-                                "sortable": true,
-                                "center" : true
-                        },
                         "actions" :{
                                 "name" :"actions",
                                 "selector" : "actions",
