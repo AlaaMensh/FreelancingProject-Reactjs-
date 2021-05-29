@@ -86,7 +86,7 @@ const selectHeaderFile=(event)=> {
   form.append('result',file)
   form.append('PID',props.PID)
   console.log(form);
-  axios.post('http://localhost:3000/visit/UpdateResult',form)
+  axios.post('http://localhost:8080/visit/UpdateResult',form)
   .then(res=>{
     console.log("success")
   }).catch(err=>{

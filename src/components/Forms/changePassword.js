@@ -140,7 +140,7 @@ const ChangePassword = ()=>{
         //   pathname: "/forgetPasswordCode",
         //   // state: {yourCalculatedData: data}
         // }); 
-        history.push("/login");
+        // history.push("/login");
 
     }
   return (
