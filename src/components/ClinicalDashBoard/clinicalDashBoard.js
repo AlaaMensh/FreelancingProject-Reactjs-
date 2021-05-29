@@ -11,7 +11,7 @@ import Prescription from "../Prescription/Prescription";
 import AllOrders from "../orderGeneration/allOrders";
 import Row from "react-bootstrap/Row";
 import AddOrderForm from "../orderGeneration/addOrderForm";
-
+import { ListGroup } from "react-bootstrap";
 const ClinicalDashBoard = ({ match }) => {
   const history = useHistory();
   const [ptId, setPtId] = useState(41);
@@ -30,8 +30,8 @@ const ClinicalDashBoard = ({ match }) => {
             <nav id="sidebar">
               <div className="sidebar-header"></div>
 
-              <ul className="list-unstyled components">
-                <li>
+              <ListGroup>
+                <ListGroup.Item>
                   {parseInt(localStorage.getItem("role")) === 8 ? (
                     <Link
                       to={match.url + `/clinicalDashBoard`}
@@ -44,13 +44,13 @@ const ClinicalDashBoard = ({ match }) => {
                       Clinical DashBoard
                     </Link>
                   )}
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Link to={match.url + `/patientAppointement`}>
                     Patient Appointement
                   </Link>
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Link
                     to={
                       match.url + `/patientOnGoingProblems/${"onGoingProblems"}`
@@ -58,28 +58,28 @@ const ClinicalDashBoard = ({ match }) => {
                   >
                     On Going Problems
                   </Link>
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Link to={match.url + `/patientAllergyproblems/${"allergy"}`}>
                     Allergy Problems
                   </Link>
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Link to={match.url + `/allLabOrders/${"lab"}`}>
                     Lab Orders
                   </Link>
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Link to={match.url + `/allPathologyOrders/${"pathology"}`}>
                     Pathology Orders
                   </Link>
-                </li>
-                <li>
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Link to={match.url + `/allRadioOrders/${"radio"}`}>
                     radio Orders
                   </Link>
-                </li>
-              </ul>
+                </ListGroup.Item>
+              </ListGroup>
             </nav>
           </div>
         </div>
