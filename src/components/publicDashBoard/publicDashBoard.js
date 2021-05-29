@@ -29,16 +29,16 @@ const PublicDashBoard = ({match}) => {
 
 const [ role , setRole] = useState("");
 const MainFunctions = [ // Cards content and its role
-    {text: "New Doctor Appointement" , role :["8"]},          //doctor
-    {text: "New patient registration" , role :["8" , "6"]},   //doctor and our GP
-    {text: "EMR Electronic Medical Records" , role :["8"]},   // doctor
-    {text: "Nursing Assessment" , role :["8" , "7"]},         // nurse and doctor
-    {text: "Lap Information System" , role :["3","8"]},           // lab FD
-    {text: "Radiology Information System" , role :["4" , "8"]},     // radio
-    {text: "Path information system" , role :["5" , "8"]},         // pathology
-    {text: "Electronic procreption ERX" , role :["13" , "8"]}, //doctor or pharmacist
-    {text: "System Admin" , role :["admin"]},
-    {text: "Document Manegment" , role :["" , ""]},
+    {text: "New Doctor Appointement" , role :["8"], src:"/images/appo.svg"},          //doctor
+    {text: "New patient registration" , role :["8" , "6"],src:"/images/ptreg.svg"},   //doctor and our GP
+    {text: "EMR Electronic Medical Records" , role :["8"] , src:"/images/emr.svg"},   // doctor
+    {text: "Nursing Assessment" , role :["8" , "7"],src:"/images/nurse.svg"},         // nurse and doctor
+    {text: "Lap Information System" , role :["3","8"],src:"/images/lab.svg"},           // lab FD
+    {text: "Radiology Information System" , role :["4" , "8"],src:"/images/radio.svg"},     // radio
+    {text: "Path information system" , role :["5" , "8"],src:"/images/patho.svg"},         // pathology
+    {text: "Electronic procreption ERX" , role :["13" , "8"],src:"/images/phar.svg"}, //doctor or pharmacist
+    {text: "System Admin" , role :["admin"],src:"/images/admin.svg"},
+    {text: "Document Manegment" , role :["" , ""],src:"/images/docs.svg"},
     
 ]
 const renderBodyForSessionCode = (value, role) =>{
@@ -124,7 +124,7 @@ const renderBodyForSessionCode = (value, role) =>{
               }
             }}
             >
-              <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
+              <Card.Img variant="top" src={window.location.origin + `${value.src}`} />
               <Card.Body className="text-secondary">
                 <Card.Title className="text-center">{value.text}</Card.Title>
               </Card.Body>

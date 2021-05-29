@@ -151,7 +151,14 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
 
     render() { 
         return ( 
-            <Container >
+           
+<div className="container-fluid" style={{height:'100%' }}>
+<div className="row align-items-center" style={{height:'100%' }}>
+    <div className="col-4 justify-content-center no-gutter">
+
+       <div className="row">
+
+
                 {
         
                 }
@@ -164,7 +171,13 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 buttonTitle = "Signup"/>
                 )
                 }
-            </Container>
+                    
+       </div>
+            
+            </div>
+            <div className="col-8 bg-primary"style={{height:'100%',backgroundImage:"url('../images/disk-orginal.jpg') ",  backgroundRepeat: "no-repeat",
+  backgroundSize: "cover" }}></div>
+            </div></div>
          );
     }
 }
