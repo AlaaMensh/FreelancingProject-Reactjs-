@@ -29,7 +29,8 @@ class AllOrders extends Component {
       formType:"uploadResult",
       numPages:null,
       pageNumber:1,
-      fileResult:""
+      fileResult:"" ,
+      resultStatus : ""
           }
         }
       async componentDidMount(){
@@ -187,19 +188,22 @@ class AllOrders extends Component {
       Form.append("result" ,this.state.result )
       Form.append("orderId" , this.state.typeObj["id"])
       
-
+      console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
       await fetch(`http://localhost:8080/visit/updateOrder`, {
         method: 'POST',
         body: Form
       }).then((resp)=>{
         console.log("Getting: " , resp);
-        resp.json().then((data)=>{ //** */ if you want to delete the record with uploaded Result
+        resp.json().then((data)=>{
+          console.log("dataaaaaaaaa: " , data)
+           //** */ if you want to delete the record with uploaded Result
           // var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
           // this.setState({orderlabList : temp});
         })
       }).catch(()=>{
         console.log("error On Server")
       })
+      
 
          
     }
@@ -225,6 +229,7 @@ class AllOrders extends Component {
                       console.log("id:  " , row)
                       this.handleopenModal();
                       this.getTypeByID(row.id);
+                      this.setState({resultStatus : "upload"})
                     }}>
                       Upload Result
                       </button>
@@ -264,7 +269,8 @@ class AllOrders extends Component {
                       console.log("id:  " , row)
                       this.setState({fileResult : row.result})
                       this.getTypeByID(row.id);
-                      this.handleopenModal()
+                      this.handleopenModal();
+                      this.setState({resultStatus : "show"})
                     }}>
                       Show Result
                       </button>
@@ -368,8 +374,26 @@ class AllOrders extends Component {
                 />
                 {console.log("inputs: " , this.state.formType)}
             </Col> 
-            <ModalForView  show={this.state.openModal} onHide={this.handleClose} body={this.renderModalBody()} />
+            {
+              this.state.resultStatus==="show" && (
+                <ModalForView  show={this.state.openModal} onHide={this.handleClose} body={this.renderModalBody()} />
+
+              )
+            }
             
+            {
+              this.state.resultStatus==="upload" && this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
+                <ModalComp show={this.state.openModal}
+                  onHide={this.handleClose}
+                  ModalInputs={this.state.modalUploadResultInputs}
+                  updatedTypeObj = {this.state.typeObj}
+                  handleChange = {this.handleChange}
+                  handleUpdate = {this.handleUpdate}
+                  handleAdding={this.handleAdding}
+                  formType = {this.state.formType}
+                />
+              ) 
+            }
             {/* for Plus Icon */}
             {/* if We Want to Add Order */}
               <div className="row mt-4">

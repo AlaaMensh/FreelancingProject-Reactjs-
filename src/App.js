@@ -5,7 +5,7 @@ import {
   Switch,
   useHistory,
 } from "react-router-dom";
-import "./App.css";
+import "./App.scss";
 import ClinicalDashBoard from "./components/ClinicalDashBoard/clinicalDashBoard";
 import Login from "./components/Forms/login";
 import SignupList1 from "./components/Forms/signUp/signUp";
@@ -51,9 +51,7 @@ function App() {
 
   return (
     <Router>
-      <div className="container--fluid">
-        <NavBar isAuth={loggedIn} logout={logout} />
-      </div>
+      <NavBar isAuth={loggedIn} logout={logout} />
       <Switch>
         <Route exact path="/typesGenerator" component={TypesGenerator}></Route>
         <Route exact path="/addOrderForm" component={AddOrderForm}></Route>

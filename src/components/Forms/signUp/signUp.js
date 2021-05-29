@@ -152,11 +152,13 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
     render() { 
         return ( 
            
-<div className="container-fluid" style={{height:'100%' }}>
-<div className="row align-items-center" style={{height:'100%' }}>
-    <div className="col-4 justify-content-center no-gutter">
-
-       <div className="row">
+          <div className="container-fluid">
+          <div className="row no-gutter">
+            <div className="col-md-8 col-lg-6">
+              <div className="login d-flex align-items-center py-5">
+                <div className="container">
+                  <div className="row">
+                    <div className="col-md-9 col-lg-8 mx-auto">
 
 
                 {
@@ -171,13 +173,19 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 buttonTitle = "Signup"/>
                 )
                 }
-                    
-       </div>
-            
+             <div className="text-center">
+                      <a className="small" href="/forgetPassword">
+                        Forgot password?
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="col-8 bg-primary"style={{height:'100%',backgroundImage:"url('../images/disk-orginal.jpg') ",  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover" }}></div>
-            </div></div>
+          </div>
+          <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        </div>
+      </div>
          );
     }
 }

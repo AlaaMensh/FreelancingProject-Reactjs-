@@ -46,6 +46,7 @@ class ModalComp extends Component {
                 <Modal.Footer>
                     {
                         this.props.formType === "edit" || this.props.formType === "uploadResult" ? (
+                            
                             <Button variant="warning"   value="Edit" onClick={()=>{
                                 this.props.handleUpdate()
                                       }} >Edit</Button>

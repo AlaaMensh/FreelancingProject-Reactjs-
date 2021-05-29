@@ -94,6 +94,7 @@ class Login extends Component {
         console.log("resp.type: ", typeof resp, resp);
 
         resp.json().then((data) => {
+          console.log("data.message :" , data.message)
           if (data.message) {
             // if this user has wrong password or wrong UserName
             toast(`🦄 ${data.message}`, {
@@ -161,37 +162,36 @@ class Login extends Component {
     if (this.state.isLoggedIn) return <Redirect to="/publicDashBoard" />;
 
     return (
-      <div className="container-fluid" style={{ height: "100%" }}>
+      <div className="container-fluid">
         <ToastContainer />
-        <div className="row align-items-center" style={{ height: "100%" }}>
-          <div className="col-4 justify-content-center no-gutter">
-            <div className="row">
-              <div className="col justfiy-content-center">
-                <h3>Wellcome Back!</h3>
+        <div className="row no-gutter">
+          <div className="col-md-8 col-lg-6">
+            <div className="login d-flex align-items-center py-5">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-9 col-lg-8 mx-auto">
+                    <h3 className="login-heading mb-4 px-2">Welcome back!</h3>
+                    {console.log("state: ", this.state)}
+                    {this.state.formInputs &&
+                      this.state.formInputs.length > 0 && (
+                        <FormGenerator
+                          ModalInputs={this.state.formInputs}
+                          handleChange={this.handleChange}
+                          handleSubmit={this.handleSignup}
+                          buttonTitle="Login"
+                        />
+                      )}
+                    <div className="text-center">
+                      <a className="small" href="/forgetPassword">
+                        Forgot password?
+                      </a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-            {console.log("state: ", this.state)}
-            {this.state.formInputs && this.state.formInputs.length > 0 && (
-              <FormGenerator
-                ModalInputs={this.state.formInputs}
-                handleChange={this.handleChange}
-                handleSubmit={this.handleSignup}
-                buttonTitle="Login"
-              />
-            )}
-            <a style={{ fontSize: "0.9em" }} href="/forgetPassword">
-              Forgot Password
-            </a>
           </div>
-          <div
-            className="col-8 bg-primary"
-            style={{
-              height: "100%",
-              backgroundImage: "url('./images/disk-orginal.jpg') ",
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          ></div>
+          <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
         </div>
       </div>
     );
