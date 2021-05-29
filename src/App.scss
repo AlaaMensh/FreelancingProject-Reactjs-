@@ -84,3 +84,35 @@ body {
 .MuiAccordionDetails-root {
   overflow: visible !important;
 }
+
+.uprofile {
+  width: 375px;
+  border: none;
+  .media {
+    border: 1px solid #ebedec;
+  }
+
+  .fa-angle-down {
+    margin-top: 13px;
+  }
+
+  p.text-muted {
+    font-size: 14px;
+  }
+
+  .list {
+    list-style: none;
+    line-height: 50px;
+    font-size: 14px;
+  }
+
+  ul.list li:hover {
+    border: none;
+    background-color: #ecf2fe;
+    color: #224bba;
+    cursor: pointer;
+    &.danger {
+      background-color: #ffe4e4;
+    }
+  }
+}
