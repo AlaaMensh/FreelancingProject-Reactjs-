@@ -16,7 +16,7 @@ const NavBar = (props) => {
     var name = "AlaaMensh";
 
     return (
-        <Navbar bg="light" expand="md">
+        <Navbar style={{ marginBottom: "20px" }} bg="light" expand="md">
             <Navbar.Brand href="#home">Our Logo</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
