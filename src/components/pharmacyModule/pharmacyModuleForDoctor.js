@@ -97,12 +97,12 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
         formBody = formBody.join("&");
       
         
-      fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}`, {
-          method: 'POST',
+      fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}/${localStorage.getItem("userId")}`, {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-          },
-          body: formBody
+          }
+        
         }).then((resp)=>{
           resp.json().then((data)=>{
             console.log("All Incomming Data;  " , data)

@@ -38,7 +38,7 @@ const AddToDB = (row)=>{
   console.log(row)
   var t = row.drug.split(',')
   console.log(t)
-  axios.post('http://localhost:3000/visit/addPrescription_Drugs_single',{
+  axios.post('http://localhost:8080/visit/addPrescription_Drugs_single',{
     Quantity : row.quantity,
     Duration : row.duration,
     drug_id : t[0],
@@ -66,7 +66,7 @@ const loadDrugs = ()=>{
     return;
   }
 
-axios.get('http://localhost:3000/drug/getAll').then(res=>{
+axios.get('http://localhost:8080/drug/getAll').then(res=>{
   setDrugs(res.data)
   console.log("mostafa",res.data)
 }).catch(err=>{

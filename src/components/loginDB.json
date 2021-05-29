@@ -15,5 +15,5 @@
         }
 
     },
-    "addUser":"https://mvb1.herokuapp.com/autho/login/"
+    "addUser":"http://localhost:8080/autho/login/"
 }

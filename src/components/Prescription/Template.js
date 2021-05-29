@@ -37,8 +37,8 @@ const styles={
         position:'relative',
         backgroundColor:'#fff'
     },
-    HeaderButton:{ position:'absolute',top:0,right:'-10%',textAlign:"center"},
-    FooterButton:{ position:'absolute',bottom:0,right:'-10%',textAlign:"center"},
+    HeaderButton:{ position:'absolute',top:0,right:0,textAlign:"center"},
+    FooterButton:{ position:'absolute',bottom:0,right:0,textAlign:"center"},
     NoteButton:{ position:'absolute',top:0,right:0,textAlign:"center"},
     Modal:{
 
