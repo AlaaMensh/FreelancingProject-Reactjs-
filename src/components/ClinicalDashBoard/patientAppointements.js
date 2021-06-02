@@ -39,30 +39,30 @@ class UserCrud extends Component {
       for(var p in appointements[type].columnsTable ){ // for Adding actions Buttons to DataTable
         if(p === "actions"){
           appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
-          <Row>
-            <Col >
-              <Button  variant="primary"
+            <div className = "row">
+            <div className="col-auto">
+                <Button  variant="primary"
                 style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
                 onClick={async () => {  
                      this.setUpdatedObj(row.id);
                     this.setState({formType :"edit"})
                     this.handleopenModal()
                   }}>Update</Button>
-            </Col>
-          <Col>
-          <Button  variant="btn-danger"
+                  </div>           
+                   <div className="col-auto">
+           <Button  variant="btn-danger"
                 onClick={() => {
                     this.handleDelete(row.id)
                   }}>Delete
           </Button>
-          </Col>
-          <Col>
-  
-          <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
+          </div>
+          <div className="col-auto">       
+         <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
           buttonValue="Make Visit" fromComponent="appointement" history={this.props.history}/>
-          </Col>
+            </div>
           
-          </Row>
+          </div>
+          
           )
           }
           temp.push(appointements[type].columnsTable[p])
@@ -120,7 +120,7 @@ class UserCrud extends Component {
 
   setUpdatedObj = (id)=>{
     var obj =  this.state.data.find(row => row.id === id)
-    // console.log("obj: " , obj);
+    console.log("obj: " , obj);
     this.setState({typeObj : obj});
   }
 
@@ -325,7 +325,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
   renderingForPatientAppointements = () =>{
     return(
       <>
-      {console.log("updateObject: " , this.state.ModalAddtionInputs)}
+      {console.log("updateObject: " , this.state.data)}
         {console.log("state: " , this.state)}
         <Row className= "py-3 mt-5">
                     <Col>

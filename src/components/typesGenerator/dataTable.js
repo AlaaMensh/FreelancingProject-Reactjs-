@@ -5,9 +5,11 @@ import "./dataTable.css";
 class DataTableComp extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {
+          
+          }
     }
-    
+
     render() { 
         const tableData = {
             columns:this.props.columns,

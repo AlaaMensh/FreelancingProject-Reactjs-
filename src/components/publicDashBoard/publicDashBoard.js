@@ -393,6 +393,16 @@ const PublicDashBoard = ({ match }) => {
         />
         <Route
           exact
+          path={match.path + "/EMR/Futureappointements/future/visit/prescription/:visitId"}
+          component={Prescription}
+        />
+        <Route
+          exact
+          path={match.path + "/EMR/currentAppointements/current/visit/prescription/:visitId"}
+          component={Prescription}
+        />
+        <Route
+          exact
           path={match.path + "/EMR/currentAppointements/current/visit"}
           component={Visit}
         />

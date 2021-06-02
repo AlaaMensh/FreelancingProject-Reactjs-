@@ -46,8 +46,8 @@ class Appointements extends Component {
       for(var p in appointements[type].columnsTable ){ // for Adding actions Buttons to DataTable
         if(p === "actions"){
           appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
-          <Row>
-            <Col >
+            <div className = "row">
+            <div className="col-auto">
               <Button  variant="primary"
                 style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
                 onClick={async () => {  
@@ -55,21 +55,44 @@ class Appointements extends Component {
                     this.setState({formType :"edit"})
                     this.handleopenModal()
                   }}>Update</Button>
-            </Col>
-          <Col>
-          <Button  variant="btn-danger"
+                  </div>           
+                   <div className="col-auto">
+           <Button  variant="danger"
                 onClick={() => {
                     this.handleDelete(row.id)
                   }}>Delete
           </Button>
-          </Col>
-          <Col>
-  
-          <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
+          </div>
+          <div className="col-auto">       
+           <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
           buttonValue="Make Visit" fromComponent="appointement" history= {this.props.history}/>
-          </Col>
+            </div>
           
-          </Row>
+          </div>
+          // <Row>
+          //   <Col >
+          //     <Button  variant="primary"
+          //       style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
+          //       onClick={async () => {  
+          //            this.setUpdatedObj(row.id);
+          //           this.setState({formType :"edit"})
+          //           this.handleopenModal()
+          //         }}>Update</Button>
+          //   </Col>
+          // <Col>
+          // <Button  variant="btn-danger"
+          //       onClick={() => {
+          //           this.handleDelete(row.id)
+          //         }}>Delete
+          // </Button>
+          // </Col>
+          // <Col>
+  
+          // <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
+          // buttonValue="Make Visit" fromComponent="appointement" history= {this.props.history}/>
+          // </Col>
+          
+          // </Row>
           )
           }
           temp.push(appointements[type].columnsTable[p])
@@ -205,7 +228,7 @@ class Appointements extends Component {
       details[p] = this.state[p]
     } 
     details["id"] = localStorage.getItem("userId");
-     details["check"] = this.state.check;
+    details["check"] = this.state.check;
     //details["check"] = "drFDId";
 
 

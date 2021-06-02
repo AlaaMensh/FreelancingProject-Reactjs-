@@ -194,7 +194,9 @@ class AllOrdersForDoctor extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
-                <button  className="btn btn-primary"
+                <button
+                style={{display: !row.result ? "none" : "block"}}  
+                className="btn btn-primary"
                   onClick={() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)
@@ -282,7 +284,10 @@ class AllOrdersForDoctor extends Component {
   }
   renderingModalBody = ()=>{
     return (
+      <>
       <h1>Result</h1>
+      {/* <iframe src="https://www.w3schools.com" title="W3Schools Free Online Web Tutorials"></iframe> */}
+      </>
     )
   }
 

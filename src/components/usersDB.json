@@ -1465,7 +1465,160 @@
              "getLabIdInSession":"" 
              
 
-          }
+          },
+          "pharmacist" : {  
+                "state":{
+                   "firstName":"",
+                   "secondName":"",
+                   "lastName": "", 
+                   "Date": "",
+                   "degree" : "",
+                   "userName": "",
+                   "Password": "",
+                   "Email": "",
+                   "phone" : "",
+                   "address": ""
+                   
+           },
+              "columnsTable" : {
+                       "firstName": {
+                               "name": "First Name",
+                               "selector": "firstName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "secondName": {
+                               "name": "Second Name",
+                               "selector": "secondName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "lastName": {
+                               "name": "Last Name",
+                               "selector": "lastName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "Date": {
+                               "name": "Date",
+                               "selector": "Date",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "degree" :{
+                               "name" :"Degree",
+                               "selector" : "degree",
+                               "sortable":true,
+                               "center" : true,
+                               "hide":true
+                       },
+
+
+                       "phone" :{
+                               "name" :"Phone",
+                               "selector" : "phone",
+                               "sortable":true,
+                               "center" : true,
+                               "hide":true
+                       },
+                       "Address" :{
+                               "name" :"Address",
+                               "selector" : "address",
+                               "sortable":true,
+                               "center" : true,
+                               "hide":true
+                       },
+                       "actions" :{
+                               "name" :"actions",
+                               "selector" : "actions",
+                               "sortable":false,
+                               "center" : true,
+                               "width":"300px"
+                       }
+              },
+              "modalUpdateForms": {
+                       "firstName" :{
+                               "type": "text",
+                               "name" : "firstName"
+                       },
+                       "secondName" :{
+                               "type": "text",
+                               "name" : "secondName"
+                       },
+                       "lastName" :{
+                               "type": "text",
+                               "name" : "lastName"
+                       },
+                       "Date" :{
+                               "type": "date",
+                               "name" : "Date"
+                       },
+                       "degree" :{
+                               "type": "text",
+                               "name" : "degree"
+                       },                
+                       "phone" : {
+                               "type":"text",
+                               "name" :"phone"
+                       },
+                       "address" : {
+                               "type":"text",
+                               "name" :"address"
+                       }
+
+              },
+              "modalAdditionForms": {
+                       "firstName" :{
+                               "type": "text",
+                               "name" : "firstName"
+                       },
+                       "secondName" :{
+                               "type": "text",
+                               "name" : "secondName"
+                       },
+                       "lastName" :{
+                               "type": "text",
+                               "name" : "lastName"
+                       },
+                       "Date" :{
+                               "type": "date",
+                               "name" : "Date"
+                       },
+                       "degree" :{
+                               "type": "text",
+                               "name" : "degree"
+                       },                
+                       "phone" : {
+                               "type":"text",
+                               "name" :"phone"
+                       },
+                       "address" : {
+                               "type":"text",
+                               "name" :"address"
+                       },
+                       "Email" : {
+                               "type":"email",
+                               "name" :"Email"
+                       },
+                       "userName" : {
+                               "type":"text",
+                               "name" :"userName"
+                       },
+                       "Password" : {
+                               "type":"password",
+                               "name" :"Password"
+                       }
+
+              },
+              "title":"All Doctors",
+              "description":"simple blah blah this the page and what it dose you know stuff..",
+              "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
+              "deleteUser" : "http://localhost:8080/assistant/deleteAssistant",
+              "updateUser":"http://localhost:8080/assistant/updateAssistant",
+              "getAll":"http://localhost:8080/assistant/getAssistant"
+              
+
+           }
 
     
             

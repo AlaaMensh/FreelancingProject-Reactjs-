@@ -151,7 +151,8 @@
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getlabOrderByPtId",
                "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getlabOrderbyLab",
-               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getlabOrderbyDrid"
+               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getlabOrderbyDrid",
+               "uploadResult" :"http://localhost:8080/visit/updateOrder"
 
             },
     "pathology" : {
@@ -311,7 +312,8 @@
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getpathoOrderByPtId",
                "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getpathoOrderbyLab",
-               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getpathoOrderbyDrid"
+               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getpathoOrderbyDrid",
+               "uploadResult" :"http://localhost:8080/order/pathelogies/updateResult"
             },
             "radio" : {
                 "state":{
@@ -320,7 +322,7 @@
                       "status":"",
                       "result":""
                       
-              },
+                },
               
                  "columnsTable" : {
                          "firstname": {
@@ -472,7 +474,8 @@
                      "getAllAcceptedOrders" :"",
                      "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getradioOrderByPtId",
                      "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getRadioOrderbyLab",
-                     "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getradioOrderbyDrid"
+                     "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getradioOrderbyDrid",
+                     "uploadResult" :"http://localhost:8080/order/radios/updateResult"
                   }
     
             

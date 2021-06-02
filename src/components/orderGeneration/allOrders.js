@@ -9,7 +9,8 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
-import ModalForView from "../pharmacyModule/modalForView"
+import ModalForView from "../pharmacyModule/modalForView";
+import {Link} from "react-router-dom"
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 var object  = {}
@@ -30,7 +31,8 @@ class AllOrders extends Component {
       numPages:null,
       pageNumber:1,
       fileResult:"" ,
-      resultStatus : ""
+      resultStatus : "",
+      resultToShow:""
           }
         }
       async componentDidMount(){
@@ -189,7 +191,8 @@ class AllOrders extends Component {
       Form.append("orderId" , this.state.typeObj["id"])
       
       console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-      await fetch(`http://localhost:8080/visit/updateOrder`, {
+      // await fetch(`http://localhost:8080/visit/updateOrder`, {
+      await fetch(`${orderType[this.state.type].uploadResult}`, {
         method: 'POST',
         body: Form
       }).then((resp)=>{
@@ -203,7 +206,8 @@ class AllOrders extends Component {
       }).catch(()=>{
         console.log("error On Server")
       })
-      
+
+      this.getData(true , this.state.type)
 
          
     }
@@ -261,19 +265,25 @@ class AllOrders extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
+                <a  href= {`http://localhost:8080/${this.state.type}s/${row.result}`}>
+                
                 
                 <button  className="btn btn-primary"
-                hidden={row.result == null ? true : false}
+                hidden={!row.result  ? true : false}
                   onClick={() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)
                       this.setState({fileResult : row.result})
                       this.getTypeByID(row.id);
                       this.handleopenModal();
+                      this.setState({resultToShow: row.result});
+                    //  this.props.history.push(`http://localhost:8080/${this.state.type}/${row.result}`)
                       this.setState({resultStatus : "show"})
                     }}>
                       Show Result
                       </button>
+                  </a>
+               
                 <button className="ml-2 btn btn-danger"
                     onClick = {() => {  
                       // console.log("rooooow : " , row)
@@ -317,7 +327,7 @@ class AllOrders extends Component {
 
     renderModalBody = ()=>{
       return (
-        <h1>Result</h1>
+    <iframe src={`http://localhost:8080/${this.state.type}s/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
       )
     }
 
@@ -405,20 +415,7 @@ class AllOrders extends Component {
                         </Fab>                       */}
                 </div>
                      
-            {
-              this.state.fileResult && (
-                <div>
-                  <Document
-                    // file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
-                    file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
-                    onLoadSuccess={this.onDocumentLoadSuccess}
-                  >
-                    <Page pageNumber={this.state.pageNumber} />
-                  </Document>
-                  <p>Page {this.state.pageNumber} of {this.state.numPages}</p>
-                </div>
-              )
-            }
+
       </Row>
         
     </Container>
