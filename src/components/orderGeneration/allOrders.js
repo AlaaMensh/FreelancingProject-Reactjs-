@@ -10,8 +10,7 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
 import ModalForView from "../pharmacyModule/modalForView";
-import {Link} from "react-router-dom"
-// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import "./order.css"
 
 var object  = {}
 
@@ -121,13 +120,15 @@ class AllOrders extends Component {
         endPoint = `${orderType[type].getAllOrdersByLabId}`
         switch(type){
           case "lab":{
-            details["labId"] = localStorage.getItem("labId");
+            // details["labId"] = localStorage.getItem("labId");
+            details["labId"] = 1;
           }
           case "pathology":{
-            details["pathoId"] = localStorage.getItem("pathoId");
+            // details["pathoId"] = localStorage.getItem("pathoId");
+            details["pathoId"] = 1;
           }
           case "radio":{
-            details["radioId"] = localStorage.getItem("radioId");
+            details["radioId"] = 1;
           }
         }
 
@@ -265,7 +266,7 @@ class AllOrders extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
-                <a  href= {`http://localhost:8080/${this.state.type}s/${row.result}`}>
+                {/* <a  href= {`http://localhost:8080/${this.state.type}s/${row.result}`}> */}
                 
                 
                 <button  className="btn btn-primary"
@@ -282,7 +283,7 @@ class AllOrders extends Component {
                     }}>
                       Show Result
                       </button>
-                  </a>
+                  {/* </a> */}
                
                 <button className="ml-2 btn btn-danger"
                     onClick = {() => {  
@@ -327,7 +328,9 @@ class AllOrders extends Component {
 
     renderModalBody = ()=>{
       return (
-    <iframe src={`http://localhost:8080/${this.state.type}s/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
+        <div className="wrap">
+          <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
+        </div>
       )
     }
 

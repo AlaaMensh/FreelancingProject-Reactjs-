@@ -148,7 +148,7 @@ await fetch(`${columns[this.state.type].addType}`, {
 
 
   async componentDidMount(){
-    var type = "allergy";
+    var type = "drug";
     this.setState({type});
     
     var temp = []

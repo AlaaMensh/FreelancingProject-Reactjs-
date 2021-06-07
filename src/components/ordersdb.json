@@ -142,18 +142,17 @@
                "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                "title":"All Lab Orders",
                "description":"From here you can see and upload Results for all accepted orders",
-               "addOrder" :"https://mvb1.herokuapp.com/order/addlabOrder",
-               "deleteOrder" : "https://mvb1.herokuapp.com/order/deletelabOrder",
-               "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
-               "getAll":"https://mvb1.herokuapp.com/lab/getAll",
-               "acceptOrder":"https://mvb1.herokuapp.com/order/acceptOrder",
-               "getNotAcceptedOrders" :"https://mvb1.herokuapp.com/order/getlabOrderByPtCode",
+               "addOrder" :"http://localhost:8080/order/addlabOrder",
+               "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
+               "updateOrder":"http://localhost:8080/allergy/updateAllergy",
+               "getAll":"http://localhost:8080/lab/getAll",
+               "acceptOrder":"http://localhost:8080/order/acceptOrder",
+               "getNotAcceptedOrders" :"http://localhost:8080/order/getlabOrderByPtCode",
                "getAllAcceptedOrders" :"",
-               "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getlabOrderByPtId",
-               "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getlabOrderbyLab",
-               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getlabOrderbyDrid",
-               "uploadResult" :"http://localhost:8080/visit/updateOrder"
-
+               "getAllOrdersByPtID" : "http://localhost:8080/order/getlabOrderByPtId",
+               "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab",
+               "getAllDoctorOrders":"http://localhost:8080/order/getlabOrderbyDrid",
+               "uploadResult" :"http://localhost:8080/order/labs/updateResult"
             },
     "pathology" : {
           "state":{
@@ -303,7 +302,7 @@
                "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                "title":"All Pathology Orders",
                "description":"From here you can see and upload Results for all accepted orders",
-               "addOrder" :"https://mvb1.herokuapp.com/order/addpathoOrder",
+               "addOrder" :"http://localhost:8080/order/addpathoOrder",
                "deleteOrder" : "https://mvb1.herokuapp.com/order/deletepathoOrder",
                "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
                "getAll":"https://mvb1.herokuapp.com/allergy/getAllergy",
@@ -312,8 +311,8 @@
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getpathoOrderByPtId",
                "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getpathoOrderbyLab",
-               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getpathoOrderbyDrid",
-               "uploadResult" :"http://localhost:8080/order/pathelogies/updateResult"
+               "getAllDoctorOrders":"http://localhost:8080/order/getpathoOrderbyDrid",
+               "uploadResult" :"http://localhost:8080/order/pathelogys/updateResult"
             },
             "radio" : {
                 "state":{

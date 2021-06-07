@@ -195,7 +195,7 @@
                },
                "title":"All Doctors",
                "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"https://mvb1.herokuapp.com/doctor/addDoctor",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
                "deleteUser" : "http://localhost:8080/doctor/deleteDoctor",
                "updateUser":"http://localhost:8080/doctor/updateDoctor",
                "getAll":"http://localhost:8080/doctor/getDoctor"
@@ -346,8 +346,8 @@
                         }
 
                },
-               "title":"All Doctors",   
-               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "title":"All Nurses",   
+               "description":"You can see All Nurses here..",
                "addUser" :"https://mvb1.herokuapp.com/nurse/addNurse",
                "deleteUser" : "http://localhost:8080/nurse/deleteNurse",
                "updateUser":"http://localhost:8080/nurse/updateNurse",
@@ -498,8 +498,8 @@
                         }
 
                },
-               "title":"All Doctors",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "title":"All Pathologists",
+               "description":"You can see All Pathologists here...",
                "addUser" :"https://mvb1.herokuapp.com/patho/addPathology",
                "deleteUser" : "http://localhost:8080/patho/deletePathology",
                "updateUser":"http://localhost:8080/patho/updatePathology",
@@ -649,8 +649,8 @@
                         }
 
                },
-               "title":"All Doctors",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "title":"All radiogists",
+               "description":"You can see all Radiogists here..",
                "addUser" :"https://mvb1.herokuapp.com/radiology/addRadiology",
                "deleteUser" : "http://localhost:8080/radiology/deleteradiology",
                "updateUser":"http://localhost:8080/radiology/updateradiology",
@@ -802,8 +802,8 @@
                         }
 
                },
-               "title":"All Doctors",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "title":"All Chemists",
+               "description":"You can see all Chemists here...",
                "addUser" :"https://mvb1.herokuapp.com/chemist/addChemist",
                "deleteUser" : "http://localhost:8080/chemist/deleteChemist",
                "updateUser":"http://localhost:8080/chemist/updateChemist",
@@ -955,8 +955,8 @@
                         }
 
                },
-               "title":"All Doctors",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "title":"All Assistant",
+               "description":"You can see All Assistants here..",
                "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
                "deleteUser" : "http://localhost:8080/assistant/deleteAssistant",
                "updateUser":"http://localhost:8080/assistant/updateAssistant",
@@ -1082,12 +1082,12 @@
 
              },
              "title":"All Lab FrontDisks",
-             "description":"simple blah blah this the page and what it dose you know stuff..",
+             "description":"You can see All Lab FrontDists here..",
              "addUser" :"https://mvb1.herokuapp.com/frontdisk/addLabFrontDisk",
              "deleteUser" : "http://localhost:8080/frontdisk/deletelabFD",
              "updateUser":"http://localhost:8080/frontdisk/updatelabFD",
              "getAll":"http://localhost:8080/frontdisk/getlabFD",
-             "getAllDataFD" :"http://localhost:8080/lab/getAll",
+             "getAllDataFD" :"https://mvb1.herokuapp.com/lab/getAll",
              "getLabIdInSession":"" 
              
 
@@ -1203,8 +1203,8 @@
                       }
 
              },
-             "title":"All Lab FrontDisks",
-             "description":"simple blah blah this the page and what it dose you know stuff..",
+             "title":"All Radios FrontDisks",
+             "description":"You can see here all Radios FrontDisks..",
              "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
              "deleteUser" : "http://localhost:8080/frontdisk/deleteradioFD",
              "updateUser":"http://localhost:8080/frontdisk/updateradioFD",
@@ -1329,8 +1329,8 @@
                       }
 
              },
-             "title":"All Lab FrontDisks",
-             "description":"simple blah blah this the page and what it dose you know stuff..",
+             "title":"All pathology FrontDisks",
+             "description":"You can see all Pathology FrontDisks..",
              "addUser" :"https://mvb1.herokuapp.com/frontdisk/addpathoFrontDisk",
              "deleteUser" : "http://localhost:8080/frontdisk/deletepathobFD",
              "updateUser":"http://localhost:8080/frontdisk/updatepathoFD",
@@ -1610,8 +1610,8 @@
                        }
 
               },
-              "title":"All Doctors",
-              "description":"simple blah blah this the page and what it dose you know stuff..",
+              "title":"All Pharmacists",
+              "description":"You can see All Pharmacists here...",
               "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
               "deleteUser" : "http://localhost:8080/assistant/deleteAssistant",
               "updateUser":"http://localhost:8080/assistant/updateAssistant",
