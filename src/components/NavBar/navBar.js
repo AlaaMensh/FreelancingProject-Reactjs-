@@ -9,13 +9,11 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useState, useEffect, useRef } from "react";
 import Row from "react-bootstrap/Row";
 import "./navbar.css";
-import axios from "axios";
 
 const NavBar = (props) => {
     const history = useHistory();
     const [userName, setUserName] = useState(localStorage.getItem("userName"));
     const [target, setTarget] = useState(null);
-    const [img , setImg] = useState(null);
     const [showProfile, setShowProfile] = useState(false);
     const ref = useRef(null);
     // const [userName , setUserName] = useState("");
@@ -24,16 +22,6 @@ const NavBar = (props) => {
         setShowProfile(!showProfile);
         setTarget(event.target);
     };
-    // Handle Getting user Photo without Upload it 
-    // useEffect(()=>{
-    //     axios.post('http://localhost:8080/profile/photo',data).then(result=>{
-    //         console.log(result.data)
-    //        setImg("http://localhost:8080/images/"+result.data)
-    //    })
-    //    .catch(err=>{
-    //        console.log(err)
-    //    })
-    // },[])
     return (
         <Navbar style={{ marginBottom: "20px" }} bg="light" expand="md">
             <Navbar.Brand href="#home">Our Logo</Navbar.Brand>
@@ -107,7 +95,6 @@ const NavBar = (props) => {
                                     <div class="col m-0 p-0 uprofile">
                                         <div class="media p-2">
                                             <img
-                                                // src="https://imgur.com/yVjnDV8.png"
                                                 src="https://imgur.com/yVjnDV8.png"
                                                 class="mr-1 align-self-start"
                                             />

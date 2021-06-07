@@ -65,13 +65,11 @@
                     "firstName":"",
                     "secondName":"",
                     "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
                     "userName": "",
                     "Password": "",
                     "Email": "",
                     "phone" : "",
-                    "address": ""
+                    "specialty": ""
                     
                 },
                "columnsTable" : {
@@ -87,16 +85,6 @@
                                 "sortable": true,
                                 "center" : true
                         },
-
-                        "degree" :{
-                                "name" :"Degree",
-                                "selector" : "degree",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-
-
                         "phone" :{
                                 "name" :"Phone",
                                 "selector" : "phone",
@@ -104,9 +92,9 @@
                                 "center" : true,
                                 "hide":true
                         },
-                        "Address" :{
-                                "name" :"Address",
-                                "selector" : "address",
+                        "specialty" :{
+                                "name" :"Specialty",
+                                "selector" : "specialty",
                                 "sortable":true,
                                 "center" : true,
                                 "hide":true
@@ -132,21 +120,13 @@
                                 "type": "text",
                                 "name" : "lastName"
                         },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },                
+                        "specialty" :{
+                                "type": "select",
+                                "name" : "speciality"
+                        },         
                         "phone" : {
                                 "type":"text",
                                 "name" :"phone"
-                        },
-                        "address" : {
-                                "type":"text",
-                                "name" :"address"
                         }
 
                },
@@ -163,21 +143,18 @@
                                 "type": "text",
                                 "name" : "lastName"
                         },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },                
+                        "specialty" :{
+                                "type": "autoComplete",
+                                "name" : "specialty",
+                                "options":[
+                                        {"value":"request", "text" : "Request"},
+                                        {"value":"deliver", "text" : "Delivering"},
+                                        {"value":"pending", "text" : "Pending"}
+                                ]
+                        },         
                         "phone" : {
                                 "type":"text",
                                 "name" :"phone"
-                        },
-                        "address" : {
-                                "type":"text",
-                                "name" :"address"
                         },
                         "Email" : {
                                 "type":"email",
@@ -194,13 +171,12 @@
 
                },
                "title":"All Doctors",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addUser" :"http://localhost:8080/doctor/addDoctor",
-               "deleteUser" : "http://localhost:8080/doctor/deleteDoctor",
-               "updateUser":"http://localhost:8080/doctor/updateDoctor",
-               "getAll":"http://localhost:8080/doctor/getDoctor"
+               "description":"You will see all Doctor Here..",
+               "addUser" :"https://mvb1.herokuapp.com/doctor/addDoctor",
+               "deleteUser" : "https://mvb1.herokuapp.com/doctor/deleteDoctor",
+               "updateUser":"https://mvb1.herokuapp.com/doctor/updateDoctor",
+               "getAll":"https://mvb1.herokuapp.com/doctor/getDoctor"
                
-
             },
         "nurse" : {  
                 "state":{
@@ -215,7 +191,7 @@
                     "phone" : "",
                     "address": ""
                     
-            },
+                },
                "columnsTable" : {
                         "firstName": {
                                 "name": "First Name",
@@ -1044,7 +1020,7 @@
                               "name" :"address"
                       },
                       "labId" : {
-                              "type":"select",
+                              "type":"autoComplete",
                               "name" :"labId"
                       }
                       
@@ -1099,8 +1075,7 @@
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "establishment": "",
-                      "contactPerson" : "",
+                      "organization": "",
                       "radioId":""   
                       
           },
@@ -1111,20 +1086,14 @@
                         "sortable": true,
                         "center" : true
                 },
-                "establishment": {
-                        "name": "establishment",
-                        "selector": "establishment",
-                        "sortable": true,
-                        "center" : true
-                },
-                "contactPerson": {
-                        "name": "contactPerson",
-                        "selector": "contactPerson",
+                "organization": {
+                        "name": "Organization",
+                        "selector": "organization",
                         "sortable": true,
                         "center" : true
                 },
                 "phone" :{
-                        "name" :"phone",
+                        "name" :"Phone",
                         "selector" : "phone",
                         "sortable":true,
                         "center" : true,
@@ -1138,79 +1107,79 @@
                         "width":"300px"
                 }
          },
-             "modalAdditionForms": {
-                      "establishment" :{
-                              "type": "text",
-                              "name" : "establishment"
-                      },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
-                      },
-                      "userName" : {
-                              "type":"text",
-                              "name" :"userName"
-                      },
-                      
-                      "Password" : {
-                              "type":"password",
-                              "name" :"Password"
-                      },
-                      "Email" : {
-                              "type":"email",
-                              "name" :"Email"
-                      },
-                      "phone" : {
-                              "type":"text",
-                              "name" :"phone"
-                      },
-                      "address" : {
-                              "type":"text",
-                              "name" :"address"
-                      },
-                      "radioId" : {
-                              "type":"select",
-                              "name" :"radioId"
-                      }
-                      
-              },
-              "modalUpdateForms": {
-                      "establishment" :{
-                              "type": "text",
-                              "name" : "establishment"
-                      },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
-                      },
-                      "userName" : {
-                              "type":"text",
-                              "name" :"userName"
-                      },
-                      
-                      "Password" : {
-                              "type":"password",
-                              "name" :"Password"
-                      },
+        "modalAdditionForms": {
+                "organization" :{
+                        "type": "text",
+                        "name" : "organization"
+                },
+                "contactPerson" :{
+                        "type": "text",
+                        "name" : "contactPerson"
+                },
+                "userName" : {
+                        "type":"text",
+                        "name" :"userName"
+                },
+                
+                "Password" : {
+                        "type":"password",
+                        "name" :"Password"
+                },
+                "Email" : {
+                        "type":"email",
+                        "name" :"Email"
+                },
+                "phone" : {
+                        "type":"text",
+                        "name" :"phone"
+                },
+                "address" : {
+                        "type":"text",
+                        "name" :"address"
+                },
+                "radioId" : {
+                        "type":"autoComplete",
+                        "name" :"radioId"
+                }
+                
+        },
+        "modalUpdateForms": {
+                "organization" :{
+                        "type": "text",
+                        "name" : "organization"
+                },
+                "contactPerson" :{
+                        "type": "text",
+                        "name" : "contactPerson"
+                },
+                "userName" : {
+                        "type":"text",
+                        "name" :"userName"
+                },
+                
+                "Password" : {
+                        "type":"password",
+                        "name" :"Password"
+                },
 
-                      "phone" : {
-                              "type":"text",
-                              "name" :"phone"
-                      },
-                      "address" : {
-                              "type":"text",
-                              "name" :"address"
-                      }
+                "phone" : {
+                        "type":"text",
+                        "name" :"phone"
+                },
+                "address" : {
+                        "type":"text",
+                        "name" :"address"
+                }
 
-             },
-             "title":"All Radios FrontDisks",
-             "description":"You can see here all Radios FrontDisks..",
-             "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
-             "deleteUser" : "http://localhost:8080/frontdisk/deleteradioFD",
-             "updateUser":"http://localhost:8080/frontdisk/updateradioFD",
-             "getAll":"http://localhost:8080/frontdisk/getradioFD",
-             "getAllDataFD" : "https://mvb1.herokuapp.com/radio/getAll",
-             "getLabIdInSession":"" 
+        },
+        "title":"All Radios FrontDisks",
+        "description":"You can see here all Radios FrontDisks..",
+        "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
+        "deleteUser" : "http://localhost:8080/frontdisk/deleteradioFD",
+        "updateUser":"http://localhost:8080/frontdisk/updateradioFD",
+        "getAll":"http://localhost:8080/frontdisk/getradioFD",
+        "getAllDataFD" : "https://mvb1.herokuapp.com/radio/getAll",
+        "getLabIdInSession":"" 
              
 
           },
@@ -1221,8 +1190,7 @@
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "establishment": "",
-                      "contactPerson" : "",
+                      "organization": "",
                       "pathoId":""
                      
                       
@@ -1234,18 +1202,13 @@
                         "sortable": true,
                         "center" : true
                 },
-                "establishment": {
-                        "name": "establishment",
-                        "selector": "establishment",
+                "organization": {
+                        "name": "organization",
+                        "selector": "organization",
                         "sortable": true,
                         "center" : true
                 },
-                "contactPerson": {
-                        "name": "contactPerson",
-                        "selector": "contactPerson",
-                        "sortable": true,
-                        "center" : true
-                },
+
                 "phone" :{
                         "name" :"phone",
                         "selector" : "phone",
@@ -1262,13 +1225,9 @@
                 }
                 },
              "modalAdditionForms": {
-                      "establishment" :{
+                      "organization" :{
                               "type": "text",
-                              "name" : "establishment"
-                      },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
+                              "name" : "organization"
                       },
                       "userName" : {
                               "type":"text",
@@ -1292,19 +1251,15 @@
                               "name" :"address"
                       },
                       "pathoId" : {
-                              "type":"select",
+                              "type":"autoComplete",
                               "name" :"pathoId"
                       }
                       
               },
               "modalUpdateForms": {
-                      "establishment" :{
+                      "organization" :{
                               "type": "text",
-                              "name" : "establishment"
-                      },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
+                              "name" : "organization"
                       },
                       "userName" : {
                               "type":"text",
@@ -1347,8 +1302,7 @@
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "establishment": "",
-                      "contactPerson" : "",
+                      "organization": "",
                       "drId":""
                      
                       
@@ -1360,15 +1314,9 @@
                         "sortable": true,
                         "center" : true
                 },
-                "establishment": {
-                        "name": "establishment",
-                        "selector": "establishment",
-                        "sortable": true,
-                        "center" : true
-                },
-                "contactPerson": {
-                        "name": "contactPerson",
-                        "selector": "contactPerson",
+                "organization": {
+                        "name": "organization",
+                        "selector": "organization",
                         "sortable": true,
                         "center" : true
                 },
@@ -1388,14 +1336,11 @@
                 }
          },
              "modalAdditionForms": {
-                      "establishment" :{
+                      "organization" :{
                               "type": "text",
-                              "name" : "establishment"
+                              "name" : "organization"
                       },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
-                      },
+
                       "userName" : {
                               "type":"text",
                               "name" :"userName"
@@ -1424,13 +1369,9 @@
                       
               },
               "modalUpdateForms": {
-                      "establishment" :{
+                      "organization" :{
                               "type": "text",
-                              "name" : "establishment"
-                      },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
+                              "name" : "organization"
                       },
                       "userName" : {
                               "type":"text",

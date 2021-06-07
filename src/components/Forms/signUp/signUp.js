@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import userType from "../../usersDB.json";
-import FormGenerator from "../formGeneration"
+// import FormGenerator from "../formGeneration"
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
+import FormGenerator from './../formGenerationNew';
 
 const arr = [
   {id:1 , name:"lab1" , abbreviation:"" ,description:""},
@@ -170,7 +171,9 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 handleChange = {this.handleChange}
                 handleSubmit= {this.handleSignup}
                 options = {this.state.options}
-                buttonTitle = "Signup"/>
+                buttonTitle = "Signup"
+                formType = "add"
+                />
                 )
                 }
              <div className="text-center">

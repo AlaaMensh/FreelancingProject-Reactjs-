@@ -10,7 +10,9 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
 import ModalForView from "../pharmacyModule/modalForView";
-import "./order.css"
+import "./order.css";
+import FormGenerator from "../Forms/formGenerationNew";
+import ModalGenerator from "../ModalGeneration/modalGeneration";
 
 var object  = {}
 
@@ -26,7 +28,7 @@ class AllOrders extends Component {
       modalUploadResultInputs :[],
       openModal:false,
       typeObj:{},
-      formType:"uploadResult",
+      formType:"upload",
       numPages:null,
       pageNumber:1,
       fileResult:"" ,
@@ -120,15 +122,13 @@ class AllOrders extends Component {
         endPoint = `${orderType[type].getAllOrdersByLabId}`
         switch(type){
           case "lab":{
-            // details["labId"] = localStorage.getItem("labId");
-            details["labId"] = 1;
+            details["labId"] = localStorage.getItem("labId");
           }
           case "pathology":{
-            // details["pathoId"] = localStorage.getItem("pathoId");
-            details["pathoId"] = 1;
+            details["pathoId"] = localStorage.getItem("pathoId");
           }
           case "radio":{
-            details["radioId"] = 1;
+            details["radioId"] = localStorage.getItem("radioId");
           }
         }
 
@@ -328,8 +328,9 @@ class AllOrders extends Component {
 
     renderModalBody = ()=>{
       return (
-        <div className="wrap">
+        <div className="wrap" style={{height:"100%"}}>
           <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
+
         </div>
       )
     }
@@ -396,15 +397,29 @@ class AllOrders extends Component {
             
             {
               this.state.resultStatus==="upload" && this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
-                <ModalComp show={this.state.openModal}
+                // <ModalComp show={this.state.openModal}
+                //   onHide={this.handleClose}
+                //   ModalInputs={this.state.modalUploadResultInputs}
+                //   updatedTypeObj = {this.state.typeObj}
+                //   handleChange = {this.handleChange}
+                //   handleUpdate = {this.handleUpdate}
+                //   handleAdding={this.handleAdding}
+                //   formType = {this.state.formType}
+                // />
+                <ModalGenerator
                   onHide={this.handleClose}
-                  ModalInputs={this.state.modalUploadResultInputs}
-                  updatedTypeObj = {this.state.typeObj}
-                  handleChange = {this.handleChange}
-                  handleUpdate = {this.handleUpdate}
-                  handleAdding={this.handleAdding}
-                  formType = {this.state.formType}
-                />
+                  show={this.state.openModal}
+                 >
+                      <FormGenerator
+                       ModalInputs = {this.state.modalUploadResultInputs}
+                       handleChange = {this.handleChange}
+                       handleUpdate = {this.handleUpdate}
+                       handleAdding={this.handleAdding}
+                       options = {[]}
+                       formType = {this.state.formType}
+
+                      />
+                </ModalGenerator>
               ) 
             }
             {/* for Plus Icon */}

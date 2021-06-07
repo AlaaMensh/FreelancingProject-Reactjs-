@@ -13,6 +13,8 @@ import EditIcon from "@material-ui/icons/Edit";
 import Fab from "@material-ui/core/Fab";
 import { withStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
+import { Form } from "react-bootstrap";
+import axios from "axios";
 
 var object = {};
 const useStyles = (theme) => ({
@@ -56,6 +58,11 @@ const useStyles = (theme) => ({
     backgroundColor: "#c94c4c",
   },
 });
+const example = [
+  {id:1 , name :"lol"},
+  {id:2 , name :"lol"},
+  {id:3 , name :"lol"},
+];
 
 var id = 0;
 var rowsToKeep = [];
@@ -67,13 +74,7 @@ class Allergy extends Component {
 
     this.state = {
       allergyList: [
-        //   {
-        //       id:"",
-        //       type:"" ,
-        //       status:"",
-        //       reaction:"",
-        //       notes:""
-        // }
+  
       ],
       typeId: 0,
       openModal1: false,
@@ -88,6 +89,11 @@ class Allergy extends Component {
       reaction: "",
       notes: "",
       key: 1,
+
+      name:"",
+      allergyTypes :[], // from DB ,
+      activeStatus: true, // for Changing
+      activeStatusText: "Active" // for the value of changing
     };
   }
 
@@ -126,6 +132,43 @@ class Allergy extends Component {
       allergyList: this.state.allergyList.filter((row) => row.id !== id),
     });
   };
+
+  changeActiveStatus = async (id) =>{
+    var obj = await this.state.allergyList.filter((item) => {
+    if(item.id === id){
+      item.activeStatusText = "resolved"
+    }
+    // return item1
+      
+    });
+    console.log ("objjjjjj : " , obj.name)
+    var details = {
+      id: id,
+      name:this.state.name,
+      type: this.state.type,
+      status: this.state.status,
+      reaction: this.state.reaction,
+      notes: this.state.notes,
+      activeStatusText : ""
+    };
+    if(obj.activeStatusText == "Active"){
+      console.log("/////////////////////")
+     details.activeStatusText = "Resolved"
+    }
+    else{
+      details.activeStatusText = "Active"
+    }
+    
+    console.log("objjjj: " , obj)
+    console.log("details: " , details)
+
+    const items = this.state.allergyList.map((item) =>
+      item.id == id ? details : item
+    );
+    console.log("items: " , items)
+
+    this.setState({ allergyList: items });
+  }
   async componentDidMount() {
     if (this.props.allergyListHome && this.props.allergyListHome.length > 0) {
       this.setState({
@@ -133,6 +176,7 @@ class Allergy extends Component {
         key: this.props.allergyListHome.length + 1,
       });
     }
+    await this.getAllergyTypesFromDB(); // to get All Allergy Types from DB
     // this.getData()
   }
   handleUpdate = () => {
@@ -188,18 +232,42 @@ class Allergy extends Component {
             columns={[
               { field: "id", headerName: "id", width: 70 },
               { field: "type", headerName: "Type", width: 200 },
-              { field: "status", headerName: "Status", width: 200 },
-              { field: "reaction", headerName: "Reaction", width: 200 },
-              { field: "notes", headerName: "Notes", width: 400 },
-
-
-              {
-                field: "Actions",
-                headerName: "Actions",
-                width: 250,
+              { field: "name", headerName: "Allergy Name", width: 200 },
+              { field: "activeStatusText",
+               headerName: "Active Status",
+                width: 200,
                 renderCell: (params) => (
                   <strong>
                     {/* {params.value.getFullYear()} */}
+                    {params.row.activeStatusText}
+                    </strong>
+                )
+                    },
+
+              { field: "status", headerName: "Status", width: 200 },
+              { field: "reaction", headerName: "Reaction", width: 200 },
+              { field: "notes", headerName: "Notes", width: 400 },
+              {
+                field: "Actions",
+                headerName: "Actions",
+                width: 450,
+                renderCell: (params) => (
+                  <strong>
+                    {/* {params.value.getFullYear()} */}
+                    <Button
+                      variant="contained"
+                      color="default"
+                      size="small"
+                      className={this.props.classes.button}
+                      startIcon={<EditIcon />}
+                      style={{ marginLeft: 16 }}
+                      onClick={() => {
+                        this.changeActiveStatus(params.row.id)
+                        // this.getData()
+                      }}
+                    >
+                      Resolved
+                    </Button>
                     <Button
                       variant="contained"
                       color="default"
@@ -265,13 +333,25 @@ class Allergy extends Component {
       </div>
     );
   };
+  getAllergyTypesFromDB = async() =>{
+    
+    await axios.get(`https://mvb1.herokuapp.com/allergy/getAllergy` ,{
+    } ).then(async resp => {
+      console.log("resp : " ,resp)
+      console.log("AllData: " , resp.data);
+      this.setState({options : resp.data});
+      this.setState({allergyTypes : resp.data});
+    })
+  }
   handleAdding = () => {
     var details = {
       id: this.state.key,
+      name:this.state.name,
       type: this.state.type,
       status: this.state.status,
       reaction: this.state.reaction,
       notes: this.state.notes,
+      activeStatusText : this.state.activeStatusText
     };
 
     this.setState({});
@@ -280,27 +360,6 @@ class Allergy extends Component {
     this.setState({ allergyList: joined });
     this.setState({ key: this.state.key + 1 });
 
-    //   var formBody = [];
-    //   for (var property in details) {
-    //     var encodedKey = encodeURIComponent(property);
-    //     var encodedValue = encodeURIComponent(details[property]);
-    //     formBody.push(encodedKey + "=" + encodedValue);
-    //   }
-    //   formBody = formBody.join("&");
-    //   console.log("formging:     " , formBody)
-
-    //   fetch('http://localhost:3000/allergy/addAllergy', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    //     },
-    //     body: formBody
-    //   }).then(()=>{
-    //     console.log("it is inserted");
-    //   }).catch(()=>{
-    //     console.log("errror")
-    //   })
-    //   this.getData();
   };
 
   render() {
@@ -457,6 +516,25 @@ class Allergy extends Component {
                       variant="outlined"
                       required
                       fullWidth
+                      id="name"
+                      label="Allergy Name"
+                      name="name"
+                      type="text"
+                      autoComplete="name"
+                      // placeholder={this.state.TypeObj.name}
+                      onChange={(event) => {
+                        this.setState({ name: event.target.value });
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {/* <TextField
+                      InputProps={{
+                        classes: { input: this.props.classes.input2 },
+                      }}
+                      variant="outlined"
+                      required
+                      fullWidth
                       id="type"
                       label="Type"
                       name="type"
@@ -466,7 +544,27 @@ class Allergy extends Component {
                       onChange={(event) => {
                         this.setState({ type: event.target.value });
                       }}
-                    />
+                    /> */}
+                       <Form.Control
+                          as="select"
+                          custom
+                          // onChange={this.onChangeColor.bind(this)}
+                        >
+                           <option value="drug">Drug</option>
+                           <option value="other">other</option>
+                          {/* {
+                            this.state.allergyTypes && (
+                              this.state.allergyTypes.map((allergyType)=>{
+                                return (
+                                  <option value={allergyType.id}>{allergyType.name}</option>
+                                )
+                              })
+                            
+                            )
+
+                          } */}
+                          
+                        </Form.Control>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField

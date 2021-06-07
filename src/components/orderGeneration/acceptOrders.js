@@ -32,16 +32,13 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       }
       switch(this.state.type){
         case "lab":
-            // details["labFDId"] = localStorage.getItem("labId");
-            details["labFDId"] = 1;
+            details["labFDId"] = localStorage.getItem("labId");
             break;
         case "pathology":
-            // details["pathoFDId"] = localStorage.getItem("pathoId");
-            details["pathoFDId"] =1;
+            details["pathoFDId"] = localStorage.getItem("pathoId");
             break;
         case "radio":
-            details["radioFDId"] = 1;
-            // details["radioFDId"] = localStorage.getItem("radioId");
+            details["radioFDId"] = localStorage.getItem("radioId");
             break;
     }
       console.log("detilaas : " , details)

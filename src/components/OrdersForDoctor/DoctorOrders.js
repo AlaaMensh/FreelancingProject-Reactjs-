@@ -9,8 +9,7 @@ import Col from 'react-bootstrap/Col';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
-import ModalForView from "../pharmacyModule/modalForView";
-import "../orderGeneration/order.css";
+import ModalForView from "../pharmacyModule/modalForView"
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 var object  = {}
@@ -206,8 +205,6 @@ class AllOrdersForDoctor extends Component {
                     }}>
                       Show Result
                       </button>
-                      </div>
-                      <div className="col-auto">
                 <button className="ml-2 btn btn-danger"
                     onClick = {() => {  
                       // console.log("rooooow : " , row)
@@ -216,8 +213,7 @@ class AllOrdersForDoctor extends Component {
                       }}>
                         Delete
                         </button>
-                        </div>
-              
+              </div>
             
             </div>
             )
@@ -288,9 +284,10 @@ class AllOrdersForDoctor extends Component {
   }
   renderingModalBody = ()=>{
     return (
-      <div className="wrap">
-        <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
-      </div>
+      <>
+      <h1>Result</h1>
+      {/* <iframe src="https://www.w3schools.com" title="W3Schools Free Online Web Tutorials"></iframe> */}
+      </>
     )
   }
 

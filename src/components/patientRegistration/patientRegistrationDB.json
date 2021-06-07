@@ -1,0 +1,128 @@
+{
+    "allergyStep" : 
+    {   "state":{
+            "name":"",
+            "type":"",
+            "date":"",
+            "status":"Active"
+            
+    },
+       "columnsTable" : {
+               "name": {
+                       "name": "Name",
+                       "selector": "name",
+                       "sortable": true,
+                       "center" : true
+               },
+               "type": {
+                       "name": "Type",
+                       "selector": "type",
+                       "sortable": true,
+                       "center" : true
+               },
+                "date": {
+                        "name": "Date",
+                        "selector": "date",
+                        "sortable": true,
+                        "center" : true
+                },
+                "status": {
+                        "name": "Status",
+                        "selector": "status",
+                        "sortable": true,
+                        "center" : true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"500px"
+                }
+       },
+      
+       "modalForms": {
+                "name" :{
+                        "type": "text",
+                        "name" : "name"
+                },
+                "type" :{
+                        "type": "select",
+                        "name" : "type",
+                        "options":[
+                            {"value":"drug", "text" : "Drug"},
+                            {"value":"other", "text" : "Other"}
+                    ]
+                },
+                "date" : {
+                        "type":"date",
+                        "name" :"date"
+                }
+
+       }
+
+    },
+    "familyHistory" : 
+    {   "state":{
+            "problem":"",
+            "relation":"",
+            "note":""
+            
+    },
+       "columnsTable" : {
+               "name": {
+                       "name": "Name",
+                       "selector": "name",
+                       "sortable": true,
+                       "center" : true
+               },
+               "type": {
+                       "name": "Type",
+                       "selector": "type",
+                       "sortable": true,
+                       "center" : true
+               },
+                "date": {
+                        "name": "Date",
+                        "selector": "date",
+                        "sortable": true,
+                        "center" : true
+                },
+                "status": {
+                        "name": "Status",
+                        "selector": "status",
+                        "sortable": true,
+                        "center" : true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"500px"
+                }
+       },
+      
+       "modalForms": {
+                "name" :{
+                        "type": "text",
+                        "name" : "name"
+                },
+                "type" :{
+                        "type": "select",
+                        "name" : "type",
+                        "options":[
+                            {"value":"drug", "text" : "Drug"},
+                            {"value":"other", "text" : "Other"}
+                    ]
+                },
+                "date" : {
+                        "type":"date",
+                        "name" :"date"
+                }
+
+       }
+
+    }
+
+}

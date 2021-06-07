@@ -48,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PaientRegistration({
+  getGender,
   getFirstName,
   getSecondName,
   getBloodGroup,
@@ -163,17 +164,17 @@ export default function PaientRegistration({
               </Row>
               <Row>
                 <Form.Group as={Col}>
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>UserName</Form.Label>
                   <Form.Control
                     variant="outlined"
                     required
                     fullWidth
                     size="small"
-                    id="email"
-                    placeholder="Email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="userName"
+                    placeholder="UserName"
+                    name="userName"
+                    type="userName"
+                    autoComplete="userName"
                     onChange={(event) => {
                       getEmail(event.target.value);
                       // console.log("yyyyys" , username);
@@ -215,6 +216,21 @@ export default function PaientRegistration({
                       ),
                     }}
                   />
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Control
+                  as="select"
+                  defaultValue={obj.gender}
+                  custom
+                    onChange = {(event)=>{
+                      getGender(event.target.value);
+                    }}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </Form.Control>
+
                 </Form.Group>
 
                 <Form.Group as={Col}>

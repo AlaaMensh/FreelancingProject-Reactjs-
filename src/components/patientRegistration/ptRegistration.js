@@ -12,6 +12,7 @@ import FamilyHistoryStep from "./familyHistoryStep";
 import SurgeriesStep from "./surgeriesStep";
 import InterventionsStep from "./otherInterventionsStep";
 import OnGoingProblemStep from "./onGoingProblemStep";
+import ListStep from "./listStep";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,9 +92,11 @@ export default function HorizontalLabelPositionBelowStepper() {
   const [surgeriesList, setsurgeriesList] = useState([]);
   const [interventionsList, setinterventionsList] = useState([]);
   const [onGoingProblemList, setonGoingProblemList] = useState([]);
+  const [gender, setGender] = useState("");
 
   const handleSubmit = () => {
     console.log(
+      "gender: " ,gender,
       "first: ",
       firstName,
       "last: ",
@@ -168,6 +171,9 @@ export default function HorizontalLabelPositionBelowStepper() {
   const getSecondName = (name) => {
     setSecondName(name);
   };
+  const getGender = (name) => {
+    setGender(name);
+  };
   const getLastName = (name) => {
     setLastName(name);
   };
@@ -190,6 +196,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     setbirthDate(name);
   };
   const obj = {
+    gender : gender,
     firstName: firstName,
     lastName: lastName,
     secondName: secondName,
@@ -222,6 +229,7 @@ export default function HorizontalLabelPositionBelowStepper() {
       case 0:
         return (
           <Info
+            getGender = {getGender}
             getFirstName={getFirstName}
             getSecondName={getSecondName}
             getEmail={getEmail}
@@ -236,7 +244,7 @@ export default function HorizontalLabelPositionBelowStepper() {
         );
       case 1:
         return (
-          <Allergy
+          <ListStep
             getAllergyList={getAllergyList}
             allergyListHome={allergyList}
           />
