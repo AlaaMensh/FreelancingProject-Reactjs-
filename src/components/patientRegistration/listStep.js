@@ -52,6 +52,7 @@ class ListStep extends Component {
   }
  //** to get the row which will updated */
   getTypeByID = async (row) => {
+    console.log("UpdatedObject: " , row)
     this.setState({ TypeObj: row });
   };
   // for Modal
@@ -91,28 +92,26 @@ class ListStep extends Component {
       }
 
     
-        const items = this.state.allergyList.map((item) =>
-          item === row? obj : item
+        const items = await this.state.allergyList.map((item) =>
+          item == row ? obj : item
         );
     
         this.setState({ allergyList: items });
 
       console.log("AfterChangint: ",obj);
-    //   var newList = await this.state.allergyList.map((allergyType) =>
-    //       allergyType.name === this.state.TypeObj.name ? obj : allergyType 
-    //   )
-    //   console.log("NewList: ",obj);
-    // this.setState({ allergyList: newList });
-    //   this.setState({
-    //     allergyList: this.state.allergyList.filter((row) => row.id !== id),
-    //   });
+
+
       }
   async componentDidMount() {
-    var type = "allergyStep"; // change it with steptype props
+    console.log("///////////////////////////////////////////")
+    var type = this.props.type; // change it with steptype props
     this.setState({stepType : type})
     await this.handleDataTable(type);
     await this.handleFormInputs(type);
     var newState = this.state;
+    if(type === "surgeries" || type === "familyHistory" || type === "onGoingProblems" ){
+      this.getTypesFromDB()
+    }
 
     // *** to fill the state of this stepType component
     for(var property in steps[type].state ){ 
@@ -120,11 +119,46 @@ class ListStep extends Component {
       }
 
       // this for Navigation if you go to another step the information still at it is
-    if (this.props.allergyListHome && this.props.allergyListHome.length > 0) {
-      this.setState({
-        allergyList: this.props.allergyListHome,
-        key: this.props.allergyListHome.length + 1,
-      });
+
+    switch(type){
+     
+        case "allergyStep":{
+          if (this.props.allergyListHome && this.props.allergyListHome.length > 0) {
+            this.setState({
+              allergyList: this.props.allergyListHome,
+              key: this.props.allergyListHome.length + 1,
+            });
+          }
+          break;
+        }
+        case "familyHistory":{
+          if (this.props.familyHistoryListHome && this.props.familyHistoryListHome.length > 0) {
+            this.setState({
+              allergyList: this.props.familyHistoryListHome,
+              key: this.props.familyHistoryListHome.length + 1,
+            });
+          }
+          break;
+        }
+        case "surgeries":{
+          if (this.props.surgeriesListHome && this.props.surgeriesListHome.length > 0) {
+            this.setState({
+              allergyList: this.props.surgeriesListHome,
+              key: this.props.surgeriesListHome.length + 1,
+            });
+          }
+          break;
+        }
+        case "onGoingProblems":{
+          if (this.props.onGoingProblemListHome && this.props.onGoingProblemListHome.length > 0) {
+            this.setState({
+              allergyList: this.props.onGoingProblemListHome,
+              key: this.props.onGoingProblemListHome.length + 1,
+            });
+          }
+          break;
+        }
+      
     }
 
   }
@@ -140,7 +174,7 @@ class ListStep extends Component {
 
 
     const items = this.state.allergyList.map((item) =>
-      item === this.state.TypeObj ? details : item
+      item == this.state.TypeObj ? details : item
     );
     console.log("iteeeeems: " , items)
 
@@ -151,7 +185,24 @@ class ListStep extends Component {
   componentDidUpdate() {
     console.log("hhhhhhh");  
     // this.rendering();
-    this.props.getAllergyList(this.state.allergyList);
+    switch(this.props.type){
+      case "allergyStep":{
+        this.props.getAllergyList(this.state.allergyList);
+        break;
+      }
+      case "familyHistory":{
+        this.props.getfamilyHistoryList(this.state.allergyList);
+        break;
+      }
+      case "surgeries":{
+        this.props.getsurgeriesList(this.state.allergyList);
+        break;
+      }
+      case "onGoingProblems":{
+        this.props.getonGoingProblemList(this.state.allergyList);
+        break;
+      }
+    }
     
   }
 
@@ -218,14 +269,19 @@ class ListStep extends Component {
       this.setState({columns : temp});
   }
   //** this function used when loading data from DB in dropDown list */
-  getAllergyTypesFromDB = async() =>{
-    
-    await axios.get(`https://mvb1.herokuapp.com/allergy/getAllergy` ,{
+  getTypesFromDB = async() =>{
+    var temp2 =[];
+    await axios.get(`${steps[this.state.stepType].getProblemsFromDB}` ,{
     } ).then(async resp => {
-      console.log("resp : " ,resp)
-      console.log("AllData: " , resp.data);
-      this.setState({options : resp.data});
-      this.setState({allergyTypes : resp.data});
+      console.log("AllIncomingData: " , resp.data);
+
+      //********* Here You should search by abbreviation or name and the value will be the name  */
+      for(var place of resp.data){
+        var obj = {value : place.name ,  text : place.name + " (" + place.abbreviation+" )" }
+        temp2.push(obj);
+      }
+      this.setState({options : temp2})
+      temp2=[]; 
     })
   }
   handleAdding = () => {
@@ -237,7 +293,7 @@ class ListStep extends Component {
     details["id"] = this.state.key;
 
     this.setState({});
-    console.log("detilaas : ", details);
+    console.log("Addition Object : ", details);
     var joined = this.state.allergyList.concat(details);
     this.setState({ allergyList: joined });
     this.setState({ key: this.state.key + 1 });
@@ -273,10 +329,10 @@ class ListStep extends Component {
   };
   // used on props of the form component to handle the values of all variables
   handleChange = (evt) => {
-    if(evt.text && evt.text === "autoComplete"){
+    if(evt.text && evt.text === "autoComplete" && evt.newValue.text){
       console.log("evt: " , evt , "  Value :")
       this.setState({
-        [evt.input]: evt.newValue.value,
+        [evt.input]: evt.newValue.value, //// **** Here the value after choosing from dropDown will be the name without abbreviation
       });
     }
     else{
@@ -288,7 +344,6 @@ class ListStep extends Component {
 
   };
   render() {
-    // const { classes } = this.props;
 
     return (
       <div className="hero">
@@ -310,7 +365,6 @@ class ListStep extends Component {
           <Fab
             color="primary"
             aria-label="add"
-            // className={this.props.classes.iconPlus}
             onClick={() => {
             this.setState({formType : "add"});
               this.handleopenModal();

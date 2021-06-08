@@ -70,27 +70,83 @@
             
     },
        "columnsTable" : {
+               "problem": {
+                       "name": "Problem",
+                       "selector": "problem",
+                       "sortable": true,
+                       "center" : true
+               },
+               "relation": {
+                       "name": "Relation",
+                       "selector": "relation",
+                       "sortable": true,
+                       "center" : true
+               },
+                "note": {
+                        "name": "Note",
+                        "selector": "note",
+                        "sortable": true,
+                        "center" : true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"500px"
+                }
+       },
+      
+       "modalForms": {
+                "problem" :{
+                        "type": "autoComplete",
+                        "name" : "problem"
+                },
+                "note" :{
+                        "type": "text",
+                        "name" : "note"
+                },
+                "relation" :{
+                        "type": "select",
+                        "name" : "relation",
+                        "options":[
+                            {"value":"parent", "text" : "Parent"},
+                            {"value":"sibling", "text" : "Sibling"},
+                            {"value":"remoteFamily", "text" : "Remote Family"}
+                    ]
+                },
+                "date" : {
+                        "type":"date",
+                        "name" :"date"
+                }
+
+       },
+       "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
+
+    },
+    "surgeries" : 
+    {   "state":{
+            "name":"",
+            "date":"",
+            "note":""
+            
+    },
+       "columnsTable" : {
                "name": {
                        "name": "Name",
                        "selector": "name",
                        "sortable": true,
                        "center" : true
                },
-               "type": {
-                       "name": "Type",
-                       "selector": "type",
+               "date": {
+                       "name": "Date",
+                       "selector": "date",
                        "sortable": true,
                        "center" : true
                },
-                "date": {
-                        "name": "Date",
-                        "selector": "date",
-                        "sortable": true,
-                        "center" : true
-                },
-                "status": {
-                        "name": "Status",
-                        "selector": "status",
+                "note": {
+                        "name": "Note",
+                        "selector": "note",
                         "sortable": true,
                         "center" : true
                 },
@@ -105,24 +161,64 @@
       
        "modalForms": {
                 "name" :{
-                        "type": "text",
+                        "type": "autoComplete",
                         "name" : "name"
                 },
-                "type" :{
-                        "type": "select",
-                        "name" : "type",
-                        "options":[
-                            {"value":"drug", "text" : "Drug"},
-                            {"value":"other", "text" : "Other"}
-                    ]
+                "note" :{
+                        "type": "text",
+                        "name" : "note"
                 },
                 "date" : {
                         "type":"date",
                         "name" :"date"
                 }
 
-       }
+       },
+       "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
+
+    },
+    "onGoingProblems" : 
+    {   "state":{
+            "problem":"",
+            "date":""
+          
+            
+    },
+       "columnsTable" : {
+               "problem": {
+                       "name": "Problem",
+                       "selector": "problem",
+                       "sortable": true,
+                       "center" : true
+               },
+               "date": {
+                       "name": "Date",
+                       "selector": "date",
+                       "sortable": true,
+                       "center" : true
+               },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"500px"
+                }
+       },
+       "modalForms": {
+                "problem" :{
+                        "type": "autoComplete",
+                        "name" : "problem"
+                },
+                "date" : {
+                        "type":"date",
+                        "name" :"date"
+                }
+
+       },
+       "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
 
     }
+
 
 }

@@ -7,7 +7,7 @@ import { Form, Col, Row, Button } from "react-bootstrap";
 import Typography from "@material-ui/core/Typography";
 import { useState } from "react";
 import Info from "./importatntInfo";
-import Allergy from "./allergyStep";
+import AllergyStep from "./allergyStep";
 import FamilyHistoryStep from "./familyHistoryStep";
 import SurgeriesStep from "./surgeriesStep";
 import InterventionsStep from "./otherInterventionsStep";
@@ -70,7 +70,7 @@ function getSteps() {
     "Fill Important Info",
     "Allergy Step",
     "Family History Step",
-    "Surgies Step",
+    "Surgical History Step",
     "Intervetions Step",
     "onGoingProblem",
     "Finished",
@@ -133,7 +133,7 @@ export default function HorizontalLabelPositionBelowStepper() {
       Interventions : interventionsList,
       onGoingProblems : onGoingProblemList,
     };
-    console.log("formBody:  ", formBody);
+    console.log("Details To Add:  ", details);
 
     var formBody = [];
     for (var property in details) {
@@ -208,9 +208,11 @@ export default function HorizontalLabelPositionBelowStepper() {
     bloodGroup: bloodGroup,
   };
   const getAllergyList = (List) => {
+    console.log("allergyListInHome: " , List);
     setAllergyList(List);
   };
   const getfamilyHistoryList = (List) => {
+    console.log("Familty HistoryListInHome: " , List);
     setFamilyHistoryList(List);
   };
   const getSurgeriesList = (List) => {
@@ -244,9 +246,10 @@ export default function HorizontalLabelPositionBelowStepper() {
         );
       case 1:
         return (
-          <ListStep
+          <AllergyStep
             getAllergyList={getAllergyList}
             allergyListHome={allergyList}
+            type = "allergyStep"
           />
         );
       case 2:
@@ -254,6 +257,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <FamilyHistoryStep
             getfamilyHistoryList={getfamilyHistoryList}
             familyHistoryListHome={familyHistoryList}
+            type ="familyHistory"
           />
         );
       case 3:
@@ -261,6 +265,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <SurgeriesStep
             getsurgeriesList={getSurgeriesList}
             surgeriesListHome={surgeriesList}
+            type = "surgeries"
           />
         );
       case 4:
@@ -275,6 +280,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <OnGoingProblemStep
             getonGoingProblemList={getonGoingProblemList}
             onGoingProblemListHome={onGoingProblemList}
+            type = "onGoingProblems"
           />
         );
       default:

@@ -109,6 +109,9 @@ class UserCrud extends Component {
     });
     console.log("details for Addition: ", details);
   }
+  componentWillUnmount(){
+    this.setState({allergyList : []});
+  }
   async componentDidMount() {
     var type = this.props.match.params.type;
     this.setState({ type });
