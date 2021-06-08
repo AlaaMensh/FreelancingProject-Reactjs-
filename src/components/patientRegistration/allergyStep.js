@@ -145,7 +145,7 @@ class AllergyStep extends Component {
       }
       }
   async componentDidMount() {
-    console.log("///////////////////////////////////////////")
+
 
     var type = this.props.type; // change it with steptype props
     
@@ -163,9 +163,7 @@ class AllergyStep extends Component {
         newState[property] = steps[type].state[property];
       }
 
-      // this for Navigation if you go to another step the information still at it is
-
-
+  // this for Navigation if you go to another step the information still at it is
   }
   // update DataTable
   handleUpdate = () => {
@@ -192,22 +190,10 @@ class AllergyStep extends Component {
     // this.rendering();
     switch(this.props.type){
       case "allergyStep":{
-        console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
         this.props.getAllergyList(this.state.allergyList);
         break;
       }
-      case "familyHistory":{
-        this.props.getfamilyHistoryList(this.state.allergyList);
-        break;
-      }
-      case "surgeries":{
-        this.props.getsurgeriesList(this.state.allergyList);
-        break;
-      }
-      case "onGoingProblems":{
-        this.props.getonGoingProblemList(this.state.allergyList);
-        break;
-      }
+      
     }
     
   }

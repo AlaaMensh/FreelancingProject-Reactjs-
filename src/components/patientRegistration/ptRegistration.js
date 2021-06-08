@@ -12,7 +12,7 @@ import FamilyHistoryStep from "./familyHistoryStep";
 import SurgeriesStep from "./surgeriesStep";
 import InterventionsStep from "./otherInterventionsStep";
 import OnGoingProblemStep from "./onGoingProblemStep";
-import ListStep from "./listStep";
+// import ListStep from "./listStep"; // Put it if you solve the one component Problem
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,8 +116,8 @@ export default function HorizontalLabelPositionBelowStepper() {
     var result = JSON.stringify(familyHistoryList);
     var json = JSON.parse(result);
 
+    // this object will be sent to back to add patient
     var details = {
-      // this object will be sent to back to add patient
       firstName: firstName,
       lastName: lastName,
       secondName: secondName,
@@ -226,7 +226,6 @@ export default function HorizontalLabelPositionBelowStepper() {
   };
 
   const ptRegistration = (stepIndex) => {
-    // const classes = useStyles();
     switch (stepIndex) {
       case 0:
         return (

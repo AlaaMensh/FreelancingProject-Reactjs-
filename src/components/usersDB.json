@@ -1018,10 +1018,6 @@
                       "address" : {
                               "type":"text",
                               "name" :"address"
-                      },
-                      "labId" : {
-                              "type":"autoComplete",
-                              "name" :"labId"
                       }
                       
               },
@@ -1112,10 +1108,6 @@
                         "type": "text",
                         "name" : "organization"
                 },
-                "contactPerson" :{
-                        "type": "text",
-                        "name" : "contactPerson"
-                },
                 "userName" : {
                         "type":"text",
                         "name" :"userName"
@@ -1136,21 +1128,14 @@
                 "address" : {
                         "type":"text",
                         "name" :"address"
-                },
-                "radioId" : {
-                        "type":"autoComplete",
-                        "name" :"radioId"
                 }
+
                 
         },
         "modalUpdateForms": {
                 "organization" :{
                         "type": "text",
                         "name" : "organization"
-                },
-                "contactPerson" :{
-                        "type": "text",
-                        "name" : "contactPerson"
                 },
                 "userName" : {
                         "type":"text",
@@ -1249,10 +1234,6 @@
                       "address" : {
                               "type":"text",
                               "name" :"address"
-                      },
-                      "pathoId" : {
-                              "type":"autoComplete",
-                              "name" :"pathoId"
                       }
                       
               },
@@ -1302,8 +1283,8 @@
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "organization": "",
-                      "drId":""
+                      "organization": ""
+
                      
                       
           },
@@ -1361,11 +1342,8 @@
                       "address" : {
                               "type":"text",
                               "name" :"address"
-                      },
-                      "drId" : {
-                              "type":"select",
-                              "name" :"drId"
                       }
+                      
                       
               },
               "modalUpdateForms": {

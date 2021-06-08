@@ -103,7 +103,6 @@ class ListStep extends Component {
 
       }
   async componentDidMount() {
-    console.log("///////////////////////////////////////////")
     var type = this.props.type; // change it with steptype props
     this.setState({stepType : type})
     await this.handleDataTable(type);
