@@ -130,60 +130,6 @@
                "getAll":"https://mvb1.herokuapp.com/drug/getAll"
 
             },
-    "LRP" : 
-            {   "state":{
-                    "abbreviation":"",
-                    "name":"",
-                    "description":""
-            
-            },
-               "columnsTable" : {
-                        "abbreviation": {
-                                "name": "abbreviation",
-                                "selector": "abbreviation",
-                                "sortable": true
-                        },
-                        "name" :{
-                                "name" :"name",
-                                "selector" : "name",
-                                "sortable":true
-                        },
-                        "description" :{
-                                "name" :"description",
-                                "selector" : "description",
-                                "sortable":true
-                        },
-                      
-                        "actions" :{
-                                "name" :"actions",
-                                "selector" : "actions",
-                                "sortable":false,
-                                "center" : true,
-                                "width":"300px"
-                        }
-               },
-               "modalForms": {
-                        "abbreviation" :{
-                                "type":"text",
-                                "name" :"abbreviation"
-                        },
-                        "name" : {
-                                "type":"text",
-                                "name" :"name"
-                        },
-                        "description" : {
-                                "type":"text",
-                                "name" :"description"
-                        }
-               },
-               "title":"All LRP Types",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addType" :"http://localhost:8080/lpr/addLpr",
-               "deleteType" : "http://localhost:8080/lpr/deleteLpr",
-               "updateType":"http://localhost:8080/lpr/updateLpr",
-               "getAll":"http://localhost:8080/lpr/getLpr"
-
-            },
             "lab" : 
             {   "state":{
                     "name":"",
