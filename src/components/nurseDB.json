@@ -1,0 +1,194 @@
+{
+    "patientsOnVisit" : { 
+            "columnsTable" : {
+                "firstName": {
+                        "name": "First Name",
+                        "selector": "firstName",
+                        "sortable": true
+                },
+                "secondName" :{
+                        "name" :"Second Name",
+                        "selector" : "secondName",
+                        "sortable":true
+                },
+                "lastName" :{
+                        "name" :"Last Name",
+                        "selector" : "lastName",
+                        "sortable":true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true
+                },
+                "address" :{
+                        "name" :"Address",
+                        "selector" : "address",
+                        "sortable":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+       },
+               "title":"All patients On Active Visit",
+               "description":"From here you can see All patients on Active visits",
+               "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate"
+
+        },
+     "nurseVitals" :{
+         "state":{
+            "time":"",
+            "data":"",
+            "temp":"",
+            "pulse":"",
+            "respiratoryRate":"",
+            "OXSat":"",
+            "height":"",
+            "weight":"",
+            "BMI":"",
+            "pain":"",
+            "smokingStatus":"",
+            "headC":"",
+            "bloodPressure":""
+         },
+         "columnsTable":{
+            "time": {
+                "name": "Time",
+                "selector": "time",
+                "sortable": true
+        },
+        "temp" :{
+                "name" :"Temp",
+                "selector" : "temp",
+                "sortable":true,
+                "center" : true
+        },
+
+        "pulse" :{
+                "name" :"pulse",
+                "selector" : "pulse",
+                "sortable":true,
+                "center" : true
+        },
+        "bloodPressure" :{
+                "name" :"bloodPressure",
+                "selector" : "bloodPressure",
+                "sortable":true,
+                "center" : true
+        },
+        "pain" :{
+                "name" :"pain",
+                "selector" : "pain",
+                "sortable":true,
+                "center" : true
+        },
+        "respiratoryRate" :{
+                "name" :"respiratoryRate",
+                "selector" : "respiratoryRate",
+                "sortable":true,
+                "center" : true
+        },
+        "OXSat" :{
+                "name" :"OXSat",
+                "selector" : "OXSat",
+                "sortable":true
+        },
+        "height" :{
+                "name" :"height",
+                "selector" : "height",
+                "sortable":true,
+                "center" : true
+        },
+        "weight" :{
+                "name" :"weight",
+                "selector" : "weight",
+                "sortable":true,
+                "center" : true
+        },
+        "BMI" :{
+                "name" :"BMI",
+                "selector" : "BMI",
+                "sortable":true,
+                "center" : true
+        },
+        "smokingStatus" :{
+                "name" :"smokingStatus",
+                "selector" : "smokingStatus",
+                "sortable":true,
+                "center" : true
+        },
+        "headC" :{
+                "name" :"headC",
+                "selector" : "headC",
+                "sortable":true,
+                "center" : true
+        },
+        "actions" :{
+                "name" :"actions",
+                "selector" : "actions",
+                "sortable":false,
+                "center" : true,
+                "width":"300px"
+        }
+         },
+         "modalAdditionForm": {
+            "temp" :{
+                    "type": "number",
+                    "name" : "temp"
+            },
+            "pulse" : {
+                    "type":"number",
+                    "name" :"pulse"
+            },
+            "bloodPressure" : {
+                    "type":"number",
+                    "name" :"bloodPressure"
+            },
+            "pain" : {
+                    "type":"number",
+                    "name" :"pain"
+            },
+            "respiratoryRate" : {
+                    "type":"number",
+                    "name" :"respiratoryRate"
+            },
+            "OXSat" : {
+                    "type":"number",
+                    "name" :"OXSat"
+            },
+            "height" : {
+                    "type":"number",
+                    "name" :"height"
+            },
+            "weight" : {
+                    "type":"number",
+                    "name" :"weight"
+            },
+            "BMI" : {
+                    "type":"number",
+                    "name" :"BMI"
+            },
+            "smokingStatus" : {
+                    "type":"number",
+                    "name" :"smokingStatus"
+            },
+            "headC" : {
+                    "type":"number",
+                    "name" :"headC"
+            }
+
+        },
+        "title":"All Patient last Visits",
+        "description":"From here you can see and upload Results for all accepted orders",
+        "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate",
+        "getPatientLastVisits":"https://mvb1.herokuapp.com/nurse/getByPtId",
+        "deleteVital" : "https://mvb1.herokuapp.com/nurse/deleteRecorder",
+        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord"
+
+     }
+            
+        }

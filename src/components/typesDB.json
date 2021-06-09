@@ -1,0 +1,230 @@
+{
+    "allergy" : 
+            {   "state":{
+                    "name":"",
+                    "description":""
+            },
+               "columnsTable" : {
+                        "name": {
+                
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "description" :{
+                                "name" :"description",
+                                "selector" : "description",
+                                "sortable":true,
+                                "center" : true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                
+                                "width":"300px"
+                        }
+               },
+               "title":"All Allergy Types",
+                "description":"simple blah blah this the page and what it dose you know stuff..",
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name"
+                        },
+                        "description" : {
+                                "type":"text",
+                                "name" :"description"
+                        }
+
+               },
+               "addType" :"http://localhost:8080/allergy/addAllergy",
+               "deleteType" : "http://localhost:8080/allergy/deleteAllergy",
+               "updateType":"http://localhost:8080/allergy/updateAllergy",
+               "getAll":"http://localhost:8080/allergy/getAllergy"
+
+            },
+    "disease" : 
+            {   "state":{
+                    "name":"",
+                    "code":"",
+                    "abbreviation":""
+            },
+               "columnsTable" : {
+                        "name": {
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true
+                        },
+                        "abbreviation" :{
+                                "name" :"Abbreviation",
+                                "selector" : "abbreviation",
+                                "sortable":true
+                        },
+                        "code" :{
+                                "name" :"Code",
+                                "selector" : "code",
+                                "sortable":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name"
+                        },
+                        "code" : {
+                                "type":"text",
+                                "name" :"code"
+                        },
+                        "abbreviation" : {
+                                "type":"text",
+                                "name" :"abbreviation"
+                        }
+               },
+               "title":"All Diseases Types",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addType" :"http://localhost:8080/disease/addDiseases",
+               "deleteType" : "http://localhost:8080/disease/deleteDiseases",
+               "updateType":"http://localhost:8080/diseases/updateDiseases",
+               "getAll":"http://localhost:8080/disease/getAll"
+
+            },
+    "drug" : 
+            {   "state":{
+                    "genricName":"",
+                    "tradeName":"",
+                    "form":"",
+                    "dose":"",
+                    "family":""
+            },
+               "columnsTable" : {
+                        "genricName": {
+                                "name": "genricName",
+                                "selector": "genricName",
+                                "sortable": true
+                        },
+                        "tradeName" :{
+                                "name" :"tradeName",
+                                "selector" : "tradeName",
+                                "sortable":true
+                        },
+                        "form" :{
+                                "name" :"form",
+                                "selector" : "form",
+                                "sortable":true
+                        },
+                        "dose" :{
+                                "name" :"dose",
+                                "selector" : "dose",
+                                "sortable":true
+                        },
+                        "family" :{
+                                "name" :"family",
+                                "selector" : "family",
+                                "sortable":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "genricName" :{
+                                "type":"text",
+                                "name" :"genricName"
+                        },
+                        "tradeName" : {
+                                "type":"text",
+                                "name" :"tradeName"
+                        },
+                        "form" : {
+                                "type":"text",
+                                "name" :"form"
+                        },
+                        "dose" : {
+                                "type":"text",
+                                "name" :"dose"
+                        },
+                        "family" : {
+                                "type":"text",
+                                "name" :"family"
+                        }
+               },
+               "title":"All Drugs Types",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addType" :"http://localhost:8080/drug/addDrug",
+               "deleteType" : "http://localhost:8080/drug/deleteDrug",
+               "updateType":"http://localhost:8080/drug/updateDrugs",
+               "getAll":"http://localhost:8080/drug/getAll"
+
+            },
+    "LRP" : 
+            {   "state":{
+                    "abbreviation":"",
+                    "name":"",
+                    "description":""
+            
+            },
+               "columnsTable" : {
+                        "abbreviation": {
+                                "name": "abbreviation",
+                                "selector": "abbreviation",
+                                "sortable": true
+                        },
+                        "name" :{
+                                "name" :"name",
+                                "selector" : "name",
+                                "sortable":true
+                        },
+                        "description" :{
+                                "name" :"description",
+                                "selector" : "description",
+                                "sortable":true
+                        },
+                      
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalForms": {
+                        "abbreviation" :{
+                                "type":"text",
+                                "name" :"abbreviation"
+                        },
+                        "name" : {
+                                "type":"text",
+                                "name" :"name"
+                        },
+                        "description" : {
+                                "type":"text",
+                                "name" :"description"
+                        }
+               },
+               "title":"All LRP Types",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addType" :"http://localhost:8080/lpr/addLpr",
+               "deleteType" : "http://localhost:8080/lpr/deleteLpr",
+               "updateType":"http://localhost:8080/lpr/updateLpr",
+               "getAll":"http://localhost:8080/lpr/getLpr"
+
+            }
+            
+            
+    
+}
