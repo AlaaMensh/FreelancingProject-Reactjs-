@@ -218,6 +218,46 @@
        },
        "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
 
+    },
+    "interventionsStep" : 
+    {   "state":{
+            "name":"",
+            "note":""
+    },
+       "columnsTable" : {
+               "name": {
+                       "name": "Name",
+                       "selector": "name",
+                       "sortable": true,
+                       "center" : true
+               },
+               "note": {
+                       "name": "Note",
+                       "selector": "note",
+                       "sortable": true,
+                       "center" : true
+               },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"500px"
+                }
+       },
+       "modalForms": {
+                "name" :{
+                        "type": "text",
+                        "name" : "name"
+                },
+                "note" :{
+                        "type": "text",
+                        "name" : "note"
+                }
+
+       },
+       "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
+
     }
 
 

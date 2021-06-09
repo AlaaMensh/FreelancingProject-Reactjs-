@@ -335,13 +335,11 @@
                     "firstName":"",
                     "secondName":"",
                     "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
                     "userName": "",
-                    "Password": "",
+                    "password": "",
                     "Email": "",
                     "phone" : "",
-                    "address": ""
+                    "pathoFDId" : ""
                     
                 },
                "columnsTable" : {
@@ -363,31 +361,10 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "Date": {
-                                "name": "Date",
-                                "selector": "Date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "degree" :{
-                                "name" :"Degree",
-                                "selector" : "degree",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-
 
                         "phone" :{
                                 "name" :"Phone",
                                 "selector" : "phone",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-                        "Address" :{
-                                "name" :"Address",
-                                "selector" : "address",
                                 "sortable":true,
                                 "center" : true,
                                 "hide":true
@@ -443,15 +420,7 @@
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },                
+                        },               
                         "phone" : {
                                 "type":"text",
                                 "name" :"phone"
@@ -468,31 +437,36 @@
                                 "type":"text",
                                 "name" :"userName"
                         },
-                        "Password" : {
+                        "password" : {
                                 "type":"password",
-                                "name" :"Password"
+                                "name" :"password"
+                        },
+                        "pathoFDId" : {
+                                "type":"autoComplete",
+                                "name" :"pathoFDId"
                         }
+
 
                },
                "title":"All Pathologists",
                "description":"You can see All Pathologists here...",
                "addUser" :"https://mvb1.herokuapp.com/patho/addPathology",
-               "deleteUser" : "http://localhost:8080/patho/deletePathology",
+               "deleteUser" : "https://mvb1.herokuapp.com/patho/deletePathology",
                "updateUser":"http://localhost:8080/patho/updatePathology",
-               "getAll":"http://localhost:8080/patho/getPathology"
+               "getAll":"https://mvb1.herokuapp.com/patho/getPathology",
+               "getAllDataFD" :"https://mvb1.herokuapp.com/frontdisk/getpathoFD"
             },
         "radiogist" : {  
                  "state":{
                     "firstName":"",
                     "secondName":"",
                     "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
                     "userName": "",
-                    "Password": "",
+                    "password": "",
                     "Email": "",
                     "phone" : "",
-                    "address": ""
+                    "address": "",
+                    "radioFDId" :""
                     
             },
                "columnsTable" : {
@@ -514,21 +488,6 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "Date": {
-                                "name": "Date",
-                                "selector": "Date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "degree" :{
-                                "name" :"Degree",
-                                "selector" : "degree",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-
-
                         "phone" :{
                                 "name" :"Phone",
                                 "selector" : "phone",
@@ -594,15 +553,7 @@
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },                
+                        },               
                         "phone" : {
                                 "type":"text",
                                 "name" :"phone"
@@ -619,18 +570,23 @@
                                 "type":"text",
                                 "name" :"userName"
                         },
-                        "Password" : {
+                        "password" : {
                                 "type":"password",
-                                "name" :"Password"
+                                "name" :"password"
+                        },
+                        "radioFDId" : {
+                                "type":"autoComplete",
+                                "name" :"radioFDId"
                         }
 
                },
                "title":"All radiogists",
                "description":"You can see all Radiogists here..",
                "addUser" :"https://mvb1.herokuapp.com/radiology/addRadiology",
-               "deleteUser" : "http://localhost:8080/radiology/deleteradiology",
+               "deleteUser" : "https://mvb1.herokuapp.com/radiology/deleteradiology",
                "updateUser":"http://localhost:8080/radiology/updateradiology",
-               "getAll":"http://localhost:8080/radiology/getRadiology"
+               "getAll":"https://mvb1.herokuapp.com/radiology/getRadiology",
+               "getAllDataFD" : "https://mvb1.herokuapp.com/frontdisk/getradioFD"
                
 
             },
@@ -639,14 +595,10 @@
                     "firstName":"",
                     "secondName":"",
                     "lastName": "", 
-                    "Date": "",
-                    "degree" : "",
                     "userName": "",
-                    "Password": "",
+                    "password": "",
                     "Email": "",
-                    "phone" : "",
-                    "address": ""
-                    
+                    "phone" : ""              
                 },
                "columnsTable" : {
                         "firstName": {
@@ -667,21 +619,6 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "Date": {
-                                "name": "Date",
-                                "selector": "Date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "degree" :{
-                                "name" :"Degree",
-                                "selector" : "degree",
-                                "sortable":true,
-                                "center" : true,
-                                "hide":true
-                        },
-
-
                         "phone" :{
                                 "name" :"Phone",
                                 "selector" : "phone",
@@ -716,15 +653,7 @@
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },                
+                        },              
                         "phone" : {
                                 "type":"text",
                                 "name" :"phone"
@@ -747,22 +676,10 @@
                         "lastName" :{
                                 "type": "text",
                                 "name" : "lastName"
-                        },
-                        "Date" :{
-                                "type": "date",
-                                "name" : "Date"
-                        },
-                        "degree" :{
-                                "type": "text",
-                                "name" : "degree"
-                        },                
+                        },               
                         "phone" : {
                                 "type":"text",
                                 "name" :"phone"
-                        },
-                        "address" : {
-                                "type":"text",
-                                "name" :"address"
                         },
                         "Email" : {
                                 "type":"email",
@@ -772,18 +689,18 @@
                                 "type":"text",
                                 "name" :"userName"
                         },
-                        "Password" : {
+                        "password" : {
                                 "type":"password",
-                                "name" :"Password"
+                                "name" :"password"
                         }
 
                },
                "title":"All Chemists",
                "description":"You can see all Chemists here...",
                "addUser" :"https://mvb1.herokuapp.com/chemist/addChemist",
-               "deleteUser" : "http://localhost:8080/chemist/deleteChemist",
+               "deleteUser" : "https://mvb1.herokuapp.com/chemist/deleteChemist",
                "updateUser":"http://localhost:8080/chemist/updateChemist",
-               "getAll":"http://localhost:8080/chemist/getChemist"
+               "getAll":"https://mvb1.herokuapp.com/chemist/getChemist"
                
 
             },
@@ -949,11 +866,7 @@
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "establishment": "",
-                      "contactPerson" : "",
-                      "labId":""
-                     
-                      
+                      "organization": ""     
           },
              "columnsTable" : {
                       "address": {
@@ -962,15 +875,9 @@
                               "sortable": true,
                               "center" : true
                       },
-                      "establishment": {
-                              "name": "establishment",
-                              "selector": "establishment",
-                              "sortable": true,
-                              "center" : true
-                      },
-                      "contactPerson": {
-                              "name": "contactPerson",
-                              "selector": "contactPerson",
+                      "organization": {
+                              "name": "Organization",
+                              "selector": "organization",
                               "sortable": true,
                               "center" : true
                       },
@@ -990,13 +897,9 @@
                       }
              },
              "modalAdditionForms": {
-                      "establishment" :{
+                      "organization" :{
                               "type": "text",
-                              "name" : "establishment"
-                      },
-                      "contactPerson" :{
-                              "type": "text",
-                              "name" : "contactPerson"
+                              "name" : "organization"
                       },
                       "userName" : {
                               "type":"text",
@@ -1056,9 +959,9 @@
              "title":"All Lab FrontDisks",
              "description":"You can see All Lab FrontDists here..",
              "addUser" :"https://mvb1.herokuapp.com/frontdisk/addLabFrontDisk",
-             "deleteUser" : "http://localhost:8080/frontdisk/deletelabFD",
+             "deleteUser" : "https://mvb1.herokuapp.com/frontdisk/deletelabFD",
              "updateUser":"http://localhost:8080/frontdisk/updatelabFD",
-             "getAll":"http://localhost:8080/frontdisk/getlabFD",
+             "getAll":"https://mvb1.herokuapp.com/frontdisk/getlabFD",
              "getAllDataFD" :"https://mvb1.herokuapp.com/lab/getAll",
              "getLabIdInSession":"" 
              
@@ -1067,12 +970,11 @@
           "radioFD" : { 
                 "state":{
                       "userName":"",
-                      "Password": "",
+                      "password": "",
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "organization": "",
-                      "radioId":""   
+                      "organization": ""
                       
           },
           "columnsTable" : {
@@ -1113,9 +1015,9 @@
                         "name" :"userName"
                 },
                 
-                "Password" : {
+                "password" : {
                         "type":"password",
-                        "name" :"Password"
+                        "name" :"password"
                 },
                 "Email" : {
                         "type":"email",
@@ -1142,9 +1044,9 @@
                         "name" :"userName"
                 },
                 
-                "Password" : {
+                "password" : {
                         "type":"password",
-                        "name" :"Password"
+                        "name" :"password"
                 },
 
                 "phone" : {
@@ -1159,10 +1061,10 @@
         },
         "title":"All Radios FrontDisks",
         "description":"You can see here all Radios FrontDisks..",
-        "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
-        "deleteUser" : "http://localhost:8080/frontdisk/deleteradioFD",
+        "addUser" :"https://mvb1.herokuapp.com/frontdisk/addradioFrontDisk",
+        "deleteUser" : "https://mvb1.herokuapp.com/frontdisk/deleteradioFD",
         "updateUser":"http://localhost:8080/frontdisk/updateradioFD",
-        "getAll":"http://localhost:8080/frontdisk/getradioFD",
+        "getAll":"https://mvb1.herokuapp.com/frontdisk/getradioFD",
         "getAllDataFD" : "https://mvb1.herokuapp.com/radio/getAll",
         "getLabIdInSession":"" 
              
@@ -1175,8 +1077,7 @@
                       "Email": "",
                       "phone" : "",
                       "address": "",
-                      "organization": "",
-                      "pathoId":""
+                      "organization": ""
                      
                       
           },
@@ -1268,9 +1169,9 @@
              "title":"All pathology FrontDisks",
              "description":"You can see all Pathology FrontDisks..",
              "addUser" :"https://mvb1.herokuapp.com/frontdisk/addpathoFrontDisk",
-             "deleteUser" : "http://localhost:8080/frontdisk/deletepathobFD",
+             "deleteUser" : "https://mvb1.herokuapp.com/frontdisk/deletepathobFD",
              "updateUser":"http://localhost:8080/frontdisk/updatepathoFD",
-             "getAll":"http://localhost:8080/frontdisk/getpathoFD",
+             "getAll":"https://mvb1.herokuapp.com/frontdisk/getpathoFD",
              "getAllDataFD" :"https://mvb1.herokuapp.com/patho/getAll",
              "getLabIdInSession":"" 
              

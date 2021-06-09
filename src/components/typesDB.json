@@ -130,6 +130,7 @@
                "getAll":"https://mvb1.herokuapp.com/drug/getAll"
 
             },
+    
             "lab" : 
             {   "state":{
                     "name":"",

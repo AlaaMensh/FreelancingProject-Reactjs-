@@ -86,10 +86,10 @@ class UserCrud extends Component {
     var temp=[];
     for (var p in userType[type].modalAdditionForms) {
       // for Addition Form Inputs
-      if (p === "labId" || p === "pathoId" || p === "radioId") { // adding all
+      if (p === "radioFDId" || p === "pathoFDId" || p === "radioId") { // adding all
         console.log("yeees" , this.state.options)
         for(var place of optionsList){
-          var obj = {value : place.id , text : place.name }
+          var obj = {value : place.id , text : place.organization }
           temp2.push(obj);
         }
         console.log("options : " , temp2)
@@ -119,7 +119,7 @@ class UserCrud extends Component {
     var temp2 = [];
     var optionsList =[];
     /// load data Which get in dropDown buttons
-    if(type === "labFD" || type === "pathologyFD" || type === "radioFD" ){
+    if(type === "radiogist" || type === "pathologyFD" || type === "radioFD" ){
        optionsList =  await this.loadSelectInputData(type);
        console.log("optionsList : ",optionsList);
        if(!optionsList){

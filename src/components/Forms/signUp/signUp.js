@@ -28,8 +28,9 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       var list = []
       this.setState({type: this.props.match.params.type})
       var type = this.props.match.params.type;
-      if(type === "labFD" || type === "radioFD" || type === "pathologyFD" || type === "doctorFD"  ){
+      if(type === "pathologist" || type === "radiogist"   ){
          await this.getDataForFD(type);
+        // await this.handleFormInputs()
 
       }
       else{
@@ -61,11 +62,11 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         for(var p in userType[type].modalAdditionForms ){
           console.log("p : " , p);
           temp.push(userType[type].modalAdditionForms[p])
-          if(( p=="labId") || p=="radioId" || p =="pathoId" ){
+          if(( p=="pathoFDId") || p=="radioFDId" || p =="pathoId" ){
             console.log("//////////////////////////////////////")
             for(var place of this.state.list){
               // console.log("id: " , place.id , " obj:" , place)
-              var obj = {value : place.id , text : place.name }
+              var obj = {value : place.id , text : place.organization }
               temp2.push(obj);
             }
             console.log("options : " , temp2)
@@ -93,11 +94,19 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
 
 
     handleChange = (evt) =>{
-        console.log("evnet " , evt.target.value)
-        const value = evt.target.value;
-        this.setState({
-          [evt.target.name]: value
-        });
+        // console.log("evnet " , evt.target.value)
+        if(evt.text && evt.text === "autoComplete"){
+          console.log("evt: " , evt , "  Value :")
+          this.setState({
+            [evt.input]: evt.newValue.value,
+          });
+        }
+        else{
+          const value = evt.target.value;
+          this.setState({
+            [evt.target.name]: value,
+          });
+        }
       }
 
     getDataForFD =(type)=>{//Ex: get lab names for labFD
@@ -169,7 +178,7 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 this.state.formInputs && this.state.formInputs.length > 0 && (
                 <FormGenerator  ModalInputs = {this.state.formInputs}
                 handleChange = {this.handleChange}
-                handleSubmit= {this.handleSignup}
+                handleAdding= {this.handleSignup}
                 options = {this.state.options}
                 buttonTitle = "Signup"
                 formType = "add"

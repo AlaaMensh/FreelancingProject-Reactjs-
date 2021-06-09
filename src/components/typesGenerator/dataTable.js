@@ -9,6 +9,7 @@ class DataTableComp extends Component {
           
           }
     }
+    
 
     render() { 
         const tableData = {
@@ -17,6 +18,7 @@ class DataTableComp extends Component {
           };
         return ( 
           <div>
+            {console.log("****************************")}
              <DataTable
                title={` ${this.props.title}`}
                columns={this.props.columns}

@@ -1,479 +1,271 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid } from "@material-ui/data-grid";
-import Button from "@material-ui/core/Button";
 import { Component } from "react";
-import Modal from "@material-ui/core/Modal";
-import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import EditIcon from "@material-ui/icons/Edit";
-import Fab from "@material-ui/core/Fab";
-import { withStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
+import axios from "axios";
+import steps from "./patientRegistrationDB.json";
+import DataTableComp from "../typesGenerator/dataTable";
+import ModalGenerator from './../ModalGeneration/modalGeneration';
+import FormGenerator from '../Forms/formGenerationNew';
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
-var object = {};
-const useStyles = (theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: "1em",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    fontSize: "1.1em",
-    fontFamily: "Dosis",
-  },
-  input2: {
-    height: "10px",
-  },
-  iconPlus: {
-    margin: "auto",
-    textAlign: "center",
-    // float:"right",
-  },
-  button: {
-    margin: theme.spacing(1),
-    fontFamily: "Roboto Slab",
-  },
-  deleteButton: {
-    backgroundColor: "#c94c4c",
-  },
-  editButton: {
-    backgroundColor: "#c94c4c",
-  },
-});
 
-var id = 0;
-var rowsToKeep = [];
-var rowsToBeDeleted = [];
 
-class InterventionsStep extends Component {
+
+class SurgeriesStep extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      interventionsList: [
-        //   {
-        //       id:"",
-        //       type:"" ,
-        //       status:"",
-        //       reaction:"",
-        //       notes:""
-        // }
-      ],
-      typeId: 0,
-      openModal1: false,
-      openModal2: false,
+      interventionsList: [], // to load data with it in table
+      openModal: false,
       TypeObj: {},
-      type: "",
-      status: "",
-      name: "",
-      date: "",
-      notes: "",
-      key: 1,
+     
+      key: 1,  // ** remove it if you don't use in another lists
+
+     
+      allergyTypes :[], // from DB ,
+      activeStatus: true, // for Changing
+      columns:[], // to handle Columns of the table
+      formInputs :[], // to handle Form Inputs the addition or update
+      formType:"", // edit or add
+      stepType : "" // if it is allergy or onGoingproblems or surgeries or interventions
+
     };
   }
-
+ //** to get the row which will updated */
   getTypeByID = async (row) => {
-    console.log("dkkdkdkdkdkdkdkdkdk:    ", row);
+    console.log("UpdatedObject: " , row)
     this.setState({ TypeObj: row });
   };
-
-  handleopenModal1 = () => {
-    this.setState({ openModal1: true });
+  // for Modal
+  handleopenModal = () => {
+    this.setState({ openModal: true });
   };
 
   handleClose = () => {
-    this.setState({ openModal1: false });
-  };
-  handleopenModal2 = () => {
-    this.setState({ openModal2: true });
-  };
-  getData = async () => {};
-
-  handleCloseModal2 = () => {
-    this.setState({ openModal2: false });
+    this.setState({ openModal: false });
   };
 
-  handleDelete = async (id) => {
+  // ***delete from table
+  handleDelete = async (row) => {
     this.setState({
-      interventionsList: this.state.interventionsList.filter(
-        (row) => row.id !== id
-      ),
+      interventionsList: this.state.interventionsList.filter((row) => row !== row),
     });
   };
-  async componentDidMount() {
-    if (
-      this.props.interventionsListHome.length > 0 &&
-      this.props.interventionsListHome.length
-    ) {
-      this.setState({
-        interventionsList: this.props.interventionsListHome,
-        key: this.props.interventionsListHome.length + 1,
-      });
-    }
-    // this.getData()
-  }
-  handleUpdate = () => {
-    var details = {
-      id: this.state.TypeObj.id,
-      name: this.state.name,
-      date: this.state.status,
-      notes: this.state.notes,
-    };
 
-    if (!details.name) {
-      details.name = this.state.TypeObj.name;
+  // ** handle Inputs of forms (addition or update) from Json file
+  handleFormInputs = (type) =>{
+      var temp = []
+    for(var property in steps[type].modalForms ){
+        temp.push(steps[type].modalForms[property]);
+      }
+      this.setState({formInputs : temp});
+  }
+  
+   // this for Navigation if you go to another step the information still at it is
+      setinterventionsListWithHomeList = (type) =>{
+        if(this.props.interventionsListHome && this.props.interventionsListHome.length > 0) {
+          this.setState({
+            interventionsList: this.props.interventionsListHome,
+            key: this.props.interventionsListHome.length + 1,
+          });
+        }
+       
+      }
+  async componentDidMount() {
+    var type = this.props.type; // change it with steptype props
+    await this.setinterventionsListWithHomeList(type)
+    this.setState({stepType : type})
+    await this.handleDataTable(type);
+    await this.handleFormInputs(type);
+    var newState = this.state;
+    if(type === "surgeries" || type === "familyHistory" || type === "onGoingProblems" ){
+      this.getTypesFromDB()
     }
-    if (!details.date) {
-      details.date = this.state.TypeObj.date;
+
+    // *** to fill the state of this stepType component
+    for(var property in steps[type].state ){ 
+        newState[property] = steps[type].state[property];
+      }
+
+  }
+  // update DataTable
+  handleUpdate = () => {
+    var details = {};
+        // for Update Form Inputs
+
+    for (var p in steps[this.state.stepType].state) {
+    details[p] = this.state[p] || this.state.TypeObj[p];
     }
-    if (!details.notes) {
-      details.notes = this.state.TypeObj.notes;
-    }
+    // var obj = this.state.interventionsList.find((item) => item == this.state.TypeObj);
+
+
     const items = this.state.interventionsList.map((item) =>
-      item.id === this.state.TypeObj.id ? details : item
+      item == this.state.TypeObj ? details : item
     );
+    console.log("iteeeeems: " , items)
 
     this.setState({ interventionsList: items });
   };
 
+  
   componentDidUpdate() {
-    console.log("hhhhhhh");
-    this.rendering();
     this.props.getinterventionsList(this.state.interventionsList);
   }
 
-  rendering = () => {
-    return (
-      <div className="container gridDataContent mt-5">
-        <div
-          className="row gridDataHeader align-items-center"
-          style={{ height: 400, width: "100%" }}
-        >
-          <DataGrid
-            className="datagrid bg-light  rounded MuiDataGrid-cellCenter"
-            style={{ textAlign: "center" }}
-            rows={this.state.interventionsList}
-            columns={[
-              { field: "id", headerName: "id", width: 70 },
-              { field: "name", headerName: "Name", width: 200 },
-              { field: "date", headerName: "Date", width: 200 },
-              { field: "notes", headerName: "Notes", width: 400 },
 
-              {
-                field: "Actions",
-                headerName: "Actions",
-                width: 250,
-                renderCell: (params) => (
-                  <strong>
-                    {/* {params.value.getFullYear()} */}
-                    <Button
-                      variant="contained"
-                      color="default"
-                      size="small"
-                      className={this.props.classes.button}
-                      startIcon={<EditIcon />}
-                      style={{ marginLeft: 16 }}
-                      onClick={() => {
-                        this.handleopenModal1();
-                        console.log("lsssssssssssssssssssssssssssssssssssss");
-                        this.getTypeByID(params.row);
-                        // this.getData()
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      className={
-                        (this.props.classes.button,
-                        this.props.classes.deleteButton)
-                      }
-                      startIcon={<EditIcon />}
-                      style={{ marginLeft: 16 }}
-                      onClick={async () => {
-                        console.log("delete function: ", params.row.id);
-                        this.handleDelete(params.row.id);
-                      }}
-                    >
-                      delete
-                    </Button>
-                  </strong>
-                ),
-              },
-            ]}
-            pageSize={5}
-            checkboxSelection
-            onRowSelected={async (row) => {
-              console.log("yes", this.state.typeId);
-            }}
-            getRowId={(row) => {}}
-            onRowClick={(row) => {
-              console.log("yyyys", row);
-              id = row.row.id;
-              this.setState({ typeId: row.row.id });
-            }}
-          />
-        </div>
-        <div className="row mt-4">
-          <Fab
-            color="primary"
-            aria-label="add"
-            className={this.props.classes.iconPlus}
-            onClick={() => {
-              this.handleopenModal2();
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </div>
-      </div>
-    );
-  };
+
+  handleDataTable = (type) =>{
+      var temp =[];
+      for(var property in steps[type].columnsTable ){
+            // for Adding actions Buttons to DataTable
+            if (property === "actions") {
+                steps[type].columnsTable[property]["cell"] = (row) => {
+                return (
+                  <div className="row">
+                    <div className="col-auto">
+                      <button
+                        className="btn btn-primary"
+                        onClick={async () => {
+                          // console.log("rooooow : " , row)
+                          // console.log("id:  " , row)
+                          this.getTypeByID(row);
+                          this.setState({ formType: "edit" }); // to get the modal of edit
+                          this.handleopenModal();
+                        }}
+                      >
+                        Update
+                      </button>
+                      </div>
+                    <div className="col-auto">
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => {
+                          this.handleDelete(row);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                );
+              };
+              temp.push(steps[type].columnsTable[property]);
+            } else {
+                temp.push(steps[type].columnsTable[property]);
+            }
+            
+      
+      
+          
+       
+      }
+      this.setState({columns : temp});
+  }
+  //** this function used when loading data from DB in dropDown list */
+  getTypesFromDB = async() =>{
+    var temp2 =[];
+    await axios.get(`${steps[this.state.stepType].getProblemsFromDB}` ,{
+    } ).then(async resp => {
+      console.log("AllIncomingData: " , resp.data);
+
+      //********* Here You should search by abbreviation or name and the value will be the name  */
+      for(var place of resp.data){
+        var obj = {value : place.name ,  text : place.name + " (" + place.abbreviation+" )" }
+        temp2.push(obj);
+      }
+      this.setState({options : temp2})
+      temp2=[]; 
+    })
+  }
   handleAdding = () => {
-    var details = {
-      id: this.state.key,
-      name: this.state.name,
-      date: this.state.date,
-      notes: this.state.notes,
-    };
+    var details = {};
+        // for Addition Form Inputs
+    for (var p in steps[this.state.stepType].state) {
+      details[p] = this.state[p];
+    }
+    details["id"] = this.state.key;
 
     this.setState({});
-    console.log("detilaas : ", details);
+    console.log("Addition Object : ", details);
     var joined = this.state.interventionsList.concat(details);
     this.setState({ interventionsList: joined });
     this.setState({ key: this.state.key + 1 });
-  };
 
+  };
+  // used on props of the form component to handle the values of all variables
+  handleChange = (evt) => {
+    if(evt.text && evt.text === "autoComplete" && evt.newValue.text){
+      console.log("evt: " , evt , "  Value :")
+      this.setState({
+        [evt.input]: evt.newValue.value, //// **** Here the value after choosing from dropDown will be the name without abbreviation
+      });
+    }
+    else{
+      const value = evt.target.value;
+      this.setState({
+        [evt.target.name]: value,
+      });
+    }
+
+  };
   render() {
-    const { classes } = this.props;
 
     return (
-      <div className="hero">
-        {this.rendering()}
+      <Container>
+        {console.log(
+          "columns : ",
+          this.state.columns,
+          " FomInputs: ",
+          this.state.formInputs,
+          " state: ",
+          this.state
+        )}
 
-        <Modal
-          open={this.state.openModal1}
-          onClose={this.handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <Container component="main" maxWidth="xs">
-            {/* <CssBaseline /> */}
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <EditIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Edit
-              </Typography>
-              <form className={classes.form} noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="name"
-                      // label="Name"
-                      name="name"
-                      type="text"
-                      autoComplete="Name"
-                      placeholder={this.state.TypeObj.name}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.type)
-                        this.setState({ name: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="date"
-                      // label="Name"
-                      name="date"
-                      type="date"
-                      autoComplete="status"
-                      placeholder={this.state.TypeObj.date}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.name)
-                        this.setState({ date: event.target.value });
-                      }}
-                    />
-                  </Grid>
+        <Row className="py-3">
+          <Col sm={10}></Col>
+          <Col sm={2}>
+            <Button
+              variant="success"
+              onClick={() => {
+                this.setState({ formType: "add" });
+                this.handleopenModal();
+              }}
+            >
+              Add New
+            </Button>{" "}
+          </Col>
+        </Row>
+        <Row className="py-3">
+          <Col sm={12} className="py-3">
+            {console.log("list: ", this.state.allergyList)}
+            <DataTableComp
+              data={this.state.allergyList}
+              columns={this.state.columns}
+              title=""
+            />
+          </Col>
+        </Row>
+        <div className="row mt-4"></div>
 
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="notes"
-                      // label="Name"
-                      name="notes"
-                      type="text"
-                      autoComplete="Notes"
-                      placeholder={this.state.TypeObj.notes}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.notes)
-                        this.setState({ notes: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="button"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={() => {
-                    this.handleUpdate();
-                    this.getData();
-                    // console.log("user: " , obj);
-                    // handleSignup()
-                  }}
-                >
-                  Edit
-                </Button>
-              </form>
-            </div>
-            {/* <Box mt={5}>
-                    <Copyright />
-                </Box> */}
-          </Container>
-        </Modal>
-
-        <Modal
-          key="1"
-          open={this.state.openModal2}
-          onClose={this.handleCloseModal2}
-          aria-labelledby="simple-modal-title1"
-          aria-describedby="simple-modal-description2"
-        >
-          <Container component="main" maxWidth="xs">
-            {/* <CssBaseline /> */}
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <AddBoxIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Add
-              </Typography>
-              <form className={classes.form} noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="name"
-                      label="Name"
-                      name="name"
-                      type="text"
-                      autoComplete="name"
-                      // placeholder={this.state.TypeObj.name}
-                      onChange={(event) => {
-                        console.log("ttttttttttt :    ", event.target.value);
-                        this.setState({ name: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="date"
-                      // label="date"
-                      name="date"
-                      type="date"
-                      autoComplete="date"
-                      // placeholder={this.state.TypeObj.name}
-                      onChange={(event) => {
-                        this.setState({ date: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      name="notes"
-                      label="Notes"
-                      type="text"
-                      id="notes"
-                      autoComplete="notes"
-                      // placeholder={this.state.TypeObj.description}
-                      onChange={(event) => {
-                        // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                        this.setState({ notes: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="button"
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  className={classes.submit}
-                  onClick={() => {
-                    this.handleAdding();
-                    this.getData();
-                    // console.log("user: " , obj);
-                    // handleSignup()
-                  }}
-                >
-                  Add
-                </Button>
-              </form>
-            </div>
-            {/* <Box mt={5}>
-                    <Copyright />
-                </Box> */}
-          </Container>
-        </Modal>
-      </div>
+        {this.state.formInputs && (
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}>
+            <FormGenerator
+              ModalInputs={this.state.formInputs}
+              updatedTypeObj={this.state.TypeObj}
+              handleChange={this.handleChange}
+              handleUpdate={this.handleUpdate}
+              handleAdding={this.handleAdding}
+              options={this.state.options}
+              formType={this.state.formType}
+            />
+          </ModalGenerator>
+        )}
+      </Container>
     );
   }
 }
 
-export default withStyles(useStyles)(InterventionsStep);
+export default SurgeriesStep;

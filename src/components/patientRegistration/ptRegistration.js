@@ -96,7 +96,8 @@ export default function HorizontalLabelPositionBelowStepper() {
 
   const handleSubmit = () => {
     console.log(
-      "gender: " ,gender,
+      "gender: ",
+      gender,
       "first: ",
       firstName,
       "last: ",
@@ -126,12 +127,12 @@ export default function HorizontalLabelPositionBelowStepper() {
       Email: email,
       birthDate: birthDate,
       status: status,
-      BloodGroup : bloodGroup,
-      Allergy : allergyList,
-      familyHistory : familyHistoryList,
-      surgeries : surgeriesList,
-      Interventions : interventionsList,
-      onGoingProblems : onGoingProblemList,
+      BloodGroup: bloodGroup,
+      Allergy: allergyList,
+      familyHistory: familyHistoryList,
+      surgeries: surgeriesList,
+      Interventions: interventionsList,
+      onGoingProblems: onGoingProblemList,
     };
     console.log("Details To Add:  ", details);
 
@@ -196,7 +197,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     setbirthDate(name);
   };
   const obj = {
-    gender : gender,
+    gender: gender,
     firstName: firstName,
     lastName: lastName,
     secondName: secondName,
@@ -208,11 +209,11 @@ export default function HorizontalLabelPositionBelowStepper() {
     bloodGroup: bloodGroup,
   };
   const getAllergyList = (List) => {
-    console.log("allergyListInHome: " , List);
+    console.log("allergyListInHome: ", List);
     setAllergyList(List);
   };
   const getfamilyHistoryList = (List) => {
-    console.log("Familty HistoryListInHome: " , List);
+    console.log("Familty HistoryListInHome: ", List);
     setFamilyHistoryList(List);
   };
   const getSurgeriesList = (List) => {
@@ -230,7 +231,7 @@ export default function HorizontalLabelPositionBelowStepper() {
       case 0:
         return (
           <Info
-            getGender = {getGender}
+            getGender={getGender}
             getFirstName={getFirstName}
             getSecondName={getSecondName}
             getEmail={getEmail}
@@ -248,7 +249,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <AllergyStep
             getAllergyList={getAllergyList}
             allergyListHome={allergyList}
-            type = "allergyStep"
+            type="allergyStep"
           />
         );
       case 2:
@@ -256,7 +257,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <FamilyHistoryStep
             getfamilyHistoryList={getfamilyHistoryList}
             familyHistoryListHome={familyHistoryList}
-            type ="familyHistory"
+            type="familyHistory"
           />
         );
       case 3:
@@ -264,7 +265,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <SurgeriesStep
             getsurgeriesList={getSurgeriesList}
             surgeriesListHome={surgeriesList}
-            type = "surgeries"
+            type="surgeries"
           />
         );
       case 4:
@@ -272,6 +273,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <InterventionsStep
             getinterventionsList={getinterventionsList}
             interventionsListHome={interventionsList}
+            type="interventionsStep"
           />
         );
       case 5:
@@ -279,7 +281,7 @@ export default function HorizontalLabelPositionBelowStepper() {
           <OnGoingProblemStep
             getonGoingProblemList={getonGoingProblemList}
             onGoingProblemListHome={onGoingProblemList}
-            type = "onGoingProblems"
+            type="onGoingProblems"
           />
         );
       default:
