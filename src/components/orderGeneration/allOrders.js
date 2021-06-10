@@ -1,16 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import  { Component } from 'react';
-import DataTableComp from '../typesGenerator/dataTable';
-import orderType from "../ordersdb.json";
-import ModalComp from "../typesGenerator/modalGenerator";
+import axios from 'axios';
+import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import axios from 'axios';
-import Button from 'react-bootstrap/Button';
-import { Document, Page } from 'react-pdf';
+import orderType from "../ordersdb.json";
 import ModalForView from "../pharmacyModule/modalForView";
-import "./order.css"
+import DataTableComp from '../typesGenerator/dataTable';
+import ModalComp from "../typesGenerator/modalGenerator";
+import "./order.css";
 
 var object  = {}
 

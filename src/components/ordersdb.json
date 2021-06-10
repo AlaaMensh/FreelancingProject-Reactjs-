@@ -70,7 +70,7 @@
                  }
                },
                "columnsTableForPatientOrders": {
-                 "date": {
+                 "Date": {
                          "name": "Date",
                          "selector": "Date",
                          "sortable": true,
@@ -454,7 +454,7 @@
                   "status" : "",
                   "ptId": "",
                   "drId": "",
-                  "pathoId" : "" 
+                  "radioId" : "" 
                  },
                  "AcceptObject":{
                          "id":"",
@@ -464,7 +464,7 @@
                      "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                      "title":"All Pathology Orders",
                      "description":"From here you can see and upload Results for all accepted orders",
-                     "addOrder" :"https://mvb1.herokuapp.com/order/addradioOrder",
+                     "addOrder" :"http://localhost:8080/order/addradioOrder",
                      "deleteOrder" : "https://mvb1.herokuapp.com/order/deleteRadioOrder",
                      "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
                      "getAll":"https://mvb1.herokuapp.com/allergy/getAllergy",

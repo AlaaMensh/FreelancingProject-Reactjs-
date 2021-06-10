@@ -1,17 +1,14 @@
-import React from "react";
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { ListGroup } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import { Link, Route, Switch, useHistory } from "react-router-dom";
+import AddOrderForm from "../orderGeneration/addOrderForm";
+import AllOrders from "../orderGeneration/allOrders";
+import Prescription from "../Prescription/Prescription";
+import Visit from "../Visit/visit";
+import PatientAppointement from "./patientAppointements";
 import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
-import PatientAppointement from "./patientAppointements";
-import Visit from "../Visit/visit";
-import Prescription from "../Prescription/Prescription";
-import AllOrders from "../orderGeneration/allOrders";
-import Row from "react-bootstrap/Row";
-import AddOrderForm from "../orderGeneration/addOrderForm";
-import { ListGroup } from "react-bootstrap";
 const ClinicalDashBoard = ({ match }) => {
   const history = useHistory();
   const [ptId, setPtId] = useState(41);

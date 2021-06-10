@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, ModalBody } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 class ModalForView extends Component {
     constructor(props) {
         super(props);

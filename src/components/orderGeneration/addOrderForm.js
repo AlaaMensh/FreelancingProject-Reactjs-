@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import inputs from "../ordersdb.json";
-import FormGenerator from "../Forms/formGeneration";
 import axios from 'axios';
+import React, { Component } from 'react';
+import FormGenerator from "../Forms/formGeneration";
+import inputs from "../ordersdb.json";
 
 
 
@@ -23,7 +23,7 @@ class AddOrderForm extends Component {
     var type = this.props.match.params.type;
     console.log("hhhhhhhhhhhhhhhhhhh: " , this.props.history.location.state)
     // var type = "lab";
-    this.setState({type});
+    await this.setState({type});
     this.setState();
     if(this.props.match.params.id){
      this.setState({ptId: "2"});
@@ -37,20 +37,23 @@ class AddOrderForm extends Component {
     console.log("temp : "  , temp)
     var options = []
 
-    await axios.get("http://localhost:8080/lab/getAll").then(res=>{
-      res.data.map(row=>{
-        options.push({
-          "value" : row.id,
-          "text" : row.name
-        })
-      })
-    }).catch(err=>{
-      alert(err)
-    })
+
     console.log("options")
     console.log(options)
 
-    temp.push({
+    if(this.state.type == "lab")
+    {
+      await axios.get("http://localhost:8080/lab/getAll").then(res=>{
+        res.data.map(row=>{
+          options.push({
+            "value" : row.id,
+            "text" : row.name
+          })
+        })
+      }).catch(err=>{
+        alert(err)
+      })
+      temp.push({
       
         "type" : "select",
         "name" : "labId",
@@ -58,6 +61,52 @@ class AddOrderForm extends Component {
       }
 
     )
+
+    }else if(this.state.type == "radio")
+    {
+      await axios.get("http://localhost:8080/radio/getAll").then(res=>{
+        res.data.map(row=>{
+          options.push({
+            "value" : row.id,
+            "text" : row.name
+          })
+        })
+      }).catch(err=>{
+        alert(err)
+      })
+      temp.push({
+      
+        "type" : "select",
+        "name" : "radioId",
+        "options" : options
+      }
+
+    )
+
+    }
+    else
+    {
+      await axios.get("http://localhost:8080/patho/getAll").then(res=>{
+        res.data.map(row=>{
+          options.push({
+            "value" : row.id,
+            "text" : row.name
+          })
+        })
+      }).catch(err=>{
+        alert(err)
+      })
+      temp.push({
+      
+        "type" : "select",
+        "name" : "pathoId",
+        "options" : options
+      }
+
+    )
+
+    }
+
 
     this.setState({formInputs : temp});
 
@@ -71,6 +120,10 @@ class AddOrderForm extends Component {
   handleChange = (evt) =>{
     console.log("evnet " , evt.target.value)
     const value = evt.target.value;
+    if(evt.target.name == "labId")
+    {
+      alert(value)
+    }
     this.setState({
       [evt.target.name]: value
     });
@@ -110,39 +163,28 @@ class AddOrderForm extends Component {
 
 
   console.log("details", details)
-  var formBody = [];
-  for (var property in details) {
-    var encodedKey = encodeURIComponent(property);
-    var encodedValue = encodeURIComponent(details[property]);
-    formBody.push(encodedKey + "=" + encodedValue);
-  }
-  formBody = formBody.join("&");
-  console.log("formBodu : " , formBody)
-  console.log("endpoint: " ,inputs[this.state.type].addOrder )
-  fetch(`${inputs[this.state.type].addOrder}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: formBody
-  }).then((resp)=>{
-    console.log("///////////// , " , this.props.match)
-    console.log("resp: " , resp);
-    resp.text().then((msg)=>{
-      console.log("successfully added....." , msg);
-      if(!this.props.history.location.state){
-        this.props.history.goBack();
-      }
-      else{ 
-        this.props.history.push(`${this.props.match.url}/allOrdersForDoctor`)
-      }
-      // if(typeof(msg)==="object"){ //// ****************** Change it when you know the backend message *******/////
-      //   this.props.history.goBack();
-      // }
-    })
 
 
-   
+  // fetch(`${inputs[this.state.type].addOrder}`, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+  //   },
+  //   body: formBody
+  // })
+  axios.post(`${inputs[this.state.type].addOrder}`, details)
+  .then((resp)=>{
+
+    console.log("successfully added....." );
+    if(!this.props.history.location.state){
+      this.props.history.goBack();
+    }
+    else{ 
+      this.props.history.push(`${this.props.match.url}/allOrdersForDoctor`)
+    }
+    // if(typeof(msg)==="object"){ //// ****************** Change it when you know the backend message *******/////
+    //   this.props.history.goBack();
+    // }
   })
   .catch(()=>{
     console.log("eror")
