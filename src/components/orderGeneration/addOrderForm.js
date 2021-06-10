@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import inputs from "../ordersdb.json";
 import FormGenerator from "../Forms/formGeneration";
-
+import axios from 'axios';
 
 
 
@@ -14,11 +14,12 @@ class AddOrderForm extends Component {
       type:"",
       drId:"",
       ptId:"",
-      drFdId:""
+      drFdId:"",
+      labId:""
 
      }
   }
-  componentDidMount(){
+  async componentDidMount(){
     var type = this.props.match.params.type;
     console.log("hhhhhhhhhhhhhhhhhhh: " , this.props.history.location.state)
     // var type = "lab";
@@ -34,6 +35,30 @@ class AddOrderForm extends Component {
       temp.push(inputs[type].modalForms[p])
     } 
     console.log("temp : "  , temp)
+    var options = []
+
+    await axios.get("http://localhost:8080/lab/getAll").then(res=>{
+      res.data.map(row=>{
+        options.push({
+          "value" : row.id,
+          "text" : row.name
+        })
+      })
+    }).catch(err=>{
+      alert(err)
+    })
+    console.log("options")
+    console.log(options)
+
+    temp.push({
+      
+        "type" : "select",
+        "name" : "labId",
+        "options" : options
+      }
+
+    )
+
     this.setState({formInputs : temp});
 
     var newState = this.state;
@@ -68,20 +93,20 @@ class AddOrderForm extends Component {
     details["drId"] = localStorage.getItem("userId");
   
 
-    switch(this.state.type){
-      case "lab":{
-        details["labId"] = localStorage.getItem("labId") ;
-        break;
-      }
-      case "pathology":{
-        details["pathoId"] = localStorage.getItem("pathoId");
-        break;
-      }
-      case "radio":{
-        details["radioId"] = localStorage.getItem("radioId");
-        break;
-      }
-    }
+    // switch(this.state.type){
+    //   case "lab":{
+    //     details["labId"] = localStorage.getItem("labId") ;
+    //     break;
+    //   }
+    //   case "pathology":{
+    //     details["pathoId"] = localStorage.getItem("pathoId");
+    //     break;
+    //   }
+    //   case "radio":{
+    //     details["radioId"] = localStorage.getItem("radioId");
+    //     break;
+    //   }
+    // }
 
 
   console.log("details", details)
