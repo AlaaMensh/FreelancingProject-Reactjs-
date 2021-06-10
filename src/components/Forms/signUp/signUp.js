@@ -28,16 +28,13 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       var list = []
       this.setState({type: this.props.match.params.type})
       var type = this.props.match.params.type;
-      if(type === "pathologist" || type === "radiogist"   ){
+      if(type === "pathologist" || type === "radiogist" || type === "doctor" || type === "chemist" || type === "nurse"){
          await this.getDataForFD(type);
         // await this.handleFormInputs()
-
       }
       else{
         await this.handleFormInputs()
       }
-
-      
     }
 
     handleFormInputs = async (list) => {
@@ -62,11 +59,18 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         for(var p in userType[type].modalAdditionForms ){
           console.log("p : " , p);
           temp.push(userType[type].modalAdditionForms[p])
-          if(( p=="pathoFDId") || p=="radioFDId" || p =="pathoId" ){
+          if(( p=="pathoFDId") || p=="radioFDId" || p =="pathoId" || p == "drFDId" || p==="labFDId" || p === "drId"){
             console.log("//////////////////////////////////////")
             for(var place of this.state.list){
               // console.log("id: " , place.id , " obj:" , place)
-              var obj = {value : place.id , text : place.organization }
+              var obj =null;
+              if(place.organization){
+                 obj = {value : place.id , text : place.organization }
+              }
+              else{
+                //  obj = {value : place.id , text : place.firstName + " " + place.secondName + " " + place.lastName }
+                 obj = {value : place.id , text : place.firstName  }
+              }
               temp2.push(obj);
             }
             console.log("options : " , temp2)
@@ -95,26 +99,26 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
 
     handleChange = (evt) =>{
         // console.log("evnet " , evt.target.value)
-        if(evt.text && evt.text === "autoComplete"){
+        if(evt.text && evt.text === "autoComplete" && evt.newValue && evt.newValue.value){
           console.log("evt: " , evt , "  Value :")
           this.setState({
             [evt.input]: evt.newValue.value,
           });
         }
         else{
+          if(evt.target){
           const value = evt.target.value;
           this.setState({
             [evt.target.name]: value,
           });
         }
+        }
       }
 
     getDataForFD =(type)=>{//Ex: get lab names for labFD
-      console.log("endpointL " , userType[type].getAllDataFD)
+      console.log("endpoint to get info from DB in dropDownButton:  " , userType[type].getAllDataFD)
       axios.get(`${userType[type].getAllDataFD}` ,{
-      } ).then(async resp => {
-        console.log("resp : " ,resp)
-     
+      } ).then(async resp => {     
         this.setState({list : resp.data})
         console.log("AllData: " , resp.data);
         // return resp.data

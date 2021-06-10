@@ -12,6 +12,10 @@ import AllOrders from "../orderGeneration/allOrders";
 import Row from "react-bootstrap/Row";
 import AddOrderForm from "../orderGeneration/addOrderForm";
 import { ListGroup } from "react-bootstrap";
+import FamilyHistory from "./familyHistory"
+
+
+
 const ClinicalDashBoard = ({ match }) => {
   const history = useHistory();
   const [ptId, setPtId] = useState(41);
@@ -77,6 +81,11 @@ const ClinicalDashBoard = ({ match }) => {
                 <ListGroup.Item>
                   <Link to={match.url + `/allRadioOrders/${"radio"}`}>
                     radio Orders
+                  </Link>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Link to={match.url + `/familyHistory`}>
+                    Family History
                   </Link>
                 </ListGroup.Item>
               </ListGroup>
@@ -172,6 +181,11 @@ const ClinicalDashBoard = ({ match }) => {
               exact
               path={match.path + "/profile"}
               component={Prescription}
+            />
+            <Route
+              exact
+              path={match.path + "/familyHistory"}
+              component={FamilyHistory}
             />
           </Switch>
         </div>

@@ -18,7 +18,7 @@ class ModalGenerator extends Component {
             <>
             <Modal show={this.props.show} onHide={this.props.onHide} style={{marginTop:"3em"}}>
                 <Modal.Header closeButton>
-                <Modal.Title>{this.props.formType} Form</Modal.Title>
+                <Modal.Title>{this.props.formType && this.props.formType.charAt(0).toUpperCase() + this.props.formType.slice(1)} Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                         {/* render Children Component */}

@@ -142,7 +142,8 @@ class FormGenerator extends Component {
         console.log("input: " , input)
         return (
           <>
-          {input.options ? (
+            <Form.Label>{input.label || input.name} </Form.Label>
+            {input.options ? (
          
             <Autocomplete
             id="combo-box-demo"
@@ -158,7 +159,7 @@ class FormGenerator extends Component {
             }}
             getOptionLabel={(option) => option.text}
             style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Choose Your Choice" variant="outlined" />}
+            renderInput={(params) => <TextField {...params} label="Choose Your frontDist" variant="outlined" />}
           />
           
         ):(
@@ -176,7 +177,7 @@ class FormGenerator extends Component {
             }}
             getOptionLabel={(option) => option.text}
             style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Choose Your Choice" variant="outlined" />}
+            renderInput={(params) => <TextField {...params} label={input.placeHolder || "Choose Your frontDisk"} variant="outlined" />}
           />
           
         )}
@@ -188,7 +189,8 @@ class FormGenerator extends Component {
       default :{
         return(
           <Form.Group controlId={input.name}>
-          <Form.Label>{input.name}</Form.Label>
+          {/* <Form.Label>{input.label || input.name} </Form.Label> */}
+          <Form.Label>{input.label || input.name} </Form.Label>
           <Form.Control
             type={input.type}
             name={input.name}
@@ -233,63 +235,3 @@ class FormGenerator extends Component {
 }
 
 export default FormGenerator;
-// {input.type !== "select" ? (
-//   <Form.Group controlId={input.name}>
-//     <Form.Label>{input.name}</Form.Label>
-//     <Form.Control
-//       type={input.type}
-//       name={input.name}
-//       placeholder={
-//         this.props.formType === "edit"
-//           ? this.props.updatedTypeObj[input.name]
-//           : ""
-//       }
-//       onChange={(e) => {
-//         this.props.handleChange(e);
-//       }}
-//     />
-//   </Form.Group>
-// ) : (
-//   <>
-//     {/* if the input type select type */}
-//     <Form.Group controlId="exampleForm.SelectCustom">
-//       <Form.Label>{input.name}</Form.Label>
-//       {console.log("input: ", input)}
-//       <Form.Control
-//         as="select"
-//         name={input.name}
-//         onChange={(e) => {
-//           console.log("e: ", e);
-//           this.props.handleChange(e);
-//         }}
-//         custom
-//       >
-//         <option>Choose your option</option>
-//         {input.options
-//           ? input.options.map((option) => {
-//               {
-//                 /* if this component have not options in props but have it jsonFile */
-//               }
-//               // return <option value={option.value} >{option.text}</option>
-//               return (
-//                 <option value={option.value}>
-//                   {option.text}
-//                 </option>
-//               );
-//             })
-//           : this.props.options.map((option) => {
-//               {
-//                 /* if this component have options in props */
-//               }
-//               return (
-//                 <>
-//                   <option value={option.value}>
-//                     {option.text}
-//                   </option>
-//                 </>
-//               );
-//             })}
-//       </Form.Control>
-//     </Form.Group>
-//   </>
-// )}

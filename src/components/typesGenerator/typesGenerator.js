@@ -153,7 +153,7 @@ class TypesGenerator extends Component {
   };
 
   async componentDidMount() {
-    var typeName = "radiology";
+    var typeName = "surgeries";
     this.setState({ typeName });
 
     var temp = [];
@@ -269,7 +269,8 @@ class TypesGenerator extends Component {
         this.state.ModalInputs.length > 0 &&
         this.state.formType === "edit" ? (
         
-          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}>
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}
+          formType = {this.state.formType}>
             <FormGenerator
               ModalInputs={this.state.ModalInputs}
               handleChange={this.handleChange}
@@ -281,7 +282,8 @@ class TypesGenerator extends Component {
             />
           </ModalGenerator>
         ) : (
-          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}>
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}
+          formType = {this.state.formType}>
             <FormGenerator
               ModalInputs={this.state.ModalInputs}
               handleChange={this.handleChange}

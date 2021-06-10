@@ -1,56 +1,87 @@
 {
-    "allergy":{
-        "columnsTable" : {
-            "notes": {
-                    "name": "Notes",
-                    "selector": "notes",
-                    "sortable": true,
-                    "center" : true
-            },
-            "reaction" :{
-                    "name" :"Reaction",
-                    "selector" : "reaction",
-                    "sortable":true,
-                    "center" : true
-            },
-            "type" :{
-                    "name" :"Type",
-                    "selector" : "type",
-                    "sortable":true,
-                    "center" : true
-                   
-            }
-   },
-   "title":"All Allergy Problems",
-   "description":"You can see all Allergy broblems for this patient...",
-   "getAllergyProblemsForPatient" : "http://localhost:8080/pt/getAllergyById"
+  "allergy": {
+    "columnsTable": {
+      "notes": {
+        "name": "Notes",
+        "selector": "notes",
+        "sortable": true,
+        "center": true
+      },
+      "reaction": {
+        "name": "Reaction",
+        "selector": "reaction",
+        "sortable": true,
+        "center": true
+      },
+      "type": {
+        "name": "Type",
+        "selector": "type",
+        "sortable": true,
+        "center": true
+      }
     },
+    "title": "All Allergy Problems",
+    "description": "You can see all Allergy broblems for this patient...",
+    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getAllergyById"
+  },
 
-    "onGoingProblems":{
-        "columnsTable" : {
-            "problem": {
-                    "name": "Problem",
-                    "selector": "problem",
-                    "sortable": true,
-                    "center" : true
-            },
-            "status" :{
-                    "name" :"Status",
-                    "selector" : "status",
-                    "sortable":true,
-                    "center" : true
-            },
-            "treatingDr" :{
-                    "name" :"Treating Doctor",
-                    "selector" : "treatingDr",
-                    "sortable":true,
-                    "center" : true
-                   
-            }
-   },
-   "title":"All OnGoingProblems Problems",
-   "description":"You can see all OnGoingProblems broblems for this patient...",
-   "getAllergyProblemsForPatient" : "http://localhost:8080/pt/getProblemsById"
-
-    }
+  "onGoingProblems": {
+    "columnsTable": {
+      "problem": {
+        "name": "Problem",
+        "selector": "problem",
+        "sortable": true,
+        "center": true
+      },
+      "status": {
+        "name": "Status",
+        "selector": "status",
+        "sortable": true,
+        "center": true
+      },
+      "treatingDr": {
+        "name": "Treating Doctor",
+        "selector": "treatingDr",
+        "sortable": true,
+        "center": true
+      }
+    },
+    "title": "All OnGoingProblems Problems",
+    "description": "You can see all OnGoingProblems broblems for this patient...",
+    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getProblemsById"
+  },
+  "familyHistory": {
+    "state": {
+      "problem": "",
+      "relation": ""
+    },
+    "modalAdditionForms": {
+      "problem": {
+        "type": "autoComplete",
+        "name": "problem",
+        "label": "Problem",
+        "placeHolder": "Choose the Disease Type"
+      },
+      "relation": {
+        "type": "text",
+        "name": "relation",
+        "label": "Relation"
+      }
+    },
+    "columnsTable": {
+      "problem": {
+        "name": "Problem",
+        "selector": "problem",
+        "sortable": true,
+        "center": true
+      },
+      "relation": {
+        "name": "Relation",
+        "selector": "relation",
+        "sortable": true,
+        "center": true
+      }
+    },
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+  }
 }

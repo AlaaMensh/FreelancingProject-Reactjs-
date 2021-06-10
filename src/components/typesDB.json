@@ -32,11 +32,13 @@
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         },
                         "type" : {
                                 "type":"text",
-                                "name" :"type"
+                                "name" :"type",
+                                "label":"Type"
                         }
 
                },
@@ -79,15 +81,18 @@
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         },
                         "code" : {
                                 "type":"text",
-                                "name" :"code"
+                                "name" :"code",
+                                "label":"Code"
                         },
                         "abbreviation" : {
                                 "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "label":"abbreviation"
                         }
                },
                "title":"All Diseases Types",
@@ -119,7 +124,8 @@
                "modalForms": {
                         "drugName" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         }
                },
                "title":"All Drugs Types",
@@ -160,15 +166,17 @@
                         }
                },
                "title":"All Labs Types",
-                "description":"You will see here all labs Types",
+                "description":"You will see here all labs Types...",
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "label":"Abbreviation"
                         }
 
                },
@@ -207,15 +215,17 @@
                         }
                },
                "title":"All Pathologies Types",
-                "description":"You will see here all Pathologies Types",
+                "description":"You will see here all Pathologies Types...",
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "label":"Abbreviation"
                         }
 
                },
@@ -254,15 +264,17 @@
                         }
                },
                "title":"All radiologies Types",
-                "description":"You will see here all radiologies Types",
+                "description":"You will see here all radiologies Types...",
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "label":"Abbreviation"
                         }
 
                },
@@ -301,15 +313,17 @@
                         }
                },
                "title":"All Surgeries Types",
-                "description":"You will see here all Surgeries Types",
+                "description":"You will see here all Surgeries Types...",
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "label":"Abbreviation"
                         }
 
                },
