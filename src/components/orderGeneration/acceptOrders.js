@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import orderType from "../ordersdb.json";
-import DataTableComp from "../typesGenerator/dataTable";
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import orderType from "../ordersdb.json";
+import DataTableComp from "../typesGenerator/dataTable";
 
 
 class AcceptOrders extends Component { // this Component to View All The Not Accepted Orders in our System
@@ -33,14 +33,14 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       switch(this.state.type){
         case "lab":
             // details["labFDId"] = localStorage.getItem("labId");
-            details["labFDId"] = 1;
+            details["labFDId"] = localStorage.getItem("userId");
             break;
         case "pathology":
             // details["pathoFDId"] = localStorage.getItem("pathoId");
-            details["pathoFDId"] =1;
+            details["pathoFDId"] =localStorage.getItem("userId");
             break;
         case "radio":
-            details["radioFDId"] = 1;
+            details["radioFDId"] = localStorage.getItem("userId");
             // details["radioFDId"] = localStorage.getItem("radioId");
             break;
     }

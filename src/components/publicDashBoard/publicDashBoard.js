@@ -8,19 +8,18 @@ import Search from "../EMR/searchModule/search";
 import NurseVisit from "../nurseModule/nursemodule";
 import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
 import AddOrderForm from "../orderGeneration/addOrderForm";
+import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
 import ptRegistration from "../patientRegistration/ptRegistration";
+import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
+import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
 import Prescription from "../Prescription/Prescription";
 import Profile from "../Profile/Profile";
+import SessionCode from "../sessionCode";
 import Visit from "../Visit/visit";
 import AcceptOrders from "./../orderGeneration/acceptOrders";
 import AllOrders from "./../orderGeneration/allOrders";
 import ChoicePage from "./choice";
 import "./Navbar.css";
-import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
-import SessionCode from "../sessionCode";
-import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
-import ChoicePageForDoctor from "../OrdersForDoctor/choice";
-import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
 
 const PublicDashBoard = ({ match }) => {
   const history = useHistory();

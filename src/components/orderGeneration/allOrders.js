@@ -119,14 +119,14 @@ class AllOrders extends Component {
         switch(type){
           case "lab":{
             // details["labId"] = localStorage.getItem("labId");
-            details["labId"] = 1;
+            details["labFDId"] = localStorage.getItem('userId');
           }
           case "pathology":{
             // details["pathoId"] = localStorage.getItem("pathoId");
-            details["pathoId"] = 1;
+            details["pathoFDId"] = localStorage.getItem('userId');
           }
           case "radio":{
-            details["radioId"] = 1;
+            details["radioFDId"] = localStorage.getItem('userId');
           }
         }
 
