@@ -8,18 +8,7 @@
                     
             },
                "columnsTable" : {
-                       "firstname": {
-                               "name": "First Name",
-                               "selector": "firstname",
-                               "sortable": true,
-                               "center" : true
-                       },
-                       "lastname": {
-                               "name": "Last Name",
-                               "selector": "lastname",
-                               "sortable": true,
-                               "center" : true
-                       },
+
                         "comments": {
                                 "name": "Comments",
                                 "selector": "comments",
