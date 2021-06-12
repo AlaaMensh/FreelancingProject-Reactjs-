@@ -52,7 +52,7 @@ export default function PaientRegistration({
   getFirstName,
   getSecondName,
   getBloodGroup,
-  getEmail,
+  getuserName,
   getStatus,
   getLastName,
   getAddress,
@@ -61,14 +61,6 @@ export default function PaientRegistration({
   obj,
 }) {
   const [firstName, setFirstName] = useState();
-  const [secondName, setSecondName] = useState();
-  const [lastName, setLastName] = useState();
-  const [birthDate, setbirthDate] = useState();
-  const [email, setEmail] = useState();
-  const [address, setAddress] = useState();
-  const [status, setStatus] = useState();
-  const [bloodGroup, setbloodGroup] = useState();
-  const [phone, setPhone] = useState();
   const classes = useStyles();
 
   return (
@@ -94,9 +86,7 @@ export default function PaientRegistration({
                     name="firstName"
                     autoComplete="firstName"
                     onChange={(event) => {
-                      setFirstName(event.target.value);
                       getFirstName(event.target.value);
-                      console.log("yyyyys", firstName);
                     }}
                     defaultValue={obj.firstName}
                     InputProps={{
@@ -120,10 +110,8 @@ export default function PaientRegistration({
                     placeholder="Second Name"
                     name="secondName"
                     autoComplete="secondName"
-                    onChange={(event) => {
-                      setSecondName(event.target.value);
+                    onChange={(event) => {                   
                       getSecondName(event.target.value);
-                      console.log("yyyyys", firstName);
                     }}
                     defaultValue={obj.secondName}
                     InputProps={{
@@ -149,7 +137,6 @@ export default function PaientRegistration({
                     autoComplete="lastName"
                     onChange={(event) => {
                       getLastName(event.target.value);
-                      console.log("yyyyys", lastName);
                     }}
                     defaultValue={obj.lastName}
                     InputProps={{
@@ -176,7 +163,7 @@ export default function PaientRegistration({
                     type="userName"
                     autoComplete="userName"
                     onChange={(event) => {
-                      getEmail(event.target.value);
+                      getuserName(event.target.value);
                       // console.log("yyyyys" , username);
                     }}
                     defaultValue={obj.email}
@@ -205,7 +192,6 @@ export default function PaientRegistration({
                     autoComplete="address"
                     onChange={(event) => {
                       getAddress(event.target.value);
-                      // console.log("yyyyys" , username);
                     }}
                     defaultValue={obj.address}
                     InputProps={{

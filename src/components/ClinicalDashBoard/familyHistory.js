@@ -104,15 +104,18 @@ class FamilyHistory extends Component {
   };
 
   async componentDidMount() {
-    var type = "familyHistory";
+    var type = this.props.type;
     this.setState({ type });
     // put the options Inputs in options which got from jsonFile
-    var optionsList = await this.loadSelectInputData(type);
-
+    if(type === "familyHistory" || type === "surgeries"){
+      var optionsList = await this.loadSelectInputData(type); 
+      this.handleFormInputs(type, optionsList);
+    }else{
+      this.handleFormInputs(type, []);
+    }
     await this.handleDataTable(type);
 
     ////////////////////////////////// / * For Modal Forms Inputs *////////////////////////////
-    this.handleFormInputs(type, optionsList);
     ////////////////////////////////// / * setNew State With user attributes *////////////////////////////
 
     // to put user attributes in Component's state
@@ -248,7 +251,7 @@ class FamilyHistory extends Component {
   getData = async (type) => {
     console.log("UserEndpoint: ", clinicalDB[type].getAll);
     await axios.post(`${clinicalDB[type].getAll}` , {
-      ptId: this.props.match.params.id
+      ptId: this.props.id
     }).then(async (resp) => {
       this.setState({
         data: resp.data,
@@ -298,22 +301,25 @@ class FamilyHistory extends Component {
             )}
           </Col>
         </Row>
-
-        <Row className="py-3">
-          <Col sm={10}></Col>
-          <Col sm={2}>
-            <Button
-              variant="success"
-              onClick={() => {
-                this.setState({ formType: "add" });
-                this.handleopenModal();
-              }}
-            >
-              Add New
-            </Button>{" "}
-          </Col>
-        </Row>
-        <Row className="py-3">
+              {
+                this.props.addButtonFlag && (
+                  <Row className="py-3">
+                  <Col sm={10}></Col>
+                  <Col sm={2}>
+                    <Button
+                      variant="success"
+                      onClick={() => {
+                        this.setState({ formType: "add" });
+                        this.handleopenModal();
+                      }}
+                    >
+                      Add New
+                    </Button>{" "}
+                  </Col>
+                </Row>
+                 )
+              } 
+        <Row className = "py-3">
           <Col sm={12} className="py-3">
             <DataTableComp
               data={this.state.data}

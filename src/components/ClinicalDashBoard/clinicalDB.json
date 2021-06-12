@@ -1,15 +1,21 @@
 {
   "allergy": {
     "columnsTable": {
-      "notes": {
-        "name": "Notes",
-        "selector": "notes",
+      "date": {
+        "name": "Date",
+        "selector": "date",
         "sortable": true,
         "center": true
       },
-      "reaction": {
-        "name": "Reaction",
-        "selector": "reaction",
+      "name": {
+        "name": "Name",
+        "selector": "name",
+        "sortable": true,
+        "center": true
+      },
+      "status": {
+        "name": "Status",
+        "selector": "status",
         "sortable": true,
         "center": true
       },
@@ -20,9 +26,23 @@
         "center": true
       }
     },
+    "modalAdditionForms": {
+      "notes": {
+        "type": "text",
+        "name": "notes",
+        "label": "Notes",
+        "placeHolder": "Choose the Surgeries Type"
+      },
+      "reaction": {
+        "type": "text",
+        "name": "reaction",
+        "label": "Reaction"
+      }
+    },
     "title": "All Allergy Problems",
     "description": "You can see all Allergy broblems for this patient...",
-    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getAllergyById"
+    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getAllergyById",
+    "getAll" :"http://localhost:8080/pt/getAllergyById"
   },
 
   "onGoingProblems": {
@@ -33,22 +53,17 @@
         "sortable": true,
         "center": true
       },
-      "status": {
-        "name": "Status",
-        "selector": "status",
-        "sortable": true,
-        "center": true
-      },
-      "treatingDr": {
-        "name": "Treating Doctor",
-        "selector": "treatingDr",
+      "date": {
+        "name": "Date",
+        "selector": "date",
         "sortable": true,
         "center": true
       }
     },
     "title": "All OnGoingProblems Problems",
     "description": "You can see all OnGoingProblems broblems for this patient...",
-    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getProblemsById"
+    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getProblemsById",
+    "getAll" :"http://localhost:8080/pt/getProblemsById"
   },
   "familyHistory": {
     "state": {
@@ -82,6 +97,104 @@
         "center": true
       }
     },
+    "title":"All Family History for the Patient",
+    "description":"You will see here all Family History to this Patient....",
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+  },
+  "surgeries": {
+    "state": {
+      "name": "",
+      "abbreviation": ""
+    },
+    "modalAdditionForms": {
+      "problem": {
+        "type": "autoComplete",
+        "name": "name",
+        "label": "Name",
+        "placeHolder": "Choose the Surgeries Type"
+      },
+      "relation": {
+        "type": "text",
+        "name": "abbreviation",
+        "label": "Abbreviation"
+      }
+    },
+    "columnsTable": {
+      "problem": {
+        "name": "Name",
+        "selector": "name",
+        "sortable": true,
+        "center": true
+      },
+      "relation": {
+        "name": "Abbreviation",
+        "selector": "abbreviation",
+        "sortable": true,
+        "center": true
+      }
+    },
+    "title":"All Surgeries for the Patient",
+    "description":"You will see here all Surgeries to this Patient....",
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+  },
+  "Interventions": {
+    "state": {
+      "name": "",
+      "note": ""
+    },
+    "modalAdditionForms": {
+      "problem": {
+        "type": "text",
+        "name": "name",
+        "label": "Name",
+        "placeHolder": "Choose the Surgeries Type"
+      },
+      "relation": {
+        "type": "text",
+        "name": "note",
+        "label": "Note"
+      }
+    },
+    "columnsTable": {
+      "problem": {
+        "name": "Name",
+        "selector": "name",
+        "sortable": true,
+        "center": true
+      },
+      "relation": {
+        "name": "Note",
+        "selector": "note",
+        "sortable": true,
+        "center": true
+      }
+    },
+    "title":"All Interventions for the Patient",
+    "description":"You will see here all Interventions to this Patient....",
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+  },
+  "activeMedication": {
+    "state": {
+      "name": ""
+    },
+    "modalAdditionForms": {
+      "problem": {
+        "type": "autoComplete",
+        "name": "name",
+        "label": "Name",
+        "placeHolder": "Choose the Surgeries Type"
+      }
+    },
+    "columnsTable": {
+      "name": {
+        "name": "Name",
+        "selector": "name",
+        "sortable": true,
+        "center": true
+      }
+    },
+    "title":"All Active Medication for the Patient",
+    "description":"You will see here all Active Medications to this Patient....",
     "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
   }
 }

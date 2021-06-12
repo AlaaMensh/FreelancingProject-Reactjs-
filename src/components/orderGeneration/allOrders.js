@@ -73,17 +73,7 @@ class AllOrders extends Component {
     
     
           this.setState({type : this.props.match.params.type});
-          switch(this.props.match.params.type){
-              case "lab":
-                  this.setState({orderType : 0})
-                  break;
-              case "radio":
-                  this.setState({orderType : 1})
-                  break;
-              case "pathology":
-                  this.setState({orderType : 2})
-                  break;
-          }
+
     
         await this.getData(flag , this.props.match.params.type)
     

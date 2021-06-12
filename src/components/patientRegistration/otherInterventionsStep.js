@@ -240,9 +240,9 @@ class SurgeriesStep extends Component {
         </Row>
         <Row className="py-3">
           <Col sm={12} className="py-3">
-            {console.log("list: ", this.state.allergyList)}
+            {console.log("list: ", this.state.interventionsList)}
             <DataTableComp
-              data={this.state.allergyList}
+              data={this.state.interventionsList}
               columns={this.state.columns}
               title=""
             />

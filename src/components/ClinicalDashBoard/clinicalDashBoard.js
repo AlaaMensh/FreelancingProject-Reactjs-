@@ -98,8 +98,13 @@ const ClinicalDashBoard = ({ match }) => {
           </Row>
           <Switch>
             <Route exact path={match.url + `/clinicalDashBoard`}>
-              <PatientProblems type={"allergy"} id={match.params.id} />
-              <PatientProblems type={"onGoingProblems"} id={match.params.id} />
+              {/* <PatientProblems type={"allergy"} id={match.params.id} />
+              <PatientProblems type={"onGoingProblems"} id={match.params.id} /> */}
+              <FamilyHistory type={"allergy"} id={match.params.id} addButtonFlag = {false} />
+              <FamilyHistory type={"onGoingProblems"} id={match.params.id} addButtonFlag = {false} />
+              <FamilyHistory type={"familyHistory"} id={match.params.id} addButtonFlag = {false} />
+              <FamilyHistory type={"surgeries"} id={match.params.id} addButtonFlag = {false}/>
+              <FamilyHistory type={"Interventions"} id={match.params.id} addButtonFlag = {false}/>
             </Route>
             <Route
               exact
@@ -182,11 +187,12 @@ const ClinicalDashBoard = ({ match }) => {
               path={match.path + "/profile"}
               component={Prescription}
             />
-            <Route
+            < Route
               exact
               path={match.path + "/familyHistory"}
-              component={FamilyHistory}
-            />
+            >
+              <FamilyHistory type={"familyHistory"} addButtonFlag = {true} />
+            </Route>
           </Switch>
         </div>
       </div>

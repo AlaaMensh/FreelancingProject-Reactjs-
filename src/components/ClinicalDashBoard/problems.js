@@ -17,6 +17,7 @@ class PatientProblems extends Component {
         }
     async componentDidMount(){
       ///////////////*****Fixed******//////////////////
+      console.log("//////////////////////////////////////////////")
       var type = "";  
       console.log("props:  ", this.props);
       if(this.props.type){
@@ -98,6 +99,7 @@ class PatientProblems extends Component {
               </Row>
 
       <Row className= "py-3" >
+        {console.log("columns: " , this.state.columns)}
             <div className = "row  align-items-center justify-content-center" >
             <DataTableComp  data = {this.state.data}
                   columns = {this.state.columns}

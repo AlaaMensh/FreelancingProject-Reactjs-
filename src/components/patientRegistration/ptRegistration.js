@@ -69,9 +69,9 @@ function getSteps() {
   return [
     "Fill Important Info",
     "Allergy Step",
-    "Family History Step",
-    "Surgical History Step",
-    "Intervetions Step",
+    "Family History ",
+    "Surgical History ",
+    "Intervetions ",
     "onGoingProblem",
     "Finished",
   ];
@@ -82,7 +82,7 @@ export default function HorizontalLabelPositionBelowStepper() {
   const [secondName, setSecondName] = useState();
   const [lastName, setLastName] = useState();
   const [birthDate, setbirthDate] = useState();
-  const [email, setEmail] = useState();
+  const [userName, setuserName] = useState();
   const [address, setAddress] = useState();
   const [status, setStatus] = useState();
   const [bloodGroup, setbloodGroup] = useState();
@@ -106,8 +106,8 @@ export default function HorizontalLabelPositionBelowStepper() {
       address,
       "phone:  ",
       phone,
-      "email : ",
-      email,
+      "userName : ",
+      userName,
       "Family History : ",
       familyHistoryList,
       "Allergy  : ",
@@ -124,7 +124,8 @@ export default function HorizontalLabelPositionBelowStepper() {
       secondName: secondName,
       address: address,
       phone: phone,
-      Email: email,
+      gender : gender,
+      userName: userName,
       birthDate: birthDate,
       status: status,
       BloodGroup: bloodGroup,
@@ -181,8 +182,8 @@ export default function HorizontalLabelPositionBelowStepper() {
   const getAddress = (name) => {
     setAddress(name);
   };
-  const getEmail = (name) => {
-    setEmail(name);
+  const getuserName = (name) => {
+    setuserName(name);
   };
   const getPhone = (name) => {
     setPhone(name);
@@ -201,7 +202,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     firstName: firstName,
     lastName: lastName,
     secondName: secondName,
-    email: email,
+    userName: userName,
     address: address,
     birthDate: birthDate,
     status: status,
@@ -234,7 +235,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             getGender={getGender}
             getFirstName={getFirstName}
             getSecondName={getSecondName}
-            getEmail={getEmail}
+            getuserName={getuserName}
             getStatus={getStatus}
             getLastName={getLastName}
             getAddress={getAddress}
