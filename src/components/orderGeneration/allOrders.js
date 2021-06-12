@@ -251,6 +251,22 @@ class AllOrders extends Component {
             }
             temp.push(orderType[type][object][p])
           }
+          else if(p === "drname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.OrderingDrFirstName + " " + row.tOrderingDrLastName}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
+
+          }
+          else if(p === "ptname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.firstname + " " + row.lastname}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
+
+          }
           else{
     
             temp.push(orderType[type][object][p])
