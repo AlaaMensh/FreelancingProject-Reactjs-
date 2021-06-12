@@ -128,7 +128,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         
       }
 
-    handleDataTableColumns = () => {
+    handleDataTableColumns = async() => {
         var type = this.props.match.params.type;
 
         this.setState({type});
@@ -152,13 +152,28 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
             )
             }
             temp.push(orderType[type].columnsTable[p])
+          }else if(p === "drname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.OrderingFirstName + " " + row.OrderinglastName}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
+
+          }
+          else if(p === "ptname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.PtFirstName + " " + row.PtlastName}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
+
           }
           else{
-    
             temp.push(orderType[type].columnsTable[p])
           }
         }
-        this.setState({columns : temp})
+        console.log("temp :" + temp)
+        await this.setState({columns : temp})
         temp = []
         var newState = this.state;
         for(var property in orderType[type].state ){

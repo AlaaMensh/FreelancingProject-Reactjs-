@@ -198,9 +198,11 @@ class AllOrdersForDoctor extends Component {
                 <button
                 style={{display: !row.result ? "none" : "block"}}  
                 className="btn btn-primary"
-                  onClick={() => {  
+                  onClick={async() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)
+                      await this.setState({fileResult : row.result})
+                      console.log("rewsult ::"+row.result)
                       this.handleopenModal();
                       this.getTypeByID(row.id);
                     }}>
@@ -289,7 +291,7 @@ class AllOrdersForDoctor extends Component {
   renderingModalBody = ()=>{
     return (
       <div className="wrap">
-        <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
+        <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/`+this.state.fileResult} title="W3Schools Free Online Web Tutorials"></iframe>
       </div>
     )
   }
