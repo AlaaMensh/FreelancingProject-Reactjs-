@@ -102,7 +102,7 @@ const ClinicalDashBoard = ({ match }) => {
               <PatientProblems type={"onGoingProblems"} id={match.params.id} /> */}
               <FamilyHistory type={"allergy"} id={match.params.id} addButtonFlag = {false} />
               <FamilyHistory type={"onGoingProblems"} id={match.params.id} addButtonFlag = {false} />
-              <FamilyHistory type={"familyHistory"} id={match.params.id} addButtonFlag = {false} />
+              {/* <FamilyHistory type={"familyHistory"} id={match.params.id} addButtonFlag = {false} /> */}
               <FamilyHistory type={"surgeries"} id={match.params.id} addButtonFlag = {false}/>
               <FamilyHistory type={"Interventions"} id={match.params.id} addButtonFlag = {false}/>
             </Route>
