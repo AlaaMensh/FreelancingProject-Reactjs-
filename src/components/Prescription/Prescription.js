@@ -5,6 +5,7 @@ import Stepper from '@material-ui/core/Stepper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import PDF from './PDF';
 import Form from './PrescriptionForm';
 import { AddPrescriptionToDB } from './request';
@@ -50,7 +51,8 @@ export default function Prescription({match})
   }),
 );
 
-
+  const location = useLocation()
+  const [ptId,setPtId] = React.useState(location.state)
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [header, setHeader] = React.useState(null);
@@ -85,7 +87,7 @@ export default function Prescription({match})
       //   return <Form PID={PID} add_row={AddRow}/>
   
       case 1:
-        return <Table PID={PID} add_row={AddRow} prescription_rows={prescription_rows}  DelteFromPDF={DeleteRows} visitId = {match.params.visitId} ref={childRef}/>
+        return <Table ptId={ptId} PID={PID} add_row={AddRow} prescription_rows={prescription_rows}  DelteFromPDF={DeleteRows} visitId = {match.params.visitId} ref={childRef}/>
       default:
         return <PDF PID={PID} header={header} footer={footer} prescription_rows={prescription_rows} printableId='printme' ref={pdfRef}/>
 

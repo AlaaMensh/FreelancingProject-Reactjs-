@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import ModalComp from "./typesGenerator/modalGenerator";
-import { Card, Col } from 'react-bootstrap';
 import axios from 'axios';
+import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
+import ModalComp from "./typesGenerator/modalGenerator";
 
 
 

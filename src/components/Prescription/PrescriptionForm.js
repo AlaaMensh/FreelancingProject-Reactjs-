@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width:'100%'
   },
 }));
-export default function BasicTextFields({add_row,PID}) {
+export default function BasicTextFields({add_row,PID,ptId}) {
   const classes = useStyles();
 
   const [drugs,setDrugs]=React.useState([]);
@@ -42,7 +42,9 @@ const AddToDB = (row)=>{
     Duration : row.duration,
     drug_id : t[0],
     PId : PID,
-    notes : row.notes
+    notes : row.notes,
+    ptId : ptId,
+    drId : localStorage.getItem('userId')
   }
   AddPrescriptionDrug(data).then(id=>{
     add_row({

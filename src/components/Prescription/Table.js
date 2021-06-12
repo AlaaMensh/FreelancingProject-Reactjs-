@@ -113,7 +113,7 @@ const Table =  forwardRef((props,ref)=>{
   return (
     <div>
       <MyModal open={open} handleClose={handleClose}>
-         <Form PID={props.PID} add_row={props.add_row}/>
+         <Form ptId={props.ptId} PID={props.PID} add_row={props.add_row}/>
       </MyModal>
     <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
       <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection  components={{

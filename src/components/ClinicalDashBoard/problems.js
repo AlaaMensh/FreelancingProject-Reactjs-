@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 import DataTableComp from "../typesGenerator/dataTable";
 import problemType from "./clinicalDB.json";
-import {Container, Row , Col} from 'react-bootstrap'
 
 
 class PatientProblems extends Component {

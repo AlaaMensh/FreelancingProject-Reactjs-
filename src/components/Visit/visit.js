@@ -1,18 +1,15 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
+import Stepper from "@material-ui/core/Stepper";
+import { makeStyles } from "@material-ui/core/styles";
 // import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-// import { makeStyles } from '@material-ui/core/styles';
-import { useState, useEffect } from "react";
-import Procedures from "./procedures";
-import Investgation from "./investgation";
-import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useHistory, useLocation } from "react-router-dom";
 import ChiefComplains from "./chiefComplains";
-import { useLocation } from "react-router-dom";
-import { Card, Row, Col, Form, Modal, Button } from "react-bootstrap";
+import Investgation from "./investgation";
+import Procedures from "./procedures";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -74,9 +71,11 @@ function getSteps() {
 }
 
 export default function Visit({ match }) {
+
   const history = useHistory();
   const location = useLocation();
 
+  // alert(location.state)
   const [ptId, setPId] = useState(1);
   const [drId, setDrId] = useState(1);
   const [patientName, setPatientName] = useState(1);
@@ -156,7 +155,10 @@ export default function Visit({ match }) {
       .then((resp) => {
         resp.json().then((data) => {
           console.log("my Data:   ", data);
-          history.push(`${match.url}/prescription/${data.id}`); //****After making Visit you should redirect to Prescription */
+          history.push({
+            pathname : `${match.url}/prescription/${data.id}`,
+            state : location.state
+          }); //****After making Visit you should redirect to Prescription */
         });
       })
       .catch(() => {

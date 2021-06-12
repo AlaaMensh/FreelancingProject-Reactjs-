@@ -104,30 +104,6 @@ class Appointements extends Component {
             </div>           
           
           </div>
-          // <Row>
-          //   <Col >
-          //     <Button  variant="primary"
-          //       style={{display :this.compareTimeForEditButton(row.date,row.startDate) ?"none" : "block" }}
-          //       onClick={async () => {  
-          //            this.setUpdatedObj(row.id);
-          //           this.setState({formType :"edit"})
-          //           this.handleopenModal()
-          //         }}>Update</Button>
-          //   </Col>
-          // <Col>
-          // <Button  variant="btn-danger"
-          //       onClick={() => {
-          //           this.handleDelete(row.id)
-          //         }}>Delete
-          // </Button>
-          // </Col>
-          // <Col>
-  
-          // <SessionCode hidden={this.compareTimeForEditButton(row.date,row.startDate)}
-          // buttonValue="Make Visit" fromComponent="appointement" history= {this.props.history}/>
-          // </Col>
-          
-          // </Row>
           )
           }
           temp.push(appointements[type].columnsTable[p])

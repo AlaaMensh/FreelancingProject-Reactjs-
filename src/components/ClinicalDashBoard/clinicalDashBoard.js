@@ -6,6 +6,7 @@ import AddOrderForm from "../orderGeneration/addOrderForm";
 import AllOrders from "../orderGeneration/allOrders";
 import Prescription from "../Prescription/Prescription";
 import Visit from "../Visit/visit";
+import Medication from './Medication';
 import PatientAppointement from "./patientAppointements";
 import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
@@ -74,6 +75,11 @@ const ClinicalDashBoard = ({ match }) => {
                 <ListGroup.Item>
                   <Link to={match.url + `/allRadioOrders/${"radio"}`}>
                     radio Orders
+                  </Link>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Link to={match.url + `/Medication`}>
+                    Medication
                   </Link>
                 </ListGroup.Item>
               </ListGroup>
@@ -152,7 +158,12 @@ const ClinicalDashBoard = ({ match }) => {
               path={match.path + "/allRadioOrders/:type/addOrder"}
               component={AddOrderForm}
             />
-
+            <Route
+              exact
+              key={99}
+              path={match.path + "/Medication"}
+              component={Medication}
+            />
             <Route
               exact
               path={match.path + "/patientAppointement/visit"}
