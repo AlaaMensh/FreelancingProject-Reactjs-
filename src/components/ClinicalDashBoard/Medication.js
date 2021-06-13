@@ -152,7 +152,7 @@ export default function ScrollableTabsButtonAuto({match}) {
             "/"+date.getFullYear()
         })
       }
-    setActiveRows(active_rows)
+    setActiveRows([...active_rows])
   }
 
   return (
