@@ -142,12 +142,16 @@ export default function ScrollableTabsButtonAuto({match}) {
 
   const add_row = (data)=>{
       let date = new Date()
-    active_rows.push({
-        ...data,
-        createdAt : date.getDate()+
-        "/"+(date.getMonth()+1)+
-        "/"+date.getFullYear()
-    })
+      let index =  active_rows.findIndex(r=>r.id == data.id)
+      if(index == -1)
+      {
+        active_rows.push({
+            ...data,
+            createdAt : date.getDate()+
+            "/"+(date.getMonth()+1)+
+            "/"+date.getFullYear()
+        })
+      }
     setActiveRows(active_rows)
   }
 
