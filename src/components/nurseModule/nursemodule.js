@@ -7,6 +7,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import ModalGenerator from './../ModalGeneration/modalGeneration';
+import AdditionVital from './additionVitalForm';
+import axios from "axios";
 
 
 
@@ -20,8 +23,21 @@ class NurseVisit extends Component {
             pId:"",
             columns:[],
             ModalAddtionInputs :[],
-            type : "" //from JsonFile in nurseModule json File 
+            type : "", //from JsonFile in nurseModule json File
+            options :[] 
           }
+    }
+    loadSelectInputData = async(type) => {
+      var temp = [];
+      await axios.get(`${nurseModule[type].getAllData}` ,{
+      } ).then(async resp => {
+        console.log("resp : " ,resp)
+        console.log("AllData: " , resp.data);
+        this.setState({options : resp.data});
+        
+      temp =  resp.data;
+      })
+      return temp
     }
     async componentDidMount(){
       var type = "nurseVitals";
@@ -29,7 +45,10 @@ class NurseVisit extends Component {
       console.log("parmas.:   ",  this.props.match.params.id)
       this.setState({pId : this.props.match.params.id}); // set here the patientId from the url 
       this.handleDataTableColumns(type);
-      this.handleFormModuleInput(type);
+      var optionsList = await this.loadSelectInputData(type);
+      console.log("optionsList: " , optionsList)
+
+      this.handleFormModuleInput(type , optionsList);
       this.handleState(type);
       await this.getLastVisits(type);
      
@@ -40,14 +59,24 @@ class NurseVisit extends Component {
         newState[property] = "" 
       }
     }
-    handleChange = (event)=>{
+    handleChange = (evt)=>{
+      if(evt.text && evt.text === "autoComplete" ){
+        
         this.setState({
-            [event.target.name] :event.target.value
-        })
+          [evt.input]: evt.newValue.value,
+        });
+      }
+      else{
+        if(evt.target){
+          const value = evt.target.value;
+          this.setState({
+            [evt.target.name]: value,
+          });
+        }
+      }
     }
     handleDataTableColumns = (type) =>{
       var temp = [];
-    
       for(var p in nurseModule[type].columnsTable ){ // for Adding actions Buttons to DataTable
         if(p === "actions"){
           nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
@@ -77,6 +106,21 @@ class NurseVisit extends Component {
           }
           temp.push(nurseModule[type].columnsTable[p])
         }
+        else if(p === "bloodPressureNumerator"){
+          nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            {console.log("rooowowwww:  " , row)}
+            <div className="col-auto">
+              {/* <h1>hhhh</h1> */}
+            <p className="span">{row.bloodPressureNumerator}</p><span>/</span>
+               <p className="span">{row.bloodPressureNumerator}</p>
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(nurseModule[type].columnsTable[p])
+        }
         else{
   
           temp.push(nurseModule[type].columnsTable[p])
@@ -85,11 +129,24 @@ class NurseVisit extends Component {
       this.setState({columns : temp})
       temp = []
     }
-    handleFormModuleInput = (type) =>{
+    handleFormModuleInput = (type , optionsList) =>{
       var temp = [];
+
     
       for(var p in nurseModule[type].modalAdditionForm ){ // for Adding actions Buttons to DataTable
+        var temp2 = [];
+        if (p === "takenBy") { // adding all
+          for(var nurse of optionsList){
+            var obj =null;
+            obj = {value : nurse.id , firstName : nurse.firstName  ,  secondName : nurse.secondName ,  lastName : nurse.lastName }
+            temp2.push(obj);
+          }
+          console.log("options : " , temp2)
+          this.setState({options : temp2})
+          temp2=[]
+        }
         temp.push(nurseModule[type].modalAdditionForm[p]);
+  
       }
       this.setState({ModalAddtionInputs : temp})
     }
@@ -130,7 +187,9 @@ class NurseVisit extends Component {
             time :time,
             temp:"",
             pulse:"" , 
-            bloodPressure: "" ,
+            bloodPressureNumerator: "" ,
+            bloodPressuredenomerator:"",
+
             respiratoryRate: "" ,
             OXSat:"" ,
             height:"" , 
@@ -157,7 +216,8 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
-              bloodPressure : time.bloodPressure ,
+              bloodPressureNumerator : time.bloodPressureNumerator ,
+              bloodPressuredenomerator : time.bloodPressuredenomerator ,
               respiratoryRate : time.respiratoryRate,
               OXSat : time.OXSat,
               height : time.headC, 
@@ -256,7 +316,8 @@ class NurseVisit extends Component {
                 time : time,
                 temp:"",
                 pulse:"" , 
-                bloodPressure: "" ,
+                bloodPressureNumerator:"",
+                bloodPressuredenomerator :"",
                 respiratoryRate: "" ,
                 OXSat:"" ,
                 height:"" , 
@@ -264,7 +325,9 @@ class NurseVisit extends Component {
                 BMI :"" ,
                 pain:"",
                 smokingStatus: "" ,
-                headC : ""
+                headC : "",
+                takenBy:""
+
             }
             var joined = data.concat(obj2);
             // this.setState({ timeDate: joined });
@@ -287,18 +350,20 @@ class NurseVisit extends Component {
             time: this.getTime(),
             temp:this.state.temp,
             pulse: this.state.pulse,
-            bloodPressure: this.state.bloodPressure,
             respiratoryRate: this.state.respiratoryRate ,
-            OXSat: this.state.oxygenSaturation,
+            OXSat: this.state.OXSat,
             height: this.state.height,
             weight: this.state.weight,
             BMI: this.state.BMI,
             pain: this.state.pain,
             smokingStatus: this.state.smokingStatus,
-            headC: this.state.headCircumference,  
+            headC: this.state.headC, 
+            bloodPressureNumerator:this.state.bloodPressureNumerator,
+            bloodPressuredenomerator :this.state.bloodPressuredenomerator,
+            takenBy : this.state.takenBy 
           }
 
-        
+          console.log("details On Adding : " , details)
           var formBody = [];
           for (var property in details) {
             var encodedKey = encodeURIComponent(property);
@@ -329,7 +394,8 @@ class NurseVisit extends Component {
             time: this.getTime(),
             temp:this.state.temp,
             pulse: this.state.pulse,
-            bloodPressure: this.state.bloodPressure,
+            bloodPressureNumerator: this.state.bloodPressureNumerator,
+            bloodPressuredenomerator: this.state.bloodPressuredenomerator,
             respiratoryRate: this.state.respiratoryRate ,
             OXSat: this.state.oxygenSaturation,
             height: this.state.height,
@@ -338,6 +404,7 @@ class NurseVisit extends Component {
             pain: this.state.pain,
             smokingStatus: this.state.smokingStatus,
             headC: this.state.headCircumference,
+            takenBy:this.state.takenBy
             }: item
           );
           // console.log("obj: " , obj);
@@ -368,6 +435,7 @@ class NurseVisit extends Component {
       return(
         <Container >
         <Row className= "py-3">
+         {console.log("options :" , this.state.options)} 
         <Col>
             {
               nurseModule && this.state.type && (
@@ -412,16 +480,27 @@ class NurseVisit extends Component {
             <AddIcon  />
         </Fab>  */}
         {
-       this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 &&(
-        <ModalComp show={this.state.openModal}
-        onHide={this.handleClose}
-        ModalInputs={this.state.ModalAddtionInputs}
-        updatedTypeObj = {this.state.typeObj}
-        handleChange = {this.handleChange}
-        handleUpdate = {this.handleUpdate}
-        handleAdding={this.handleAddition}
-        formType = {this.state.formType}
-       />
+       this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 && (
+        <ModalGenerator  onHide={this.handleClose} show={this.state.openModal}   formType={this.state.formType}> 
+          <AdditionVital 
+          ModalInputs={this.state.ModalAddtionInputs}
+          handleChange={this.handleChange}
+          handleUpdate={this.handleUpdate}
+          handleAdding={this.handleAddition}
+          formType={this.state.formType} 
+          options = {this.state.options}
+          from = "nurseModule" />
+       
+        </ModalGenerator>
+      //   <ModalComp show={this.state.openModal}
+      //   onHide={this.handleClose}
+      //   ModalInputs={this.state.ModalAddtionInputs}
+      //   updatedTypeObj = {this.state.typeObj}
+      //   handleChange = {this.handleChange}
+      //   handleUpdate = {this.handleUpdate}
+      //   handleAdding={this.handleAddition}
+      //   formType = {this.state.formType}
+      //  />
        )
      }
     </div>

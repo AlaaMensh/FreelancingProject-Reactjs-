@@ -15,6 +15,7 @@ class FormGenerator extends Component {
   }
   // change Form Button with update and add or upload
   renderFormButton = () => {
+    // eslint-disable-next-line default-case
     switch (this.props.formType) {
       case "add": {
         return (

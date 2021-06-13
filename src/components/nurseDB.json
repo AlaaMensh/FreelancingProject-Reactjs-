@@ -53,7 +53,9 @@
             "pain":"",
             "smokingStatus":"",
             "headC":"",
-            "bloodPressure":""
+            "bloodPressureNumerator":"",
+            "bloodPressuredenomerator" :"",
+            "takenBy":""
          },
          "columnsTable":{
             "time": {
@@ -74,9 +76,9 @@
                 "sortable":true,
                 "center" : true
         },
-        "bloodPressure" :{
-                "name" :"bloodPressure",
-                "selector" : "bloodPressure",
+        "bloodPressureNumerator" :{
+                "name" :"bloodPressureNumerator",
+                "selector" : "bloodPressureNumerator",
                 "sortable":true,
                 "center" : true
         },
@@ -144,9 +146,13 @@
                     "type":"number",
                     "name" :"pulse"
             },
-            "bloodPressure" : {
+            "bloodPressureNumerator" : {
                     "type":"number",
-                    "name" :"bloodPressure"
+                    "name" :"bloodPressureNumerator"
+            },
+            "bloodPressuredenomerator" : {
+                    "type":"number",
+                    "name" :"bloodPressuredenomerator"
             },
             "pain" : {
                     "type":"number",
@@ -179,6 +185,10 @@
             "headC" : {
                     "type":"number",
                     "name" :"headC"
+            },
+            "takenBy" : {
+                    "type":"autoComplete",
+                    "name" :"takenBy"
             }
 
         },
@@ -187,7 +197,8 @@
         "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate",
         "getPatientLastVisits":"https://mvb1.herokuapp.com/nurse/getByPtId",
         "deleteVital" : "https://mvb1.herokuapp.com/nurse/deleteRecorder",
-        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord"
+        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord",
+        "getAllData" :"https://mvb1.herokuapp.com/nurse/getNurse"
 
      }
             
