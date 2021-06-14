@@ -93,6 +93,7 @@ export const pdf_styles = {
         top:0,
         left:0, 
         width:'100%',
+        height : 200
     }
     ,
     footerImage:{
@@ -100,6 +101,8 @@ export const pdf_styles = {
         bottom:0,
         left:0, 
         width:'100%',
+        height : 200
+
     }
 }
 

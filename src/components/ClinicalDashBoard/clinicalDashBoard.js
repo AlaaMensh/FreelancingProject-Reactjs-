@@ -7,12 +7,13 @@ import AllOrders from "../orderGeneration/allOrders";
 import Prescription from "../Prescription/Prescription";
 import Visit from "../Visit/visit";
 import Medication from './Medication';
+import MyPrescriptions from './MyPrescriptions';
 import PatientAppointement from "./patientAppointements";
 import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
 const ClinicalDashBoard = ({ match }) => {
   const history = useHistory();
-  const [ptId, setPtId] = useState(41);
+  const [ptId, setPtId] = useState(match.params.id);
 
   useEffect(() => {
     console.log("herree dashBoard:", match.params.id);
@@ -80,6 +81,11 @@ const ClinicalDashBoard = ({ match }) => {
                 <ListGroup.Item>
                   <Link to={match.url + `/Medication`}>
                     Medication
+                  </Link>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <Link to={match.url + `/MyPrescriptions`}>
+                    Prescription
                   </Link>
                 </ListGroup.Item>
               </ListGroup>
@@ -163,6 +169,12 @@ const ClinicalDashBoard = ({ match }) => {
               key={99}
               path={match.path + "/Medication"}
               component={Medication}
+            />
+            <Route
+              exact
+              key={99}
+              path={match.path + "/MyPrescriptions"}
+              component={MyPrescriptions}
             />
             <Route
               exact

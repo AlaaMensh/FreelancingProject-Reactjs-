@@ -22,7 +22,7 @@ function getSteps() {
 
 
 
-export default function Prescription({match})
+export default function Prescription({match,patient_id})
 {
 
         // In order to gain access to the child component instance,
@@ -52,7 +52,17 @@ export default function Prescription({match})
 );
 
   const location = useLocation()
-  const [ptId,setPtId] = React.useState(location.state)
+  //#region 
+  // if come from visit then ptId will bind his value from location.state
+  // else come from clinical dashboard will bind value from props
+  const [ptId,setPtId] = React.useState(
+    location.state && location.state > 0
+    ?
+    location.state
+    :
+    patient_id
+    )
+  //#endregion
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [header, setHeader] = React.useState(null);
@@ -102,7 +112,18 @@ export default function Prescription({match})
   const addPrescription = ()=>{
     let data = {
       notes: notes,
-      visit_id : match.params.visitId
+      ptId : ptId,
+      drId : localStorage.getItem('userId'),
+      visit_id :
+      match.params
+      ?
+      match.params.visitId
+      ?
+      match.params.visitId
+      :
+      0
+      :
+      0
     }
     AddPrescriptionToDB(data).then(id=>{
       setPID(id)
@@ -115,13 +136,13 @@ export default function Prescription({match})
 
 
   const handleNext = () => {
-    // if(!header || !footer || !notes){
-    //   alert("please Fill Data")
-    //   return
-    // }
-    // if(activeStep == 0 && !PID){
-    //   addPrescription()
-    // }
+    if(!header || !footer || !notes){
+      alert("please Fill Data")
+      return
+    }
+    if(activeStep == 0 && !PID){
+      addPrescription()
+    }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
