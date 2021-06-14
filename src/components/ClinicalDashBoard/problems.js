@@ -50,8 +50,9 @@ class PatientProblems extends Component {
 
 
     getProblems = (type)=>{ // get all Allergy prolems for this patient from DB
+      console.log("idOnGetting: " , this.props.match.params.id)
       var details = {
-        ptId:this.props.id /// you should change this to props
+        ptId:this.props.match.params.id /// you should change this to props
         // ptId:13 /// you should change this to props
        }
        var formBody = [];

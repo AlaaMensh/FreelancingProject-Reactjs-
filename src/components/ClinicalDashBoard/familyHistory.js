@@ -107,7 +107,7 @@ class FamilyHistory extends Component {
     var type = this.props.type;
     this.setState({ type });
     // put the options Inputs in options which got from jsonFile
-    if(type === "familyHistory" || type === "surgeries"){
+    if(type === "familyHistory" || type === "surgeries" || type === "onGoingProblems" || type === "activeMedication"){
       var optionsList = await this.loadSelectInputData(type); 
       this.handleFormInputs(type, optionsList);
     }else{
@@ -249,7 +249,7 @@ class FamilyHistory extends Component {
     this.getData(this.state.type);
   };
   getData = async (type) => {
-    console.log("UserEndpoint: ", clinicalDB[type].getAll);
+    console.log("UserEndpoint: ", clinicalDB[type].getAll , this.props.id);
     await axios.post(`${clinicalDB[type].getAll}` , {
       ptId: this.props.id
     }).then(async (resp) => {
@@ -282,7 +282,10 @@ class FamilyHistory extends Component {
       }
     }
   };
-
+componentWillUnmount(){
+  this.setState({data :[]})
+  this.setState({type : ""})
+}
   render() {
     const tableData = {
       columns: this.state.columns,
@@ -291,6 +294,7 @@ class FamilyHistory extends Component {
 
     return (
       <Container>
+        {console.log("modalAdditionInputs : " , this.state.ModalAddtionInputs)}
         <Row className="py-3">
           <Col>
             {clinicalDB && this.state.type && (
@@ -358,7 +362,7 @@ class FamilyHistory extends Component {
                   {/*  for Updating Modal */}
             <FormGenerator
               updatedTypeObj={this.state.typeObj}
-              ModalInputs={this.state.ModalUpdateInputs}
+              ModalInputs={this.state.ModalAddtionInputs}
               handleChange={this.handleChange}
               handleUpdate={this.handleUpdate}
               handleAdding={this.handleAdding}

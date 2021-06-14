@@ -53,9 +53,10 @@
             "pain":"",
             "smokingStatus":"",
             "headC":"",
-            "bloodPressureNumerator":"",
-            "bloodPressuredenomerator" :"",
-            "takenBy":""
+            "systolic ":"",
+            "diastolic" :"",
+            "takenBy":"",
+            "bloodGlucose":""
          },
          "columnsTable":{
             "time": {
@@ -76,11 +77,12 @@
                 "sortable":true,
                 "center" : true
         },
-        "bloodPressureNumerator" :{
-                "name" :"bloodPressureNumerator",
-                "selector" : "bloodPressureNumerator",
-                "sortable":true,
-                "center" : true
+        "systolic" :{
+                "name" :"Blood Pressure",
+                "selector" : "systolic",
+                "sortable":true,        
+                "center" : true,
+                "width": "200px"
         },
         "pain" :{
                 "name" :"pain",
@@ -129,6 +131,12 @@
                 "sortable":true,
                 "center" : true
         },
+        "bloodGlucose" :{
+                "name" :"bloodGlucose",
+                "selector" : "bloodGlucose",
+                "sortable":true,
+                "center" : true
+        },
         "actions" :{
                 "name" :"actions",
                 "selector" : "actions",
@@ -146,13 +154,17 @@
                     "type":"number",
                     "name" :"pulse"
             },
-            "bloodPressureNumerator" : {
+            "systolic " : {
                     "type":"number",
-                    "name" :"bloodPressureNumerator"
+                    "name" :"systolic "
             },
-            "bloodPressuredenomerator" : {
+            "diastolic" : {
                     "type":"number",
-                    "name" :"bloodPressuredenomerator"
+                    "name" :"diastolic"
+            },
+            "bloodGlucose" : {
+                    "type":"number",
+                    "name" :"bloodGlucose"
             },
             "pain" : {
                     "type":"number",

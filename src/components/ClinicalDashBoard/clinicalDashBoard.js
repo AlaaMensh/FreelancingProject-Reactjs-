@@ -97,7 +97,7 @@ const ClinicalDashBoard = ({ match }) => {
             <UserInfo id={match.params.id} />
           </Row>
           <Switch>
-            <Route exact path={match.url + `/clinicalDashBoard`}>
+            <Route exact path={match.url + `/clinicalDashBoard`} key={14}>
               {/* <PatientProblems type={"allergy"} id={match.params.id} />
               <PatientProblems type={"onGoingProblems"} id={match.params.id} /> */}
               <FamilyHistory type={"allergy"} id={match.params.id} addButtonFlag = {false} />
@@ -105,6 +105,7 @@ const ClinicalDashBoard = ({ match }) => {
               {/* <FamilyHistory type={"familyHistory"} id={match.params.id} addButtonFlag = {false} /> */}
               <FamilyHistory type={"surgeries"} id={match.params.id} addButtonFlag = {false}/>
               <FamilyHistory type={"Interventions"} id={match.params.id} addButtonFlag = {false}/>
+              <FamilyHistory type={"activeMedication"} id={match.params.id} addButtonFlag = {false}/>
             </Route>
             <Route
               exact
@@ -189,6 +190,7 @@ const ClinicalDashBoard = ({ match }) => {
             />
             < Route
               exact
+              key={15}
               path={match.path + "/familyHistory"}
             >
               <FamilyHistory type={"familyHistory"} addButtonFlag = {true} />

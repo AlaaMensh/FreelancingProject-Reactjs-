@@ -24,7 +24,14 @@
         "selector": "type",
         "sortable": true,
         "center": true
-      }
+      },
+      "actions" :{
+        "name" :"actions",
+        "selector" : "actions",
+        "sortable":false,
+        "center" : true,
+        "width":"300px"
+}
     },
     "modalAdditionForms": {
       "notes": {
@@ -60,10 +67,24 @@
         "center": true
       }
     },
+    "modalAdditionForms": {
+      "problem": {
+        "type": "autoComplete",
+        "name": "problem",
+        "label": "Problem",
+        "placeHolder": "Choose the Disease Type"
+      },
+      "date": {
+        "type": "text",
+        "name": "date",
+        "label": "Date"
+      }
+    },
     "title": "All OnGoingProblems Problems",
     "description": "You can see all OnGoingProblems broblems for this patient...",
     "getAllergyProblemsForPatient": "http://localhost:8080/pt/getProblemsById",
-    "getAll" :"http://localhost:8080/pt/getProblemsById"
+    "getAll" :"http://localhost:8080/pt/getProblemsById",
+    "getAllDiseases" :"https://mvb1.herokuapp.com/disease/getAll"
   },
   "familyHistory": {
     "state": {

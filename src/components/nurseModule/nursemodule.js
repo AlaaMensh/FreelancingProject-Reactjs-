@@ -68,6 +68,7 @@ class NurseVisit extends Component {
       }
       else{
         if(evt.target){
+          console.log("evt.target.name: " , evt.target.name)
           const value = evt.target.value;
           this.setState({
             [evt.target.name]: value,
@@ -106,14 +107,14 @@ class NurseVisit extends Component {
           }
           temp.push(nurseModule[type].columnsTable[p])
         }
-        else if(p === "bloodPressureNumerator"){
+        else if(p === "systolic"){
           nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
           <div className = "row">
             {console.log("rooowowwww:  " , row)}
             <div className="col-auto">
               {/* <h1>hhhh</h1> */}
-            <p className="span">{row.bloodPressureNumerator}</p><span>/</span>
-               <p className="span">{row.bloodPressureNumerator}</p>
+            {row.systolic }<span>/</span>
+               {row.systolic }
             </div>
           
           </div>
@@ -187,9 +188,8 @@ class NurseVisit extends Component {
             time :time,
             temp:"",
             pulse:"" , 
-            bloodPressureNumerator: "" ,
-            bloodPressuredenomerator:"",
-
+            systolic : "" ,
+            diastolic:"",
             respiratoryRate: "" ,
             OXSat:"" ,
             height:"" , 
@@ -197,7 +197,9 @@ class NurseVisit extends Component {
             BMI :"" ,
             pain:"",
             smokingStatus: "" ,
-            headC : ""
+            headC : "",
+            takenBy:localStorage.getItem("userId"),
+            bloodGlucose :""
         }
         var joined = this.state.timeDate.concat(obj2);
         this.setState({ timeDate: joined });
@@ -216,16 +218,18 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
-              bloodPressureNumerator : time.bloodPressureNumerator ,
-              bloodPressuredenomerator : time.bloodPressuredenomerator ,
+              systolic  : time.systolic  ,
+              diastolic : time.diastolic ,
               respiratoryRate : time.respiratoryRate,
               OXSat : time.OXSat,
-              height : time.headC, 
+              height : time.height, 
               weight : time.weight,
               BMI : time.BMI,
               smokingStatus: time.smokingStatus,
               headC : time.headC,
-              pain : time.pain
+              pain : time.pain,
+              takenBy:localStorage.getItem("userId"),
+              bloodGlucose:time.bloodGlucose
          }
 
           }
@@ -238,15 +242,18 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
-              bloodPressure : time.bloodPressure ,
+              systolic  : time.systolic  ,
+              diastolic : time.diastolic ,
               respiratoryRate : time.respiratoryRate,
               OXSat : time.OXSat,
-              height : time.headC, 
+              height : time.height, 
               weight : time.weight,
               BMI : time.BMI,
               smokingStatus: time.smokingStatus,
               headC : time.headC,
-              pain : time.pain
+              pain : time.pain,
+              takenBy:localStorage.getItem("userId"),
+              bloodGlucose:time.bloodGlucose
          }
 
           }
@@ -258,16 +265,18 @@ class NurseVisit extends Component {
                 time : time.time,
                 temp : time.temp,
                 pulse : time.pulse, 
-                bloodPressure : time.bloodPressure ,
+                systolic  : time.systolic  ,
+                diastolic : time.diastolic ,
                 respiratoryRate : time.respiratoryRate,
                 OXSat : time.OXSat,
-                height : time.headC, 
+                height : time.height, 
                 weight : time.weight,
                 BMI : time.BMI,
                 smokingStatus: time.smokingStatus,
                 headC : time.headC,
-                pain : time.pain
-
+                pain : time.pain,
+                takenBy:localStorage.getItem("userId"),
+                bloodGlucose:time.bloodGlucose
             
            }
            
@@ -316,8 +325,8 @@ class NurseVisit extends Component {
                 time : time,
                 temp:"",
                 pulse:"" , 
-                bloodPressureNumerator:"",
-                bloodPressuredenomerator :"",
+                systolic :"",
+                diastolic :"",
                 respiratoryRate: "" ,
                 OXSat:"" ,
                 height:"" , 
@@ -358,9 +367,11 @@ class NurseVisit extends Component {
             pain: this.state.pain,
             smokingStatus: this.state.smokingStatus,
             headC: this.state.headC, 
-            bloodPressureNumerator:this.state.bloodPressureNumerator,
-            bloodPressuredenomerator :this.state.bloodPressuredenomerator,
-            takenBy : this.state.takenBy 
+            systolic :this.state.systolic ,
+            diastolic :this.state.diastolic,
+            takenBy:localStorage.getItem("userId"),
+            bloodGlucose:this.state.bloodGlucose
+            // takenBy : this.state.takenBy 
           }
 
           console.log("details On Adding : " , details)
@@ -394,17 +405,18 @@ class NurseVisit extends Component {
             time: this.getTime(),
             temp:this.state.temp,
             pulse: this.state.pulse,
-            bloodPressureNumerator: this.state.bloodPressureNumerator,
-            bloodPressuredenomerator: this.state.bloodPressuredenomerator,
+            systolic : this.state.systolic ,
+            diastolic: this.state.diastolic,
             respiratoryRate: this.state.respiratoryRate ,
-            OXSat: this.state.oxygenSaturation,
+            OXSat: this.state.OXSat,
             height: this.state.height,
             weight: this.state.weight,
             BMI: this.state.BMI,
             pain: this.state.pain,
             smokingStatus: this.state.smokingStatus,
-            headC: this.state.headCircumference,
-            takenBy:this.state.takenBy
+            headC: this.state.headC,
+            takenBy:this.state.takenBy,
+            bloodGlucose:this.state.bloodGlucose
             }: item
           );
           // console.log("obj: " , obj);
@@ -435,7 +447,7 @@ class NurseVisit extends Component {
       return(
         <Container >
         <Row className= "py-3">
-         {console.log("options :" , this.state.options)} 
+         {console.log("timeDateeee :" , this.state.timeDate)} 
         <Col>
             {
               nurseModule && this.state.type && (
