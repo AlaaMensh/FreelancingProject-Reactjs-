@@ -22,7 +22,7 @@ function getSteps() {
 
 
 
-export default function Prescription({match,patient_id})
+export default function Prescription({match,patient_id,finish_method})
 {
 
         // In order to gain access to the child component instance,
@@ -142,6 +142,14 @@ export default function Prescription({match,patient_id})
     }
     if(activeStep == 0 && !PID){
       addPrescription()
+    }
+    if(activeStep === steps.length -1)
+    {
+      alert("aa")
+      if(finish_method)
+      {
+        finish_method()
+      }
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };

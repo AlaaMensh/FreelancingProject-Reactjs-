@@ -7,14 +7,14 @@ import MyModal from '../Prescription/modal';
 import Prescription from '../Prescription/Prescription';
 import MyDialog from './MyDialog';
 const PColumns = [
-    { field: 'PID', headerName: 'ID', hide:true },
-    { field: 'PNotes', headerName: 'Notes', width:150},
+    { field: 'id', headerName: 'ID', hide:true },
+    { field: 'PNotes', headerName: 'Notes', width:500},
     { field: 'PDate', headerName: 'Date',width:150},
   
   ];
 
 const PDColumns = [
-    { field: 'PDID', headerName: 'ID', hide:true },
+    { field: 'id', headerName: 'ID', hide:true },
     { field: 'drug', headerName: 'drug', width:150},
     { field: 'notes', headerName: 'notes',width:150},
     { field: 'date', headerName: 'date',width:150},
@@ -44,20 +44,29 @@ const MyPrescriptions = ({match}) =>{
      const MyPrescriptions = ()=>{
         axios.post("http://localhost:8080/visit/myPrescriptions",{
             ptId : ptId
-        }).then(data=>{
-            if(data && data.length > 0)
+        }).then(res=>{
+            if(res.data && res.data.length > 0)
             {
-                setData([...data])
-                setRows([...data])
+                setData([...res.data])
+                setRows([...res.data])
             }
-
         }).catch(err=>{
             alert(err)
         })
      } 
 
     const SelectRow = (row)=>{
+        let index = rows.findIndex(r=>r.id == row.id)
+        if(index != -1)
+        {
+            setDrugRows([...rows[index].drugs])
+            setDrugModal(true)
+        }
+    }
 
+    const JobFinish = ()=>{
+         MyPrescriptions()
+        
     }
 
     //handle Modal Open
@@ -81,7 +90,7 @@ const MyPrescriptions = ({match}) =>{
     return (
         <>
         <MyDialog open={open} handleClose={handleClose}>
-            <Prescription match={match} patient_id={ptId}/>
+            <Prescription match={match} patient_id={ptId} finish_method={JobFinish}/>
         </MyDialog>
         <MyModal open={drugModal} handleClose={handleDrugClose}>
         <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
@@ -97,7 +106,7 @@ const MyPrescriptions = ({match}) =>{
                     <AddIcon  />
                 </Fab> 
             </div>
-            <DataGrid onRowDoubleClick={(row)=>SelectRow(row)} rows={rows} columns={PColumns} pageSize={5} checkboxSelection  components={{
+            <DataGrid id={Math.random()}  onRowDoubleClick={(row)=>SelectRow(row)} rows={rows} columns={PColumns} pageSize={5}  components={{
                 Toolbar: GridToolbar,
             }}
             />
