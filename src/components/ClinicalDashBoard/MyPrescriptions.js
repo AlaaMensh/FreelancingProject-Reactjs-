@@ -47,6 +47,18 @@ const MyPrescriptions = ({match}) =>{
         }).then(res=>{
             if(res.data && res.data.length > 0)
             {
+                res.data.map(r=>{
+                    let d = new Date(r.PDate)
+                    r.PDate = d.getDate()+
+                        "/"+(d.getMonth()+1)+
+                        "/"+d.getFullYear()
+                    r.drugs.map(row=>{
+                        d= new Date(row.date)
+                        row.date =  d.getDate()+
+                        "/"+(d.getMonth()+1)+
+                        "/"+d.getFullYear()
+                    })    
+                })
                 setData([...res.data])
                 setRows([...res.data])
             }

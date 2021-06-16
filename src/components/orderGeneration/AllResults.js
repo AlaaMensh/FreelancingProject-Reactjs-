@@ -4,16 +4,15 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import { Document, Page } from 'react-pdf';
-import "../orderGeneration/order.css";
 import orderType from "../ordersdb.json";
 import ModalForView from "../pharmacyModule/modalForView";
 import DataTableComp from '../typesGenerator/dataTable';
-// pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import ModalComp from "../typesGenerator/modalGenerator";
+import "./order.css";
 
 var object  = {}
 
-class AllOrdersForDoctor extends Component {
+class AllResults extends Component {
   constructor(props) {
     super(props);
     
@@ -28,7 +27,9 @@ class AllOrdersForDoctor extends Component {
       formType:"uploadResult",
       numPages:null,
       pageNumber:1,
-      fileResult:""
+      fileResult:"" ,
+      resultStatus : "",
+      resultToShow:""
           }
         }
       async componentDidMount(){
@@ -38,16 +39,25 @@ class AllOrdersForDoctor extends Component {
           
           this.setState({type : this.props.match.params.type});
           
-
+          if(this.props.match.params.id){ // for PatientId
+          console.log("yes here is it ")
+          this.setState({flagCompoenentType : false});
+          flag = false;
+          this.setState({ptId : this.props.match.params.id});
+          object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
+        }
+        else{
           console.log("no it it is not")
           this.setState({flagCompoenentType : true});
           flag = true;
-        
+        }
    
         if(flag){
           object = "columnsTable"; // to get Data with First Name and lastName of the patient for all orders of LabId
         }
-
+        else{
+          object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
+        }
         this.handleTableColumnsForAllAcceptedOrders(this.props.match.params.type , object)
           
           this.setState({drId : localStorage.getItem("userId")});
@@ -97,13 +107,32 @@ class AllOrdersForDoctor extends Component {
     getData = async (flag ,type) => {
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
-
-   // for LabId or PathoId or labId
-        var details = { 
-            drId:localStorage.getItem("userId")
+      if(!flag){ // for PatientID and only Accepted Order
+        var details = {
+          ptId:this.props.match.params.id,
+         }
+         endPoint = `${orderType[type].getAllOrdersByPtID}`;
+      }
+      else{ // for LabId or PathoId or labId
+        var details = { }
+        endPoint = `${orderType[type].getAllResultsById}`
+        switch(type){
+          case "lab":{
+            // details["labId"] = localStorage.getItem("labId");
+            details["labFDId"] = localStorage.getItem('userId');
+          }
+          case "pathology":{
+            // details["pathoId"] = localStorage.getItem("pathoId");
+            details["pathoFDId"] = localStorage.getItem('userId');
+          }
+          case "radio":{
+            details["radioFDId"] = localStorage.getItem('userId');
+          }
         }
 
 
+      }
+      console.log("endPoint: " , endPoint)
        var formBody = [];
        for (var property in details) {
          var encodedKey = encodeURIComponent(property);
@@ -111,8 +140,7 @@ class AllOrdersForDoctor extends Component {
          formBody.push(encodedKey + "=" + encodedValue);
        }
        formBody = formBody.join("&");
-       console.log("endPointttttttt: " , orderType[type].getAllDoctorOrders)
-       axios.post(`${orderType[type].getAllDoctorOrders}`,formBody).then(result=>{
+       axios.post(`${endPoint}`,details).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
 
@@ -124,59 +152,6 @@ class AllOrdersForDoctor extends Component {
       
     }
  
-    handleDelete= async(id)=>{
-
-      var details = {
-        id:id
-      }
-      var formBody = [];
-      for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        formBody.push(encodedKey + "=" + encodedValue);
-      }
-      
-      fetch(`${orderType[this.state.type].deleteOrder}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-        },
-        body: formBody
-      }).then(()=>{
-        console.log("it is deleted");
-      }).catch(()=>{
-        console.log("errror")
-      })
-      this.setState({
-        orderlabList: this.state.orderlabList.filter(row => row.id !== id)
-       })
-        
-    }
-
-
-  
-    handleUpdate = async ()=>{  // Upload files Using updateOrder function
-
-      var Form = new FormData();
-      Form.append("result" ,this.state.result )
-      Form.append("orderId" , this.state.typeObj["id"])
-      
-
-      await fetch(`http://localhost:8080/visit/updateOrder`, {
-        method: 'POST',
-        body: Form
-      }).then((resp)=>{
-        console.log("Getting: " , resp);
-        resp.json().then((data)=>{
-          var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
-          this.setState({orderlabList : temp});
-        })
-      }).catch(()=>{
-        console.log("errror")
-      })
-
-         
-    }
 
 
     // type(lab - pathology - radio)
@@ -193,48 +168,40 @@ class AllOrdersForDoctor extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
-                <button
-                style={{display: !row.result ? "none" : "block"}}  
-                className="btn btn-primary"
-                  onClick={async() => {  
+                <button  className="btn btn-primary"
+                  onClick={() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)
-                      await this.setState({fileResult : row.result})
-                      console.log("rewsult ::"+row.result)
-                      this.handleopenModal();
+                      this.setState({fileResult : row.result})
                       this.getTypeByID(row.id);
+                      this.handleopenModal();
+                      this.setState({resultToShow: row.result});
+                    //  this.props.history.push(`http://localhost:8080/${this.state.type}/${row.result}`)
+                      this.setState({resultStatus : "show"})
                     }}>
                       Show Result
                       </button>
-                      </div>
-                      <div className="col-auto">
-                <button className="ml-2 btn btn-danger"
-                    onClick = {() => {  
-                      // console.log("rooooow : " , row)
-                        console.log("id:  " , row)
-                        this.handleDelete(row.id);
-                      }}>
-                        Delete
-                        </button>
-                        </div>
-              
+              </div>
             
             </div>
             )
             }
             temp.push(orderType[type][object][p])
           }
-          else if (p== "ptname")
+          else if(p === "drname")
           {
-            orderType[type][object][p]["cell"] =  (row) =>{ return(
-            
-              <a style={{color:'#007bff',cursor:'pointer'}} onClick={(e)=>{
-                e.preventDefault()
-                this.props.history.push('/clinicalDashBoard/'+row.PtID)
-              }}>{row.firstname + " " + row.lastname}</a>
-            )
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.OrderingDrFirstName + " " + row.tOrderingDrLastName}</span> )
             }
-            temp.push(orderType[type][object][p])
+            temp.push(orderType[type].columnsTable[p])
+
+          }
+          else if(p === "ptname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.firstname + " " + row.lastname}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
 
           }
           else{
@@ -250,42 +217,30 @@ class AllOrdersForDoctor extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
+                {/* <a  href= {`http://localhost:8080/${this.state.type}s/${row.result}`}> */}
+                
+                
                 <button  className="btn btn-primary"
+                hidden={!row.result  ? true : false}
                   onClick={() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)
                       this.setState({fileResult : row.result})
                       this.getTypeByID(row.id);
+                      this.handleopenModal();
+                      this.setState({resultToShow: row.result});
+                    //  this.props.history.push(`http://localhost:8080/${this.state.type}/${row.result}`)
+                      this.setState({resultStatus : "show"})
                     }}>
                       Show Result
                       </button>
-                <button className="ml-2 btn btn-danger"
-                    onClick = {() => {  
-                      // console.log("rooooow : " , row)
-                        console.log("id:  " , row)
-                        this.handleDelete(row.id);
-                      }}>
-                        Delete
-                        </button>
+                  {/* </a> */}
               </div>
             
             </div>
             )
             }
             temp.push(orderType[type][object][p])
-          }
-          else if (p== "ptname")
-          {
-            orderType[type][object][p]["cell"] =  (row) =>{ return(
-            
-              <a style={{color:'#007bff',cursor:'pointer'}} onClick={(e)=>{
-                e.preventDefault()
-                this.props.history.push('/clinicalDashBoard/'+row.PtID)
-              }}>{row.firstname + " " + row.lastname}</a>
-            )
-            }
-            temp.push(orderType[type][object][p])
-
           }
           else{
     
@@ -312,15 +267,24 @@ class AllOrdersForDoctor extends Component {
   
 
   }
-  renderingModalBody = ()=>{
-    return (
-      <div className="wrap">
-        <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/`+this.state.fileResult} title="W3Schools Free Online Web Tutorials"></iframe>
-      </div>
-    )
-  }
 
-   
+    renderModalBody = ()=>{
+      return (
+        <div className="wrap">
+          <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
+              this.state.type=="lab"
+              ?
+              'labs'
+              :
+              this.state.type=="pathology"
+              ?
+              'patholgys'
+              :
+              'radios'
+            }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
+        </div>
+      )
+    }
 
     rendering = () => {
         return(
@@ -329,12 +293,19 @@ class AllOrdersForDoctor extends Component {
                 {console.log("state: " , this.state.columns)}
               <Row className= "py-3">
                   <Col>
-
                       {
                         this.state.flagCompoenentType && this.state.type && orderType &&(
+                          <>
+                          <h3>{orderType[this.state.type].titleForPatientOrders}</h3>
+                          <div>{orderType[this.state.type].descriptionForPatientOrders}</div>
+                          </>
+                        )
+                      }
+                      {
+                        !this.state.flagCompoenentType && this.state.type && orderType &&(
                             <>
-                            <h3>All Doctor Orders</h3>
-                            <div>You can Show All you orders....</div>
+                            <h3>All Patient Orders</h3>
+                            <div>You can Show result here....</div>
                             </>
                         )
                       }
@@ -347,10 +318,7 @@ class AllOrdersForDoctor extends Component {
                     <Col sm={2}><Button variant="success"  onClick = {()=>{
                         console.log("prosp : " , this.props.match.url)
                       if(this.props.match.params.type === "lab"){
-                           this.props.history.push({
-                             pathname:`${this.props.match.url}/addOrder`,
-                             state:"DoctorOrders"
-                           })
+                           this.props.history.push(`${this.props.match.url}/addOrder`)
                       }
                       else if(this.props.match.params.type=== "pathology"){
                         this.props.history.push(`${this.props.match.url}/addOrder`)
@@ -364,7 +332,6 @@ class AllOrdersForDoctor extends Component {
             }
 
       <Row className= "py-3" >
-          {console.log("columns: " , this.state.columns)}
          <Col>
                 <DataTableComp  data = {this.state.orderlabList}
                   columns = {this.state.columns}
@@ -372,7 +339,26 @@ class AllOrdersForDoctor extends Component {
                 />
                 {console.log("inputs: " , this.state.formType)}
             </Col> 
+            {
+              this.state.resultStatus==="show" && (
+                <ModalForView  show={this.state.openModal} onHide={this.handleClose} body={this.renderModalBody()} />
+
+              )
+            }
             
+            {
+              this.state.resultStatus==="upload" && this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
+                <ModalComp show={this.state.openModal}
+                  onHide={this.handleClose}
+                  ModalInputs={this.state.modalUploadResultInputs}
+                  updatedTypeObj = {this.state.typeObj}
+                  handleChange = {this.handleChange}
+                  handleUpdate = {this.handleUpdate}
+                  handleAdding={this.handleAdding}
+                  formType = {this.state.formType}
+                />
+              ) 
+            }
             {/* for Plus Icon */}
             {/* if We Want to Add Order */}
               <div className="row mt-4">
@@ -383,22 +369,8 @@ class AllOrdersForDoctor extends Component {
                           <AddIcon  />
                         </Fab>                       */}
                 </div>
-                <ModalForView body={this.renderingModalBody()} show={this.state.openModal} onHide={this.handleClose} />
                      
-            {
-              this.state.fileResult && (
-                <div>
-                  <Document
-                    // file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
-                    file={"D:/back-End/Project_v2/public/labs"+this.state.fileResult}
-                    onLoadSuccess={this.onDocumentLoadSuccess}
-                  >
-                    <Page pageNumber={this.state.pageNumber} />
-                  </Document>
-                  <p>Page {this.state.pageNumber} of {this.state.numPages}</p>
-                </div>
-              )
-            }
+
       </Row>
         
     </Container>
@@ -425,4 +397,4 @@ class AllOrdersForDoctor extends Component {
     }
 }
  
-export default AllOrdersForDoctor; 
+export default AllResults; 

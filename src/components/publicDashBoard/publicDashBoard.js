@@ -18,6 +18,7 @@ import SessionCode from "../sessionCode";
 import Visit from "../Visit/visit";
 import AcceptOrders from "./../orderGeneration/acceptOrders";
 import AllOrders from "./../orderGeneration/allOrders";
+import AllResults from "./../orderGeneration/AllResults";
 import ChoicePage from "./choice";
 import "./Navbar.css";
 
@@ -325,6 +326,12 @@ const PublicDashBoard = ({ match }) => {
           exact
           path={match.path + "/choice/:type/allLabOrders"}
           component={AllOrders}
+        />
+          <Route
+          key={13}
+          exact
+          path={match.path + "/choice/:type/allResults"}
+          component={AllResults}
         />
         <Route
           key={14}

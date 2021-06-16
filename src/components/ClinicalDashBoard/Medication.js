@@ -1,5 +1,6 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
@@ -11,25 +12,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import MyModal from '../Prescription/modal';
 import Form from '../Prescription/PrescriptionForm';
-import { loadMYDrugs } from '../Prescription/request';
+import { loadMYDrugs, UnActiveDrug } from '../Prescription/request';
 
-const columns = [
-    { field: 'id', headerName: 'ID', hide:true },
-    { field: 'drugName', headerName: 'Drug', width:150},
-    { field: 'Quantity', headerName: 'Quantity',type:'number',width:150},
-    {
-      field: 'Duration',
-      headerName: 'Duration',
-      type: 'number',
-      width:150
-    },
-    {
-        field: 'createdAt',
-        headerName: 'Date',
-        width:150
-      }
-  
-  ];
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,7 +65,58 @@ export default function ScrollableTabsButtonAuto({match}) {
   const [un_active_rows,setUnActiveRows] = React.useState([])
   const [open, setOpen] = React.useState(false);
   const ptId = match.params.id  
+  const inactive_columns = [
+    { field: 'id', headerName: 'ID', hide:true },
+    { field: 'drugName', headerName: 'Drug', width:150},
+    { field: 'Quantity', headerName: 'Quantity',type:'number',width:150},
+    {
+      field: 'Duration',
+      headerName: 'Duration',
+      type: 'number',
+      width:150
+    },
+    {
+        field: 'createdAt',
+        headerName: 'Date',
+        width:150
+      },
 
+  
+  ];
+
+  const active_columns = [
+    { field: 'id', headerName: 'ID', hide:true },
+    { field: 'drugName', headerName: 'Drug', width:150},
+    { field: 'Quantity', headerName: 'Quantity',type:'number',width:150},
+    {
+      field: 'Duration',
+      headerName: 'Duration',
+      type: 'number',
+      width:150
+    },
+    {
+        field: 'createdAt',
+        headerName: 'Date',
+        width:150
+      },
+      {
+        field: 'inActive',
+        headerName: 'Active',
+        renderCell: (params) => (
+          <strong>
+            <Button
+              onClick={()=>unActiveRow(params.row.id)}
+              variant="contained"
+              color="danger"
+              size="small"
+              style={{ marginLeft: 16 }}
+            >
+              UnActive
+            </Button>
+          </strong>
+        ),
+      },
+  ];
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -127,7 +163,7 @@ export default function ScrollableTabsButtonAuto({match}) {
                     createdAt : date.getDate()+
                     "/"+(date.getMonth()+1)+
                     "/"+date.getFullYear(),
-                    status : CheckStatus(row)?"active":"inactive"
+                    status : CheckStatus(row) && row.active == 1?"active":"inactive",
                 })
             }
         })
@@ -138,6 +174,19 @@ export default function ScrollableTabsButtonAuto({match}) {
         alert(err)
     })
   
+  }
+
+  const unActiveRow=(id)=>{
+    let index = rows.findIndex(r=>r.id == id)
+    rows[index].status = 'inactive'
+    UnActiveDrug(id).then(res=>{
+      setRows([...rows])
+      setActiveRows(rows.filter(r=>r.status == "active"))
+      setUnActiveRows(rows.filter(r=>r.status == "inactive"))
+    }).catch(err=>{
+      alert(err)
+    })
+
   }
 
   const add_row = (data)=>{
@@ -172,7 +221,7 @@ export default function ScrollableTabsButtonAuto({match}) {
           aria-label="scrollable auto tabs example"
         >
           <Tab label="Active Drugs" {...a11yProps(0)} />
-          <Tab label="In Active Drugs" {...a11yProps(1)} />
+          <Tab label="InActive Drugs" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <div style={{position:'relative'}}>
@@ -183,7 +232,7 @@ export default function ScrollableTabsButtonAuto({match}) {
         </div>
       <TabPanel value={value} index={0}>
       <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-      <DataGrid rows={active_rows} columns={columns} pageSize={5} checkboxSelection  components={{
+      <DataGrid rows={active_rows} columns={active_columns} pageSize={5}  components={{
             Toolbar: GridToolbar,
         }}
         />
@@ -191,7 +240,7 @@ export default function ScrollableTabsButtonAuto({match}) {
       </TabPanel>
       <TabPanel value={value} index={1}>
       <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-      <DataGrid rows={un_active_rows} columns={columns} pageSize={5} checkboxSelection  components={{
+      <DataGrid rows={un_active_rows} columns={inactive_columns} pageSize={5}  components={{
             Toolbar: GridToolbar,
         }}
         />

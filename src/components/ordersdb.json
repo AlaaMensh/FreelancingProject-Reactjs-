@@ -15,12 +15,6 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "drname": {
-                                "name": "Doctor Name",
-                                "selector": "OrderingFirstName",
-                                "sortable": true,
-                                "center" : true
-                        },
                         "ptname": {
                                 "name": "Patient Name",
                                 "selector": "PtFirstName",
@@ -157,6 +151,7 @@
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "http://localhost:8080/order/getlabOrderByPtId",
                "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab",
+               "getAllResultsById" : "http://localhost:8080/order/getResultsbyLab",
                "getAllDoctorOrders":"http://localhost:8080/order/getlabOrderbyDrid",
                "uploadResult" :"http://localhost:8080/order/labs/updateResult"
             },
@@ -317,6 +312,7 @@
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getpathoOrderByPtId",
                "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getpathoOrderbyLab",
+               "getAllResultsById" : "http://localhost:8080/order/getResultsbyPatho",
                "getAllDoctorOrders":"http://localhost:8080/order/getpathoOrderbyDrid",
                "uploadResult" :"http://localhost:8080/order/pathelogys/updateResult"
             },
@@ -478,6 +474,7 @@
                      "getAllAcceptedOrders" :"",
                      "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getradioOrderByPtId",
                      "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getRadioOrderbyLab",
+                      "getAllResultsById" : "http://localhost:8080/order/getResultsbyRadio",
                      "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getradioOrderbyDrid",
                      "uploadResult" :"http://localhost:8080/order/radios/updateResult"
                   }
