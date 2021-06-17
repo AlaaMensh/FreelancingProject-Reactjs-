@@ -107,8 +107,8 @@ export default function Visit({ match }) {
   const [radioOrdersHome, setRadioOrdersHome] = useState([]);
 
   useEffect(() => {
-    console.log("this.props", location);
-    var code = location.state;
+    var code = location.state || match.params.code ;
+    console.log("match: " , match);
     setPId(match.params.id);
     setPId(localStorage.getItem("userId"));
   }, []);
@@ -120,7 +120,7 @@ export default function Visit({ match }) {
 
     var details = {
       // ************this object will be Sent to BackEnd to add a Visit
-      ptId: location.state,
+      ptId: location.state || match.params.id ,
       drId: localStorage.getItem("userId"),
       chiefComplains: chiefComplains,
       diagnosis: diagnosis,

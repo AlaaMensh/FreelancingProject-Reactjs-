@@ -251,7 +251,7 @@ class SurgeriesStep extends Component {
         <div className="row mt-4"></div>
 
         {this.state.formInputs && (
-          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}>
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType={this.state.formType}>
             <FormGenerator
               ModalInputs={this.state.formInputs}
               updatedTypeObj={this.state.TypeObj}

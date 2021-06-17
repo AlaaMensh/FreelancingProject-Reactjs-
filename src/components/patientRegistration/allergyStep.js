@@ -94,7 +94,7 @@ class AllergyStep extends Component {
     );
     console.log("iteeeeems: ", items);
 
-    this.setState({ allergyList: items });
+    this.setState({ allergyList: [...items] });
 
 
     // const items = await this.state.allergyList.map((item) =>
@@ -106,6 +106,7 @@ class AllergyStep extends Component {
     // console.log("AfterChangint: ", obj);
   };
   setAllergyListWithHomeList = (type) => {
+    // eslint-disable-next-line default-case
     switch (type) {
       case "allergyStep": {
         console.log(
@@ -228,7 +229,8 @@ class AllergyStep extends Component {
                   Update
                 </button>
               </div>
-              <div className="col-auto">
+              {/* if you want to add button for resolving */}
+              {/* <div className="col-auto">
                 <button
                   className="btn btn-primary"
                   hidden={this.state.stepType === "allergyStep" ? false : true}
@@ -240,7 +242,7 @@ class AllergyStep extends Component {
                 >
                   Resolved
                 </button>
-              </div>
+              </div> */}
               <div className="col-auto">
                 <button
                   className="btn btn-danger"
@@ -336,10 +338,10 @@ class AllergyStep extends Component {
           </Col>
         </Row>
         <Row className="py-3">
-          <Col sm={12} className="py-3">
+          <Col sm={10} className="py-3">
             {console.log("list: ", this.state.allergyList)}
             {
-              this.state.allergyList &&(
+              this.state.allergyList && (
                 <DataTableComp
                 data={this.state.allergyList}
                 columns={this.state.columns}
@@ -352,7 +354,7 @@ class AllergyStep extends Component {
         <div className="row mt-4"></div>
 
         {this.state.formInputs && (
-          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}>
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType ={this.state.formType}>
             <FormGenerator
               ModalInputs={this.state.formInputs}
               updatedTypeObj={this.state.TypeObj}

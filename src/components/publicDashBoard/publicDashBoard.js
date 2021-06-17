@@ -311,6 +311,11 @@ const PublicDashBoard = ({ match }) => {
         />
         <Route
           exact
+          path={match.path + "/choice/:type/acceptOrders/:code"}
+          component={ AcceptOrders }
+        />
+        <Route
+          exact
           path={match.path + "/pathologyChoice/:type/acceptPathologyOrders"}
           component={AcceptOrders}
         />
@@ -389,6 +394,11 @@ const PublicDashBoard = ({ match }) => {
         <Route
           exact
           path={match.path + "/EMR/Futureappointements/future/visit"}
+          component={Visit}
+        />
+        <Route
+          exact
+          path={match.path + "/NavBar/visit/:id"}
           component={Visit}
         />
         <Route

@@ -4,7 +4,7 @@
             "name":"",
             "type":"",
             "date":"",
-            "status":"Active"
+            "status":""
             
     },
        "columnsTable" : {
@@ -44,7 +44,9 @@
        "modalForms": {
                 "name" :{
                         "type": "text",
-                        "name" : "name"
+                        "name" : "name",
+                        "label" :"Allergy Name",
+                        "placeHolder":"Enter Allergy Name"
                 },
                 "type" :{
                         "type": "select",
@@ -52,11 +54,24 @@
                         "options":[
                             {"value":"drug", "text" : "Drug"},
                             {"value":"other", "text" : "Other"}
-                    ]
+                    ],
+                    "placeHolder":"Choose Allergy Type",
+                    "label" :"Allergy Type"
+                },
+                "status" :{
+                        "type": "select",
+                        "name" : "status",
+                        "options":[
+                            {"value":"Resolved", "text" : "Active"},
+                            {"value":"Active", "text" : "Resolved"}
+                    ],
+                    "placeHolder":"Status",
+                    "label" :"Status"
                 },
                 "date" : {
                         "type":"date",
-                        "name" :"date"
+                        "name" :"date",
+                        "label" :"Date"
                 }
 
        }
@@ -100,11 +115,15 @@
        "modalForms": {
                 "problem" :{
                         "type": "autoComplete",
-                        "name" : "problem"
+                        "name" : "problem",
+                        "label" : "Problem",
+                        "placeHolder":"Choose Disease Type"
                 },
                 "note" :{
                         "type": "text",
-                        "name" : "note"
+                        "name" : "note",
+                        "label" : "Note",
+                        "placeHolder" :"Enter Note"
                 },
                 "relation" :{
                         "type": "select",
@@ -113,11 +132,10 @@
                             {"value":"parent", "text" : "Parent"},
                             {"value":"sibling", "text" : "Sibling"},
                             {"value":"remoteFamily", "text" : "Remote Family"}
-                    ]
-                },
-                "date" : {
-                        "type":"date",
-                        "name" :"date"
+                            
+                    ],
+                    "label" : "Relation",
+                    "placeHolder" :"Choose Relation"
                 }
 
        },
@@ -162,15 +180,21 @@
        "modalForms": {
                 "name" :{
                         "type": "autoComplete",
-                        "name" : "name"
+                        "name" : "name",
+                        "label" : "Surgery Name",
+                        "placeHolder" :"Choose Surgeries Type"
                 },
                 "note" :{
                         "type": "text",
-                        "name" : "note"
+                        "name" : "note",
+                        "label" : "Note", 
+                        "placeHolder" :"Enter Note "
                 },
                 "date" : {
                         "type":"date",
-                        "name" :"date"
+                        "name" :"date",
+                        "label" : "Date",
+                        "placeHolder" :"Enter Date"
                 }
 
        },
@@ -208,12 +232,14 @@
        "modalForms": {
                 "problem" :{
                         "type": "autoComplete",
-                        "name" : "problem"
-                },
+                        "name" : "problem",
+                        "label" : "Problem",
+                        "placeHolder":"Choose Disease Type"                },
                 "date" : {
                         "type":"date",
-                        "name" :"date"
-                }
+                        "name" :"date",
+                        "label" : "Date",
+                        "placeHolder":"Date"                }
 
        },
        "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
@@ -248,11 +274,15 @@
        "modalForms": {
                 "name" :{
                         "type": "text",
-                        "name" : "name"
-                },
+                        "name" : "name",
+                        "label" : "Name",
+                        "placeHolder":"Enter Intervention Name"               
+                 },
                 "note" :{
                         "type": "text",
-                        "name" : "note"
+                        "name" : "note",
+                        "label" : "Note",
+                        "placeHolder":"Enter Note"       
                 }
 
        },

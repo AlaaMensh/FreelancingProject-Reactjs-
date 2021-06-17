@@ -8,6 +8,8 @@ import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { useState, useEffect, useRef } from "react";
 import Row from "react-bootstrap/Row";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import SessionCode from "../sessionCode";
 import "./navbar.css";
 
 const NavBar = (props) => {
@@ -30,11 +32,12 @@ const NavBar = (props) => {
                 <Nav className="ml-auto px-2">
                     {/* *************check here on role on every Choice in the DropDown *************/}
                     {props.isAuth && (
+                        <>
                         <NavDropdown
-                            title="Our Functions"
+                            title="Doctor Functions"
                             id="basic-nav-dropdown"
                         >
-                            {localStorage.getItem("role") ? (
+                            {localStorage.getItem("role") && parseInt(localStorage.getItem("role")) === 8 ? (
                                 <NavDropdown.Item href="/publicDashBoard">
                                     Dr.DashBoard
                                 </NavDropdown.Item>
@@ -46,7 +49,7 @@ const NavBar = (props) => {
                                     Dr.DashBoard
                                 </NavDropdown.Item>
                             )}
-                            {parseInt(localStorage.getItem("role")) == 8 ? (
+                            {parseInt(localStorage.getItem("role")) === 8 ? (
                                 <NavDropdown.Item href="/publicDashBoard/appoint">
                                     Appointements
                                 </NavDropdown.Item>
@@ -58,11 +61,189 @@ const NavBar = (props) => {
                                     Appointements
                                 </NavDropdown.Item>
                             )}
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                trash
-                            </NavDropdown.Item>
+                            {parseInt(localStorage.getItem("role")) === 8 ? (
+                                <NavDropdown.Item >
+                                    <SessionCode hidden={false}
+                                buttonValue="Visits" fromComponent="navBarVisits" history= {history}/>
+                                    
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                    Visits
+                                </NavDropdown.Item>
+                            )}
+                            {parseInt(localStorage.getItem("role")) === 8 ? (
+                                <NavDropdown.Item href="/ptRegistration">
+                                    Patient Appointements
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                    Patient Appointements
+                                </NavDropdown.Item>
+                            )}
+                            {parseInt(localStorage.getItem("role")) === 8 ? (
+                                <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/lab">
+                                     Doctor Lab Orders
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                    All Doctor Lab Orders
+                                </NavDropdown.Item>
+                            )}
+                            {parseInt(localStorage.getItem("role")) === 8 ? (
+                                <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/pathology">
+                                     Doctor Pathology Orders
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                      Doctor Pathology Orders
+                                </NavDropdown.Item>
+                            )}
+                            {parseInt(localStorage.getItem("role")) === 8 ? (
+                                <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/radio">
+                                     Doctor Radiology Orders
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                      Doctor Radiology Orders
+                                </NavDropdown.Item>
+                            )}
+              
+                            
                         </NavDropdown>
+                        <NavDropdown
+                            title="LabFD Functions"
+                            id="basic-nav-dropdown"
+                        >
+                            {localStorage.getItem("role") && parseInt(localStorage.getItem("role")) === 3 ? (
+                                // <NavDropdown.Item href="publicDashBoard/choice/lab/allLabOrders" onClick={()=>{
+                                //     history.push("publicDashBoard/choice/lab/allLabOrders")
+                                // }}>
+                                <NavDropdown.Item 
+                                href="#"
+                                style={{ cursor: "pointer" }} >
+                                <Link
+                                    to={ `/publicDashBoard/choice/lab/allLabOrders`}
+                                    style={{ cursor: "pointer" }}
+                                    >
+                                   Get All Accepted AllOrders
+                                </Link>    
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                             Get All Accepted AllOrders
+                                </NavDropdown.Item>
+                            )}
+                            {parseInt(localStorage.getItem("role")) === 3 ? (
+                                <NavDropdown.Item href="/publicDashBoard/appoint">
+                                <SessionCode hidden={false}
+                                buttonValue="Get Patient Orders" fromComponent="NavBar" history= {history}/>
+                                    
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                               Get Patient Orders
+                                </NavDropdown.Item>
+                            )}
+                            {/* <NavDropdown.Divider /> */}
+                     
+                        </NavDropdown>
+                        <NavDropdown
+                            title="Patients Functions"
+                            id="basic-nav-dropdown"
+                        >
+                            {localStorage.getItem("role") && parseInt(localStorage.getItem("role")) === 8 ? (
+                                // <NavDropdown.Item href="publicDashBoard/choice/lab/allLabOrders" onClick={()=>{
+                                //     history.push("publicDashBoard/choice/lab/allLabOrders")
+                                // }}>
+                                <NavDropdown.Item 
+                                href="#"
+                                style={{ cursor: "pointer" }} >
+                                <Link
+                                    to={ `/publicDashBoard/choice/lab/allLabOrders`}
+                                    style={{ cursor: "pointer" }}
+                                    >
+                                 All My Patients
+                                </Link>    
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                             All My Patients
+                                </NavDropdown.Item>
+                            )}
+                            {localStorage.getItem("role") && parseInt(localStorage.getItem("role")) === 8 ? (
+                                // <NavDropdown.Item href="publicDashBoard/choice/lab/allLabOrders" onClick={()=>{
+                                //     history.push("publicDashBoard/choice/lab/allLabOrders")
+                                // }}>
+                                <NavDropdown.Item 
+                                href="#"
+                                style={{ cursor: "pointer" }} >
+                                <Link
+                                    to={ `/publicDashBoard/choice/lab/allLabOrders`}
+                                    style={{ cursor: "pointer" }}
+                                    >
+                                 Search My Parents
+                                </Link>    
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                Search My Parents
+                                </NavDropdown.Item>
+                            )}
+                            {localStorage.getItem("role") && parseInt(localStorage.getItem("role")) === 8 ? (
+                                // <NavDropdown.Item href="publicDashBoard/choice/lab/allLabOrders" onClick={()=>{
+                                //     history.push("publicDashBoard/choice/lab/allLabOrders")
+                                // }}>
+                                <NavDropdown.Item 
+                                href="#"
+                                style={{ cursor: "pointer" }} >
+                                <Link
+                                    to={ `/publicDashBoard/choice/lab/allLabOrders`}
+                                    style={{ cursor: "pointer" }}
+                                    >
+                                 ????
+                                </Link>    
+                                </NavDropdown.Item>
+                            ) : (
+                                <NavDropdown.Item
+                                    href="#"
+                                    style={{ cursor: "not-allowed" }}
+                                >
+                                ????
+                                </NavDropdown.Item>
+                            )}
+                      
+                            {/* <NavDropdown.Divider /> */}
+                     
+                        </NavDropdown>
+                        </>
                     )}
                 </Nav>
                 {props.isAuth && (
@@ -78,12 +259,22 @@ const NavBar = (props) => {
                                           localStorage.getItem("userName")
                                         : ""}
                                 </span>
-                                <ArrowDropDownIcon
+                                {/* <ArrowDropDownIcon
                                     style={{ fontSize: "1.6em" }}
-                                />
+                                /> */}
+                                <div style={{width:"50px" , height:"50px",
+                                            backgroundColor: "yellow",
+                                            borderRadius: "50%",
+                                            background: 'url(https://imgur.com/yVjnDV8.png)',
+                                            backgroundPosition: "center",
+                                            backgroundSize: "cover"
+                                            }} className="img-fluid">
+
+                                </div>
+
                             </div>
                         </Nav.Link>
-                        <Overlay
+                        {/* <Overlay
                             show={showProfile}
                             target={target}
                             placement="bottom"
@@ -116,10 +307,7 @@ const NavBar = (props) => {
                                             </div>
                                         </div>
                                         <ul class="list text-muted mt-3 pl-0">
-                                            {/*                                            <li class="danger text-danger">
-                                                <i class="far fa-building mr-3 ml-2"></i>
-                                                Change Password
-                                            </li>*/}
+                                       
                                             <li
                                                 onClick={(e) => {
                                                     handleClick(e);
@@ -152,7 +340,7 @@ const NavBar = (props) => {
                                     </div>
                                 </Popover.Content>
                             </Popover>
-                        </Overlay>
+                        </Overlay> */}
                     </React.Fragment>
                 )}
                 {console.log("props.auth: ", props.isAuth)}

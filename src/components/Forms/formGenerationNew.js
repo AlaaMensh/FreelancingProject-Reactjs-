@@ -63,7 +63,7 @@ class FormGenerator extends Component {
       case "select":{
         return (
           <Form.Group controlId="exampleForm.SelectCustom">
-          <Form.Label>{input.name}</Form.Label>
+          <Form.Label>{input.label || input.name}</Form.Label>
           {console.log("input: ", input)}
           <Form.Control
             as="select"
@@ -74,7 +74,7 @@ class FormGenerator extends Component {
             }}
             custom
           >
-            <option>Choose your option</option>
+            <option>{input.placeHolder}</option>
             {input.options
               ? input.options.map((option) => {
                   {
@@ -160,7 +160,7 @@ class FormGenerator extends Component {
             }}
             getOptionLabel={(option) => option.text}
             style={{ width: 300 }}
-            renderInput={(params) => <TextField {...params} label="Choose Your frontDist" variant="outlined" />}
+            renderInput={(params) => <TextField {...params} label={input.placeHolder || `Choose Your ${input.label}`} variant="outlined" />}
           />
           
         ):(
@@ -198,7 +198,7 @@ class FormGenerator extends Component {
             placeholder={
               this.props.formType === "edit"
                 ? this.props.updatedTypeObj[input.name]
-                : ""
+                : input.placeHolder || ""
             }
             onChange={(e) => {
               this.props.handleChange(e);

@@ -339,7 +339,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             </div>
           )}
         </Col>
-        <Col md="auto">
+        <Col sm={2} md="2">
           <Stepper
             activeStep={activeStep}
             alternativeLabel

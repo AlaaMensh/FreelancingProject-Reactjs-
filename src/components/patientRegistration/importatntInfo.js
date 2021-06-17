@@ -206,11 +206,11 @@ export default function PaientRegistration({
                 <Form.Group as={Col}>
                   <Form.Label>Gender</Form.Label>
                   <Form.Control
-                  as="select"
-                  defaultValue={obj.gender}
+                  as = "select"
+                  defaultValue = {obj.gg}
                   custom
-                    onChange = {(event)=>{
-                      getGender(event.target.value);
+                    onChange = { (event) => {
+                      getGender (event.target.value) ;
                     }}
                 >
                   <option value="male">Male</option>
@@ -276,28 +276,17 @@ export default function PaientRegistration({
                 <Form.Group as={Col}>
                   <Form.Label>status</Form.Label>
                   <Form.Control
-                    variant="outlined"
-                    required
-                    fullWidth
-                    size="small"
-                    name="status"
-                    placeholder="Status"
-                    type="text"
-                    id="status"
-                    // autoComplete="current-password"
-                    onChange={(event) => {
-                      getStatus(event.target.value);
-                      // console.log("email" , email);
+                  as = "select"
+                  defaultValue = {obj.status}
+                  custom
+                    onChange = { (event) => {
+                      getStatus (event.target.value) ;
                     }}
-                    defaultValue={obj.status}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MailOutlineIcon className={classes.iconsColor} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
+                >
+                  <option value="male">Married</option>
+                  <option value="female">Single</option>
+                </Form.Control>
+                  
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>blood Group</Form.Label>

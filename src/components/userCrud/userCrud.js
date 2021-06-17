@@ -123,7 +123,7 @@ class UserCrud extends Component {
     var temp2 = [];
     var optionsList =[];
     /// load data Which get in dropDown buttons
-    if(type === "radiogist" || type === "pathologyFD" || type === "radioFD" || type === "doctor" || type === "chemist" || type === "nurse"){
+    if(type === "radiogist" || type === "pathologyFD" || type === "radioFD" || type === "doctor" || type === "chemist" || type === "nurse" || type === "pathologist"){
        optionsList =  await this.loadSelectInputData(type);
        console.log("optionsList : ",optionsList);
        if(!optionsList){
@@ -171,6 +171,7 @@ class UserCrud extends Component {
   };
   setUpdatedObj = (id) => {
     var obj = this.state.data.find((row) => row.id === id);
+    console.log("object: " , obj);
     this.setState({ typeObj: obj });
   };
 
@@ -200,8 +201,10 @@ class UserCrud extends Component {
       },
       body: formBody,
     })
-      .then(() => {
-        console.log("it is inserted");
+      .then((resp) => {
+        resp.json().then((data)=>{
+          console.log("Update Function: " , data);
+        })
       })
       .catch(() => {
         console.log("errror");
@@ -380,7 +383,7 @@ class UserCrud extends Component {
               handleChange={this.handleChange}
               handleUpdate={this.handleUpdate}
               handleAdding={this.handleAdding}
-              options={[]}
+              options={this.state.options}
               formType={this.state.formType}
             />
           </ModalGenerator>

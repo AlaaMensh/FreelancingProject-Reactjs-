@@ -10,13 +10,12 @@ import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
 import ModalForView from "../pharmacyModule/modalForView";
-import "./order.css";
 import FormGenerator from "../Forms/formGenerationNew";
 import ModalGenerator from "../ModalGeneration/modalGeneration";
 
 var object  = {}
 
-class AllOrders extends Component {
+class ClinicalOrders extends Component {
   constructor(props) {
     super(props);
     
@@ -39,44 +38,24 @@ class AllOrders extends Component {
       async componentDidMount(){
 
         var flag = false;
-          console.log("propsppppppppppp:  " , this.props.match.params.id)
-          console.log("type$$$$$$$$$:  " , this.props.match.params.type)
+          console.log("propsppppppppppp:  " , this.props.id)
           
-          this.setState({type : this.props.match.params.type});
+          this.setState({type : this.props.type});
           
-          if(this.props.match.params.id){ // for PatientId
+        // for PatientId
           console.log("yes here is it ")
           this.setState({flagCompoenentType : false});
           flag = false;
-          this.setState({ptId : this.props.match.params.id});
+          this.setState({ptId : this.props.id});
           object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
-        }
-        else{
-          console.log("no it it is not")
-          this.setState({flagCompoenentType : true});
-          flag = true;
-        }
-   
-        if(flag){
-          object = "columnsTable"; // to get Data with First Name and lastName of the patient for all orders of LabId
-        }
-        else{
-          object = "columnsTableForPatientOrders";// to get Data without First Name and lastName for PatientId
-        }
-        this.handleTableColumnsForAllAcceptedOrders(this.props.match.params.type , object)
-          
-          this.setState({drId : localStorage.getItem("userId")});
-          
-          
-          // if(this.props.match.params.type != "lab"){
-          // this.setState({labID : 1})
-          // }
+       
+        
+        this.handleTableColumnsForAllAcceptedOrders(this.props.type , object)
     
-    
-          this.setState({type : this.props.match.params.type});
+          this.setState({type : this.props.type});
 
     
-        await this.getData(flag , this.props.match.params.type)
+        await this.getData(flag , this.props.type)
     
         }
         onDocumentLoadSuccess({ numPages }) {
@@ -102,30 +81,11 @@ class AllOrders extends Component {
     getData = async (flag ,type) => {
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
-      if(!flag){ // for PatientID and only Accepted Order
-        var details = {
-          ptId:this.props.match.params.id,
-         }
-         endPoint = `${orderType[type].getAllOrdersByPtID}`;
-      }
-      else{ // for LabId or PathoId or labId
-        var details = { }
-        endPoint = `${orderType[type].getAllOrdersByLabId}`
-        switch(type){
-          case "lab":{
-            details["labId"] = localStorage.getItem("labId");
-          }
-          case "pathology":{
-            details["pathoId"] = localStorage.getItem("pathoId");
-          }
-          case "radio":{
-            details["radioId"] = localStorage.getItem("radioId");
-          }
-        }
-
-
-      }
-      console.log("endPoint: " , endPoint)
+      var details = {
+        ptId:this.props.id,
+       }
+       endPoint = `${orderType[type].getAllOrdersByPtID}`; 
+        console.log("endPoint: " , endPoint)
        var formBody = [];
        for (var property in details) {
          var encodedKey = encodeURIComponent(property);
@@ -212,54 +172,13 @@ class AllOrders extends Component {
     handleTableColumnsForAllAcceptedOrders = (type , object) => { 
       console.log("object : " , orderType[type][object])
       var temp = []
-      if(object === "columnsTable"){
-        for(var p in orderType[type][object] ){
-          if(p === "actions"  ){
-            // console.log("object : " , orderType[type][object][p])
-            orderType[type][object][p]["cell"] =  (row) =>{ return(
-            <div className = "row">
-              <div className="col-auto">
-                <button  className="btn btn-primary"
-                  onClick={() => {  
-                    console.log("rooooow : " , row)
-                      console.log("id:  " , row)
-                      this.handleopenModal();
-                      this.getTypeByID(row.id);
-                      this.setState({resultStatus : "upload"})
-                    }}>
-                      Upload Result
-                      </button>
-                <button className="ml-2 btn btn-danger"
-                    onClick = {() => {  
-                      // console.log("rooooow : " , row)
-                        console.log("id:  " , row)
-                        this.handleDelete(row.id);
-                      }}>
-                        Delete
-                        </button>
-              </div>
-            
-            </div>
-            )
-            }
-            temp.push(orderType[type][object][p])
-          }
-          else{
-    
-            temp.push(orderType[type][object][p])
-          }
-        }
-      }
-      else {
+
         for(var p in orderType[type][object] ){
           if(p === "actions"){
             // console.log("object : " , orderType[type][object][p])
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
-                {/* <a  href= {`http://localhost:8080/${this.state.type}s/${row.result}`}> */}
-                
-                
                 <button  className="btn btn-primary"
                 hidden={!row.result  ? true : false}
                   onClick={() => {  
@@ -292,11 +211,10 @@ class AllOrders extends Component {
             temp.push(orderType[type][object][p])
           }
           else{
-    
             temp.push(orderType[type][object][p])
           }
         }
-      }
+      
  
       this.setState({columns : temp})
       console.log("temp : ", temp)
@@ -328,7 +246,6 @@ class AllOrders extends Component {
 
     rendering = () => {
         return(
-
               <Container fluid>
                 {console.log("state: " , this.state.columns)}
               <Row className= "py-3">
@@ -351,34 +268,16 @@ class AllOrders extends Component {
                       }
                   </Col>
               </Row>
-            {
-              !this.state.flagCompoenentType && (
-                <Row className= "py-3" >
-                <Col sm={10}></Col>
-                    <Col sm={2}><Button variant="success"  onClick = {()=>{
-                        console.log("prosp : " , this.props.match.url)
-                      if(this.props.match.params.type === "lab"){
-                           this.props.history.push(`${this.props.match.url}/addOrder`)
-                      }
-                      else if(this.props.match.params.type=== "pathology"){
-                        this.props.history.push(`${this.props.match.url}/addOrder`)
-                      }
-                      else{
-                             this.props.history.push(`${this.props.match.url}/addOrder`)
-                      }
-                    }}>Add New</Button>{' '}</Col>
-                </Row>
-              )
-            }
 
-      <Row className= "py-3" >
+
+      <Row className= "py-3">
          <Col>
                 <DataTableComp  data = {this.state.orderlabList}
                   columns = {this.state.columns}
                   title= "" 
                 />
                 {console.log("inputs: " , this.state.formType)}
-            </Col> 
+          </Col> 
             {
               this.state.resultStatus==="show" && (
                 <ModalForView  show={this.state.openModal} onHide={this.handleClose} body={this.renderModalBody()} />
@@ -451,4 +350,4 @@ class AllOrders extends Component {
     }
 }
  
-export default AllOrders; 
+export default ClinicalOrders; 

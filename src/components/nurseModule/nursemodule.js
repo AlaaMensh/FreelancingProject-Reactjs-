@@ -60,8 +60,7 @@ class NurseVisit extends Component {
       }
     }
     handleChange = (evt)=>{
-      if(evt.text && evt.text === "autoComplete" ){
-        
+      if(evt.text && evt.text === "autoComplete" ){   
         this.setState({
           [evt.input]: evt.newValue.value,
         });
@@ -113,6 +112,7 @@ class NurseVisit extends Component {
             {console.log("rooowowwww:  " , row)}
             <div className="col-auto">
               {/* <h1>hhhh</h1> */}
+              {/* { row.systolic } */}
             {row.systolic }<span>/</span>
                {row.systolic }
             </div>
@@ -188,16 +188,10 @@ class NurseVisit extends Component {
             time :time,
             temp:"",
             pulse:"" , 
+            // bloodPressure: "",
             systolic : "" ,
             diastolic:"",
-            respiratoryRate: "" ,
             OXSat:"" ,
-            height:"" , 
-            weight:"" ,
-            BMI :"" ,
-            pain:"",
-            smokingStatus: "" ,
-            headC : "",
             takenBy:localStorage.getItem("userId"),
             bloodGlucose :""
         }
@@ -218,20 +212,13 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
+              // bloodPressure:time.systolic +"/"+time.diastolic,
               systolic  : time.systolic  ,
               diastolic : time.diastolic ,
-              respiratoryRate : time.respiratoryRate,
               OXSat : time.OXSat,
-              height : time.height, 
-              weight : time.weight,
-              BMI : time.BMI,
-              smokingStatus: time.smokingStatus,
-              headC : time.headC,
-              pain : time.pain,
               takenBy:localStorage.getItem("userId"),
-              bloodGlucose:time.bloodGlucose
+              bloodGlucose : time.bloodGlucose
          }
-
           }
         if(time.id == -1 )
           {
@@ -242,20 +229,13 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
+              // bloodPressure: time.systolic + "/"+ time.diastolic,
               systolic  : time.systolic  ,
               diastolic : time.diastolic ,
-              respiratoryRate : time.respiratoryRate,
               OXSat : time.OXSat,
-              height : time.height, 
-              weight : time.weight,
-              BMI : time.BMI,
-              smokingStatus: time.smokingStatus,
-              headC : time.headC,
-              pain : time.pain,
               takenBy:localStorage.getItem("userId"),
               bloodGlucose:time.bloodGlucose
          }
-
           }
          if(time.id >= 1){
             console.log("yes" , time)
@@ -265,29 +245,18 @@ class NurseVisit extends Component {
                 time : time.time,
                 temp : time.temp,
                 pulse : time.pulse, 
+                // bloodPressure :  time.systolic +"/" + time.diastolic,
                 systolic  : time.systolic  ,
                 diastolic : time.diastolic ,
-                respiratoryRate : time.respiratoryRate,
                 OXSat : time.OXSat,
-                height : time.height, 
-                weight : time.weight,
-                BMI : time.BMI,
-                smokingStatus: time.smokingStatus,
-                headC : time.headC,
-                pain : time.pain,
                 takenBy:localStorage.getItem("userId"),
-                bloodGlucose:time.bloodGlucose
-            
-           }
-           
+                bloodGlucose:time.bloodGlucose 
+           }         
          }
          time = obj
          Temp.push(time)
-
-
       })
       this.setState({timeDate : Temp})
-
     }
     getTime = () =>{
       var d = new Date();
@@ -325,6 +294,7 @@ class NurseVisit extends Component {
                 time : time,
                 temp:"",
                 pulse:"" , 
+                // bloodPressure:"",
                 systolic :"",
                 diastolic :"",
                 respiratoryRate: "" ,
@@ -354,23 +324,17 @@ class NurseVisit extends Component {
     }
     handleAddition = async()=>{
           var details = {
-            ptId:this.state.pId,
             date: this.getDate(),
             time: this.getTime(),
-            temp:this.state.temp,
+            // systolic :this.state.systolic ,
+            // diastolic :this.state.diastolic,
             pulse: this.state.pulse,
-            respiratoryRate: this.state.respiratoryRate ,
-            OXSat: this.state.OXSat,
-            height: this.state.height,
-            weight: this.state.weight,
-            BMI: this.state.BMI,
-            pain: this.state.pain,
-            smokingStatus: this.state.smokingStatus,
-            headC: this.state.headC, 
-            systolic :this.state.systolic ,
-            diastolic :this.state.diastolic,
-            takenBy:localStorage.getItem("userId"),
-            bloodGlucose:this.state.bloodGlucose
+            temperature:this.state.temp,
+            oxygenSaturation: this.state.OXSat,
+            bloodGlucoseLevel:this.state.bloodGlucose,
+            nurseId:localStorage.getItem("userId"),
+            ptId:this.state.pId,
+            bloodPressure : this.state.systolic + "/" +this.state.diastolic 
             // takenBy : this.state.takenBy 
           }
 
@@ -407,16 +371,10 @@ class NurseVisit extends Component {
             pulse: this.state.pulse,
             systolic : this.state.systolic ,
             diastolic: this.state.diastolic,
-            respiratoryRate: this.state.respiratoryRate ,
             OXSat: this.state.OXSat,
-            height: this.state.height,
-            weight: this.state.weight,
-            BMI: this.state.BMI,
-            pain: this.state.pain,
-            smokingStatus: this.state.smokingStatus,
-            headC: this.state.headC,
             takenBy:this.state.takenBy,
-            bloodGlucose:this.state.bloodGlucose
+            bloodGlucose:this.state.bloodGlucose,
+            // bloodPressure : this.state.systolic +"/"+ this.state.diastolic
             }: item
           );
           // console.log("obj: " , obj);

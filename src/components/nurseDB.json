@@ -45,16 +45,10 @@
             "data":"",
             "temp":"",
             "pulse":"",
-            "respiratoryRate":"",
             "OXSat":"",
-            "height":"",
-            "weight":"",
-            "BMI":"",
-            "pain":"",
-            "smokingStatus":"",
-            "headC":"",
             "systolic ":"",
             "diastolic" :"",
+            "bloodPressure":"",
             "takenBy":"",
             "bloodGlucose":""
          },
@@ -84,52 +78,11 @@
                 "center" : true,
                 "width": "200px"
         },
-        "pain" :{
-                "name" :"pain",
-                "selector" : "pain",
-                "sortable":true,
-                "center" : true
-        },
-        "respiratoryRate" :{
-                "name" :"respiratoryRate",
-                "selector" : "respiratoryRate",
-                "sortable":true,
-                "center" : true
-        },
+        
         "OXSat" :{
                 "name" :"OXSat",
                 "selector" : "OXSat",
                 "sortable":true
-        },
-        "height" :{
-                "name" :"height",
-                "selector" : "height",
-                "sortable":true,
-                "center" : true
-        },
-        "weight" :{
-                "name" :"weight",
-                "selector" : "weight",
-                "sortable":true,
-                "center" : true
-        },
-        "BMI" :{
-                "name" :"BMI",
-                "selector" : "BMI",
-                "sortable":true,
-                "center" : true
-        },
-        "smokingStatus" :{
-                "name" :"smokingStatus",
-                "selector" : "smokingStatus",
-                "sortable":true,
-                "center" : true
-        },
-        "headC" :{
-                "name" :"headC",
-                "selector" : "headC",
-                "sortable":true,
-                "center" : true
         },
         "bloodGlucose" :{
                 "name" :"bloodGlucose",
@@ -166,37 +119,9 @@
                     "type":"number",
                     "name" :"bloodGlucose"
             },
-            "pain" : {
-                    "type":"number",
-                    "name" :"pain"
-            },
-            "respiratoryRate" : {
-                    "type":"number",
-                    "name" :"respiratoryRate"
-            },
             "OXSat" : {
                     "type":"number",
                     "name" :"OXSat"
-            },
-            "height" : {
-                    "type":"number",
-                    "name" :"height"
-            },
-            "weight" : {
-                    "type":"number",
-                    "name" :"weight"
-            },
-            "BMI" : {
-                    "type":"number",
-                    "name" :"BMI"
-            },
-            "smokingStatus" : {
-                    "type":"number",
-                    "name" :"smokingStatus"
-            },
-            "headC" : {
-                    "type":"number",
-                    "name" :"headC"
             },
             "takenBy" : {
                     "type":"autoComplete",

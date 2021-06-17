@@ -16,8 +16,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
          }
     }
     async componentDidMount(){
-      console.log("000000000000000: " , this.props.history.location.state)
-      this.setState({type : this.props.match.params.type});
+      console.log("000000000000000: " , this.props.match.params.code)
+      this.setState({type : this.props.match.params.type || this.props.match.params.code });
         await this.handleDataTableColumns();
         await this.getData(this.props.match.params.type);
     }

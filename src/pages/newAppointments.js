@@ -272,6 +272,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     this.getData(this.state.type);
   }
   getData = async()=>{
+    alert("ss")
       var type  = this.state.type;
   
     var details = {
