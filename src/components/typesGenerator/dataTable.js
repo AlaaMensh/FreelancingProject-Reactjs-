@@ -18,14 +18,13 @@ class DataTableComp extends Component {
           };
         return ( 
           <div>
-            {console.log("****************************")}
+            {console.log(tableData)}
              <DataTable
                title={` ${this.props.title}`}
                columns={this.props.columns}
                data={this.props.data}
                pagination
-               highlightOnHover
-               
+              
              />
            </div>
          );
