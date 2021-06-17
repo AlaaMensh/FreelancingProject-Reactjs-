@@ -26,7 +26,7 @@
     font-weight: bold !important;
     justify-content: left !important;
     border-right: 2px solid #ccc	;
-    font-size: 12px !important;
+    font-size: 15px !important;
 }
 .rdt_TableCol:last-child { border-width: 0; }
 .rdt_TableCell{
@@ -39,7 +39,8 @@
 }
 
 .rdt_TableHead{
-
+    height: 3em;
+    min-height: 3em;
     
 }
 .rdt_TableHeadRow{
