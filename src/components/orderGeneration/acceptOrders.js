@@ -182,8 +182,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
 
             <Row className= "py-3">
                 <Col>
-                    <h3>All Not Accepted Orders for this patient</h3>
-                    <div>You can accept orders for this patient from here...</div>
+                    <h3>All Avilable Orders for this patient</h3>
+                    <div>You can accept orders for this patient from here.</div>
                 </Col>
             </Row>
 
