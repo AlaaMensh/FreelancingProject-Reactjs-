@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import userType from "../usersDB.json";
 import ModalComp from "../typesGenerator/modalGenerator";
 import axios from "axios";
-import DataTableComp from "../typesGenerator/dataTable";
+import DataTableComp from "../typesGenerator/dataTablebkp";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
