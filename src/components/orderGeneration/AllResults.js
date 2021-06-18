@@ -33,7 +33,6 @@ class AllResults extends Component {
           }
         }
       async componentDidMount(){
-
         var flag = false;
           console.log("propsppppppppppp:  " , this.props.match.params.id)
           
@@ -80,9 +79,8 @@ class AllResults extends Component {
                   this.setState({orderType : 2})
                   break;
           }
-    
         await this.getData(flag , this.props.match.params.type)
-    
+          
         }
         onDocumentLoadSuccess({ numPages }) {
           this.setState(numPages);
@@ -278,7 +276,7 @@ class AllResults extends Component {
               :
               this.state.type=="pathology"
               ?
-              'patholgys'
+              'pathologys'
               :
               'radios'
             }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>

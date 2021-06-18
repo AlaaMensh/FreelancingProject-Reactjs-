@@ -113,16 +113,17 @@ const MyPrescriptions = ({match}) =>{
         </div>
         </MyModal>
         <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-            <div style={{ position:'absolute',top:0,right:0,textAlign:"center",zIndex:999}}>
-                <Fab color="primary"  aria-label="add" onClick={()=>handleOpen()} >
-                    <AddIcon  />
-                </Fab> 
-            </div>
+
             <DataGrid id={Math.random()}  onRowDoubleClick={(row)=>SelectRow(row)} rows={rows} columns={PColumns} pageSize={5}  components={{
                 Toolbar: GridToolbar,
             }}
             />
         </div>
+        <div style={{ position:'relative',margin:'auto',textAlign:"center",zIndex:999}}>
+                <Fab color="primary"  aria-label="add" onClick={()=>handleOpen()} >
+                    <AddIcon  />
+                </Fab> 
+            </div>
         </>
     )
 }

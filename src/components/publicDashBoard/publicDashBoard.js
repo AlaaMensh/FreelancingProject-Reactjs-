@@ -334,6 +334,12 @@ const PublicDashBoard = ({ match }) => {
           component={AllResults}
         />
         <Route
+          key={13}
+          exact
+          path={match.path + "/pathologyChoice/:type/allResults"}
+          component={AllResults}
+        />
+        <Route
           key={14}
           exact
           path={match.path + "/pathologyChoice/:type/allPathologyOrders"}

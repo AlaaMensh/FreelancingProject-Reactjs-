@@ -1,14 +1,52 @@
-import React, { Component } from 'react';
-import appointements from '../appointements.json';
-import ModalComp from "../typesGenerator/modalGenerator";
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
-import DataTableComp from "../typesGenerator/dataTable";
-import AddIcon from '@material-ui/icons/Add';
-import SessionCode from "../sessionCode";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import appointements from '../appointements.json';
+import SessionCode from "../sessionCode";
+import DataTableComp from "../typesGenerator/dataTable";
+import ModalComp from "../typesGenerator/modalGenerator";
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
 class UserCrud extends Component {
   constructor(props) {
     super(props);
@@ -25,8 +63,8 @@ class UserCrud extends Component {
       check : "", // which send to back ==>drId OR ==> drFDId,
       past :[], // for past appointements
       future:[], // for Future appointements
-      doctorOrPatientAppointemnt : true //--> if(true) ==> this for Patient appointements , false -->
- 
+      doctorOrPatientAppointemnt : true, //--> if(true) ==> this for Patient appointements , false -->
+      value : 0
      }
   }
 
@@ -50,7 +88,7 @@ class UserCrud extends Component {
                   }}>Update</Button>
                   </div>           
                    <div className="col-auto">
-           <Button  variant="btn-danger"
+           <Button  variant="danger"
                 onClick={() => {
                     this.handleDelete(row.id)
                   }}>Delete
@@ -110,7 +148,9 @@ class UserCrud extends Component {
       await this.checkRole()
       await this.getData(type);
     }
-
+     handleTapsChange = (event, newValue) => {
+      this.setState({value:newValue});
+    };
   handleClose = () => {
     this.setState({openModal : false})
   };
@@ -327,13 +367,12 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       <>
       {console.log("updateObject: " , this.state.data)}
         {console.log("state: " , this.state)}
-        <Row className= "py-3 mt-5">
+        <Row className= "">
                     <Col>
                         {
                           appointements && this.state.type && (
                             <>
                             <h3>{appointements[this.state.type].title}</h3>
-                            <div>{appointements[this.state.type].description}</div>
                             </>
                           )
                         }
@@ -348,30 +387,46 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
             </Col>
           </Row>
         <Row className=" align-items-center">
-          <Col>
-                
+          <div style={{width:'100%'}}>
+            <AppBar position="static" color="default">
+                <Tabs
+                  value={this.state.value}
+                  onChange={this.handleTapsChange}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  aria-label="scrollable auto tabs example"
+                >
+                  <Tab label="Current Appointments" {...a11yProps(0)} />
+                  <Tab label="Past Appointments" {...a11yProps(1)} />
+                  <Tab label="Future Appointments" {...a11yProps(2)} />
+                </Tabs>
+              </AppBar>
+
+              <TabPanel value={this.state.value} index={0}>
                 <DataTableComp  data = {this.state.data} 
                           columns = {this.state.columns}
                           title= {""}
                 />
-          </Col>
-         </Row>
-         <Row className="mt-5">
-          <Col>
+              </TabPanel>
+
+              <TabPanel value={this.state.value} index={1}>
+
             <DataTableComp   data = {this.state.past}
                       columns = {this.state.columns}
                       title= {"Past Appointements"}
             />
-          </Col>
-         </Row>
+            </TabPanel>
 
-         <Row className="mt-5">
-            <Col>
+            <TabPanel value={this.state.value} index={2}>
+            
               <DataTableComp  data = {this.state.future}
                         columns = {this.state.columns}
                         title= {"Future Appointements"}
               />
-          </Col>
+          </TabPanel>
+          </div>
       </Row>
      {  
       this.state.formType === "add" && this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 ?(

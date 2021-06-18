@@ -315,7 +315,17 @@ class AllOrdersForDoctor extends Component {
   renderingModalBody = ()=>{
     return (
       <div className="wrap">
-        <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/`+this.state.fileResult} title="W3Schools Free Online Web Tutorials"></iframe>
+                  <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
+              this.state.type=="lab"
+              ?
+              'labs'
+              :
+              this.state.type=="pathology"
+              ?
+              'pathologys'
+              :
+              'radios'
+            }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
       </div>
     )
   }

@@ -1,7 +1,17 @@
+import AppBar from '@material-ui/core/AppBar';
+import Box from '@material-ui/core/Box';
+import Fab from '@material-ui/core/Fab';
+import { useTheme } from '@material-ui/core/styles';
+import Tab from '@material-ui/core/Tab';
+import Tabs from '@material-ui/core/Tabs';
+import Typography from '@material-ui/core/Typography';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
-import { Link, Route, Switch, useHistory } from "react-router-dom";
+import { Link, Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AddOrderForm from "../orderGeneration/addOrderForm";
 import AllOrders from "../orderGeneration/allOrders";
 import Prescription from "../Prescription/Prescription";
@@ -11,10 +21,81 @@ import MyPrescriptions from './MyPrescriptions';
 import PatientAppointement from "./patientAppointements";
 import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
+
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
+  };
+}
+
 const ClinicalDashBoard = ({ match }) => {
+  const styles = {
+    active:{
+      backgroundColor:'#007bff',
+
+    },
+    active_link:{
+      color:'#fff',
+      textDecoration:'none'
+    },
+    inactive:{
+      backgroundColor:'transparent',
+      color:'#007bff',
+      textDecoration:'underline'
+    },
+    inactive_link:{
+      color:'#007bff',
+      textDecoration:'underline'
+    },
+  }
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  }
   const history = useHistory();
   const [ptId, setPtId] = useState(match.params.id);
-
+  const location = useLocation();
+  var arr = location.pathname.split('/')
+  console.log(arr)
   useEffect(() => {
     console.log("herree dashBoard:", match.params.id);
     setPtId(match.params.id);
@@ -22,19 +103,26 @@ const ClinicalDashBoard = ({ match }) => {
 
   return (
     <div className="container mt-5">
+
       <div className="row">
+
         <div className="col-4 col-md-4 col-lg-3 ">
           <div class="wrapper">
             {/* Bootstrap SideBar */}
             <nav id="sidebar">
               <div className="sidebar-header"></div>
 
-              <ListGroup>
-                <ListGroup.Item>
+              <ListGroup style={{position:'fixed'}}>
+              <Link
+                  className="btn btn-success"
+                  to={match.url + `/patientAppointement/visit`}>
+                    Make New Visit
+              </Link>
+                <ListGroup.Item style={arr[1] && arr[arr.length-1]=="clinicalDashBoard"?styles.active:styles.inactive}>
                   {parseInt(localStorage.getItem("role")) === 8 ? (
                     <Link
                       to={match.url + `/clinicalDashBoard`}
-                      style={{ cursor: "pointer" }}
+                      style={arr[1] && arr[arr.length-1]=="clinicalDashBoard"?styles.active_link:styles.inactive_link}
                     >
                       Clinical DashBoard
                     </Link>
@@ -44,13 +132,15 @@ const ClinicalDashBoard = ({ match }) => {
                     </Link>
                   )}
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/patientAppointement`}>
+                <ListGroup.Item style={arr[arr.length-1]=="patientAppointement"?styles.active:styles.inactive}>
+                  <Link style={arr[arr.length-1]=="patientAppointement"?styles.active_link:styles.inactive_link}
+                   to={match.url + `/patientAppointement`}>
                     Patient Appointement
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
+                <ListGroup.Item style={arr[arr.length-1]=="onGoingProblems"?styles.active:styles.inactive}>
                   <Link
+                  style={arr[arr.length-1]=="onGoingProblems"?styles.active_link:styles.inactive_link}
                     to={
                       match.url + `/patientOnGoingProblems/${"onGoingProblems"}`
                     }
@@ -58,33 +148,45 @@ const ClinicalDashBoard = ({ match }) => {
                     On Going Problems
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/patientAllergyproblems/${"allergy"}`}>
+                <ListGroup.Item style={arr[arr.length-1]=="allergy"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="allergy"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/patientAllergyproblems/${"allergy"}`}>
                     Allergy Problems
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/allLabOrders/${"lab"}`}>
+                <ListGroup.Item style={arr[arr.length-1]=="lab"||arr[arr.length-2]=="lab"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="lab"||arr[arr.length-2]=="lab"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/allLabOrders/${"lab"}`}>
                     Lab Orders
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/allPathologyOrders/${"pathology"}`}>
+                <ListGroup.Item style={arr[arr.length-1]=="pathology"||arr[arr.length-2]=="pathology"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="pathology"||arr[arr.length-2]=="pathology"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/allPathologyOrders/${"pathology"}`}>
                     Pathology Orders
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/allRadioOrders/${"radio"}`}>
+                <ListGroup.Item style={arr[arr.length-1]=="radio"||arr[arr.length-2]=="radio"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="radio"||arr[arr.length-2]=="radio"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/allRadioOrders/${"radio"}`}>
                     radio Orders
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/Medication`}>
+                <ListGroup.Item style={arr[arr.length-1]=="Medication"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="Medication"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/Medication`}>
                     Medication
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item>
-                  <Link to={match.url + `/MyPrescriptions`}>
+                <ListGroup.Item style={arr[arr.length-1]=="MyPrescriptions"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="MyPrescriptions"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/MyPrescriptions`}>
                     Prescription
                   </Link>
                 </ListGroup.Item>
@@ -92,14 +194,62 @@ const ClinicalDashBoard = ({ match }) => {
             </nav>
           </div>
         </div>
-        <div className="col-8 col-md-8 col-lg-9  ">
+        <div  className="col-8 col-md-8 col-lg-9  ">
+        <div style={{ position:'absolute',top:0,right:0,textAlign:"center",display:'none',zIndex:999}}>
+                  <Fab color="primary"  aria-label="add" onClick={()=>handleClickOpen()} >
+                      <AccountBoxIcon  />
+                  </Fab> 
+          </div>
           <Row>
-            <UserInfo id={match.params.id} />
+            {/* <Dialog
+              fullScreen={fullScreen}
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="responsive-dialog-title"
+            >
+              <DialogContent> */}
+                <UserInfo id={match.params.id} />
+
+              {/* </DialogContent>
+              <DialogActions>
+              <Button autoFocus onClick={handleClose} color="primary">
+                Close
+              </Button>
+              </DialogActions>
+           </Dialog> */}
           </Row>
+          <div style={{
+          backgroundColor:"#eee",
+          borderRadius:10,
+          boxShadow : 20,
+          padding:20,
+          position:'relative'
+        }}>
+
+        
           <Switch>
             <Route exact path={match.url + `/clinicalDashBoard`}>
+              <AppBar position="static" color="default">
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  indicatorColor="primary"
+                  textColor="primary"
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  aria-label="scrollable auto tabs example"
+                >
+                  <Tab label="Allergy Problems" {...a11yProps(0)} />
+                  <Tab label="OnGoing Problems" {...a11yProps(1)} />
+                </Tabs>
+              </AppBar>
+              <TabPanel value={value} index={0}>
               <PatientProblems type={"allergy"} id={match.params.id} />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+
               <PatientProblems type={"onGoingProblems"} id={match.params.id} />
+              </TabPanel>
             </Route>
             <Route
               exact
@@ -194,6 +344,7 @@ const ClinicalDashBoard = ({ match }) => {
               component={Prescription}
             />
           </Switch>
+          </div>
         </div>
       </div>
     </div>

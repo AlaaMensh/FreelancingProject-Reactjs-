@@ -343,7 +343,17 @@ class AllOrders extends Component {
     renderModalBody = ()=>{
       return (
         <div className="wrap">
-          <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
+                    <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
+              this.state.type=="lab"
+              ?
+              'labs'
+              :
+              this.state.type=="pathology"
+              ?
+              'pathologys'
+              :
+              'radios'
+            }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
         </div>
       )
     }

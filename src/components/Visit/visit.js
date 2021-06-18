@@ -67,7 +67,7 @@ const styles = {
 
 function getSteps() {
   //steps in the Top
-  return ["Fill Important Info", "Investigation", "Procedures", "finished"];
+  return ["Fill Important Info", "Investigation", "Treatment Plan", "finished"];
 }
 
 export default function Visit({ match }) {

@@ -225,11 +225,7 @@ export default function ScrollableTabsButtonAuto({match}) {
         </Tabs>
       </AppBar>
       <div style={{position:'relative'}}>
-      <div style={{ position:'absolute',top:0,right:0,textAlign:"center",zIndex:999}}>
-          <Fab color="primary"  aria-label="add" onClick={()=>handleOpen()} >
-          <AddIcon  />
-          </Fab> 
-        </div>
+
       <TabPanel value={value} index={0}>
       <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
       <DataGrid rows={active_rows} columns={active_columns} pageSize={5}  components={{
@@ -247,6 +243,11 @@ export default function ScrollableTabsButtonAuto({match}) {
         </div>
       </TabPanel>
       </div>
+      <div style={{ position:'relative',margin:'auto',textAlign:"center",zIndex:999}}>
+          <Fab color="primary"  aria-label="add" onClick={()=>handleOpen()} >
+          <AddIcon  />
+          </Fab> 
+        </div>
     </div>
   );
 }

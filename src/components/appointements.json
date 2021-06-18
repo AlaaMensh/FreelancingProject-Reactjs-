@@ -13,12 +13,6 @@
         },
 
         "columnsTable" : {
-            "patientName": {
-                    "name": "Patient Name ",
-                    "selector": "patientName",
-                    "sortable": true,
-                    "center" : true
-            },
             "endDate": {
                     "name": "End Time",
                     "selector": "endDate",
