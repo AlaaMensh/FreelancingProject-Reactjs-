@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Col } from "react-bootstrap";
 import { Route, Switch, useHistory } from "react-router-dom";
 import Appointement from "../../pages/newAppointments";
+import MyPrescriptions from '../ClinicalDashBoard/MyPrescriptions';
 import Appointements from "../EMR/appointements";
 import EMR from "../EMR/emr";
 import Search from "../EMR/searchModule/search";
@@ -10,7 +11,6 @@ import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
 import AddOrderForm from "../orderGeneration/addOrderForm";
 import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
 import ptRegistration from "../patientRegistration/ptRegistration";
-import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
 import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
 import Prescription from "../Prescription/Prescription";
 import Profile from "../Profile/Profile";
@@ -377,7 +377,7 @@ const PublicDashBoard = ({ match }) => {
         <Route
           exact
           path={match.path + "/pharmacyModule"}
-          component={PharmacyModuleForDoctor}
+          component={MyPrescriptions}
         />
         <Route
           exact
