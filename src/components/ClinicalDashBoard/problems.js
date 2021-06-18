@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
 import DataTableComp from "../typesGenerator/dataTable";
 import problemType from "./clinicalDB.json";
+import {Container, Row , Col} from 'react-bootstrap'
 
 
 class PatientProblems extends Component {
@@ -17,6 +17,7 @@ class PatientProblems extends Component {
         }
     async componentDidMount(){
       ///////////////*****Fixed******//////////////////
+      console.log("//////////////////////////////////////////////")
       var type = "";  
       console.log("props:  ", this.props);
       if(this.props.type){
@@ -49,9 +50,10 @@ class PatientProblems extends Component {
 
 
     getProblems = (type)=>{ // get all Allergy prolems for this patient from DB
+      console.log("idOnGetting: " , this.props.match.params.id)
       var details = {
-        // id:this.props.id /// you should change this to props
-        ptId:13 /// you should change this to props
+        ptId:this.props.match.params.id /// you should change this to props
+        // ptId:13 /// you should change this to props
        }
        var formBody = [];
 
@@ -98,6 +100,7 @@ class PatientProblems extends Component {
               </Row>
 
       <Row className= "py-3" >
+        {console.log("columns: " , this.state.columns)}
             <div className = "row  align-items-center justify-content-center" >
             <DataTableComp  data = {this.state.data}
                   columns = {this.state.columns}

@@ -14,6 +14,11 @@ import Col from 'react-bootstrap/Col';
 
 
 
+var row = [
+  {id:1 , firstName : "alaa" , LastName : "Ahmed" , maritalStatus : "lol"},
+  {id:2 , firstName : "Mohamed" , LastName : "Nassif" , maritalStatus : "lol"},
+  {id:3 , firstName : "Ola" , LastName : "non" , maritalStatus : "lol"},
+]
 
 
 
@@ -56,7 +61,7 @@ class DataGridTable extends Component {
             <div className="col-auto">
               <button  className="btn btn-info"
                 onClick={async () => {  
-                  this.props.history.push(`/ClinicalDashBoard/${row.id}`);
+                  this.props.history.push(`/ClinicalDashBoard/${row.ptId}`);
                   // this.handleDelete(row.id);
 
                   }}>Go to ClinicalDashBoard</button>

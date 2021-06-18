@@ -13,6 +13,12 @@
         },
 
         "columnsTable" : {
+            "patientName": {
+                    "name": "Patient Name ",
+                    "selector": "patientName",
+                    "sortable": true,
+                    "center" : true
+            },
             "endDate": {
                     "name": "End Time",
                     "selector": "endDate",
@@ -170,9 +176,9 @@
                         }
     },
     "modalAdditionForms": {
-        "patientCode" : {
+        "patientName" : {
                 "type":"text",
-                "name" :"patientCode"
+                "name" :"patientName"
         },
         "date" :{
                 "type": "date",
@@ -182,6 +188,10 @@
         "startTime" : {
                 "type":"time",
                 "name" :"startTime"
+        },
+        "reason" : {
+                "type":"text",
+                "name" :"reason"
         },
         "duration" : {
                 "type":"number",
@@ -217,7 +227,8 @@
         "endDate": ""
     },
     "addDetails" : {
-        "patientCode": "",
+        "patientName": "",
+        "reason": "",
         "startTime": "",
         "duration" : "",
         "date": "",
@@ -226,7 +237,7 @@
     },
     "title":"All Doctor Appointements at Specific time",
     "description":"Here you will see all your Appointements...",
-        "addAppointement" : "https://mvb1.herokuapp.com/appointment/addAppoinment",
+        "addAppointement" : "http://localhost:8080/appointment/addAppoinment",
         "updateAppointements" :"http://localhost:8080/appointment/updateAppointment",
         "deleteAppointements" :"http://localhost:8080/appointment/deleteAppointment",
         "getAllappointementsForDoctor":"http://localhost:8080/appointment/getAppoinmentbyDrId"

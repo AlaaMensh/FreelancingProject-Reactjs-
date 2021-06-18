@@ -6,8 +6,6 @@ import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import axios from 'axios';
 import * as React from 'react';
-import MyModal from './modal';
-import Form from './PrescriptionForm';
 
 const columns = [
   { field: 'id', headerName: 'ID', hide:true },
@@ -26,14 +24,13 @@ const Table =  forwardRef((props,ref)=>{
 
     //initialize slection array
   const [selectionModel,setSelectionModel]=React.useState([]);
-  const [open, setOpen] = React.useState(false);
 
   let fromdata= new FormData()
   
   const [rows,setRows] = React.useState([])
-
   React.useEffect(() => {
-
+    console.log("rrrr")
+    console.log(props.prescription_rows)
       if(props.prescription_rows && props.prescription_rows.length > 0)
       {
         setRows([...props.prescription_rows])
@@ -45,7 +42,16 @@ const Table =  forwardRef((props,ref)=>{
 
     useImperativeHandle(ref, () => ({
       addRow(temp) {
+        // //alert(data)
+        // let temp = {}
+        // Object.preventExtensions(temp);
 
+        // temp['id'] = data.id
+        // temp['drugName'] = data.drug
+        // temp['Quantity'] = data.quantity
+        // temp['Duration'] = data.duration
+        // console.log("temp")
+        // rows.push(temp);
         setRows([...temp]);
       },
     }));
@@ -54,6 +60,7 @@ const Table =  forwardRef((props,ref)=>{
 
     //event on select row function
     const handleRowSelection = (e)=>{
+      alert("aa")
         if(e.isSelected)
         {
             // let temp = rows.filter(row=>row.id !== e.data.id)
@@ -68,15 +75,6 @@ const Table =  forwardRef((props,ref)=>{
             }
         }
     }
-
-    //handle Modal Open
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    //handle Modal CLose
-    const handleClose = () => {
-        setOpen(false);
-    };
     
     //delete rows function
     const DeleteRows = ()=>{
@@ -111,10 +109,6 @@ const Table =  forwardRef((props,ref)=>{
 
     }
   return (
-    <div>
-      <MyModal open={open} handleClose={handleClose}>
-         <Form ptId={props.ptId} PID={props.PID} add_row={props.add_row}/>
-      </MyModal>
     <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
       <DataGrid rows={rows} columns={columns} pageSize={5} checkboxSelection  components={{
     Toolbar: GridToolbar,
@@ -125,8 +119,16 @@ const Table =  forwardRef((props,ref)=>{
           setSelectionModel(newSelection.selectionModel)
       }}
 />
+{/* <Button onClick={AddToDB}  variant="contained" color="primary"
+  style={{width:'420px',margin:10}} >
+            Save
+    </Button> */}
+  {/* <Button onClick={DeleteRows}  variant="contained" color="secondary"
+  style={{width:'420px',margin:10}} >
+            Delete
+    </Button> */}
       <div style={{ margin: "0 auto",textAlign:"center"}}>
-          <Fab color="primary"  aria-label="add"  onClick={()=>handleOpen()}>
+          <Fab color="primary"  aria-label="add"  >
              <AddIcon  />
           </Fab> 
         </div>
@@ -135,7 +137,6 @@ const Table =  forwardRef((props,ref)=>{
              <DeleteIcon  />
           </Fab> 
         </div>
-    </div>
     </div>
   );
 }) 

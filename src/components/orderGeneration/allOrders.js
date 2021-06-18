@@ -1,14 +1,18 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
+import React, { useState, useEffect } from 'react';
+import  { Component } from 'react';
+import DataTableComp from '../typesGenerator/dataTable';
+import orderType from "../ordersdb.json";
+import ModalComp from "../typesGenerator/modalGenerator";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import orderType from "../ordersdb.json";
+import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+import Button from 'react-bootstrap/Button';
+import { Document, Page } from 'react-pdf';
 import ModalForView from "../pharmacyModule/modalForView";
-import DataTableComp from '../typesGenerator/dataTable';
-import ModalComp from "../typesGenerator/modalGenerator";
 import "./order.css";
+import FormGenerator from "../Forms/formGenerationNew";
+import ModalGenerator from "../ModalGeneration/modalGeneration";
 
 var object  = {}
 
@@ -24,7 +28,7 @@ class AllOrders extends Component {
       modalUploadResultInputs :[],
       openModal:false,
       typeObj:{},
-      formType:"uploadResult",
+      formType:"upload",
       numPages:null,
       pageNumber:1,
       fileResult:"" ,
@@ -36,6 +40,7 @@ class AllOrders extends Component {
 
         var flag = false;
           console.log("propsppppppppppp:  " , this.props.match.params.id)
+          console.log("type$$$$$$$$$:  " , this.props.match.params.type)
           
           this.setState({type : this.props.match.params.type});
           
@@ -69,17 +74,7 @@ class AllOrders extends Component {
     
     
           this.setState({type : this.props.match.params.type});
-          switch(this.props.match.params.type){
-              case "lab":
-                  this.setState({orderType : 0})
-                  break;
-              case "radio":
-                  this.setState({orderType : 1})
-                  break;
-              case "pathology":
-                  this.setState({orderType : 2})
-                  break;
-          }
+
     
         await this.getData(flag , this.props.match.params.type)
     
@@ -118,15 +113,13 @@ class AllOrders extends Component {
         endPoint = `${orderType[type].getAllOrdersByLabId}`
         switch(type){
           case "lab":{
-            // details["labId"] = localStorage.getItem("labId");
-            details["labFDId"] = localStorage.getItem('userId');
+            details["labId"] = localStorage.getItem("labId");
           }
           case "pathology":{
-            // details["pathoId"] = localStorage.getItem("pathoId");
-            details["pathoFDId"] = localStorage.getItem('userId');
+            details["pathoId"] = localStorage.getItem("pathoId");
           }
           case "radio":{
-            details["radioFDId"] = localStorage.getItem('userId');
+            details["radioId"] = localStorage.getItem("radioId");
           }
         }
 
@@ -251,22 +244,6 @@ class AllOrders extends Component {
             }
             temp.push(orderType[type][object][p])
           }
-          else if(p === "drname")
-          {
-            orderType[type].columnsTable[p]["cell"] =  (row) =>{
-            return ( <span>{row.OrderingDrFirstName + " " + row.tOrderingDrLastName}</span> )
-            }
-            temp.push(orderType[type].columnsTable[p])
-
-          }
-          else if(p === "ptname")
-          {
-            orderType[type].columnsTable[p]["cell"] =  (row) =>{
-            return ( <span>{row.firstname + " " + row.lastname}</span> )
-            }
-            temp.push(orderType[type].columnsTable[p])
-
-          }
           else{
     
             temp.push(orderType[type][object][p])
@@ -342,18 +319,9 @@ class AllOrders extends Component {
 
     renderModalBody = ()=>{
       return (
-        <div className="wrap">
-                    <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
-              this.state.type=="lab"
-              ?
-              'labs'
-              :
-              this.state.type=="pathology"
-              ?
-              'pathologys'
-              :
-              'radios'
-            }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
+        <div className="wrap" style={{height:"100%"}}>
+          <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
+
         </div>
       )
     }
@@ -420,15 +388,29 @@ class AllOrders extends Component {
             
             {
               this.state.resultStatus==="upload" && this.state.modalUploadResultInputs && this.state.modalUploadResultInputs.length > 0 &&(
-                <ModalComp show={this.state.openModal}
+                // <ModalComp show={this.state.openModal}
+                //   onHide={this.handleClose}
+                //   ModalInputs={this.state.modalUploadResultInputs}
+                //   updatedTypeObj = {this.state.typeObj}
+                //   handleChange = {this.handleChange}
+                //   handleUpdate = {this.handleUpdate}
+                //   handleAdding={this.handleAdding}
+                //   formType = {this.state.formType}
+                // />
+                <ModalGenerator
                   onHide={this.handleClose}
-                  ModalInputs={this.state.modalUploadResultInputs}
-                  updatedTypeObj = {this.state.typeObj}
-                  handleChange = {this.handleChange}
-                  handleUpdate = {this.handleUpdate}
-                  handleAdding={this.handleAdding}
-                  formType = {this.state.formType}
-                />
+                  show={this.state.openModal}
+                 >
+                      <FormGenerator
+                       ModalInputs = {this.state.modalUploadResultInputs}
+                       handleChange = {this.handleChange}
+                       handleUpdate = {this.handleUpdate}
+                       handleAdding={this.handleAdding}
+                       options = {[]}
+                       formType = {this.state.formType}
+
+                      />
+                </ModalGenerator>
               ) 
             }
             {/* for Plus Icon */}

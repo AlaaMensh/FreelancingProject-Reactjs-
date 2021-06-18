@@ -1,14 +1,15 @@
-import axios from 'axios';
-import React, { Component } from 'react';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
+import React, { useState, useEffect } from 'react';
+import  { Component } from 'react';
+import DataTableComp from '../typesGenerator/dataTable';
+import orderType from "../ordersdb.json";
+import ModalComp from "../typesGenerator/modalGenerator";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 import { Document, Page } from 'react-pdf';
-import "../orderGeneration/order.css";
-import orderType from "../ordersdb.json";
-import ModalForView from "../pharmacyModule/modalForView";
-import DataTableComp from '../typesGenerator/dataTable';
+import ModalForView from "../pharmacyModule/modalForView"
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 var object  = {}
@@ -196,18 +197,14 @@ class AllOrdersForDoctor extends Component {
                 <button
                 style={{display: !row.result ? "none" : "block"}}  
                 className="btn btn-primary"
-                  onClick={async() => {  
+                  onClick={() => {  
                     console.log("rooooow : " , row)
                       console.log("id:  " , row)
-                      await this.setState({fileResult : row.result})
-                      console.log("rewsult ::"+row.result)
                       this.handleopenModal();
                       this.getTypeByID(row.id);
                     }}>
                       Show Result
                       </button>
-                      </div>
-                      <div className="col-auto">
                 <button className="ml-2 btn btn-danger"
                     onClick = {() => {  
                       // console.log("rooooow : " , row)
@@ -216,26 +213,12 @@ class AllOrdersForDoctor extends Component {
                       }}>
                         Delete
                         </button>
-                        </div>
-              
+              </div>
             
             </div>
             )
             }
             temp.push(orderType[type][object][p])
-          }
-          else if (p== "ptname")
-          {
-            orderType[type][object][p]["cell"] =  (row) =>{ return(
-            
-              <a style={{color:'#007bff',cursor:'pointer'}} onClick={(e)=>{
-                e.preventDefault()
-                this.props.history.push('/clinicalDashBoard/'+row.PtID)
-              }}>{row.firstname + " " + row.lastname}</a>
-            )
-            }
-            temp.push(orderType[type][object][p])
-
           }
           else{
     
@@ -274,19 +257,6 @@ class AllOrdersForDoctor extends Component {
             }
             temp.push(orderType[type][object][p])
           }
-          else if (p== "ptname")
-          {
-            orderType[type][object][p]["cell"] =  (row) =>{ return(
-            
-              <a style={{color:'#007bff',cursor:'pointer'}} onClick={(e)=>{
-                e.preventDefault()
-                this.props.history.push('/clinicalDashBoard/'+row.PtID)
-              }}>{row.firstname + " " + row.lastname}</a>
-            )
-            }
-            temp.push(orderType[type][object][p])
-
-          }
           else{
     
             temp.push(orderType[type][object][p])
@@ -314,19 +284,10 @@ class AllOrdersForDoctor extends Component {
   }
   renderingModalBody = ()=>{
     return (
-      <div className="wrap">
-                  <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
-              this.state.type=="lab"
-              ?
-              'labs'
-              :
-              this.state.type=="pathology"
-              ?
-              'pathologys'
-              :
-              'radios'
-            }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
-      </div>
+      <>
+      <h1>Result</h1>
+      {/* <iframe src="https://www.w3schools.com" title="W3Schools Free Online Web Tutorials"></iframe> */}
+      </>
     )
   }
 

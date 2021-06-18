@@ -1,15 +1,18 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Stepper from "@material-ui/core/Stepper";
-import { makeStyles } from "@material-ui/core/styles";
 // import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import React, { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { useHistory, useLocation } from "react-router-dom";
-import ChiefComplains from "./chiefComplains";
-import Investgation from "./investgation";
+// import { makeStyles } from '@material-ui/core/styles';
+import { useState, useEffect } from "react";
 import Procedures from "./procedures";
+import Investgation from "./investgation";
+import { useHistory } from "react-router-dom";
+import ChiefComplains from "./chiefComplains";
+import { useLocation } from "react-router-dom";
+import { Card, Row, Col, Form, Modal, Button } from "react-bootstrap";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,15 +70,13 @@ const styles = {
 
 function getSteps() {
   //steps in the Top
-  return ["Fill Important Info", "Investigation", "Treatment Plan", "finished"];
+  return ["Fill Important Info", "Investigation", "Procedures", "finished"];
 }
 
 export default function Visit({ match }) {
-
   const history = useHistory();
   const location = useLocation();
 
-  // alert(location.state)
   const [ptId, setPId] = useState(1);
   const [drId, setDrId] = useState(1);
   const [patientName, setPatientName] = useState(1);
@@ -106,8 +107,8 @@ export default function Visit({ match }) {
   const [radioOrdersHome, setRadioOrdersHome] = useState([]);
 
   useEffect(() => {
-    console.log("this.props", location);
-    var code = location.state;
+    var code = location.state || match.params.code ;
+    console.log("match: " , match);
     setPId(match.params.id);
     setPId(localStorage.getItem("userId"));
   }, []);
@@ -119,7 +120,7 @@ export default function Visit({ match }) {
 
     var details = {
       // ************this object will be Sent to BackEnd to add a Visit
-      ptId: location.state,
+      ptId: location.state || match.params.id ,
       drId: localStorage.getItem("userId"),
       chiefComplains: chiefComplains,
       diagnosis: diagnosis,
@@ -155,10 +156,7 @@ export default function Visit({ match }) {
       .then((resp) => {
         resp.json().then((data) => {
           console.log("my Data:   ", data);
-          history.push({
-            pathname : `${match.url}/prescription/${data.id}`,
-            state : location.state
-          }); //****After making Visit you should redirect to Prescription */
+          history.push(`${match.url}/prescription/${data.id}`); //****After making Visit you should redirect to Prescription */
         });
       })
       .catch(() => {

@@ -1,57 +1,50 @@
 import Fab from "@material-ui/core/Fab";
 import UploadIcon from "@material-ui/icons/CloudUploadRounded";
 import PrintIcon from "@material-ui/icons/Print";
-import { Document, Image, Page, PDFViewer, StyleSheet, Text, View } from '@react-pdf/renderer';
 import axios from "axios";
 import React from "react";
-import ReactDOM from 'react-dom';
 import { useReactToPrint } from "react-to-print";
-import { pdf_styles as styles } from './styles';
+import BackImage from "../../assets/images/back.png";
+import DivToPrint from "./Print";
 
-const mystyles = StyleSheet.create({
-  page: {
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-    paddingBottom:40
+const styles = {
+  parentDiv: {
+    borderRadius: 6,
+    elevation: 3, //how much comes away from screen
+    backgroundImage: `url(${BackImage})`,
+    shadowOffset: { width: 1, height: 1 },
+    shadowColor: "#333",
+    shadowOpacity: 0.3,
+    marginHorizontal: 4,
+    marginVertical: 6,
+    shadowRadius: 2,
+    position: "relative",
+    marginTop: 10,
+    paddingBottom: 40,
   },
-  header: {
-    flex:1,
-    position:'relative',
-    top:0,
-    marginBottom:0
+  prescriptionDesign: {
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "50%",
+    position: "relative",
+    backgroundColor: "#fff",
   },
-  text:{
-    margin:0,
-    fontSize:12,
-    color:'#777'
-  },
-  value:{
-    margin:0,
-    fontSize:12,
-    color:'#000'
-  },
-  footer: {
-    flex:1,
-    position:'absolute',
-    left:0,
-    bottom:0,
-    right:0,
-  },
-  row:{
-    flex:1,
-    flexDirection: 'row',
-    justifyContent:'space-between',
-    marginLeft:10,
-    marginRight:10,
-    marginTop:0,
-    marginBottom:0,
-    position:'relative',
-    top:0
-    
-  }
-});
 
-
+  headerImage: {
+    position: "relative",
+    top: 0,
+    left: 0,
+    width: "100%",
+  },
+  HeaderButton: { position: "absolute", top: 0, right: 0, textAlign: "center" },
+  footerImage: {
+    position: "relative",
+    bottom: 0,
+    left: 0,
+    width: "100%",
+  },
+};
 
 const { forwardRef, useRef, useImperativeHandle } = React;
 const PDF = forwardRef((props, ref) => {
@@ -76,47 +69,6 @@ const PDF = forwardRef((props, ref) => {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
-  const handleprint2 = ()=>{
-    ReactDOM.render(<Viewer />, document.getElementById('printDiv'));
-
-  }
-
-  const Viewer = () => (
-    <PDFViewer height={500} width='100%'>
-      <MyDocument />
-    </PDFViewer>
-  );
-  // Create Document Component
-  const MyDocument = () => (
-    <Document>
-      <Page size="A5" style={mystyles.page}>
-        <View style={mystyles.header}>
-          <Image src={URL.createObjectURL(props.header)}/>
-        </View>
-        <View style={[mystyles.row,{marginTop:10}]}>
-        <Text style={mystyles.text}>Drug</Text>
-        <Text style={mystyles.text}>Frequency</Text>
-        <Text style={mystyles.text}>Duration</Text>
-        <Text style={mystyles.text}>Notes</Text>
-        </View>
-        {rows.map(row=>{
-          return(
-            <View style={mystyles.row}>
-            <Text style={mystyles.value}>{row.drugName}</Text>
-            <Text style={mystyles.value}>{row.Quantity}</Text>
-            <Text style={mystyles.value}>{row.Duration}</Text>
-            <Text style={mystyles.value}>{row.notes}</Text>
-            </View>
-            
-          )
-        })}
-        <View style={mystyles.footer}>
-          <Image src={URL.createObjectURL(props.footer)}/>
-        </View>
-      </Page>
-    </Document>
-  );
 
   const selectHeaderFile = (event) => {
     let file = event.target.files[0];
@@ -145,7 +97,7 @@ const PDF = forwardRef((props, ref) => {
     <div className="mg20">
       {/* White Shadow Div Start */}
       <div style={styles.parentDiv} id="myDiv">
-        <Fab color="primary" aria-label="add" onClick={() => handleprint2()}>
+        <Fab color="primary" aria-label="add" onClick={() => handlePrint()}>
           <PrintIcon />
         </Fab>
         {/* Header Image Button Start */}
@@ -164,14 +116,12 @@ const PDF = forwardRef((props, ref) => {
         </label>
         {/* Header Image Button End */}
         {/* Image Div Parent Start */}
-      <div id="printDiv" style={styles.prescriptionDesign}>
-      </div>
-        {/* <DivToPrint
+        <DivToPrint
           header={props.header}
           footer={props.footer}
           rows={rows}
           ref={componentRef}
-        /> */}
+        />
         {/* Image Div Parent End */}
       </div>
     </div>

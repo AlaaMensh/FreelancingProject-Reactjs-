@@ -1,9 +1,9 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 import { Formik } from 'formik';
 import React from 'react';
 import * as Yup from 'yup';
-import { AddPrescriptionDrug, loadDrugs as LoadFromDB } from './request';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding:5,
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     width:'100%'
   },
 }));
-export default function BasicTextFields({add_row,PID,ptId}) {
+export default function BasicTextFields({add_row,PID}) {
   const classes = useStyles();
 
   const [drugs,setDrugs]=React.useState([]);
@@ -37,27 +37,22 @@ export default function BasicTextFields({add_row,PID,ptId}) {
 const AddToDB = (row)=>{
   console.log(row)
   var t = row.drug.split(',')
-  let data = {
+  console.log(t)
+  axios.post('http://localhost:8080/visit/addPrescription_Drugs_single',{
     Quantity : row.quantity,
     Duration : row.duration,
     drug_id : t[0],
-    PId : PID,
-    notes : row.notes,
-    ptId : ptId,
-    drId : localStorage.getItem('userId')
-  }
-  AddPrescriptionDrug(data).then(id=>{
+    PId : PID
+  }).then(res=>{
     add_row({
       drugName:t[1],
       Quantity:row.quantity,
       Duration:row.duration,
-      notes : row.notes,
-      id : id
-    })
-  }).catch(err=>{
-    console.log(err)
+      id:res.data.insertId
   })
-
+  }).catch(err=>{
+    console.log(err+" err in create drugs_prescription")
+  })
 
 }
 
@@ -71,12 +66,11 @@ const loadDrugs = ()=>{
     return;
   }
 
-  LoadFromDB().then(data=>{
-    setDrugs(data)
-  }).catch(err=>{
-    console.log(err)
-  })
-
+axios.get('http://localhost:8080/drug/getAll').then(res=>{
+  setDrugs(res.data)
+  console.log("mostafa",res.data)
+}).catch(err=>{
+})
 }
   return (
     <form className={classes.root} noValidate autoComplete="off">
@@ -103,8 +97,8 @@ const loadDrugs = ()=>{
                 >
                   {
                   drugs.length >0 && drugs.map(drug=>
-                  <MenuItem key={drug.id} value={drug.id+","+drug.name}>
-                    {drug.name}
+                  <MenuItem key={drug.id} value={drug.id+","+drug.genricName}>
+                    {drug.genricName}
                     </MenuItem>)
                     }
                 </Select>

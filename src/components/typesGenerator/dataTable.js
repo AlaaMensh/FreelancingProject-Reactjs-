@@ -9,6 +9,7 @@ class DataTableComp extends Component {
           
           }
     }
+    
 
     render() { 
         const tableData = {
@@ -16,8 +17,9 @@ class DataTableComp extends Component {
             data :this.props.data
           };
         return ( 
+          <div>
+            {console.log("****************************")}
              <DataTable
-
                title={` ${this.props.title}`}
                columns={this.props.columns}
                data={this.props.data}
@@ -25,6 +27,7 @@ class DataTableComp extends Component {
                highlightOnHover
                
              />
+           </div>
          );
     }
 }

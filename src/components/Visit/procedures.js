@@ -1,11 +1,11 @@
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-// import "./form.css";
-import TextField from '@material-ui/core/TextField';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import axios from 'axios';
 import React from "react";
-import { Col, Form, Row } from "react-bootstrap";
+import TextField from "@material-ui/core/TextField";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
+import { Card, Row, Col, Form } from "react-bootstrap";
+// import "./form.css";
 
 const useStyles = makeStyles((theme) => ({
   marginTopp: {
@@ -52,20 +52,7 @@ export default function Procedures({
   obj,
 }) {
   const classes = useStyles();
-  const [surgys,setSurgys] = React.useState([])
-  const [inputValue, setInputValue] = React.useState('');
-  const [value, setValue] = React.useState([]);
 
-  const loadAllSurgeries = ()=>{
-    axios.get("http://localhost:8080/surgery/getAll").then(res=>{
-        setSurgys(res.data)
-    }).catch(err=>{
-      alert(err)
-    })
-  }
-  React.useEffect(()=>{
-    loadAllSurgeries()
-  },[])
   //  this Component will handle Surgies and interventions
   return (
     <Row className="justify-content-center">
@@ -75,27 +62,84 @@ export default function Procedures({
             <Row>
               <Col item xs={6}>
                 <Form.Label>Surgeries</Form.Label>
-                {surgys.length > 0 && <Autocomplete
-                multiple
-                  onChange={(event, newValue) => {
-                    if(newValue)
-                    {
-                      setValue(newValue);
-                      console.log(newValue)
-
-                    }
+                <Form.Control
+                  variant="outlined"
+                  required
+                  fullWidth
+                  size="small"
+                  id="surgeries"
+                  palceholder="Surgeries"
+                  type="text"
+                  name="surgeries"
+                  autoComplete="surgeries"
+                  defaultValue={obj.surgeries}
+                  onChange={(event) => {
+                    getSurgeries(event.target.value);
                   }}
-                  filterSelectedOptions
-                  getOptionLabel={(option) => option.abbreviation}
-                  id="controllable-states-demo"
-                  options={surgys}
-                  style={{ width: 300 }}
-                  renderInput={(params) => <TextField {...params} label="Controllable" variant="outlined" />}
-                />}
+                />
               </Col>
-              
+              <Col item xs={6}>
+                <Form.Label>Surgery Date</Form.Label>
+                <Form.Control
+                  variant="outlined"
+                  required
+                  fullWidth
+                  size="small"
+                  id="surgeryDate"
+                  palceholder="Surgery Date"
+                  type="date"
+                  name="surgeryDate"
+                  autoComplete="surgeryDate"
+                  value={obj.surgeryDate}
+                  onChange={(event) => {
+                    getSurgeryDate(event.target.value);
+                    // console.log("yyyyys" , lastName);
+                  }}
+                />
+              </Col>
             </Row>
 
+            <Row>
+              <Col item xs={6}>
+                <Form.Label>interventions</Form.Label>
+                <Form.Control
+                  variant="outlined"
+                  required
+                  fullWidth
+                  size="small"
+                  id="interventions"
+                  placeholder="interventions"
+                  name="interventions"
+                  type="text"
+                  autoComplete="interventions"
+                  value={obj.interventions}
+                  onChange={(event) => {
+                    getInterventions(event.target.value);
+                    // console.log("yyyyys" , username);
+                  }}
+                  // defaultValue={obj.email}
+                />
+              </Col>
+              <Col item xs={6}>
+                <Form.Label>Interventions Date</Form.Label>
+                <Form.Control
+                  variant="outlined"
+                  required
+                  fullWidth
+                  size="small"
+                  id="interventionsDate"
+                  placeholder="Interventions Date"
+                  name="interventionsDate"
+                  type="date"
+                  autoComplete="interventionsDate"
+                  defaultValue={obj.interventionsDate}
+                  onChange={(event) => {
+                    getInterventionsDate(event.target.value);
+                    // console.log("yyyyys" , username);
+                  }}
+                />
+              </Col>
+            </Row>
 
             <Grid container justify="flex-end">
               <Grid item></Grid>

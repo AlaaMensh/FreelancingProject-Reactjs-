@@ -2,7 +2,7 @@
     "allergy" : 
             {   "state":{
                     "name":"",
-                    "description":""
+                    "type":""
             },
                "columnsTable" : {
                         "name": {
@@ -12,9 +12,9 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "description" :{
-                                "name" :"description",
-                                "selector" : "description",
+                        "type" :{
+                                "name" :"type",
+                                "selector" : "type",
                                 "sortable":true,
                                 "center" : true
                         },
@@ -28,22 +28,26 @@
                         }
                },
                "title":"All Allergy Types",
-                "description":"simple blah blah this the page and what it dose you know stuff..",
+                "description":"You will find all Allergy here..",
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Allergy Name"
                         },
-                        "description" : {
+                        "type" : {
                                 "type":"text",
-                                "name" :"description"
+                                "name" :"type",
+                                "label":"Type",
+                                "placeHolder":"Choose Allergy Type"
                         }
 
                },
-               "addType" :"http://localhost:8080/allergy/addAllergy",
-               "deleteType" : "http://localhost:8080/allergy/deleteAllergy",
-               "updateType":"http://localhost:8080/allergy/updateAllergy",
-               "getAll":"http://localhost:8080/allergy/getAllergy"
+               "addType" :"https://mvb1.herokuapp.com/allergy/addAllergy",
+               "deleteType" : "https://mvb1.herokuapp.com/allergy/deleteAllergy",
+               "updateType":"https://mvb1.herokuapp.com/allergy/updateAllergy",
+               "getAll":"https://mvb1.herokuapp.com/allergy/getAllergy"
 
             },
     "disease" : 
@@ -79,58 +83,40 @@
                "modalForms": {
                         "name" :{
                                 "type":"text",
-                                "name" :"name"
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Disease Name"
                         },
                         "code" : {
                                 "type":"text",
-                                "name" :"code"
+                                "name" :"code",
+                                "label":"Code",
+                                "placeHolder":"Enter Disease Code"
                         },
                         "abbreviation" : {
                                 "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "label":"abbreviation",
+                                "placeHolder":"Enter Disease Abbreviation"
                         }
                },
                "title":"All Diseases Types",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addType" :"http://localhost:8080/disease/addDiseases",
-               "deleteType" : "http://localhost:8080/disease/deleteDiseases",
-               "updateType":"http://localhost:8080/diseases/updateDiseases",
-               "getAll":"http://localhost:8080/disease/getAll"
+               "description":"You will find All Diseases here..",
+               "addType" :"https://mvb1.herokuapp.com/disease/addDiseases",
+               "deleteType" : "https://mvb1.herokuapp.com/disease/deleteDiseases",
+               "updateType":"https://mvb1.herokuapp.com/disease/updateDiseases",
+               "getAll":"https://mvb1.herokuapp.com/disease/getAll"
 
             },
     "drug" : 
             {   "state":{
-                    "genricName":"",
-                    "tradeName":"",
-                    "form":"",
-                    "dose":"",
-                    "family":""
+                    "name":""
             },
                "columnsTable" : {
-                        "genricName": {
-                                "name": "genricName",
-                                "selector": "genricName",
+                        "name": {
+                                "name": "name",
+                                "selector": "name",
                                 "sortable": true
-                        },
-                        "tradeName" :{
-                                "name" :"tradeName",
-                                "selector" : "tradeName",
-                                "sortable":true
-                        },
-                        "form" :{
-                                "name" :"form",
-                                "selector" : "form",
-                                "sortable":true
-                        },
-                        "dose" :{
-                                "name" :"dose",
-                                "selector" : "dose",
-                                "sortable":true
-                        },
-                        "family" :{
-                                "name" :"family",
-                                "selector" : "family",
-                                "sortable":true
                         },
                         "actions" :{
                                 "name" :"actions",
@@ -141,89 +127,228 @@
                         }
                },
                "modalForms": {
-                        "genricName" :{
+                        "drugName" :{
                                 "type":"text",
-                                "name" :"genricName"
-                        },
-                        "tradeName" : {
-                                "type":"text",
-                                "name" :"tradeName"
-                        },
-                        "form" : {
-                                "type":"text",
-                                "name" :"form"
-                        },
-                        "dose" : {
-                                "type":"text",
-                                "name" :"dose"
-                        },
-                        "family" : {
-                                "type":"text",
-                                "name" :"family"
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Drug Name"
                         }
                },
                "title":"All Drugs Types",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addType" :"http://localhost:8080/drug/addDrug",
-               "deleteType" : "http://localhost:8080/drug/deleteDrug",
-               "updateType":"http://localhost:8080/drug/updateDrugs",
-               "getAll":"http://localhost:8080/drug/getAll"
+               "description":"You will find all Drugs here..",
+               "addType" :"https://mvb1.herokuapp.com/drug/addDrug",
+               "deleteType" : "https://mvb1.herokuapp.com/drug/deleteDrug",
+               "updateType":"https://mvb1.herokuapp.com/drug/updateDrug",
+               "getAll":"https://mvb1.herokuapp.com/drug/getAll"
 
             },
-    "LRP" : 
+    
+            "lab" : 
             {   "state":{
-                    "abbreviation":"",
                     "name":"",
-                    "description":""
-            
+                    "abbreviation":""
             },
                "columnsTable" : {
-                        "abbreviation": {
-                                "name": "abbreviation",
-                                "selector": "abbreviation",
-                                "sortable": true
+                        "name": {
+                
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true,
+                                "center" : true
                         },
-                        "name" :{
-                                "name" :"name",
-                                "selector" : "name",
-                                "sortable":true
+                        "abbreviation" :{
+                                "name" :"abbreviation",
+                                "selector" : "abbreviation",
+                                "sortable":true,
+                                "center" : true
                         },
-                        "description" :{
-                                "name" :"description",
-                                "selector" : "description",
-                                "sortable":true
-                        },
-                      
                         "actions" :{
                                 "name" :"actions",
                                 "selector" : "actions",
                                 "sortable":false,
                                 "center" : true,
+                                
                                 "width":"300px"
                         }
                },
+               "title":"All Labs Types",
+                "description":"You will see here all labs Types...",
                "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Lab Name"
+                        },
+                        "abbreviation" : {
+                                "type":"text",
+                                "name" :"abbreviation",
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Lab Abbreviation"
+                        }
+
+               },
+               "addType" :"https://mvb1.herokuapp.com/lab/addlab",
+               "deleteType" : "https://mvb1.herokuapp.com/lab/deletelab",
+               "updateType":"https://mvb1.herokuapp.com/lab/updatedlab",
+               "getAll":"https://mvb1.herokuapp.com/lab/getAll"
+
+            },
+            "pathology" : 
+            {   "state":{
+                    "name":"",
+                    "abbreviation":""
+            },
+               "columnsTable" : {
+                        "name": {
+                
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true,
+                                "center" : true
+                        },
                         "abbreviation" :{
-                                "type":"text",
-                                "name" :"abbreviation"
+                                "name" :"abbreviation",
+                                "selector" : "abbreviation",
+                                "sortable":true,
+                                "center" : true
                         },
-                        "name" : {
-                                "type":"text",
-                                "name" :"name"
-                        },
-                        "description" : {
-                                "type":"text",
-                                "name" :"description"
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                
+                                "width":"300px"
                         }
                },
-               "title":"All LRP Types",
-               "description":"simple blah blah this the page and what it dose you know stuff..",
-               "addType" :"http://localhost:8080/lpr/addLpr",
-               "deleteType" : "http://localhost:8080/lpr/deleteLpr",
-               "updateType":"http://localhost:8080/lpr/updateLpr",
-               "getAll":"http://localhost:8080/lpr/getLpr"
+               "title":"All Pathologies Types",
+                "description":"You will see here all Pathologies Types...",
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Pathology Name"
+                        },
+                        "abbreviation" : {
+                                "type":"text",
+                                "name" :"abbreviation",
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Pathology abbreviation"
+                        }
+
+               },
+               "addType" :"https://mvb1.herokuapp.com/patho/addpatho",
+               "deleteType" : "https://mvb1.herokuapp.com/patho/deletepatho",
+               "updateType":"https://mvb1.herokuapp.com/patho/updatedpatho",
+               "getAll":"https://mvb1.herokuapp.com/patho/getAll"
+
+            },
+            "radiology" : 
+            {   "state":{
+                    "name":"",
+                    "abbreviation":""
+            },
+               "columnsTable" : {
+                        "name": {
+                
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "abbreviation" :{
+                                "name" :"abbreviation",
+                                "selector" : "abbreviation",
+                                "sortable":true,
+                                "center" : true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                
+                                "width":"300px"
+                        }
+               },
+               "title":"All radiologies Types",
+                "description":"You will see here all radiologies Types...",
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Radio Name"
+                        },
+                        "abbreviation" : {
+                                "type":"text",
+                                "name" :"abbreviation",
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Radio Abbreviation"
+                        }
+
+               },
+               "addType" :"https://mvb1.herokuapp.com/radio/addRadio",
+               "deleteType" : "https://mvb1.herokuapp.com/radio/deleteRadio",
+               "updateType":"https://mvb1.herokuapp.com/radio/updatedRadio",
+               "getAll":"https://mvb1.herokuapp.com/radio/getAll"
+
+            },
+            "surgeries" : 
+            {   "state":{
+                    "name":"",
+                    "abbreviation":""
+            },
+               "columnsTable" : {
+                        "name": {
+                
+                                "name": "Name",
+                                "selector": "name",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "abbreviation" :{
+                                "name" :"abbreviation",
+                                "selector" : "abbreviation",
+                                "sortable":true,
+                                "center" : true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                
+                                "width":"300px"
+                        }
+               },
+               "title":"All Surgeries Types",
+                "description":"You will see here all Surgeries Types...",
+               "modalForms": {
+                        "name" :{
+                                "type":"text",
+                                "name" :"name",
+                                "label":"Name",
+                                "placeHolder":"Enter Surgery Name"
+                        },
+                        "abbreviation" : {
+                                "type":"text",
+                                "name" :"abbreviation",
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Surgery Abbreviation"
+                        }
+
+               },
+               "addType" :"https://mvb1.herokuapp.com/surgery/addsurgery",
+               "deleteType" : "https://mvb1.herokuapp.com/surgery/deletesurgery",
+               "updateType":"https://mvb1.herokuapp.com/surgery/updatedsurgery",
+               "getAll":"https://mvb1.herokuapp.com/surgery/getAll"
 
             }
+
+  
             
             
     

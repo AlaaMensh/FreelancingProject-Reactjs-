@@ -1,20 +1,28 @@
-import MuiAccordion from "@material-ui/core/Accordion";
-import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
-import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
+import React, { Component } from "react";
+import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select";
+import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import MuiAccordion from "@material-ui/core/Accordion";
+import MuiAccordionSummary from "@material-ui/core/AccordionSummary";
+import MuiAccordionDetails from "@material-ui/core/AccordionDetails";
+import { withStyles } from "@material-ui/core/styles";
+// import Modal from "@material-ui/core/Modal";
+// import Avatar from '@material-ui/core/Avatar';
+import AddBoxIcon from "@material-ui/icons/AddBox";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Card, Row, Col, Form, Modal } from "react-bootstrap";
+
 // import { CheckCircleSharp } from "@material-ui/icons";
+
 // // import "./form.css";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import React, { Component } from "react";
-import { Col, Form, Modal, Row } from "react-bootstrap";
 
-
+import { useEffect } from "react";
+import { gridColumnLookupSelector } from "@material-ui/data-grid";
 // // import { useEffect } from 'react';
 
 const Accordion = withStyles({
@@ -227,6 +235,7 @@ class Investgation extends Component {
           drId: 1, // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments: this.state.notes,
+          status: this.state.TypeObj.status,
           date: this.getDate(),
         };
 
@@ -245,6 +254,7 @@ class Investgation extends Component {
           drId: 1, // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments: this.state.notes,
+          status: this.state.TypeObj.status,
           date: this.getDate(),
         };
 
@@ -262,6 +272,7 @@ class Investgation extends Component {
           drId: 1, // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments: this.state.notes,
+          status: this.state.TypeObj.status,
           date: this.getDate(),
         };
 
@@ -377,6 +388,7 @@ class Investgation extends Component {
                         drId: localStorage.getItem("userId"),
                         result: null,
                         comments: labb && labb.comments ? labb.comments : "",
+                        status: "request",
                         date: this.getDate(),
                       };
                       // Create a new array based on current state:
@@ -504,6 +516,7 @@ class Investgation extends Component {
                         drId: localStorage.getItem("userId"),
                         result: null,
                         comments: labb && labb.comments ? labb.comments : "",
+                        status: "request",
                         date: this.getDate(),
                       };
                       // Create a new array based on current state:
@@ -563,6 +576,7 @@ class Investgation extends Component {
                                 <tr>
                                   <td>{choice.name}</td>
                                   <td>{this.getDate()}</td>
+                                  <td>request</td>
                                   {lab && lab.comments !== "" ? (
                                     <td>{lab.comments}</td>
                                   ) : (
@@ -631,6 +645,7 @@ class Investgation extends Component {
                         drId: localStorage.getItem("userId"),
                         result: null,
                         comments: labb && labb.comments ? labb.comments : "",
+                        status: "request",
                         date: this.getDate(),
                       };
                       // Create a new array based on current state:
@@ -775,7 +790,23 @@ class Investgation extends Component {
                       }}
                     />
                   </Col>
-
+                  <Col item xs={12}>
+                    <Form.Label>Status</Form.Label>
+                    <Form.Control
+                      as="select"
+                      custom
+                      native
+                      // defaultValue="choice1"
+                      onChange={(event) => {
+                        this.setState({ status: event.target.value });
+                        console.log("status", event.target.value);
+                      }}
+                    >
+                      <option value="choice1">Pending</option>
+                      <option value="choice2">Processing</option>
+                      <option value="choice3">Done</option>
+                    </Form.Control>
+                  </Col>
                 </Row>
 
                 <Button

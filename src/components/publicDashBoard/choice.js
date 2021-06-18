@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Card from 'react-bootstrap/Card';
 import SessionCode from "../sessionCode";
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 class ChoicePage extends Component {
     constructor(props) {
         super(props);
@@ -22,7 +23,7 @@ class ChoicePage extends Component {
         return (  
            
                 <div className="row mt-5 justify-content-center align-items-center">
-                    <div className="col-10 col-md-4">
+                    <div className="col-10 col-md-6">
                             <Card style={{ width: '18rem',height:"15em" }} className="bg-light text-secondary" 
                             onClick={()=>{
                                 console.log("history: " , this.props);
@@ -45,27 +46,8 @@ class ChoicePage extends Component {
                                 </Card.Text>
                                 </Card.Body>
                                 </Card>
-
                     </div>
-                        {/* results start */}
-
-                    <div className="col-10 col-md-4 mt-5 mt-md-0">
-                        <Card
-                        onClick={()=>{
-                            this.props.history.push(`${this.props.location.pathname}/allResults`)
-
-                        }}>
-                            <Card.Img variant="top" style={{cursor:"pointer"}} src={window.location.origin + '/images/img1.svg'} />
-                            <Card.Body className="text-secondary mt-2 mx-auto">
-                            <Card.Text className="text-secondary">
-                                  Get all Results
-                            </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </div>
-                        {/* results end */}
-
-                    <div className="col-10 col-md-4 mt-5 mt-md-0">
+                    <div className="col-10 col-md-6 mt-5 mt-md-0">
                                     <SessionCode buttonValue = "get patient Orders"
                                         fromComponent={"choice"} 
                                         orderType={this.props.match.params.type}

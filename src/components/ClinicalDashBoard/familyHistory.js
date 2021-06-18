@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import userType from "../usersDB.json";
+import clinicalDB from "./clinicalDB.json";
 import ModalComp from "../typesGenerator/modalGenerator";
 import axios from "axios";
 import DataTableComp from "../typesGenerator/dataTable";
@@ -11,10 +11,10 @@ import FormGenerator from "../Forms/formGenerationNew";
 import ModalGenerator from "./../ModalGeneration/modalGeneration";
 
 const optionsInput = [
-  {id:1 , name:"alaa"},
-  {id:2 , name:"lol"}
-]
-class UserCrud extends Component {
+  { id: 1, name: "alaa" },
+  { id: 2, name: "lol" },
+];
+class FamilyHistory extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -29,16 +29,16 @@ class UserCrud extends Component {
       formType: "add",
       addingUserObject: {},
       updateUserObject: {},
-      options :[]
+      options: [],
     };
   }
-  handleDataTable = (type) =>{
+  handleDataTable = (type) => {
     var temp = [];
-    var temp2=[]
-    for (var p in userType[type].columnsTable) {
+    var temp2 = [];
+    for (var p in clinicalDB[type].columnsTable) {
       // for Adding actions Buttons to DataTable
       if (p === "actions") {
-        userType[type].columnsTable[p]["cell"] = (row) => {
+        clinicalDB[type].columnsTable[p]["cell"] = (row) => {
           return (
             <div className="row">
               <div className="col-auto">
@@ -68,98 +68,61 @@ class UserCrud extends Component {
             </div>
           );
         };
-        temp.push(userType[type].columnsTable[p]);
+        temp.push(clinicalDB[type].columnsTable[p]);
       } else {
-        temp.push(userType[type].columnsTable[p]);
+        temp.push(clinicalDB[type].columnsTable[p]);
       }
-      
-
-
     }
     this.setState({ columns: temp });
     temp = [];
-  }
-  handleAdditionInputs = (type  , optionsList) =>{
-    console.log("//////////////////////////////////////////")
+  };
+  ///***  to handle Form Inputs***
+  handleFormInputs = (type, optionsList) => {
     var details = {};
-    var temp2=[];
-    var temp=[];
-    for (var p in userType[type].modalAdditionForms) {
-      // for Addition Form Inputs
-      if (p === "radioFDId" || p === "pathoFDId" || p === "radioId" || p == "drFDId" || p == "labFDId" || p === "drId") { // adding all
-        console.log("yeees" , this.state.options)
-        for(var place of optionsList){
-          var obj =null;
-          if(place.organization){
-             obj = {value : place.id , text : place.organization }
-          }
-          else{
-             obj = {value : place.id , text : place.firstName + " " + place.secondName + " " + place.lastName }
-          }         
-           temp2.push(obj);
-        }
-        console.log("options : " , temp2)
-        this.setState({options : temp2})
-        temp2=[]
+    var temp2 = [];
+    var temp = [];
+    // for Addition Form Inputs
+    for (var p in clinicalDB[type].modalAdditionForms) {
+      for (var disease of optionsList) {
+        var obj = {
+          value: disease.id,
+          text: disease.name + " (" + disease.abbreviation + " )",
+        };
+        temp2.push(obj);
       }
+      console.log("options : ", temp2);
+      this.setState({ options: temp2 });
+      temp2 = [];
 
-
-      temp.push(userType[type].modalAdditionForms[p]);
-      console.log("here: ", userType[type].modalAdditionForms[p]["name"]);
-
-      details[userType[type].modalAdditionForms[p]["name"]] = "";
+      temp.push(clinicalDB[type].modalAdditionForms[p]);
+      details[clinicalDB[type].modalAdditionForms[p]["name"]] = "";
     }
     this.setState({
       ModalAddtionInputs: temp,
-      addingUserObject: details,
     });
     console.log("details for Addition: ", details);
-  }
+  };
 
   async componentDidMount() {
-    var type = this.props.match.params.type;
+    var type = this.props.type;
     this.setState({ type });
-    var temp = [];
-    var temp2 = [];
-    var optionsList =[];
-    /// load data Which get in dropDown buttons
-    if(type === "radiogist" || type === "pathologyFD" || type === "radioFD" || type === "doctor" || type === "chemist" || type === "nurse" || type === "pathologist"){
-       optionsList =  await this.loadSelectInputData(type);
-       console.log("optionsList : ",optionsList);
-       if(!optionsList){
-         optionsList = optionsInput
-       }
-    }
-    else{
-      optionsList = [];
-    }
     // put the options Inputs in options which got from jsonFile
-  
+    if(type === "familyHistory" || type === "surgeries" || type === "onGoingProblems" || type === "activeMedication"){
+      var optionsList = await this.loadSelectInputData(type); 
+      this.handleFormInputs(type, optionsList);
+    }else{
+      this.handleFormInputs(type, []);
+    }
     await this.handleDataTable(type);
 
-    ////////////////////////////////// / * ForAddition *////////////////////////////
-    this.handleAdditionInputs(type , optionsList);
-    ////////////////////////////////// / * ForUpdate Form Inputs *////////////////////////////
-    var temp = [];
-    var details = {};
-    for (var p in userType[type].modalUpdateForms) {
-      // for Update Form Inputs
-      temp.push(userType[type].modalUpdateForms[p]);
-      details[userType[type].modalUpdateForms[p]["name"]] = "";
-    }
-    this.setState({
-      ModalUpdateInputs: temp,
-      updateUserObject: details,
-    });
-    console.log("details for updating: ", details);
-
+    ////////////////////////////////// / * For Modal Forms Inputs *////////////////////////////
     ////////////////////////////////// / * setNew State With user attributes *////////////////////////////
+
+    // to put user attributes in Component's state
     var newState = this.state;
-    for (var property in userType[type].state) {
-      // to put user attributes in Component's state
+    for (var property in clinicalDB[type].state) {
       newState[property] = "";
     }
-
     await this.getData(type);
   }
 
@@ -169,21 +132,21 @@ class UserCrud extends Component {
   handleopenModal = () => {
     this.setState({ openModal: true });
   };
+  // to set the Updated Object to get the old Value from this
   setUpdatedObj = (id) => {
     var obj = this.state.data.find((row) => row.id === id);
-    console.log("object: " , obj);
     this.setState({ typeObj: obj });
   };
 
-  handleUpdate = async () => {
+  handleUpdate = async () => { // **** Change the EndPoint with the New One
     var details = {};
 
-    for (var property in this.state.updateUserObject) {
+    for (var property in clinicalDB[this.state.type].state) {
       details[property] = this.state[property] || this.state.typeObj[property];
     }
+    details["id"] = this.state.typeObj.id;
 
     console.log("details on update : ", details);
-    details["id"] = this.state.typeObj.id;
 
     var formBody = [];
     for (var property in details) {
@@ -194,21 +157,18 @@ class UserCrud extends Component {
     formBody = formBody.join("&");
 
     console.log("formBody: ", formBody);
-    await fetch(`${userType[this.state.type].updateUser}`, {
+    await fetch(`${clinicalDB[this.state.type].updateUser}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
       },
       body: formBody,
     })
-      .then((resp) => {
-        resp.json().then((data)=>{
-          console.log("Update Function: " , data);
-        })
-      })
+      .then(() => {})
       .catch(() => {
         console.log("errror");
       });
+
     this.getData(this.state.type);
   };
   handleDelete = async (id) => {
@@ -221,9 +181,8 @@ class UserCrud extends Component {
       var encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-    // formBody = formBody.join("&");
 
-    fetch(`${userType[this.state.type].deleteUser}`, {
+    fetch(`${clinicalDB[this.state.type].deleteUser}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
@@ -242,29 +201,27 @@ class UserCrud extends Component {
     });
   };
   // load data into Select input from DB
-  loadSelectInputData = async(type) => {
+  loadSelectInputData = async (type) => {
     var temp = [];
-    await axios.get(`${userType[type].getAllDataFD}` ,{
-    } ).then(async resp => {
-      console.log("resp : " ,resp)
-      console.log("AllData: " , resp.data);
-      this.setState({options : resp.data});
-      
-    temp =  resp.data;
-    })
-    return temp
-  }
-  handleAdding = async () => {
+    await axios
+      .get(`${clinicalDB[type].getAllDiseases}`, {})
+      .then(async (resp) => {
+        console.log("resp : ", resp);
+        console.log("AllData: ", resp.data);
+        this.setState({ options: resp.data });
+
+        temp = resp.data;
+      });
+    return temp;
+  };
+
+  handleAdding = async () => { // **** Change the EndPoint with the New One
     var details = {};
-    for (var p in this.state.addingUserObject) {
-      // for Addition Form Inputs
+    // for Addition Form Inputs
+    for (var p in clinicalDB[this.state.type].state) {
       details[p] = this.state[p];
     }
-    if(this.state.type === "assistant"){
-      details["address"]="Giza";
-    }
     console.log("details on Adding : ", details);
-    console.log("detilaas : ", details);
 
     var formBody = [];
     for (var property in details) {
@@ -274,7 +231,7 @@ class UserCrud extends Component {
     }
     formBody = formBody.join("&");
 
-    await fetch(`${userType[this.state.type].addUser}`, {
+    await fetch(`${clinicalDB[this.state.type].addUser}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
@@ -282,10 +239,9 @@ class UserCrud extends Component {
       body: formBody,
     })
       .then((resp) => {
-        resp.json().then((data) =>{
-          console.log("data: " , data);
-        })
-        console.log("it is inserted");
+        resp.json().then((data) => {
+          console.log("Message From BackEnd: ", data);
+        });
       })
       .catch(() => {
         console.log("errror");
@@ -293,33 +249,43 @@ class UserCrud extends Component {
     this.getData(this.state.type);
   };
   getData = async (type) => {
-    console.log("UserEndpoint: ", userType[type].getAll);
-    await axios.get(`${userType[type].getAll}`).then(async (resp) => {
+    console.log("UserEndpoint: ", clinicalDB[type].getAll , this.props.id);
+    await axios.post(`${clinicalDB[type].getAll}` , {
+      ptId: this.props.id
+    }).then(async (resp) => {
       this.setState({
         data: resp.data,
         temp: resp.data,
       });
-      console.log("resp.data: ", resp.data);
+      console.log("All Incoming Data in GetData Funciton : ", resp.data);
     });
   };
 
   handleChange = (evt) => {
-    if(evt.text && evt.text === "autoComplete" && evt.newValue && evt.newValue.value){
-      console.log("evt: " , evt , "  Value :")
+    // if it is autoComplete the Object will change it will contain the newValue 
+    if (
+      evt.text &&
+      evt.text === "autoComplete" &&
+      evt.newValue &&
+      evt.newValue.value
+    ) {
+      console.log("evt: ", evt, "  Value :");
       this.setState({
         [evt.input]: evt.newValue.value,
       });
-    }
-    else{
-      if(evt.target){
+    } else {
+      if (evt.target) { // to handle after deletion the choice from autoComplete input
         const value = evt.target.value;
         this.setState({
           [evt.target.name]: value,
         });
       }
     }
-
   };
+componentWillUnmount(){
+  this.setState({data :[]})
+  this.setState({type : ""})
+}
   render() {
     const tableData = {
       columns: this.state.columns,
@@ -328,32 +294,36 @@ class UserCrud extends Component {
 
     return (
       <Container>
+        {console.log("modalAdditionInputs : " , this.state.ModalAddtionInputs)}
         <Row className="py-3">
           <Col>
-            {userType && this.state.type && (
+            {clinicalDB && this.state.type && (
               <>
-                <h3>{userType[this.state.type].title}</h3>
-                <div>{userType[this.state.type].description}</div>
+                <h3>{clinicalDB[this.state.type].title}</h3>
+                <div>{clinicalDB[this.state.type].description}</div>
               </>
             )}
           </Col>
         </Row>
-
-        <Row className="py-3">
-          <Col sm={10}></Col>
-          <Col sm={2}>
-            <Button
-              variant="success"
-              onClick={() => {
-                this.setState({ formType: "add" });
-                this.handleopenModal();
-              }}
-            >
-              Add New
-            </Button>{" "}
-          </Col>
-        </Row>
-        <Row className="py-3">
+              {
+                this.props.addButtonFlag && (
+                  <Row className="py-3">
+                  <Col sm={10}></Col>
+                  <Col sm={2}>
+                    <Button
+                      variant="success"
+                      onClick={() => {
+                        this.setState({ formType: "add" });
+                        this.handleopenModal();
+                      }}
+                    >
+                      Add New
+                    </Button>{" "}
+                  </Col>
+                </Row>
+                 )
+              } 
+        <Row className = "py-3">
           <Col sm={12} className="py-3">
             <DataTableComp
               data={this.state.data}
@@ -364,13 +334,16 @@ class UserCrud extends Component {
           </Col>
         </Row>
 
-        {console.log("state : "  ,this.state)}
         {this.state.formType === "add" &&
         this.state.ModalAddtionInputs &&
         this.state.ModalAddtionInputs.length > 0 ? (
-          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}   formType={this.state.formType}>
+          <ModalGenerator
+            onHide={this.handleClose}
+            show={this.state.openModal}
+            formType={this.state.formType}
+          > 
+          {/*  for Addition Modal */}
             <FormGenerator
-              hideModal = {this.handleClose}
               ModalInputs={this.state.ModalAddtionInputs}
               handleChange={this.handleChange}
               handleUpdate={this.handleUpdate}
@@ -380,15 +353,20 @@ class UserCrud extends Component {
             />
           </ModalGenerator>
         ) : (
-          <ModalGenerator onHide={this.handleClose} show={this.state.openModal}   formType={this.state.formType}>
+          // for Update
+          <ModalGenerator
+            onHide={this.handleClose}
+            show={this.state.openModal}
+            formType={this.state.formType}
+          >
+                  {/*  for Updating Modal */}
             <FormGenerator
-              hideModal = {this.handleClose}
               updatedTypeObj={this.state.typeObj}
-              ModalInputs={this.state.ModalUpdateInputs}
+              ModalInputs={this.state.ModalAddtionInputs}
               handleChange={this.handleChange}
               handleUpdate={this.handleUpdate}
               handleAdding={this.handleAdding}
-              options={this.state.options}
+              options={[]}
               formType={this.state.formType}
             />
           </ModalGenerator>
@@ -398,4 +376,4 @@ class UserCrud extends Component {
   }
 }
 
-export default UserCrud;
+export default FamilyHistory;

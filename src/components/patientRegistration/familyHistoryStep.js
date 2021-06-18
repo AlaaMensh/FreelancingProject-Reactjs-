@@ -1,526 +1,267 @@
 import React, { useState, useEffect } from "react";
-import { DataGrid } from "@material-ui/data-grid";
-import Button from "@material-ui/core/Button";
 import { Component } from "react";
-import Modal from "@material-ui/core/Modal";
-import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import AddBoxIcon from "@material-ui/icons/AddBox";
-import EditIcon from "@material-ui/icons/Edit";
-import Fab from "@material-ui/core/Fab";
-import { withStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-
-var object = {};
-const useStyles = (theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    backgroundColor: "white",
-    padding: "1em",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-    fontSize: "1.1em",
-    fontFamily: "Dosis",
-  },
-  input2: {
-    height: "10px",
-  },
-  iconPlus: {
-    margin: "auto",
-    textAlign: "center",
-    // float:"right",
-  },
-  button: {
-    margin: theme.spacing(1),
-    fontFamily: "Roboto Slab",
-  },
-  deleteButton: {
-    backgroundColor: "#c94c4c",
-  },
-  editButton: {
-    backgroundColor: "#c94c4c",
-  },
-});
-
-var id = 0;
-var rowsToKeep = [];
-var rowsToBeDeleted = [];
+import axios from "axios";
+import steps from "./patientRegistrationDB.json";
+import DataTableComp from "../typesGenerator/dataTable";
+import ModalGenerator from "./../ModalGeneration/modalGeneration";
+import FormGenerator from "../Forms/formGenerationNew";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
 
 class FamilyHistoryStep extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      familyHistoryList: [
-        //   {
-        //       id:"",
-        //       type:"" ,
-        //       status:"",
-        //       reaction:"",
-        //       notes:""
-        // }
-      ],
-      typeId: 0,
-      openModal1: false,
-      openModal2: false,
+      familyHistory: [], // to load data with it in table
+      openModal: false,
       TypeObj: {},
-      type: "",
-      status: "",
-      reaction: "",
-      notes: "",
-      relation: "",
-      notes: "",
-      problem: "",
-      dateOfDiagnosis: "",
-      key: 1,
+
+      key: 1, // ** remove it if you don't use in another lists
+
+      allergyTypes: [], // from DB ,
+      activeStatus: true, // for Changing
+      activeStatusText: "Active", // for the value of changing
+      columns: [], // to handle Columns of the table
+      formInputs: [], // to handle Form Inputs the addition or update
+      formType: "", // edit or add
+      stepType: "", // if it is allergy or onGoingproblems or surgeries or interventions
     };
   }
-
-  getTypeByID = async (row) => {
-    console.log("dkkdkdkdkdkdkdkdkdk:    ", row);
-    this.setState({ TypeObj: row });
+  //** to get the row which will updated */
+  getTypeByID = async (id) => {
+    var updatedObj = this.state.familyHistory.filter((item) => item.id === id)
+    console.log("UpdatedObject: ", updatedObj);
+    this.setState({ TypeObj: updatedObj[0]});
   };
-
-  handleopenModal1 = () => {
-    this.setState({ openModal1: true });
+  // for Modal
+  handleopenModal = () => {
+    this.setState({ openModal: true });
   };
 
   handleClose = () => {
-    this.setState({ openModal1: false });
-  };
-  handleopenModal2 = () => {
-    this.setState({ openModal2: true });
-  };
-  getData = async () => {};
-
-  handleCloseModal2 = () => {
-    this.setState({ openModal2: false });
+    this.setState({ openModal: false });
   };
 
+  // ***delete from table
   handleDelete = async (id) => {
     this.setState({
-      familyHistoryList: this.state.familyHistoryList.filter(
-        (row) => row.id !== id
-      ),
+      familyHistory: this.state.familyHistory.filter((row) => row.id !== id),
     });
   };
-  async componentDidMount() {
+
+  // ** handle Inputs of forms (addition or update) from Json file
+  handleFormInputs = (type) => {
+    var temp = [];
+    for (var property in steps[type].modalForms) {
+      temp.push(steps[type].modalForms[property]);
+    }
+    this.setState({ formInputs: temp });
+  };
+  // this for Navigation if you go to another step the information still at it is
+  setfamilyHistoryWithHomeList = (type) => {
     if (
-      this.props.familyHistoryListHome.length > 0 &&
-      this.props.familyHistoryListHome.length
+      this.props.familyHistoryListHome &&
+      this.props.familyHistoryListHome.length > 0
     ) {
       this.setState({
-        familyHistoryList: this.props.familyHistoryListHome,
+        familyHistory: this.props.familyHistoryListHome,
         key: this.props.familyHistoryListHome.length + 1,
       });
     }
-    // this.getData()
+  };
+  async componentDidMount() {
+    var type = this.props.type; // change it with steptype props
+    await this.setfamilyHistoryWithHomeList(type);
+
+    this.setState({ stepType: type });
+    await this.handleDataTable(type);
+    await this.handleFormInputs(type);
+    var newState = this.state;
+    if (
+      type === "surgeries" ||
+      type === "familyHistory" ||
+      type === "onGoingProblems"
+    ) {
+      this.getTypesFromDB();
+    }
+
+    // *** to fill the state of this stepType component
+    for (var property in steps[type].state) {
+      newState[property] = steps[type].state[property];
+    }
   }
+  // update DataTable
   handleUpdate = () => {
-    var details = {
-      id: this.state.TypeObj.id,
-      relation: this.state.relation,
-      problem: this.state.problem,
-      dateOfDiagnosis: this.state.dateOfDiagnosis,
-      notes: this.state.notes,
-    };
+    var details = {};
+    // for Update Form Inputs
 
-    if (!details.relation) {
-      details.relation = this.state.TypeObj.relation;
+    for (var p in steps[this.state.stepType].state) {
+      details[p] = this.state[p] || this.state.TypeObj[p];
     }
-    if (!details.problem) {
-      details.problem = this.state.TypeObj.problem;
-    }
-    if (!details.dateOfDiagnosis) {
-      details.dateOfDiagnosis = this.state.TypeObj.dateOfDiagnosis;
-    }
-    if (!details.notes) {
-      details.notes = this.state.TypeObj.notes;
-    }
+    // var obj = this.state.familyHistory.find((item) => item == this.state.TypeObj);
 
-    const items = this.state.familyHistoryList.map((item) =>
-      item.id === this.state.TypeObj.id ? details : item
+    const items = this.state.familyHistory.map((item) =>
+      item == this.state.TypeObj ? details : item
     );
+    console.log("iteeeeems: ", items);
 
-    this.setState({ familyHistoryList: items });
+    this.setState({ familyHistory: items });
   };
 
   componentDidUpdate() {
-    // console.log("hhhhhhh")
-    this.rendering();
-    this.props.getfamilyHistoryList(this.state.familyHistoryList);
+    this.props.getfamilyHistoryList(this.state.familyHistory);
   }
 
-  rendering = () => {
-    return (
-      <div className="container gridDataContent mt-5">
-        <div
-          className="row gridDataHeader align-items-center"
-          style={{ height: 400, width: "100%" }}
-        >
-          <DataGrid
-            className="datagrid bg-light  rounded MuiDataGrid-cellCenter"
-            style={{ textAlign: "center" }}
-            rows={this.state.familyHistoryList}
-            columns={[
-              { field: "id", headerName: "id", width: 70 },
-              { field: "relation", headerName: "Relation", width: 200 },
-              { field: "problem", headerName: "Problem", width: 200 },
-              { field: "date", headerName: "dateOfDiagnosis", width: 200 },
-              { field: "notes", headerName: "Notes", width: 400 },
+  handleDataTable = (type) => {
+    var temp = [];
+    for (var property in steps[type].columnsTable) {
+      // for Adding actions Buttons to DataTable
+      if (property === "actions") {
+        steps[type].columnsTable[property]["cell"] = (row) => {
+          return (
+            <div className="row">
+              <div className="col-auto">
+                <button
+                  className="btn btn-primary"
+                  onClick={async () => {
+                    // console.log("rooooow : " , row)
+                    // console.log("id:  " , row)
+                    this.getTypeByID(row.id);
+                    this.setState({ formType: "edit" }); // to get the modal of edit
+                    this.handleopenModal();
+                  }}
+                >
+                  Update
+                </button>
+              </div>
+              <div className="col-auto">
+                <button
+                  className="btn btn-danger"
+                  onClick={() => {
+                    this.handleDelete(row.id);
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          );
+        };
+        temp.push(steps[type].columnsTable[property]);
+      } else {
+        temp.push(steps[type].columnsTable[property]);
+      }
+    }
+    this.setState({ columns: temp });
+  };
+  //** this function used when loading data from DB in dropDown list */
+  getTypesFromDB = async () => {
+    var temp2 = [];
+    await axios
+      .get(`${steps[this.state.stepType].getProblemsFromDB}`, {})
+      .then(async (resp) => {
+        console.log("AllIncomingData: ", resp.data);
 
-              {
-                field: "Actions",
-                headerName: "Actions",
-                width: 250,
-                renderCell: (params) => (
-                  <strong>
-                    {/* {params.value.getFullYear()} */}
-                    <Button
-                      variant="contained"
-                      color="default"
-                      size="small"
-                      className={this.props.classes.button}
-                      startIcon={<EditIcon />}
-                      style={{ marginLeft: 16 }}
-                      onClick={() => {
-                        this.handleopenModal1();
-                        console.log("lsssssssssssssssssssssssssssssssssssss");
-                        this.getTypeByID(params.row);
-                        // this.getData()
-                      }}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      size="small"
-                      className={
-                        (this.props.classes.button,
-                        this.props.classes.deleteButton)
-                      }
-                      startIcon={<EditIcon />}
-                      style={{ marginLeft: 16 }}
-                      onClick={async () => {
-                        console.log("delete function: ", params.row.id);
-                        this.handleDelete(params.row.id);
-                      }}
-                    >
-                      delete
-                    </Button>
-                  </strong>
-                ),
-              },
-            ]}
-            pageSize={5}
-            checkboxSelection
-            onRowSelected={async (row) => {
-              console.log("yes", this.state.typeId);
-            }}
-            getRowId={(row) => {}}
-            onRowClick={(row) => {
-              console.log("yyyys", row);
-              id = row.row.id;
-              this.setState({ typeId: row.row.id });
-            }}
-          />
-        </div>
-        <div className="row mt-4">
-          <Fab
-            color="primary"
-            aria-label="add"
-            className={this.props.classes.iconPlus}
-            onClick={() => {
-              this.handleopenModal2();
-            }}
-          >
-            <AddIcon />
-          </Fab>
-        </div>
-      </div>
-    );
+        //********* Here You should search by abbreviation or name and the value will be the name  */
+        for (var place of resp.data) {
+          var obj = {
+            value: place.name,
+            text: place.name + " (" + place.abbreviation + " )",
+          };
+          temp2.push(obj);
+        }
+        this.setState({ options: temp2 });
+        temp2 = [];
+      });
   };
   handleAdding = () => {
-    var details = {
-      id: this.state.key,
-      relation: this.state.relation,
-      problem: this.state.problem,
-      date: this.state.dateOfDiagnosis,
-      notes: this.state.notes,
-    };
+    var details = {};
+    // for Addition Form Inputs
+    for (var p in steps[this.state.stepType].state) {
+      details[p] = this.state[p];
+    }
+    details["id"] = this.state.key;
 
     this.setState({});
-    console.log("detilaas : ", details);
-    var joined = this.state.familyHistoryList.concat(details);
-    this.setState({ familyHistoryList: joined });
+    console.log("Addition Object : ", details);
+    var joined = this.state.familyHistory.concat(details);
+    this.setState({ familyHistory: joined });
     this.setState({ key: this.state.key + 1 });
   };
 
+  // used on props of the form component to handle the values of all variables
+  handleChange = (evt) => {
+    if (evt.text && evt.text === "autoComplete" && evt.newValue.text) {
+      console.log("evt: ", evt, "  Value :");
+      this.setState({
+        [evt.input]: evt.newValue.value, //// **** Here the value after choosing from dropDown will be the name without abbreviation
+      });
+    } else {
+      const value = evt.target.value;
+      this.setState({
+        [evt.target.name]: value,
+      });
+    }
+  };
+
   render() {
-    const { classes } = this.props;
-
     return (
-      <div className="hero">
-        {this.rendering()}
+      <Container>
+        {console.log(
+          "columns : ",
+          this.state.columns,
+          " FomInputs: ",
+          this.state.formInputs,
+          " state: ",
+          this.state
+        )}
 
-        <Modal
-          open={this.state.openModal1}
-          onClose={this.handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          <Container component="main" maxWidth="xs">
-            {/* <CssBaseline /> */}
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <EditIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Edit
-              </Typography>
-              <form className={classes.form} noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="relation"
-                      // label="Name"
-                      name="relation"
-                      type="text"
-                      autoComplete="Relation"
-                      placeholder={this.state.TypeObj.relation}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.type)
-                        this.setState({ relation: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="problem"
-                      // label="Name"
-                      name="problem"
-                      type="text"
-                      autoComplete="problem"
-                      placeholder={this.state.TypeObj.problem}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.name)
-                        this.setState({ problem: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="dateOfDiagnosis"
-                      // label="Name"
-                      name="dateOfDiagnosis"
-                      type="date"
-                      autoComplete="dateOfDiagnosis"
-                      placeholder={this.state.TypeObj.dateOfDiagnosis}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.dateOfDiagnosis)
-                        this.setState({ dateOfDiagnosis: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="notes"
-                      // label="Name"
-                      name="notes"
-                      type="text"
-                      autoComplete="Notes"
-                      placeholder={this.state.TypeObj.notes}
-                      onChange={(event) => {
-                        // console.log("kkkk;   ", this.state.TypeObj.notes)
-                        this.setState({ notes: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="button"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  onClick={() => {
-                    this.handleUpdate();
-                    this.getData();
-                    // console.log("user: " , obj);
-                    // handleSignup()
-                  }}
-                >
-                  Edit
-                </Button>
-              </form>
-            </div>
-            {/* <Box mt={5}>
-                    <Copyright />
-                </Box> */}
-          </Container>
-        </Modal>
+        <Row className="py-3">
+          <Col sm={10}></Col>
+          <Col sm={2}>
+            <Button
+              variant="success"
+              onClick={() => {
+                this.setState({ formType: "add" });
+                this.handleopenModal();
+              }}
+            >
+              Add New
+            </Button>{" "}
+          </Col>
+        </Row>
+        <Row className="py-3">
+          <Col sm={12} className="py-3">
+            {console.log("list: ", this.state.familyHistory)}
+            <DataTableComp
+              data={this.state.familyHistory}
+              columns={this.state.columns}
+              title=""
+            />
+          </Col>
+        </Row>
+        <div className="row mt-4"></div>
 
-        <Modal
-          key="1"
-          open={this.state.openModal2}
-          onClose={this.handleCloseModal2}
-          aria-labelledby="simple-modal-title1"
-          aria-describedby="simple-modal-description2"
-        >
-          <Container component="main" maxWidth="xs">
-            {/* <CssBaseline /> */}
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <AddBoxIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Add
-              </Typography>
-              <form className={classes.form} noValidate>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="relation"
-                      label="relation"
-                      name="relation"
-                      type="text"
-                      autoComplete="relation"
-                      // placeholder={this.state.TypeObj.name}
-                      onChange={(event) => {
-                        this.setState({ relation: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="problem"
-                      label="Problem"
-                      name="problem"
-                      type="text"
-                      autoComplete="problem"
-                      // placeholder={this.state.TypeObj.name}
-                      onChange={(event) => {
-                        this.setState({ problem: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      id="dateOfDiagnosis"
-                      // label="Date Of Diagnosis"
-                      name="dateOfDiagnosis"
-                      type="date"
-                      autoComplete="dateOfDiagnosis"
-                      // placeholder={this.state.TypeObj.name}
-                      onChange={(event) => {
-                        this.setState({ dateOfDiagnosis: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputProps={{
-                        classes: { input: this.props.classes.input2 },
-                      }}
-                      variant="outlined"
-                      required
-                      fullWidth
-                      name="notes"
-                      label="Notes"
-                      type="text"
-                      id="notes"
-                      autoComplete="notes"
-                      // placeholder={this.state.TypeObj.description}
-                      onChange={(event) => {
-                        // console.log('hhhhhhhhhhhhhhhhhh' , event.target.value)
-                        this.setState({ notes: event.target.value });
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                <Button
-                  type="button"
-                  variant="contained"
-                  fullWidth
-                  color="primary"
-                  className={classes.submit}
-                  onClick={() => {
-                    this.handleAdding();
-                    this.getData();
-                    // console.log("user: " , obj);
-                    // handleSignup()
-                  }}
-                >
-                  Add
-                </Button>
-              </form>
-            </div>
-            {/* <Box mt={5}>
-                    <Copyright />
-                </Box> */}
-          </Container>
-        </Modal>
-      </div>
+        {this.state.formInputs && (
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType={this.state.formType}>
+            <FormGenerator
+              hideModal={this.handleClose}
+              ModalInputs={this.state.formInputs}
+              updatedTypeObj={this.state.TypeObj}
+              handleChange={this.handleChange}
+              handleUpdate={this.handleUpdate}
+              handleAdding={this.handleAdding}
+              options={this.state.options}
+              formType={this.state.formType}
+            />
+          </ModalGenerator>
+        )}
+      </Container>
     );
   }
 }
 
-export default withStyles(useStyles)(FamilyHistoryStep);
+export default FamilyHistoryStep;

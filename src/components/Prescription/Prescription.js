@@ -4,25 +4,25 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import axios from 'axios';
 import React, { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import PDF from './PDF';
 import Form from './PrescriptionForm';
-import { AddPrescriptionToDB } from './request';
 import Table from './Table';
 import Template from './Template';
+
 // import StepperForms from './Stepper';
 
 
 
 
 function getSteps() {
-  return ['Choose Template', 'Review Drugs','Print Prescription'];
+  return ['Choose Template','Choose Drugs', 'Review Drugs','Print Prescription'];
 }
 
 
 
-export default function Prescription({match,patient_id,finish_method})
+export default function Prescription({match})
 {
 
         // In order to gain access to the child component instance,
@@ -51,18 +51,7 @@ export default function Prescription({match,patient_id,finish_method})
   }),
 );
 
-  const location = useLocation()
-  //#region 
-  // if come from visit then ptId will bind his value from location.state
-  // else come from clinical dashboard will bind value from props
-  const [ptId,setPtId] = React.useState(
-    location.state && location.state > 0
-    ?
-    location.state
-    :
-    patient_id
-    )
-  //#endregion
+
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [header, setHeader] = React.useState(null);
@@ -93,11 +82,11 @@ export default function Prescription({match,patient_id,finish_method})
     switch (stepIndex) {
       case 0:
         return <Template header={header} footer={footer} setHeader={setHeader} setFooter={setFooter} setNotes={setNotes}/>
-      // case 1:
-      //   return <Form PID={PID} add_row={AddRow}/>
-  
       case 1:
-        return <Table ptId={ptId} PID={PID} add_row={AddRow} prescription_rows={prescription_rows}  DelteFromPDF={DeleteRows} visitId = {match.params.visitId} ref={childRef}/>
+        return <Form PID={PID} add_row={AddRow}/>
+  
+      case 2:
+        return <Table prescription_rows={prescription_rows}  DelteFromPDF={DeleteRows} visitId = {match.params.visitId} ref={childRef}/>
       default:
         return <PDF PID={PID} header={header} footer={footer} prescription_rows={prescription_rows} printableId='printme' ref={pdfRef}/>
 
@@ -110,46 +99,24 @@ export default function Prescription({match,patient_id,finish_method})
 }, []);
 
   const addPrescription = ()=>{
-    let data = {
+    axios.post('http://localhost:8080/visit/addPrescription',{
       notes: notes,
-      ptId : ptId,
-      drId : localStorage.getItem('userId'),
-      visit_id :
-      match.params
-      ?
-      match.params.visitId
-      ?
-      match.params.visitId
-      :
-      0
-      :
-      0
-    }
-    AddPrescriptionToDB(data).then(id=>{
-      setPID(id)
-    })
-    .catch(err=>{
+      visit_id : match.params.visitId
+    }).then(res=>{
+        setPID(res.data.insertId)
+    }).catch(err=>{
       console.log(err)
     })
-
   }
 
 
   const handleNext = () => {
-    if(!header || !footer || !notes){
+    if(!header && !footer && !notes && !PID){
       alert("please Fill Data")
       return
     }
     if(activeStep == 0 && !PID){
       addPrescription()
-    }
-    if(activeStep === steps.length -1)
-    {
-      alert("aa")
-      if(finish_method)
-      {
-        finish_method()
-      }
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -162,7 +129,19 @@ export default function Prescription({match,patient_id,finish_method})
     setActiveStep(0);
   };
     return(
-
+      //   <div>
+      //   <Grid style={{position:'absolute',marginTop:25}} container spacing={3}>
+      //   <Grid item xs={4}>
+      //     <Form add_row={AddRow}/>
+      //   </Grid>
+      //   <Grid item xs={4}>
+      //   <Table DelteFromPDF={DeleteRows} visitId = {match.params.visitId} ref={childRef}/>
+      //   </Grid>
+      //   <Grid item xs={4}>
+      //     <PDF printableId='printme' ref={pdfRef}/>
+      //   </Grid>
+      // </Grid>
+      // </div>
       <div className={classes.root}>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
