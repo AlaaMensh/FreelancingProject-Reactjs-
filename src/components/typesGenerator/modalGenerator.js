@@ -1,7 +1,7 @@
+import { Modal } from 'react-bootstrap'
 import React, { Component } from 'react';
-import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import FormModal from "./formModal";
+import FormModal from "./formModal"
 
 class ModalComp extends Component {
     constructor(props) {

@@ -8,19 +8,20 @@ import Search from "../EMR/searchModule/search";
 import NurseVisit from "../nurseModule/nursemodule";
 import PatientsOnVisit from "../nurseModule/patinetsOnVisit";
 import AddOrderForm from "../orderGeneration/addOrderForm";
-import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
 import ptRegistration from "../patientRegistration/ptRegistration";
-import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
-import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
 import Prescription from "../Prescription/Prescription";
 import Profile from "../Profile/Profile";
-import SessionCode from "../sessionCode";
 import Visit from "../Visit/visit";
 import AcceptOrders from "./../orderGeneration/acceptOrders";
 import AllOrders from "./../orderGeneration/allOrders";
-import AllResults from "./../orderGeneration/AllResults";
 import ChoicePage from "./choice";
 import "./Navbar.css";
+import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
+import SessionCode from "../sessionCode";
+import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
+import ChoicePageForDoctor from "../OrdersForDoctor/choice";
+import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
+import AllResults from './../orderGeneration/AllResults';
 
 const PublicDashBoard = ({ match }) => {
   const history = useHistory();
@@ -213,7 +214,7 @@ const PublicDashBoard = ({ match }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container dashboard-container">
       {/* Switch the DashBoard Routing */}
       <Switch>
         <Route exact path={match.path}>
@@ -311,6 +312,11 @@ const PublicDashBoard = ({ match }) => {
         />
         <Route
           exact
+          path={match.path + "/choice/:type/acceptOrders/:code"}
+          component={ AcceptOrders }
+        />
+        <Route
+          exact
           path={match.path + "/pathologyChoice/:type/acceptPathologyOrders"}
           component={AcceptOrders}
         />
@@ -401,6 +407,11 @@ const PublicDashBoard = ({ match }) => {
         <Route
           exact
           path={match.path + "/EMR/Futureappointements/future/visit"}
+          component={Visit}
+        />
+        <Route
+          exact
+          path={match.path + "/NavBar/visit/:id"}
           component={Visit}
         />
         <Route

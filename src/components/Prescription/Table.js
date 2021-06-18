@@ -45,7 +45,6 @@ const Table =  forwardRef((props,ref)=>{
 
     useImperativeHandle(ref, () => ({
       addRow(temp) {
-
         setRows([...temp]);
       },
     }));

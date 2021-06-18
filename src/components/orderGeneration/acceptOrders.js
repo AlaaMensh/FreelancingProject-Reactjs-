@@ -16,8 +16,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
          }
     }
     async componentDidMount(){
-      console.log("000000000000000: " , this.props.history.location.state)
-      this.setState({type : this.props.match.params.type});
+      console.log("000000000000000: " , this.props.match.params.code)
+      this.setState({type : this.props.match.params.type || this.props.match.params.code });
         await this.handleDataTableColumns();
         await this.getData(this.props.match.params.type);
     }
@@ -94,7 +94,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
               break;
       }
         var details = {     
-          ptCode : this.props.history.location.state,
+          ptCode : this.props.history.location.state || this.props.match.params.code,
         }
         var formBody = [];
         for (var property in details) {
@@ -128,7 +128,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         
       }
 
-    handleDataTableColumns = async() => {
+    handleDataTableColumns = async () => {
         var type = this.props.match.params.type;
 
         this.setState({type});

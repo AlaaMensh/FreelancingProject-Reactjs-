@@ -36,7 +36,7 @@
        },
                "title":"All patients On Active Visit",
                "description":"From here you can see All patients on Active visits",
-               "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate"
+               "getAll":"https://mvb1.herokuapp.com/nurse/getByDate"
 
         },
      "nurseVitals" :{
@@ -45,15 +45,12 @@
             "data":"",
             "temp":"",
             "pulse":"",
-            "respiratoryRate":"",
             "OXSat":"",
-            "height":"",
-            "weight":"",
-            "BMI":"",
-            "pain":"",
-            "smokingStatus":"",
-            "headC":"",
-            "bloodPressure":""
+            "systolic ":"",
+            "diastolic" :"",
+            "bloodPressure":"",
+            "takenBy":"",
+            "bloodGlucose":""
          },
          "columnsTable":{
             "time": {
@@ -74,56 +71,22 @@
                 "sortable":true,
                 "center" : true
         },
-        "bloodPressure" :{
-                "name" :"bloodPressure",
-                "selector" : "bloodPressure",
-                "sortable":true,
-                "center" : true
+        "systolic" :{
+                "name" :"Blood Pressure",
+                "selector" : "systolic",
+                "sortable":true,        
+                "center" : true,
+                "width": "200px"
         },
-        "pain" :{
-                "name" :"pain",
-                "selector" : "pain",
-                "sortable":true,
-                "center" : true
-        },
-        "respiratoryRate" :{
-                "name" :"respiratoryRate",
-                "selector" : "respiratoryRate",
-                "sortable":true,
-                "center" : true
-        },
+        
         "OXSat" :{
                 "name" :"OXSat",
                 "selector" : "OXSat",
                 "sortable":true
         },
-        "height" :{
-                "name" :"height",
-                "selector" : "height",
-                "sortable":true,
-                "center" : true
-        },
-        "weight" :{
-                "name" :"weight",
-                "selector" : "weight",
-                "sortable":true,
-                "center" : true
-        },
-        "BMI" :{
-                "name" :"BMI",
-                "selector" : "BMI",
-                "sortable":true,
-                "center" : true
-        },
-        "smokingStatus" :{
-                "name" :"smokingStatus",
-                "selector" : "smokingStatus",
-                "sortable":true,
-                "center" : true
-        },
-        "headC" :{
-                "name" :"headC",
-                "selector" : "headC",
+        "bloodGlucose" :{
+                "name" :"bloodGlucose",
+                "selector" : "bloodGlucose",
                 "sortable":true,
                 "center" : true
         },
@@ -144,41 +107,25 @@
                     "type":"number",
                     "name" :"pulse"
             },
-            "bloodPressure" : {
+            "systolic " : {
                     "type":"number",
-                    "name" :"bloodPressure"
+                    "name" :"systolic "
             },
-            "pain" : {
+            "diastolic" : {
                     "type":"number",
-                    "name" :"pain"
+                    "name" :"diastolic"
             },
-            "respiratoryRate" : {
+            "bloodGlucose" : {
                     "type":"number",
-                    "name" :"respiratoryRate"
+                    "name" :"bloodGlucose"
             },
             "OXSat" : {
                     "type":"number",
                     "name" :"OXSat"
             },
-            "height" : {
-                    "type":"number",
-                    "name" :"height"
-            },
-            "weight" : {
-                    "type":"number",
-                    "name" :"weight"
-            },
-            "BMI" : {
-                    "type":"number",
-                    "name" :"BMI"
-            },
-            "smokingStatus" : {
-                    "type":"number",
-                    "name" :"smokingStatus"
-            },
-            "headC" : {
-                    "type":"number",
-                    "name" :"headC"
+            "takenBy" : {
+                    "type":"autoComplete",
+                    "name" :"takenBy"
             }
 
         },
@@ -187,7 +134,8 @@
         "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate",
         "getPatientLastVisits":"https://mvb1.herokuapp.com/nurse/getByPtId",
         "deleteVital" : "https://mvb1.herokuapp.com/nurse/deleteRecorder",
-        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord"
+        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord",
+        "getAllData" :"https://mvb1.herokuapp.com/nurse/getNurse"
 
      }
             

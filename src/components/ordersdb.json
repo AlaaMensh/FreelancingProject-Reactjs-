@@ -8,7 +8,6 @@
                     
             },
                "columnsTable" : {
-
                         "comments": {
                                 "name": "Comments",
                                 "selector": "comments",

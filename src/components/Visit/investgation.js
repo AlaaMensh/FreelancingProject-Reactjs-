@@ -775,7 +775,6 @@ class Investgation extends Component {
                       }}
                     />
                   </Col>
-
                 </Row>
 
                 <Button

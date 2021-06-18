@@ -162,7 +162,6 @@ export default function Prescription({match,patient_id,finish_method})
     setActiveStep(0);
   };
     return(
-
       <div className={classes.root}>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (

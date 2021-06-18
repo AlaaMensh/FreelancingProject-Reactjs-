@@ -56,7 +56,7 @@ class DataGridTable extends Component {
             <div className="col-auto">
               <button  className="btn btn-info"
                 onClick={async () => {  
-                  this.props.history.push(`/ClinicalDashBoard/${row.id}`);
+                  this.props.history.push(`/ClinicalDashBoard/${row.ptId}`);
                   // this.handleDelete(row.id);
 
                   }}>Go to ClinicalDashBoard</button>

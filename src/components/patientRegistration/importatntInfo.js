@@ -48,10 +48,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PaientRegistration({
+  getGender,
   getFirstName,
   getSecondName,
   getBloodGroup,
-  getEmail,
+  getuserName,
   getStatus,
   getLastName,
   getAddress,
@@ -60,16 +61,8 @@ export default function PaientRegistration({
   obj,
 }) {
   const [firstName, setFirstName] = useState();
-  const [secondName, setSecondName] = useState();
-  const [lastName, setLastName] = useState();
-  const [birthDate, setbirthDate] = useState();
-  const [email, setEmail] = useState();
-  const [address, setAddress] = useState();
-  const [status, setStatus] = useState();
-  const [bloodGroup, setbloodGroup] = useState();
-  const [phone, setPhone] = useState();
   const classes = useStyles();
-
+  
   return (
     <div
       className=" row justify-content-center small-labels"
@@ -93,9 +86,7 @@ export default function PaientRegistration({
                     name="firstName"
                     autoComplete="firstName"
                     onChange={(event) => {
-                      setFirstName(event.target.value);
                       getFirstName(event.target.value);
-                      console.log("yyyyys", firstName);
                     }}
                     defaultValue={obj.firstName}
                     InputProps={{
@@ -119,10 +110,8 @@ export default function PaientRegistration({
                     placeholder="Second Name"
                     name="secondName"
                     autoComplete="secondName"
-                    onChange={(event) => {
-                      setSecondName(event.target.value);
+                    onChange={(event) => {                   
                       getSecondName(event.target.value);
-                      console.log("yyyyys", firstName);
                     }}
                     defaultValue={obj.secondName}
                     InputProps={{
@@ -148,7 +137,6 @@ export default function PaientRegistration({
                     autoComplete="lastName"
                     onChange={(event) => {
                       getLastName(event.target.value);
-                      console.log("yyyyys", lastName);
                     }}
                     defaultValue={obj.lastName}
                     InputProps={{
@@ -163,19 +151,19 @@ export default function PaientRegistration({
               </Row>
               <Row>
                 <Form.Group as={Col}>
-                  <Form.Label>Email</Form.Label>
+                  <Form.Label>UserName</Form.Label>
                   <Form.Control
                     variant="outlined"
                     required
                     fullWidth
                     size="small"
-                    id="email"
-                    placeholder="Email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
+                    id="userName"
+                    placeholder="UserName"
+                    name="userName"
+                    type="userName"
+                    autoComplete="userName"
                     onChange={(event) => {
-                      getEmail(event.target.value);
+                      getuserName(event.target.value);
                       // console.log("yyyyys" , username);
                     }}
                     defaultValue={obj.email}
@@ -204,7 +192,6 @@ export default function PaientRegistration({
                     autoComplete="address"
                     onChange={(event) => {
                       getAddress(event.target.value);
-                      // console.log("yyyyys" , username);
                     }}
                     defaultValue={obj.address}
                     InputProps={{
@@ -215,6 +202,21 @@ export default function PaientRegistration({
                       ),
                     }}
                   />
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Control
+                  as = "select"
+                  defaultValue = {obj.gg}
+                  custom
+                    onChange = { (event) => {
+                      getGender (event.target.value) ;
+                    }}
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                </Form.Control>
+
                 </Form.Group>
 
                 <Form.Group as={Col}>
@@ -274,28 +276,17 @@ export default function PaientRegistration({
                 <Form.Group as={Col}>
                   <Form.Label>status</Form.Label>
                   <Form.Control
-                    variant="outlined"
-                    required
-                    fullWidth
-                    size="small"
-                    name="status"
-                    placeholder="Status"
-                    type="text"
-                    id="status"
-                    // autoComplete="current-password"
-                    onChange={(event) => {
-                      getStatus(event.target.value);
-                      // console.log("email" , email);
+                  as = "select"
+                  defaultValue = {obj.status}
+                  custom
+                    onChange = { (event) => {
+                      getStatus (event.target.value) ;
                     }}
-                    defaultValue={obj.status}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MailOutlineIcon className={classes.iconsColor} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
+                >
+                  <option value="male">Married</option>
+                  <option value="female">Single</option>
+                </Form.Control>
+                  
                 </Form.Group>
                 <Form.Group as={Col}>
                   <Form.Label>blood Group</Form.Label>

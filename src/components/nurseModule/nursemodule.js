@@ -7,6 +7,9 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import ModalGenerator from './../ModalGeneration/modalGeneration';
+import AdditionVital from './additionVitalForm';
+import axios from "axios";
 
 
 
@@ -20,8 +23,21 @@ class NurseVisit extends Component {
             pId:"",
             columns:[],
             ModalAddtionInputs :[],
-            type : "" //from JsonFile in nurseModule json File 
+            type : "", //from JsonFile in nurseModule json File
+            options :[] 
           }
+    }
+    loadSelectInputData = async(type) => {
+      var temp = [];
+      await axios.get(`${nurseModule[type].getAllData}` ,{
+      } ).then(async resp => {
+        console.log("resp : " ,resp)
+        console.log("AllData: " , resp.data);
+        this.setState({options : resp.data});
+        
+      temp =  resp.data;
+      })
+      return temp
     }
     async componentDidMount(){
       var type = "nurseVitals";
@@ -29,7 +45,10 @@ class NurseVisit extends Component {
       console.log("parmas.:   ",  this.props.match.params.id)
       this.setState({pId : this.props.match.params.id}); // set here the patientId from the url 
       this.handleDataTableColumns(type);
-      this.handleFormModuleInput(type);
+      var optionsList = await this.loadSelectInputData(type);
+      console.log("optionsList: " , optionsList)
+
+      this.handleFormModuleInput(type , optionsList);
       this.handleState(type);
       await this.getLastVisits(type);
      
@@ -40,14 +59,24 @@ class NurseVisit extends Component {
         newState[property] = "" 
       }
     }
-    handleChange = (event)=>{
+    handleChange = (evt)=>{
+      if(evt.text && evt.text === "autoComplete" ){   
         this.setState({
-            [event.target.name] :event.target.value
-        })
+          [evt.input]: evt.newValue.value,
+        });
+      }
+      else{
+        if(evt.target){
+          console.log("evt.target.name: " , evt.target.name)
+          const value = evt.target.value;
+          this.setState({
+            [evt.target.name]: value,
+          });
+        }
+      }
     }
     handleDataTableColumns = (type) =>{
       var temp = [];
-    
       for(var p in nurseModule[type].columnsTable ){ // for Adding actions Buttons to DataTable
         if(p === "actions"){
           nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
@@ -77,6 +106,22 @@ class NurseVisit extends Component {
           }
           temp.push(nurseModule[type].columnsTable[p])
         }
+        else if(p === "systolic"){
+          nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
+          <div className = "row">
+            {console.log("rooowowwww:  " , row)}
+            <div className="col-auto">
+              {/* <h1>hhhh</h1> */}
+              {/* { row.systolic } */}
+            {row.systolic }<span>/</span>
+               {row.systolic }
+            </div>
+          
+          </div>
+          )
+          }
+          temp.push(nurseModule[type].columnsTable[p])
+        }
         else{
   
           temp.push(nurseModule[type].columnsTable[p])
@@ -85,11 +130,24 @@ class NurseVisit extends Component {
       this.setState({columns : temp})
       temp = []
     }
-    handleFormModuleInput = (type) =>{
+    handleFormModuleInput = (type , optionsList) =>{
       var temp = [];
+
     
       for(var p in nurseModule[type].modalAdditionForm ){ // for Adding actions Buttons to DataTable
+        var temp2 = [];
+        if (p === "takenBy") { // adding all
+          for(var nurse of optionsList){
+            var obj =null;
+            obj = {value : nurse.id , firstName : nurse.firstName  ,  secondName : nurse.secondName ,  lastName : nurse.lastName }
+            temp2.push(obj);
+          }
+          console.log("options : " , temp2)
+          this.setState({options : temp2})
+          temp2=[]
+        }
         temp.push(nurseModule[type].modalAdditionForm[p]);
+  
       }
       this.setState({ModalAddtionInputs : temp})
     }
@@ -130,15 +188,12 @@ class NurseVisit extends Component {
             time :time,
             temp:"",
             pulse:"" , 
-            bloodPressure: "" ,
-            respiratoryRate: "" ,
+            // bloodPressure: "",
+            systolic : "" ,
+            diastolic:"",
             OXSat:"" ,
-            height:"" , 
-            weight:"" ,
-            BMI :"" ,
-            pain:"",
-            smokingStatus: "" ,
-            headC : ""
+            takenBy:localStorage.getItem("userId"),
+            bloodGlucose :""
         }
         var joined = this.state.timeDate.concat(obj2);
         this.setState({ timeDate: joined });
@@ -157,17 +212,13 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
-              bloodPressure : time.bloodPressure ,
-              respiratoryRate : time.respiratoryRate,
+              // bloodPressure:time.systolic +"/"+time.diastolic,
+              systolic  : time.systolic  ,
+              diastolic : time.diastolic ,
               OXSat : time.OXSat,
-              height : time.headC, 
-              weight : time.weight,
-              BMI : time.BMI,
-              smokingStatus: time.smokingStatus,
-              headC : time.headC,
-              pain : time.pain
+              takenBy:localStorage.getItem("userId"),
+              bloodGlucose : time.bloodGlucose
          }
-
           }
         if(time.id == -1 )
           {
@@ -178,17 +229,13 @@ class NurseVisit extends Component {
               time : time.time,
               temp : time.temp,
               pulse : time.pulse, 
-              bloodPressure : time.bloodPressure ,
-              respiratoryRate : time.respiratoryRate,
+              // bloodPressure: time.systolic + "/"+ time.diastolic,
+              systolic  : time.systolic  ,
+              diastolic : time.diastolic ,
               OXSat : time.OXSat,
-              height : time.headC, 
-              weight : time.weight,
-              BMI : time.BMI,
-              smokingStatus: time.smokingStatus,
-              headC : time.headC,
-              pain : time.pain
+              takenBy:localStorage.getItem("userId"),
+              bloodGlucose:time.bloodGlucose
          }
-
           }
          if(time.id >= 1){
             console.log("yes" , time)
@@ -198,27 +245,18 @@ class NurseVisit extends Component {
                 time : time.time,
                 temp : time.temp,
                 pulse : time.pulse, 
-                bloodPressure : time.bloodPressure ,
-                respiratoryRate : time.respiratoryRate,
+                // bloodPressure :  time.systolic +"/" + time.diastolic,
+                systolic  : time.systolic  ,
+                diastolic : time.diastolic ,
                 OXSat : time.OXSat,
-                height : time.headC, 
-                weight : time.weight,
-                BMI : time.BMI,
-                smokingStatus: time.smokingStatus,
-                headC : time.headC,
-                pain : time.pain
-
-            
-           }
-           
+                takenBy:localStorage.getItem("userId"),
+                bloodGlucose:time.bloodGlucose 
+           }         
          }
          time = obj
          Temp.push(time)
-
-
       })
       this.setState({timeDate : Temp})
-
     }
     getTime = () =>{
       var d = new Date();
@@ -256,7 +294,9 @@ class NurseVisit extends Component {
                 time : time,
                 temp:"",
                 pulse:"" , 
-                bloodPressure: "" ,
+                // bloodPressure:"",
+                systolic :"",
+                diastolic :"",
                 respiratoryRate: "" ,
                 OXSat:"" ,
                 height:"" , 
@@ -264,7 +304,9 @@ class NurseVisit extends Component {
                 BMI :"" ,
                 pain:"",
                 smokingStatus: "" ,
-                headC : ""
+                headC : "",
+                takenBy:""
+
             }
             var joined = data.concat(obj2);
             // this.setState({ timeDate: joined });
@@ -282,23 +324,21 @@ class NurseVisit extends Component {
     }
     handleAddition = async()=>{
           var details = {
-            ptId:this.state.pId,
             date: this.getDate(),
             time: this.getTime(),
-            temp:this.state.temp,
+            // systolic :this.state.systolic ,
+            // diastolic :this.state.diastolic,
             pulse: this.state.pulse,
-            bloodPressure: this.state.bloodPressure,
-            respiratoryRate: this.state.respiratoryRate ,
-            OXSat: this.state.oxygenSaturation,
-            height: this.state.height,
-            weight: this.state.weight,
-            BMI: this.state.BMI,
-            pain: this.state.pain,
-            smokingStatus: this.state.smokingStatus,
-            headC: this.state.headCircumference,  
+            temperature:this.state.temp,
+            oxygenSaturation: this.state.OXSat,
+            bloodGlucoseLevel:this.state.bloodGlucose,
+            nurseId:localStorage.getItem("userId"),
+            ptId:this.state.pId,
+            bloodPressure : this.state.systolic + "/" +this.state.diastolic 
+            // takenBy : this.state.takenBy 
           }
 
-        
+          console.log("details On Adding : " , details)
           var formBody = [];
           for (var property in details) {
             var encodedKey = encodeURIComponent(property);
@@ -329,15 +369,12 @@ class NurseVisit extends Component {
             time: this.getTime(),
             temp:this.state.temp,
             pulse: this.state.pulse,
-            bloodPressure: this.state.bloodPressure,
-            respiratoryRate: this.state.respiratoryRate ,
-            OXSat: this.state.oxygenSaturation,
-            height: this.state.height,
-            weight: this.state.weight,
-            BMI: this.state.BMI,
-            pain: this.state.pain,
-            smokingStatus: this.state.smokingStatus,
-            headC: this.state.headCircumference,
+            systolic : this.state.systolic ,
+            diastolic: this.state.diastolic,
+            OXSat: this.state.OXSat,
+            takenBy:this.state.takenBy,
+            bloodGlucose:this.state.bloodGlucose,
+            // bloodPressure : this.state.systolic +"/"+ this.state.diastolic
             }: item
           );
           // console.log("obj: " , obj);
@@ -368,6 +405,7 @@ class NurseVisit extends Component {
       return(
         <Container >
         <Row className= "py-3">
+         {console.log("timeDateeee :" , this.state.timeDate)} 
         <Col>
             {
               nurseModule && this.state.type && (
@@ -412,16 +450,27 @@ class NurseVisit extends Component {
             <AddIcon  />
         </Fab>  */}
         {
-       this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 &&(
-        <ModalComp show={this.state.openModal}
-        onHide={this.handleClose}
-        ModalInputs={this.state.ModalAddtionInputs}
-        updatedTypeObj = {this.state.typeObj}
-        handleChange = {this.handleChange}
-        handleUpdate = {this.handleUpdate}
-        handleAdding={this.handleAddition}
-        formType = {this.state.formType}
-       />
+       this.state.ModalAddtionInputs &&this.state.ModalAddtionInputs.length > 0 && (
+        <ModalGenerator  onHide={this.handleClose} show={this.state.openModal}   formType={this.state.formType}> 
+          <AdditionVital 
+          ModalInputs={this.state.ModalAddtionInputs}
+          handleChange={this.handleChange}
+          handleUpdate={this.handleUpdate}
+          handleAdding={this.handleAddition}
+          formType={this.state.formType} 
+          options = {this.state.options}
+          from = "nurseModule" />
+       
+        </ModalGenerator>
+      //   <ModalComp show={this.state.openModal}
+      //   onHide={this.handleClose}
+      //   ModalInputs={this.state.ModalAddtionInputs}
+      //   updatedTypeObj = {this.state.typeObj}
+      //   handleChange = {this.handleChange}
+      //   handleUpdate = {this.handleUpdate}
+      //   handleAdding={this.handleAddition}
+      //   formType = {this.state.formType}
+      //  />
        )
      }
     </div>

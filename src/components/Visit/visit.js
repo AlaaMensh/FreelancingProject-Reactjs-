@@ -119,7 +119,7 @@ export default function Visit({ match }) {
 
     var details = {
       // ************this object will be Sent to BackEnd to add a Visit
-      ptId: location.state,
+      ptId: location.state || match.params.id ,
       drId: localStorage.getItem("userId"),
       chiefComplains: chiefComplains,
       diagnosis: diagnosis,

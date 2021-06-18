@@ -21,6 +21,7 @@ import MyPrescriptions from './MyPrescriptions';
 import PatientAppointement from "./patientAppointements";
 import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
+import FamilyHistory from "./familyHistory";
 
 
 function TabPanel(props) {
@@ -343,6 +344,13 @@ const ClinicalDashBoard = ({ match }) => {
               path={match.path + "/profile"}
               component={Prescription}
             />
+            < Route
+              exact
+              key={15}
+              path={match.path + "/familyHistory"}
+            >
+              <FamilyHistory type={"familyHistory"} addButtonFlag = {true} />
+            </Route>
           </Switch>
           </div>
         </div>
