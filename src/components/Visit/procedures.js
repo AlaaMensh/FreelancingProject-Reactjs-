@@ -50,7 +50,8 @@ export default function Procedures({
   getSurgeries,
   obj,
   procedures,
-getProcedures
+getProcedures,
+ptId
 }) {
   const classes = useStyles();
   const [surgys,setSurgys] = React.useState([])
@@ -85,10 +86,12 @@ const updateRows = (newValue)=>{
   if(newValue.length > 0)
   {
     newValue.map(val=>{
+      let index = rows.findIndex(r=>r.id==val.id)
       temp.push({
         id:val.id,
         name:val.name,
-        notes:''
+        notes:(index!=-1)?rows[index].notes:'',
+        ptId:ptId
       })
     })
   }

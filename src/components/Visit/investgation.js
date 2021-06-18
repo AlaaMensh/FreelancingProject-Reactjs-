@@ -223,8 +223,8 @@ class Investgation extends Component {
         var details = {
           // that object will send to backend when update lab
           name: name,
-          ptId: 1, //**change it with the code from Appointements */
-          drId: 1, // ** change it with ==> localStorage.getItem("userId")
+          ptId: this.ptId, //**change it with the code from Appointements */
+          drId: localStorage.getItem('userId'), // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments: this.state.notes,
           date: this.getDate(),
@@ -241,8 +241,8 @@ class Investgation extends Component {
         var details = {
           // that object will send to backend when update pathology
           name: name,
-          ptId: 1, //**change it with the code from Appointements */
-          drId: 1, // ** change it with ==> localStorage.getItem("userId")
+          ptId: this.ptId, //**change it with the code from Appointements */
+          drId: localStorage.getItem('userId'), // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments: this.state.notes,
           date: this.getDate(),
@@ -258,8 +258,8 @@ class Investgation extends Component {
         var details = {
           // that object will send to backend when update radio
           name: name,
-          ptId: 1, //**change it with the code from Appointements */
-          drId: 1, // ** change it with ==> localStorage.getItem("userId")
+          ptId: this.ptId, //**change it with the code from Appointements */
+          drId: localStorage.getItem('userId'), // ** change it with ==> localStorage.getItem("userId")
           result: this.state.TypeObj.result,
           comments: this.state.notes,
           date: this.getDate(),

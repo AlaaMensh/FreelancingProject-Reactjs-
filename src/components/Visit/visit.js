@@ -119,7 +119,7 @@ export default function Visit({ match }) {
 
     var details = {
       // ************this object will be Sent to BackEnd to add a Visit
-      ptId: location.state,
+      ptId: location.state||match.params.id,
       drId: localStorage.getItem("userId"),
       chiefComplains: chiefComplains,
       diagnosis: diagnosis,
@@ -271,7 +271,7 @@ export default function Visit({ match }) {
             getNotes={getNotes}
             getDD={getDD}
             obj={obj}
-            ptId={location.state}
+            ptId={location.state||match.params.id}
           />
         );
       case 1:
@@ -286,7 +286,7 @@ export default function Visit({ match }) {
             getRadioOrders={getRadioOrders}
             getLabOrdersHome={getLabOrdersHome}
             obj={objStep3}
-            ptId={location.state}
+            ptId={location.state||match.params.id}
           />
         );
       case 2:
@@ -296,7 +296,7 @@ export default function Visit({ match }) {
             obj={surgeries}
             procedures={procedures}
             getProcedures={getProcedures}
-            ptId={location.state}
+            ptId={location.state||match.params.id}
           />
         );
 
