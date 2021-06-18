@@ -49,7 +49,8 @@
     "title": "All Allergy Problems",
     "description": "You can see all Allergy broblems for this patient...",
     "getAllergyProblemsForPatient": "http://localhost:8080/pt/getAllergyById",
-    "getAll" :"http://localhost:8080/pt/getAllergyById"
+    "getAll" :"https://mvb1.herokuapp.com/visit/pt_allergies"
+
   },
 
   "onGoingProblems": {
@@ -83,7 +84,7 @@
     "title": "All OnGoingProblems Problems",
     "description": "You can see all OnGoingProblems broblems for this patient...",
     "getAllergyProblemsForPatient": "http://localhost:8080/pt/getProblemsById",
-    "getAll" :"http://localhost:8080/pt/getProblemsById",
+    "getAll" :"https://mvb1.herokuapp.com/visit/onGoingProblem",
     "getAllDiseases" :"https://mvb1.herokuapp.com/disease/getAll"
   },
   "familyHistory": {
@@ -120,7 +121,8 @@
     },
     "title":"All Family History for the Patient",
     "description":"You will see here all Family History to this Patient....",
-    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
+    "getAll":"https://mvb1.herokuapp.com/visit/pt_familyHistories"
   },
   "surgeries": {
     "state": {
@@ -156,7 +158,8 @@
     },
     "title":"All Surgeries for the Patient",
     "description":"You will see here all Surgeries to this Patient....",
-    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
+    "getAll":"https://mvb1.herokuapp.com/visit/pt_surgery_histories"
   },
   "Interventions": {
     "state": {
@@ -192,7 +195,8 @@
     },
     "title":"All Interventions for the Patient",
     "description":"You will see here all Interventions to this Patient....",
-    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
+    "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
+    "getAll":"https://mvb1.herokuapp.com/visit/pt_interventions"
   },
   "activeMedication": {
     "state": {

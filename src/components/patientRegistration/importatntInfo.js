@@ -62,7 +62,7 @@ export default function PaientRegistration({
 }) {
   const [firstName, setFirstName] = useState();
   const classes = useStyles();
-
+  
   return (
     <div
       className=" row justify-content-center small-labels"

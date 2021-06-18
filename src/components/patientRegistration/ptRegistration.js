@@ -12,6 +12,7 @@ import FamilyHistoryStep from "./familyHistoryStep";
 import SurgeriesStep from "./surgeriesStep";
 import InterventionsStep from "./otherInterventionsStep";
 import OnGoingProblemStep from "./onGoingProblemStep";
+import "./patientRegistration.css";
 // import ListStep from "./listStep"; // Put it if you solve the one component Problem
 
 const useStyles = makeStyles((theme) => ({
@@ -197,7 +198,7 @@ export default function HorizontalLabelPositionBelowStepper() {
   const getBirthDate = (name) => {
     setbirthDate(name);
   };
-  const obj = {
+  let obj = {
     gender: gender,
     firstName: firstName,
     lastName: lastName,
@@ -227,10 +228,30 @@ export default function HorizontalLabelPositionBelowStepper() {
     setonGoingProblemList(List);
   };
 
+  const handleReset =  () => {
+
+    obj = {
+      gender: "",
+      firstName: "",
+      lastName: "",
+      secondName: "",
+      userName: userName,
+      address: address,
+      birthDate: birthDate,
+      status: status,
+      phone: phone,
+      bloodGroup: bloodGroup,}
+      console.log("handleReset: " , obj)
+      ptRegistration(0);
+      setActiveStep(0);
+    
+  };
   const ptRegistration = (stepIndex) => {
     switch (stepIndex) {
       case 0:
         return (
+  <>
+      {console.log("infooo: " , obj)}
           <Info
             getGender={getGender}
             getFirstName={getFirstName}
@@ -244,6 +265,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             getBloodGroup={getBloodGroup}
             obj={obj}
           />
+          </>
         );
       case 1:
         return (
@@ -303,14 +325,12 @@ export default function HorizontalLabelPositionBelowStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+
 
   return (
-    <div className="container">
+    <div className="container hero-container">
       <Row>
-        <Col>
+        <Col sm={9}>
           {activeStep === steps.length - 1 ? (
             <div>
               <Typography className={classes.instructions}>
@@ -353,15 +373,15 @@ export default function HorizontalLabelPositionBelowStepper() {
           </Stepper>
         </Col>
       </Row>
-      <div>
+      <div className="row" style={{marginLeft: "1em" }}>
         <Button
           disabled={activeStep === 0}
           onClick={handleBack}
-          className={classes.backButton}
+          className="btn-style"
         >
           Back
         </Button>
-        <Button variant="contained" color="primary" onClick={handleNext}>
+        <Button className="ml-3 btn-style"  onClick={handleNext}>
           {activeStep === steps.length - 1 ? "Finish" : "Next"}
         </Button>
       </div>

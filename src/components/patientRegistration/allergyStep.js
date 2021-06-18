@@ -22,7 +22,7 @@ class AllergyStep extends Component {
 
       key: 1, // ** remove it if you don't use in another lists
 
-      allergyTypes: [], // from DB ,
+
       activeStatus: true, // for Changing
       columns: [], // to handle Columns of the table
       formInputs: [], // to handle Form Inputs the addition or update
@@ -31,9 +31,10 @@ class AllergyStep extends Component {
     };
   }
   //** to get the row which will updated */
-  getTypeByID = async (row) => {
-    console.log("UpdatedObject: ", row);
-    this.setState({ TypeObj: row });
+  getTypeByID = async (id) => {
+    var updatedObj = await this.state.allergyList.filter((item) => item.id === id)
+    console.log("UpdatedObject: ", updatedObj[0]);
+    this.setState({ TypeObj: updatedObj[0] });
   };
   // for Modal
   handleopenModal = () => {
@@ -45,9 +46,9 @@ class AllergyStep extends Component {
   };
 
   // ***delete from table
-  handleDelete = async (row) => {
+  handleDelete = async (id) => {
     this.setState({
-      allergyList: this.state.allergyList.filter((row) => row !== row),
+      allergyList: this.state.allergyList.filter((row) => row.id !== id),
     });
   };
 
@@ -186,18 +187,29 @@ class AllergyStep extends Component {
     // this for Navigation if you go to another step the information still at it is
   }
   // update DataTable
-  handleUpdate = () => {
+  handleUpdate = async () => {
     var details = {};
     // for Update Form Inputs
-
+    
     for (var p in steps[this.state.stepType].state) {
-      details[p] = this.state[p] || this.state.TypeObj[p];
+      if(this.state[p]){
+        details[p] = this.state[p]
+      }
+      else{
+        details[p] = this.state.TypeObj[p];
+      }
+      
     }
+    
+    console.log("UpdatedObj....: " , this.state.TypeObj)   
+    details["id"] = this.state.TypeObj["id"];
+    console.log("details to Update: " , details)
     // var obj = this.state.allergyList.find((item) => item == this.state.TypeObj);
 
-    const items = this.state.allergyList.map((item) =>
-      item == this.state.TypeObj ? details : item
+    const items = await this.state.allergyList.map((item) =>
+      item.id == this.state.TypeObj.id ? details : item
     );
+
     console.log("iteeeeems: ", items);
 
     this.setState({ allergyList: items });
@@ -221,7 +233,7 @@ class AllergyStep extends Component {
                   onClick={async () => {
                     // console.log("rooooow : " , row)
                     // console.log("id:  " , row)
-                    this.getTypeByID(row);
+                    await this.getTypeByID(row.id);
                     this.setState({ formType: "edit" }); // to get the modal of edit
                     this.handleopenModal();
                   }}
@@ -247,7 +259,7 @@ class AllergyStep extends Component {
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    this.handleDelete(row);
+                    this.handleDelete(row.id);
                   }}
                 >
                   Delete
@@ -338,7 +350,7 @@ class AllergyStep extends Component {
           </Col>
         </Row>
         <Row className="py-3">
-          <Col sm={10} className="py-3">
+          <Col sm={12} className="py-3">
             {console.log("list: ", this.state.allergyList)}
             {
               this.state.allergyList && (
@@ -351,13 +363,15 @@ class AllergyStep extends Component {
             }
           </Col>
         </Row>
+         
         <div className="row mt-4"></div>
 
-        {this.state.formInputs && (
+        {this.state.formType === "add" && this.state.formInputs ?  (
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType ={this.state.formType}>
             <FormGenerator
+              hideModal = {this.handleClose}
               ModalInputs={this.state.formInputs}
-              updatedTypeObj={this.state.TypeObj}
+              // updatedTypeObj={this.state.TypeObj}
               handleChange={this.handleChange}
               handleUpdate={this.handleUpdate}
               handleAdding={this.handleAdding}
@@ -365,7 +379,21 @@ class AllergyStep extends Component {
               formType={this.state.formType}
             />
           </ModalGenerator>
-        )}
+        ):(
+          <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType ={this.state.formType}>
+          <FormGenerator
+            hideModal = {this.handleClose}
+            ModalInputs={this.state.formInputs}
+            updatedTypeObj={this.state.TypeObj}
+            handleChange={this.handleChange}
+            handleUpdate={this.handleUpdate}
+            handleAdding={this.handleAdding}
+            options={this.state.options}
+            formType={this.state.formType}
+          />
+        </ModalGenerator>
+        )
+      }
       </Container>
     );
   }

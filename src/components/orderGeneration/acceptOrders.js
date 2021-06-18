@@ -27,7 +27,6 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       console.log("Accepted IDS:  " , this.state.acceptedIds )
       var details = {
         id : id,
-     
         // labId: localStorage.getItem("labId")
       }
       switch(this.state.type){
@@ -91,7 +90,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
               break;
       }
         var details = {     
-          ptCode : this.props.history.location.state,
+          ptCode : this.props.history.location.state || this.props.match.params.code,
         }
         var formBody = [];
         for (var property in details) {

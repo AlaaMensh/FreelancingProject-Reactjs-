@@ -260,6 +260,9 @@ class UserCrud extends Component {
       // for Addition Form Inputs
       details[p] = this.state[p];
     }
+    if(this.state.type === "assistant"){
+      details["address"]="Giza";
+    }
     console.log("details on Adding : ", details);
     console.log("detilaas : ", details);
 
@@ -367,6 +370,7 @@ class UserCrud extends Component {
         this.state.ModalAddtionInputs.length > 0 ? (
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal}   formType={this.state.formType}>
             <FormGenerator
+              hideModal = {this.handleClose}
               ModalInputs={this.state.ModalAddtionInputs}
               handleChange={this.handleChange}
               handleUpdate={this.handleUpdate}
@@ -378,6 +382,7 @@ class UserCrud extends Component {
         ) : (
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal}   formType={this.state.formType}>
             <FormGenerator
+              hideModal = {this.handleClose}
               updatedTypeObj={this.state.typeObj}
               ModalInputs={this.state.ModalUpdateInputs}
               handleChange={this.handleChange}

@@ -35,9 +35,10 @@ class SurgeriesStep extends Component {
     };
   }
  //** to get the row which will updated */
-  getTypeByID = async (row) => {
-    console.log("UpdatedObject: " , row)
-    this.setState({ TypeObj: row });
+  getTypeByID = async (id) => {
+    var updatedObj = this.state.interventionsList.filter((item) => item.id === id)
+    console.log("UpdatedObject: ", updatedObj[0]);
+    this.setState({ TypeObj: updatedObj[0]});
   };
   // for Modal
   handleopenModal = () => {
@@ -49,9 +50,9 @@ class SurgeriesStep extends Component {
   };
 
   // ***delete from table
-  handleDelete = async (row) => {
+  handleDelete = async (id) => {
     this.setState({
-      interventionsList: this.state.interventionsList.filter((row) => row !== row),
+      interventionsList: this.state.interventionsList.filter((row) => row.id !== id),
     });
   };
 
@@ -131,7 +132,7 @@ class SurgeriesStep extends Component {
                         onClick={async () => {
                           // console.log("rooooow : " , row)
                           // console.log("id:  " , row)
-                          this.getTypeByID(row);
+                          this.getTypeByID(row.id);
                           this.setState({ formType: "edit" }); // to get the modal of edit
                           this.handleopenModal();
                         }}
@@ -143,7 +144,7 @@ class SurgeriesStep extends Component {
                       <button
                         className="btn btn-danger"
                         onClick={() => {
-                          this.handleDelete(row);
+                          this.handleDelete(row.id);
                         }}
                       >
                         Delete
@@ -253,6 +254,7 @@ class SurgeriesStep extends Component {
         {this.state.formInputs && (
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType={this.state.formType}>
             <FormGenerator
+              hideModal={this.handleClose}
               ModalInputs={this.state.formInputs}
               updatedTypeObj={this.state.TypeObj}
               handleChange={this.handleChange}

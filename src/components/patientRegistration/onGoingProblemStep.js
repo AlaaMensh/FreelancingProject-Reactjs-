@@ -43,9 +43,10 @@ class OnGoingProblem extends Component {
     };
   }
   //** to get the row which will updated */
-  getTypeByID = async (row) => {
-    console.log("UpdatedObject: ", row);
-    this.setState({ TypeObj: row });
+  getTypeByID = async (id) => {
+    var updatedObj = this.state.onGoingProblem.filter((item) => item.id === id)
+    console.log("UpdatedObject: ", updatedObj[0]);
+    this.setState({ TypeObj: updatedObj[0]});
   };
   // for Modal
   handleopenModal = () => {
@@ -57,9 +58,9 @@ class OnGoingProblem extends Component {
   };
 
   // ***delete from table
-  handleDelete = async (row) => {
+  handleDelete = async (id) => {
     this.setState({
-      onGoingProblem: this.state.onGoingProblem.filter((row) => row !== row),
+      onGoingProblem: this.state.onGoingProblem.filter((row) => row.id !== id),
     });
   };
 
@@ -162,7 +163,7 @@ class OnGoingProblem extends Component {
                   onClick={async () => {
                     // console.log("rooooow : " , row)
                     // console.log("id:  " , row)
-                    this.getTypeByID(row);
+                    this.getTypeByID(row.id);
                     this.setState({ formType: "edit" }); // to get the modal of edit
                     this.handleopenModal();
                   }}
@@ -187,7 +188,7 @@ class OnGoingProblem extends Component {
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    this.handleDelete(row);
+                    this.handleDelete(row.id);
                   }}
                 >
                   Delete
@@ -293,6 +294,7 @@ class OnGoingProblem extends Component {
         {this.state.formInputs && (
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType={this.state.formType}>
             <FormGenerator
+             hideModal={this.handleClose}
               ModalInputs={this.state.formInputs}
               updatedTypeObj={this.state.TypeObj}
               handleChange={this.handleChange}

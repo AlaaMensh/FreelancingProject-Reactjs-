@@ -24,6 +24,9 @@ class FormGenerator extends Component {
             variant="primary"
             onClick={() => {
               this.props.handleAdding();
+              if(this.props.hideModal){
+                this.props.hideModal();
+              } 
             }}
           >
             Add
@@ -35,8 +38,11 @@ class FormGenerator extends Component {
           <Button
             block
             variant="primary"
-            onClick={() => {
-              this.props.handleUpdate();
+            onClick={async () => {
+             await  this.props.handleUpdate();
+             if(this.props.hideModal){
+               this.props.hideModal();
+             } 
             }}
           >
             update

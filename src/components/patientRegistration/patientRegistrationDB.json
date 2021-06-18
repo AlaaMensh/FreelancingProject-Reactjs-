@@ -71,7 +71,8 @@
                 "date" : {
                         "type":"date",
                         "name" :"date",
-                        "label" :"Date"
+                        "label" :"Date",
+                        "placeHolder":"Date"
                 }
 
        }
@@ -198,8 +199,7 @@
                 }
 
        },
-       "getProblemsFromDB":"https://mvb1.herokuapp.com/disease/getAll"
-
+       "getProblemsFromDB":"https://mvb1.herokuapp.com/surgery/getAll"
     },
     "onGoingProblems" : 
     {   "state":{

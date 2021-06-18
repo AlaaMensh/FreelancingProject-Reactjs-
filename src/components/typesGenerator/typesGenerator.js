@@ -109,7 +109,7 @@ class TypesGenerator extends Component {
     var details = {};
     for (var p in columns[this.state.typeName].state) {
       // take attributes in state and put in object to backend
-      details[p] = this.state[p] || this.state.typeObj[p];
+      details[p] = this.state[p] ;
     }
     console.log("detilaas : ", details);
 
@@ -272,6 +272,7 @@ class TypesGenerator extends Component {
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal}
           formType = {this.state.formType}>
             <FormGenerator
+              hideModal = {this.handleClose}
               ModalInputs={this.state.ModalInputs}
               handleChange={this.handleChange}
               updatedTypeObj={this.state.typeObj}
@@ -285,6 +286,7 @@ class TypesGenerator extends Component {
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal}
           formType = {this.state.formType}>
             <FormGenerator
+              hideModal = {this.handleClose}
               ModalInputs={this.state.ModalInputs}
               handleChange={this.handleChange}
               updatedTypeObj={this.state.typeObj}

@@ -213,7 +213,7 @@ const PublicDashBoard = ({ match }) => {
   };
 
   return (
-    <div className="container">
+    <div className="container dashboard-container">
       {/* Switch the DashBoard Routing */}
       <Switch>
         <Route exact path={match.path}>

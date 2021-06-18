@@ -726,9 +726,10 @@
                     "secondName":"",
                     "lastName": "", 
                     "userName": "",
-                    "Password": "",
+                    "password": "",
                     "Email": "",
-                    "phone" : ""
+                    "phone" : "",
+                    "address":""
                     
             },
                "columnsTable" : {
@@ -822,9 +823,9 @@
                                 "label":"User Name",
                                 "placeHolder":"Enter Your UserName"
                         },
-                        "Password" : {
+                        "password" : {
                                 "type":"password",
-                                "name" :"Password",
+                                "name" :"password",
                                 "label":"Password",
                                 "placeHolder":"Enter Password"
 

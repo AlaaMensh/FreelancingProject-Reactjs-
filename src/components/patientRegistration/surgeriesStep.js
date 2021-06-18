@@ -30,9 +30,10 @@ class InterventionsStep extends Component {
     };
   }
   //** to get the row which will updated */
-  getTypeByID = async (row) => {
-    console.log("UpdatedObject: ", row);
-    this.setState({ TypeObj: row });
+  getTypeByID = async (id) => {
+    var updatedObj = this.state.surgeriesList.filter((item) => item.id === id)
+    console.log("UpdatedObject: ", updatedObj[0]);
+    this.setState({ TypeObj: updatedObj[0]});
   };
   // for Modal
   handleopenModal = () => {
@@ -44,9 +45,9 @@ class InterventionsStep extends Component {
   };
 
   // ***delete from table
-  handleDelete = async (row) => {
+  handleDelete = async (id) => {
     this.setState({
-      surgeriesList: this.state.surgeriesList.filter((row) => row !== row),
+      surgeriesList: this.state.surgeriesList.filter((row) => row.id !== id),
     });
   };
 
@@ -125,7 +126,7 @@ class InterventionsStep extends Component {
                   onClick={async () => {
                     // console.log("rooooow : " , row)
                     // console.log("id:  " , row)
-                    this.getTypeByID(row);
+                    this.getTypeByID(row.id);
                     this.setState({ formType: "edit" }); // to get the modal of edit
                     this.handleopenModal();
                   }}
@@ -137,7 +138,7 @@ class InterventionsStep extends Component {
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    this.handleDelete(row);
+                    this.handleDelete(row.id);
                   }}
                 >
                   Delete
@@ -243,6 +244,7 @@ class InterventionsStep extends Component {
         {this.state.formInputs && (
           <ModalGenerator onHide={this.handleClose} show={this.state.openModal} formType={this.state.formType}>
             <FormGenerator
+              hideModal={this.handleClose}
               ModalInputs={this.state.formInputs}
               updatedTypeObj={this.state.TypeObj}
               handleChange={this.handleChange}

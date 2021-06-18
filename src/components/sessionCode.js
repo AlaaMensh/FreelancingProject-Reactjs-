@@ -56,7 +56,14 @@ class SessionCode extends Component {
       this.handleSubmitForNavBarLab();
     } else if (this.props.fromComponent === "navBarVisits") {
       this.handleSubmitForNavBarVisits();
-    } else {
+    }
+     else if (this.props.fromComponent === "Get Patient Pathology Orders") {
+      this.handleSubmitForNavBarPathology();
+    }
+     else if (this.props.fromComponent === "Get Patient Radio Orders") {
+      this.handleSubmitForNavBarRadio();
+    }
+     else {
       this.handleSubmitForpharmacy();
     }
   };
@@ -75,6 +82,16 @@ class SessionCode extends Component {
   handleSubmitForNavBarLab = () => {
     window.location.replace(
       `http://localhost:9000/publicDashBoard/choice/lab/acceptOrders/${this.state.code}`
+    );
+  };
+  handleSubmitForNavBarPathology = () => {
+    window.location.replace(
+      `http://localhost:9000/publicDashBoard/choice/pathology/acceptOrders/${this.state.code}`
+    );
+  };
+  handleSubmitForNavBarRadio = () => {
+    window.location.replace(
+      `http://localhost:9000/publicDashBoard/choice/radio/acceptOrders/${this.state.code}`
     );
   };
   //from public DashBoard ==> choice page
@@ -198,6 +215,30 @@ class SessionCode extends Component {
         );
       }
       case "NavBar": {
+        return (
+          <div
+            onClick={() => {
+              this.handleopenModal();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            {this.props.buttonValue}
+          </div>
+        );
+      }
+      case "Get Patient Pathology Orders": {
+        return (
+          <div
+            onClick={() => {
+              this.handleopenModal();
+            }}
+            style={{ cursor: "pointer" }}
+          >
+            {this.props.buttonValue}
+          </div>
+        );
+      }
+      case "Get Patient Radio Orders": {
         return (
           <div
             onClick={() => {

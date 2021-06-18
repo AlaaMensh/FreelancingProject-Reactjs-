@@ -33,12 +33,14 @@
                         "name" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Allergy Name"
                         },
                         "type" : {
                                 "type":"text",
                                 "name" :"type",
-                                "label":"Type"
+                                "label":"Type",
+                                "placeHolder":"Choose Allergy Type"
                         }
 
                },
@@ -82,17 +84,20 @@
                         "name" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Disease Name"
                         },
                         "code" : {
                                 "type":"text",
                                 "name" :"code",
-                                "label":"Code"
+                                "label":"Code",
+                                "placeHolder":"Enter Disease Code"
                         },
                         "abbreviation" : {
                                 "type":"text",
                                 "name" :"abbreviation",
-                                "label":"abbreviation"
+                                "label":"abbreviation",
+                                "placeHolder":"Enter Disease Abbreviation"
                         }
                },
                "title":"All Diseases Types",
@@ -125,7 +130,8 @@
                         "drugName" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Drug Name"
                         }
                },
                "title":"All Drugs Types",
@@ -171,12 +177,14 @@
                         "name" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Lab Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
                                 "name" :"abbreviation",
-                                "label":"Abbreviation"
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Lab Abbreviation"
                         }
 
                },
@@ -220,12 +228,14 @@
                         "name" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Pathology Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
                                 "name" :"abbreviation",
-                                "label":"Abbreviation"
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Pathology abbreviation"
                         }
 
                },
@@ -269,12 +279,14 @@
                         "name" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Radio Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
                                 "name" :"abbreviation",
-                                "label":"Abbreviation"
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Radio Abbreviation"
                         }
 
                },
@@ -318,19 +330,21 @@
                         "name" :{
                                 "type":"text",
                                 "name" :"name",
-                                "label":"Name"
+                                "label":"Name",
+                                "placeHolder":"Enter Surgery Name"
                         },
                         "abbreviation" : {
                                 "type":"text",
                                 "name" :"abbreviation",
-                                "label":"Abbreviation"
+                                "label":"Abbreviation",
+                                "placeHolder":"Enter Surgery Abbreviation"
                         }
 
                },
-               "addType" :"http://localhost:8080/allergy/addAllergy",
-               "deleteType" : "http://localhost:8080/allergy/deleteAllergy",
-               "updateType":"http://localhost:8080/allergy/updateAllergy",
-               "getAll":"http://localhost:8080/allergy/getAllergy"
+               "addType" :"https://mvb1.herokuapp.com/surgery/addsurgery",
+               "deleteType" : "https://mvb1.herokuapp.com/surgery/deletesurgery",
+               "updateType":"https://mvb1.herokuapp.com/surgery/updatedsurgery",
+               "getAll":"https://mvb1.herokuapp.com/surgery/getAll"
 
             }
 
