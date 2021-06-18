@@ -284,8 +284,7 @@ class NurseVisit extends Component {
           }).then((resp)=>{
             console.log("Getting: " , resp);
             resp.json().then((data)=>{
-              console.log("ddddddddddddddddd;  " , data[0])
-              
+              console.log("ddddddddddddddddd;  " , data)
               var d = new Date();
               var time = d.getHours()+":"+(d.getMinutes()+1)
               var obj2 = {

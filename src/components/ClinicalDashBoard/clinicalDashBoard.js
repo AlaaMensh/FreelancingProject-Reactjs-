@@ -22,6 +22,7 @@ import PatientAppointement from "./patientAppointements";
 import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
 import FamilyHistory from "./familyHistory";
+import ClinicalOrders from "./orders"
 
 
 function TabPanel(props) {
@@ -191,6 +192,14 @@ const ClinicalDashBoard = ({ match }) => {
                     Prescription
                   </Link>
                 </ListGroup.Item>
+                <ListGroup.Item style={arr[arr.length-1]=="MyPrescriptions"?styles.active:styles.inactive}>
+                  <Link 
+                  to={match.url + `/familyHistory`}
+                  style={arr[arr.length-1]=="MyPrescriptions"?styles.active_link:styles.inactive_link}
+                  >
+                    Family History
+                  </Link>
+                </ListGroup.Item>
               </ListGroup>
             </nav>
           </div>
@@ -242,14 +251,35 @@ const ClinicalDashBoard = ({ match }) => {
                 >
                   <Tab label="Allergy Problems" {...a11yProps(0)} />
                   <Tab label="OnGoing Problems" {...a11yProps(1)} />
+                  <Tab label="surgeries Problems" {...a11yProps(2)} />
+                  <Tab label="Interventions Problems" {...a11yProps(3)} />
+                  <Tab label="activeMedication Problems" {...a11yProps(4)} />
+                  <Tab label="lab Problems" {...a11yProps(5)} />
+                  <Tab label="radio Problems" {...a11yProps(6)} />
+                  <Tab label="pathology Problems" {...a11yProps(7)} />
                 </Tabs>
+
               </AppBar>
               <TabPanel value={value} index={0}>
-              <PatientProblems type={"allergy"} id={match.params.id} />
+              <PatientProblems type={"allergy"} id={match.params.id}  addButtonFlag = {false}/>
               </TabPanel>
               <TabPanel value={value} index={1}>
-
-              <PatientProblems type={"onGoingProblems"} id={match.params.id} />
+              <PatientProblems type={"onGoingProblems"} id={match.params.id}  addButtonFlag = {false}/>
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+              <FamilyHistory type={"surgeries"} id={match.params.id} addButtonFlag = {false}/>
+              </TabPanel>
+              <TabPanel value={value} index={3}>
+              <FamilyHistory type={"Interventions"} id={match.params.id} addButtonFlag = {false}/>
+              </TabPanel>
+              <TabPanel value={value} index={4}>
+              <ClinicalOrders type = {"lab"} id = {match.params.id}  />
+              </TabPanel>
+              <TabPanel value={value} index={5}>
+              <ClinicalOrders type = {"radio"} id = {match.params.id}/>
+              </TabPanel>
+              <TabPanel value={value} index={6}>
+              <ClinicalOrders type = {"pathology"} id = {match.params.id}/>
               </TabPanel>
             </Route>
             <Route
