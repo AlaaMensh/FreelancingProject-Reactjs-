@@ -28,9 +28,6 @@ body,html{
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 99;
-
-<<<<<<< HEAD
-=======
 }
 .btn-style{
   background-color: transparent !important;
@@ -43,5 +40,5 @@ body,html{
   border: 1px solid rgb(221, 168, 177);
   color: black;
   padding: 0.2em 2em;
->>>>>>> mvpv2
+
 }
