@@ -86,8 +86,8 @@ export default function Visit({ match }) {
   const [DD, setDD] = useState();
   const [notes, setNotes] = useState();
 
-  const [procedures, setProcedures] = useState();
-  const [surgeries, setSurgeries] = useState();
+  const [procedures, setProcedures] = useState([]);
+  const [surgeries, setSurgeries] = useState([]);
   const [interventions, setInterventions] = useState();
   const [interventionDate, setInterventionDate] = useState("");
   const [surgeryDate, setSurgeryDate] = useState("");
@@ -292,12 +292,10 @@ export default function Visit({ match }) {
       case 2:
         return (
           <Procedures
-            getProcedures={getProcedures}
             getSurgeries={getSurgeries}
-            getInterventions={getInterventions}
-            getInterventionsDate={getInterventionsDate}
-            getSurgeryDate={getSurgeryDate}
-            obj={objStep2}
+            obj={surgeries}
+            procedures={procedures}
+            getProcedures={getProcedures}
             ptId={location.state}
           />
         );
