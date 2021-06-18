@@ -103,7 +103,6 @@ function App() {
         <Route exact path="/AllOrders" component={AllOrders}></Route>
 
         <Route exact path="/welcomePage" component={UserWelcomePage}></Route>
-        {/* <Route exact path={`${this.props.}`} component={UserWelcomePage}></Route> */}
 
         {/* <Route  path="/profile" component={Profile}></Route> */}
         {/* <Route exact path="**" component={Error}></Route> */}

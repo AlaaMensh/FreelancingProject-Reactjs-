@@ -116,34 +116,3 @@ body {
     }
   }
 }
-.btn-style{
-  background-color: transparent !important;
-  border: 1px solid #c7c1c1;
-  color: black !important;
-  border-color: #c7c1c1 !important;
-  padding: 0.2em 2em;
-  box-shadow: 1px 1px 9px #c7c1c1;
-  cursor: pointer;
-  &:hover{
-    background-color: rgb(231, 186, 186) !important;
-    color: black !important;
-    
-    padding: 0.2em 2em;
-  }
-
-}
-
-
-.actions-btn-style{
-  background-color: transparent !important;
-  border: 1px solid #c7c1c1;
-  color: black !important;
-  padding: 0.7em 2em;
-  box-shadow: 1px 1px 9px #c7c1c1;
-  border-radius: 1em;
-  &:hover{
-    background-color: rgb(231, 186, 186) !important;
-    color: black !important;
-  }
-}
-

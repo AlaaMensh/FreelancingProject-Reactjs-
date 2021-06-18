@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import orderType from "../ordersdb.json";
-import DataTableComp from "../typesGenerator/dataTable";
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import orderType from "../ordersdb.json";
+import DataTableComp from "../typesGenerator/dataTable";
 
 
 class AcceptOrders extends Component { // this Component to View All The Not Accepted Orders in our System
@@ -16,8 +16,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
          }
     }
     async componentDidMount(){
-      console.log("000000000000000: " , this.props.match.params.code)
-      this.setState({type : this.props.match.params.type || this.props.match.params.code });
+      console.log("000000000000000: " , this.props.history.location.state)
+      this.setState({type : this.props.match.params.type});
         await this.handleDataTableColumns();
         await this.getData(this.props.match.params.type);
     }
@@ -27,17 +27,21 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
       console.log("Accepted IDS:  " , this.state.acceptedIds )
       var details = {
         id : id,
+     
         // labId: localStorage.getItem("labId")
       }
       switch(this.state.type){
         case "lab":
-            details["labFDId"] = localStorage.getItem("labId");
+            // details["labFDId"] = localStorage.getItem("labId");
+            details["labFDId"] = localStorage.getItem("userId");
             break;
         case "pathology":
-            details["pathoFDId"] = localStorage.getItem("pathoId");
+            // details["pathoFDId"] = localStorage.getItem("pathoId");
+            details["pathoFDId"] =localStorage.getItem("userId");
             break;
         case "radio":
-            details["radioFDId"] = localStorage.getItem("radioId");
+            details["radioFDId"] = localStorage.getItem("userId");
+            // details["radioFDId"] = localStorage.getItem("radioId");
             break;
     }
       console.log("detilaas : " , details)
@@ -90,7 +94,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
               break;
       }
         var details = {     
-          ptCode : this.props.history.location.state || this.props.match.params.code,
+          ptCode : this.props.history.location.state,
         }
         var formBody = [];
         for (var property in details) {
@@ -124,7 +128,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         
       }
 
-    handleDataTableColumns = () => {
+    handleDataTableColumns = async() => {
         var type = this.props.match.params.type;
 
         this.setState({type});
@@ -148,13 +152,28 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
             )
             }
             temp.push(orderType[type].columnsTable[p])
+          }else if(p === "drname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.OrderingFirstName + " " + row.OrderinglastName}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
+
+          }
+          else if(p === "ptname")
+          {
+            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            return ( <span>{row.PtFirstName + " " + row.PtlastName}</span> )
+            }
+            temp.push(orderType[type].columnsTable[p])
+
           }
           else{
-    
             temp.push(orderType[type].columnsTable[p])
           }
         }
-        this.setState({columns : temp})
+        console.log("temp :" + temp)
+        await this.setState({columns : temp})
         temp = []
         var newState = this.state;
         for(var property in orderType[type].state ){

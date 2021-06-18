@@ -9,73 +9,9 @@ import FooterIcon from '@material-ui/icons/BorderBottom';
 import HeaderIcon from '@material-ui/icons/BorderTop';
 import NoteIcon from '@material-ui/icons/Notes';
 import React, { Component } from "react";
-import BackImage from '../../assets/images/back.png';
 import defaultImage from '../../assets/images/default-image.jpg';
+import { template_styles as styles } from './styles';
 
-const styles={
-    parentDiv:{
-        borderRadius:6,
-        elevation:3,//how much comes away from screen
-        backgroundColor:'#fff',
-        shadowOffset:{width:1,height:1},
-        shadowColor:'#333',
-        shadowOpacity:0.3,
-        marginHorizontal:4,
-        marginVertical:6,
-        shadowRadius:2,
-        position:'relative',
-        marginTop:10,
-        backgroundImage: `url(${BackImage})`,
-        paddingTop:20,
-        paddingBottom:20
-    },
-    prescriptionDesign:{
-        display: 'block',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        width: '50%',
-        position:'relative',
-        backgroundColor:'#fff'
-    },
-    HeaderButton:{ position:'absolute',top:0,right:0,textAlign:"center"},
-    FooterButton:{ position:'absolute',bottom:0,right:0,textAlign:"center"},
-    NoteButton:{ position:'absolute',top:0,right:0,textAlign:"center"},
-    Modal:{
-
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    divModal:{
-        backgroundColor: '#fff',
-        border: '2px solid #000',
-        boxShadow: 5,
-        padding: 10,
-    },
-    formControl:{
-        marginRight: 2,
-        marginTop:10,
-        width:'100%'
-    },
-    Button:{
-        marginRight: 2,
-        marginTop:40,
-        width:'100%'
-    },
-    headerImage:{
-        position:'relative',
-        top:0,
-        left:0, 
-        width:'100%',
-    }
-    ,
-    footerImage:{
-        position:'relative',
-        bottom:0,
-        left:0, 
-        width:'100%',
-    }
-}
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {

@@ -7,13 +7,11 @@ import { Form, Col, Row, Button } from "react-bootstrap";
 import Typography from "@material-ui/core/Typography";
 import { useState } from "react";
 import Info from "./importatntInfo";
-import AllergyStep from "./allergyStep";
+import Allergy from "./allergyStep";
 import FamilyHistoryStep from "./familyHistoryStep";
 import SurgeriesStep from "./surgeriesStep";
 import InterventionsStep from "./otherInterventionsStep";
 import OnGoingProblemStep from "./onGoingProblemStep";
-import "./patientRegistration.css";
-// import ListStep from "./listStep"; // Put it if you solve the one component Problem
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -70,9 +68,9 @@ function getSteps() {
   return [
     "Fill Important Info",
     "Allergy Step",
-    "Family History ",
-    "Surgical History ",
-    "Intervetions ",
+    "Family History Step",
+    "Surgies Step",
+    "Intervetions Step",
     "onGoingProblem",
     "Finished",
   ];
@@ -83,7 +81,7 @@ export default function HorizontalLabelPositionBelowStepper() {
   const [secondName, setSecondName] = useState();
   const [lastName, setLastName] = useState();
   const [birthDate, setbirthDate] = useState();
-  const [userName, setuserName] = useState();
+  const [email, setEmail] = useState();
   const [address, setAddress] = useState();
   const [status, setStatus] = useState();
   const [bloodGroup, setbloodGroup] = useState();
@@ -93,12 +91,9 @@ export default function HorizontalLabelPositionBelowStepper() {
   const [surgeriesList, setsurgeriesList] = useState([]);
   const [interventionsList, setinterventionsList] = useState([]);
   const [onGoingProblemList, setonGoingProblemList] = useState([]);
-  const [gender, setGender] = useState("");
 
   const handleSubmit = () => {
     console.log(
-      "gender: ",
-      gender,
       "first: ",
       firstName,
       "last: ",
@@ -107,8 +102,8 @@ export default function HorizontalLabelPositionBelowStepper() {
       address,
       "phone:  ",
       phone,
-      "userName : ",
-      userName,
+      "email : ",
+      email,
       "Family History : ",
       familyHistoryList,
       "Allergy  : ",
@@ -118,25 +113,24 @@ export default function HorizontalLabelPositionBelowStepper() {
     var result = JSON.stringify(familyHistoryList);
     var json = JSON.parse(result);
 
-    // this object will be sent to back to add patient
     var details = {
+      // this object will be sent to back to add patient
       firstName: firstName,
       lastName: lastName,
       secondName: secondName,
       address: address,
       phone: phone,
-      gender : gender,
-      userName: userName,
+      Email: email,
       birthDate: birthDate,
       status: status,
-      BloodGroup: bloodGroup,
-      Allergy: allergyList,
-      familyHistory: familyHistoryList,
-      surgeries: surgeriesList,
-      Interventions: interventionsList,
-      onGoingProblems: onGoingProblemList,
+      BloodGroup : bloodGroup,
+      Allergy : allergyList,
+      familyHistory : familyHistoryList,
+      surgeries : surgeriesList,
+      Interventions : interventionsList,
+      onGoingProblems : onGoingProblemList,
     };
-    console.log("Details To Add:  ", details);
+    console.log("formBody:  ", formBody);
 
     var formBody = [];
     for (var property in details) {
@@ -174,17 +168,14 @@ export default function HorizontalLabelPositionBelowStepper() {
   const getSecondName = (name) => {
     setSecondName(name);
   };
-  const getGender = (name) => {
-    setGender(name);
-  };
   const getLastName = (name) => {
     setLastName(name);
   };
   const getAddress = (name) => {
     setAddress(name);
   };
-  const getuserName = (name) => {
-    setuserName(name);
+  const getEmail = (name) => {
+    setEmail(name);
   };
   const getPhone = (name) => {
     setPhone(name);
@@ -198,12 +189,11 @@ export default function HorizontalLabelPositionBelowStepper() {
   const getBirthDate = (name) => {
     setbirthDate(name);
   };
-  let obj = {
-    gender: gender,
+  const obj = {
     firstName: firstName,
     lastName: lastName,
     secondName: secondName,
-    userName: userName,
+    email: email,
     address: address,
     birthDate: birthDate,
     status: status,
@@ -211,11 +201,9 @@ export default function HorizontalLabelPositionBelowStepper() {
     bloodGroup: bloodGroup,
   };
   const getAllergyList = (List) => {
-    console.log("allergyListInHome: ", List);
     setAllergyList(List);
   };
   const getfamilyHistoryList = (List) => {
-    console.log("Familty HistoryListInHome: ", List);
     setFamilyHistoryList(List);
   };
   const getSurgeriesList = (List) => {
@@ -228,35 +216,15 @@ export default function HorizontalLabelPositionBelowStepper() {
     setonGoingProblemList(List);
   };
 
-  const handleReset =  () => {
-
-    obj = {
-      gender: "",
-      firstName: "",
-      lastName: "",
-      secondName: "",
-      userName: userName,
-      address: address,
-      birthDate: birthDate,
-      status: status,
-      phone: phone,
-      bloodGroup: bloodGroup,}
-      console.log("handleReset: " , obj)
-      ptRegistration(0);
-      setActiveStep(0);
-    
-  };
   const ptRegistration = (stepIndex) => {
+    // const classes = useStyles();
     switch (stepIndex) {
       case 0:
         return (
-  <>
-      {console.log("infooo: " , obj)}
           <Info
-            getGender={getGender}
             getFirstName={getFirstName}
             getSecondName={getSecondName}
-            getuserName={getuserName}
+            getEmail={getEmail}
             getStatus={getStatus}
             getLastName={getLastName}
             getAddress={getAddress}
@@ -265,14 +233,12 @@ export default function HorizontalLabelPositionBelowStepper() {
             getBloodGroup={getBloodGroup}
             obj={obj}
           />
-          </>
         );
       case 1:
         return (
-          <AllergyStep
+          <Allergy
             getAllergyList={getAllergyList}
             allergyListHome={allergyList}
-            type="allergyStep"
           />
         );
       case 2:
@@ -280,7 +246,6 @@ export default function HorizontalLabelPositionBelowStepper() {
           <FamilyHistoryStep
             getfamilyHistoryList={getfamilyHistoryList}
             familyHistoryListHome={familyHistoryList}
-            type="familyHistory"
           />
         );
       case 3:
@@ -288,7 +253,6 @@ export default function HorizontalLabelPositionBelowStepper() {
           <SurgeriesStep
             getsurgeriesList={getSurgeriesList}
             surgeriesListHome={surgeriesList}
-            type="surgeries"
           />
         );
       case 4:
@@ -296,7 +260,6 @@ export default function HorizontalLabelPositionBelowStepper() {
           <InterventionsStep
             getinterventionsList={getinterventionsList}
             interventionsListHome={interventionsList}
-            type="interventionsStep"
           />
         );
       case 5:
@@ -304,7 +267,6 @@ export default function HorizontalLabelPositionBelowStepper() {
           <OnGoingProblemStep
             getonGoingProblemList={getonGoingProblemList}
             onGoingProblemListHome={onGoingProblemList}
-            type="onGoingProblems"
           />
         );
       default:
@@ -325,12 +287,14 @@ export default function HorizontalLabelPositionBelowStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-
+  const handleReset = () => {
+    setActiveStep(0);
+  };
 
   return (
-    <div className="container hero-container">
+    <div className="container">
       <Row>
-        <Col sm={9}>
+        <Col>
           {activeStep === steps.length - 1 ? (
             <div>
               <Typography className={classes.instructions}>
@@ -359,7 +323,7 @@ export default function HorizontalLabelPositionBelowStepper() {
             </div>
           )}
         </Col>
-        <Col sm={2} md="2">
+        <Col md="auto">
           <Stepper
             activeStep={activeStep}
             alternativeLabel
@@ -373,15 +337,15 @@ export default function HorizontalLabelPositionBelowStepper() {
           </Stepper>
         </Col>
       </Row>
-      <div className="row" style={{marginLeft: "1em" }}>
+      <div>
         <Button
           disabled={activeStep === 0}
           onClick={handleBack}
-          className="btn-style"
+          className={classes.backButton}
         >
           Back
         </Button>
-        <Button className="ml-3 btn-style"  onClick={handleNext}>
+        <Button variant="contained" color="primary" onClick={handleNext}>
           {activeStep === steps.length - 1 ? "Finish" : "Next"}
         </Button>
       </div>

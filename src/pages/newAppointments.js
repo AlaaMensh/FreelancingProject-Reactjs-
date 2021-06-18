@@ -1,20 +1,16 @@
-import React, { Component } from 'react';
-import appointements from '../components/appointements.json';
-import ModalComp from "../components/typesGenerator/modalGenerator";
-import axios from 'axios';
-import DataTableComp from "../components/typesGenerator/dataTable";
-import AddIcon from '@material-ui/icons/Add';
-import SessionCode from "../components/sessionCode";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
-import Button from 'react-bootstrap/Button';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  
-} from '@material-ui/pickers';  
+  KeyboardDatePicker, MuiPickersUtilsProvider
+} from '@material-ui/pickers';
+import React, { Component } from 'react';
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import appointements from '../components/appointements.json';
+import SessionCode from "../components/sessionCode";
+import DataTableComp from "../components/typesGenerator/dataTable";
+import ModalComp from "../components/typesGenerator/modalGenerator";
+
 class Appointements extends Component {
   constructor(props) {
     super(props);
@@ -93,6 +89,21 @@ class Appointements extends Component {
           // </Col>
           
           // </Row>
+          )
+          }
+          temp.push(appointements[type].columnsTable[p])
+        }
+        else if(p === "patientName"){
+          appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
+            <div className = "row">
+            <div className="col-auto">
+               <a style={{color:'#007bff',cursor:'pointer'}} onClick={(e)=>{
+                 e.preventDefault()
+                 this.props.history.push('/clinicalDashBoard/'+row.ptId)
+               }}>{row.firstName +" " + row.secondName + " " + row.lastName}</a>
+            </div>           
+          
+          </div>
           )
           }
           temp.push(appointements[type].columnsTable[p])
@@ -272,7 +283,6 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     this.getData(this.state.type);
   }
   getData = async()=>{
-    alert("ss")
       var type  = this.state.type;
   
     var details = {

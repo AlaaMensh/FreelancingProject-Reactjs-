@@ -1,32 +1,6 @@
 import React, { Component } from "react";
 import "./print.css";
-const styles = {
-  prescriptionDesign: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    alignContent: "center",
-    justifyContent: "space-between",
-    width: "50%",
-    position: "relative",
-    backgroundColor: "#fff",
-  },
-
-  headerImage: {
-    position: "relative",
-    top: 0,
-    left: 0,
-    width: "100%",
-  },
-  footerImage: {
-    position: "relative",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-  },
-};
+import { print_styles as styles } from './styles';
 
 export default class Print extends Component {
   constructor(props) {

@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import userType from "../../usersDB.json";
-// import FormGenerator from "../formGeneration"
+import FormGenerator from "../formGeneration"
 import axios from 'axios';
 import Container from 'react-bootstrap/Container';
-import FormGenerator from './../formGenerationNew';
 
 const arr = [
   {id:1 , name:"lab1" , abbreviation:"" ,description:""},
@@ -28,13 +27,15 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
       var list = []
       this.setState({type: this.props.match.params.type})
       var type = this.props.match.params.type;
-      if(type === "pathologist" || type === "radiogist" || type === "doctor" || type === "chemist" || type === "nurse"){
+      if(type === "labFD" || type === "radioFD" || type === "pathologyFD" || type === "doctorFD"  ){
          await this.getDataForFD(type);
-        // await this.handleFormInputs()
+
       }
       else{
         await this.handleFormInputs()
       }
+
+      
     }
 
     handleFormInputs = async (list) => {
@@ -59,18 +60,11 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
         for(var p in userType[type].modalAdditionForms ){
           console.log("p : " , p);
           temp.push(userType[type].modalAdditionForms[p])
-          if(( p=="pathoFDId") || p=="radioFDId" || p =="pathoId" || p == "drFDId" || p==="labFDId" || p === "drId"){
+          if(( p=="labId") || p=="radioId" || p =="pathoId" ){
             console.log("//////////////////////////////////////")
             for(var place of this.state.list){
               // console.log("id: " , place.id , " obj:" , place)
-              var obj =null;
-              if(place.organization){
-                 obj = {value : place.id , text : place.organization }
-              }
-              else{
-                //  obj = {value : place.id , text : place.firstName + " " + place.secondName + " " + place.lastName }
-                 obj = {value : place.id , text : place.firstName  }
-              }
+              var obj = {value : place.id , text : place.name }
               temp2.push(obj);
             }
             console.log("options : " , temp2)
@@ -98,27 +92,19 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
 
 
     handleChange = (evt) =>{
-        // console.log("evnet " , evt.target.value)
-        if(evt.text && evt.text === "autoComplete" && evt.newValue && evt.newValue.value){
-          console.log("evt: " , evt , "  Value :")
-          this.setState({
-            [evt.input]: evt.newValue.value,
-          });
-        }
-        else{
-          if(evt.target){
-          const value = evt.target.value;
-          this.setState({
-            [evt.target.name]: value,
-          });
-        }
-        }
+        console.log("evnet " , evt.target.value)
+        const value = evt.target.value;
+        this.setState({
+          [evt.target.name]: value
+        });
       }
 
     getDataForFD =(type)=>{//Ex: get lab names for labFD
-      console.log("endpoint to get info from DB in dropDownButton:  " , userType[type].getAllDataFD)
+      console.log("endpointL " , userType[type].getAllDataFD)
       axios.get(`${userType[type].getAllDataFD}` ,{
-      } ).then(async resp => {     
+      } ).then(async resp => {
+        console.log("resp : " ,resp)
+     
         this.setState({list : resp.data})
         console.log("AllData: " , resp.data);
         // return resp.data
@@ -182,11 +168,9 @@ class SignupList1 extends Component { //for Doctor - nurse - pathologist - chemi
                 this.state.formInputs && this.state.formInputs.length > 0 && (
                 <FormGenerator  ModalInputs = {this.state.formInputs}
                 handleChange = {this.handleChange}
-                handleAdding= {this.handleSignup}
+                handleSubmit= {this.handleSignup}
                 options = {this.state.options}
-                buttonTitle = "Signup"
-                formType = "add"
-                />
+                buttonTitle = "Signup"/>
                 )
                 }
              <div className="text-center">

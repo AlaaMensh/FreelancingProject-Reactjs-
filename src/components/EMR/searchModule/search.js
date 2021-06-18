@@ -91,12 +91,6 @@ const useStyles = (theme) => ({
 
 
 
-var row = [
-  {id:1 , firstName : "alaa" , LastName : "Ahmed" , maritalStatus : "lol"},
-  {id:2 , firstName : "Mohamed" , LastName : "Nassif" , maritalStatus : "lol"},
-  {id:3 , firstName : "Ola" , LastName : "non" , maritalStatus : "lol"},
-]
-
 var id = 0;
 var rowsToKeep = [];
 var rowsToBeDeleted = [];
@@ -120,7 +114,6 @@ class Search extends Component {
 
     getData = async()=>{
       var type = "Search";
-      this.setState({list: row});
 
       var details = {
         drId:localStorage.getItem("userId")

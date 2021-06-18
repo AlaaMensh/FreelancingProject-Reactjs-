@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
-import appointements from '../appointements.json';
-import ModalComp from "../typesGenerator/modalGenerator";
 import axios from 'axios';
-import DataTableComp from "../typesGenerator/dataTable";
-import SessionCode from "../sessionCode";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
+import React, { Component } from 'react';
 import Button from 'react-bootstrap/Button';
-import { ToastContainer, toast } from 'react-toastify';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import appointements from '../appointements.json';
+import SessionCode from "../sessionCode";
+import DataTableComp from "../typesGenerator/dataTable";
+import ModalComp from "../typesGenerator/modalGenerator";
 
 
 class Appointements extends Component {
@@ -67,6 +66,21 @@ class Appointements extends Component {
           </Col>
           
           </Row>
+          )
+          }
+          temp.push(appointements[type].columnsTable[p])
+        }
+        else if(p === "patientName"){
+          appointements[type].columnsTable[p]["cell"] =  (row) =>{ return(
+            <div className = "row">
+            <div className="col-auto">
+               <a style={{color:'#007bff',cursor:'pointer'}} onClick={(e)=>{
+                 e.preventDefault()
+                 this.props.history.push('/clinicalDashBoard/'+row.ptId)
+               }}>{row.patientName}</a>
+            </div>           
+          
+          </div>
           )
           }
           temp.push(appointements[type].columnsTable[p])

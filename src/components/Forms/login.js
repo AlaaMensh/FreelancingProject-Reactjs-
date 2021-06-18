@@ -49,7 +49,6 @@ class Login extends Component {
       [evt.target.name]: value,
     });
   };
-
   setRoleName = (role) => {
     switch (role) {
       case 2: {
@@ -117,10 +116,10 @@ class Login extends Component {
             this.props.getAuthorization(true, this.state.userName); // for App to flip the Login and logout button
           }
 
-          // if (data.role == "") {
-          //   // if he is a just user
-          //   this.props.history.push("/welcomePage");
-          // }
+          if (data.role == "") {
+            // if he is a just user
+            this.props.history.push("/welcomePage");
+          }
 
           var roleName = this.setRoleName(data.role); // to get if he is LabFD or pathologyFD or doctorFD or radioFD
           if (parseInt(data.role) == 3) {
@@ -160,7 +159,7 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.isLoggedIn) return <Redirect to = "/publicDashBoard" />;
+    if (this.state.isLoggedIn) return <Redirect to="/publicDashBoard" />;
 
     return (
       <div className="container-fluid">
