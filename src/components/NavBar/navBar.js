@@ -17,165 +17,227 @@ const NavBar = (props) => {
     const history = useHistory();
     const [userName, setUserName] = useState(localStorage.getItem("userName"));
     const [target, setTarget] = useState(null);
-    const [img , setImg] = useState(null);
+    const [img, setImg] = useState(null);
     const [showProfile, setShowProfile] = useState(false);
+    const [isAuth, setIsAuth] = useState(props.isAuth);
     const ref = useRef(null);
+
     // const [userName , setUserName] = useState("");
     var name = "AlaaMensh";
     const handleClick = (event) => {
         setShowProfile(!showProfile);
         setTarget(event.target);
     };
-    const handleUserDropDownMenu = (role)=> {
+    const handleLogout = (e) => {
+        localStorage.clear();
+        history.push("/login");
+        setIsAuth(false);
+    };
+
+    const handleUserDropDownMenu = (role) => {
         // eslint-disable-next-line default-case
-        switch(parseInt(role)){
-            case 8 :{
+        switch (parseInt(role)) {
+            case 8: {
                 return (
                     <NavDropdown
-                    title="Doctor Functions"
-                    id="basic-nav-dropdown"
-                >
+                        title="Doctor Functions"
+                        id="basic-nav-dropdown"
+                    >
                         <NavDropdown.Item href="/publicDashBoard">
                             DashBoard
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/publicDashBoard/appoint">
                             Appointements
                         </NavDropdown.Item>
-                        <NavDropdown.Item >
-                            <SessionCode hidden={false}
-                        buttonValue="Make Visit" fromComponent="navBarVisits" history= {history}/>
+                        <NavDropdown.Item>
+                            <SessionCode
+                                hidden={false}
+                                buttonValue="Make Visit"
+                                fromComponent="navBarVisits"
+                                history={history}
+                            />
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/ptRegistration">
                             Patient Registration
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/lab">
-                             Doctor Lab Orders
+                            Doctor Lab Orders
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/pathology">
-                             Doctor Pathology Orders
+                            Doctor Pathology Orders
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/radio">
-                             Doctor Radiology Orders
+                            Doctor Radiology Orders
                         </NavDropdown.Item>
-                        <NavDropdown.Item 
+                        <NavDropdown.Item
                             href="#"
-                            style={{ cursor: "pointer", textDecoration:"none" }}>
-                            <Link className="link-item"
-                                 to={ `/publicDashBoard/EMR/search`}
-                                style={{ cursor: "pointer" , textDecoration:"none" , color:"#212529"}}
-                                >
+                            style={{
+                                cursor: "pointer",
+                                textDecoration: "none",
+                            }}
+                        >
+                            <Link
+                                className="link-item"
+                                to={`/publicDashBoard/EMR/search`}
+                                style={{
+                                    cursor: "pointer",
+                                    textDecoration: "none",
+                                    color: "#212529",
+                                }}
+                            >
                                 All My Patients
-                            </Link>    
+                            </Link>
                         </NavDropdown.Item>
-               
-                </NavDropdown>
-                )
+                    </NavDropdown>
+                );
             }
             // eslint-disable-next-line no-lone-blocks
-            case 3 :{
+            case 3: {
                 return (
                     <NavDropdown
-                    title="LabFD Functions"
-                    id="basic-nav-dropdown"
-                >
-                    <NavDropdown.Item href="/publicDashBoard">
-                        DashBoard
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                    href="#"
-                    style={{ cursor: "pointer", textDecoration:"none" }}>
-                    <Link
-                        to={ `/publicDashBoard/choice/lab/allLabOrders`}
-                        style={{ cursor: "pointer" , textDecoration:"none" , color:"#212529"}}
+                        title="LabFD Functions"
+                        id="basic-nav-dropdown"
+                    >
+                        <NavDropdown.Item href="/publicDashBoard">
+                            DashBoard
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                            href="#"
+                            style={{
+                                cursor: "pointer",
+                                textDecoration: "none",
+                            }}
                         >
-                        Get All Accepted Orders
-                    </Link>    
-                    </NavDropdown.Item>
-                    <NavDropdown.Item >
-                        <SessionCode hidden={false}
-                        buttonValue="Get Patient Orders" fromComponent="NavBar" history= {history}/>
-                    </NavDropdown.Item>
-                </NavDropdown>
-                )
+                            <Link
+                                to={`/publicDashBoard/choice/lab/allLabOrders`}
+                                style={{
+                                    cursor: "pointer",
+                                    textDecoration: "none",
+                                    color: "#212529",
+                                }}
+                            >
+                                Get All Accepted Orders
+                            </Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                            <SessionCode
+                                hidden={false}
+                                buttonValue="Get Patient Orders"
+                                fromComponent="NavBar"
+                                history={history}
+                            />
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                );
             }
-            case 5 :{
+            case 5: {
                 return (
                     <NavDropdown
-                    title="Pathology Front Disk Functions"
-                    id="basic-nav-dropdown"
-                >
-                    <NavDropdown.Item href="/publicDashBoard">
-                        DashBoard
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                    href="#"
-                    style={{ cursor: "pointer", textDecoration:"none" }}>
-                    <Link
-                        to={ `/publicDashBoard/choice/pathology/allLabOrders`}
-                        style={{ cursor: "pointer" , textDecoration:"none" , color:"#212529"}}
+                        title="Pathology Front Disk Functions"
+                        id="basic-nav-dropdown"
+                    >
+                        <NavDropdown.Item href="/publicDashBoard">
+                            DashBoard
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                            href="#"
+                            style={{
+                                cursor: "pointer",
+                                textDecoration: "none",
+                            }}
                         >
-                        Get All Accepted Orders
-                    </Link>    
-                    </NavDropdown.Item>
-                    <NavDropdown.Item >
-                        <SessionCode hidden={false}
-                        buttonValue="Get Patient Pathology Orders" fromComponent="Get Patient Pathology Orders" history= {history}/>
-                    </NavDropdown.Item>
-                </NavDropdown>
-                )
+                            <Link
+                                to={`/publicDashBoard/choice/pathology/allLabOrders`}
+                                style={{
+                                    cursor: "pointer",
+                                    textDecoration: "none",
+                                    color: "#212529",
+                                }}
+                            >
+                                Get All Accepted Orders
+                            </Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                            <SessionCode
+                                hidden={false}
+                                buttonValue="Get Patient Pathology Orders"
+                                fromComponent="Get Patient Pathology Orders"
+                                history={history}
+                            />
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                );
             }
-            case 4 :{
+            case 4: {
                 return (
                     <NavDropdown
-                    title="Radiology Front Disk Functions"
-                    id="basic-nav-dropdown"
-                >
-                    <NavDropdown.Item href="/publicDashBoard">
-                        DashBoard
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                    href="#"
-                    style={{ cursor: "pointer", textDecoration:"none" }}>
-                    <Link
-                        to={ `/publicDashBoard/choice/radio/allLabOrders`}
-                        style={{ cursor: "pointer" , textDecoration:"none" , color:"#212529"}}
+                        title="Radiology Front Disk Functions"
+                        id="basic-nav-dropdown"
+                    >
+                        <NavDropdown.Item href="/publicDashBoard">
+                            DashBoard
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                            href="#"
+                            style={{
+                                cursor: "pointer",
+                                textDecoration: "none",
+                            }}
                         >
-                        Get All Accepted Orders
-                    </Link>     
-                    </NavDropdown.Item>
-                    <NavDropdown.Item>
-                        <SessionCode hidden={false}
-                        buttonValue="Get Patient Radio Orders" fromComponent="Get Patient Radio Orders" history= {history}/>
-                    </NavDropdown.Item>
-                </NavDropdown>
-                )
+                            <Link
+                                to={`/publicDashBoard/choice/radio/allLabOrders`}
+                                style={{
+                                    cursor: "pointer",
+                                    textDecoration: "none",
+                                    color: "#212529",
+                                }}
+                            >
+                                Get All Accepted Orders
+                            </Link>
+                        </NavDropdown.Item>
+                        <NavDropdown.Item>
+                            <SessionCode
+                                hidden={false}
+                                buttonValue="Get Patient Radio Orders"
+                                fromComponent="Get Patient Radio Orders"
+                                history={history}
+                            />
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                );
             }
-            case 7 :{
+            case 7: {
                 return (
                     <NavDropdown
-                    title="Nurse Functions"
-                    id="basic-nav-dropdown"
-                >
-                    <NavDropdown.Item href="/publicDashBoard">
-                        DashBoard
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                    href="#"
-                    style={{ cursor: "pointer", textDecoration:"none" }}>
-                    <Link
-                        to={ `/publicDashBoard/patientsOnVisit`}
-                        style={{ cursor: "pointer" , textDecoration:"none" , color:"#212529"}}
+                        title="Nurse Functions"
+                        id="basic-nav-dropdown"
+                    >
+                        <NavDropdown.Item href="/publicDashBoard">
+                            DashBoard
+                        </NavDropdown.Item>
+                        <NavDropdown.Item
+                            href="#"
+                            style={{
+                                cursor: "pointer",
+                                textDecoration: "none",
+                            }}
                         >
-                        Nurse Module
-                    </Link>    
-                    </NavDropdown.Item>
-                </NavDropdown>
-                )
+                            <Link
+                                to={`/publicDashBoard/patientsOnVisit`}
+                                style={{
+                                    cursor: "pointer",
+                                    textDecoration: "none",
+                                    color: "#212529",
+                                }}
+                            >
+                                Nurse Module
+                            </Link>
+                        </NavDropdown.Item>
+                    </NavDropdown>
+                );
             }
-            
         }
-
-    }
+    };
     return (
         <Navbar style={{ marginBottom: "20px" }} bg="light" expand="md">
             <Navbar.Brand href="#home">Our Logo</Navbar.Brand>
@@ -183,13 +245,15 @@ const NavBar = (props) => {
             <Navbar.Collapse id="basic-navbar-nav" ref={ref}>
                 <Nav className="ml-auto px-2">
                     {/* *************check here on role on every Choice in the DropDown *************/}
-                    {props.isAuth && (
+                    {isAuth && (
                         <>
-                        {handleUserDropDownMenu(localStorage.getItem("role"))}
-                         </>
+                            {handleUserDropDownMenu(
+                                localStorage.getItem("role")
+                            )}
+                        </>
                     )}
                 </Nav>
-                {props.isAuth && (
+                {isAuth && (
                     <React.Fragment>
                         <Nav.Link
                             onClick={handleClick}
@@ -205,18 +269,22 @@ const NavBar = (props) => {
                                 {/* <ArrowDropDownIcon
                                     style={{ fontSize: "1.6em" }}
                                 /> */}
-                                <div style={{width:"50px" , height:"50px",
-                                            backgroundColor: "yellow",
-                                            borderRadius: "50%",
-                                            background: 'url(https://imgur.com/yVjnDV8.png)',
-                                            backgroundPosition: "center",
-                                            backgroundSize: "cover"
-                                            }} className="img-fluid">
-
-                                </div>
-
+                                <div
+                                    style={{
+                                        width: "50px",
+                                        height: "50px",
+                                        backgroundColor: "yellow",
+                                        borderRadius: "50%",
+                                        background:
+                                            "url(https://imgur.com/yVjnDV8.png)",
+                                        backgroundPosition: "center",
+                                        backgroundSize: "cover",
+                                    }}
+                                    className="img-fluid"
+                                ></div>
                             </div>
                         </Nav.Link>
+
                         {/* <Overlay
                             show={showProfile}
                             target={target}
@@ -286,10 +354,12 @@ const NavBar = (props) => {
                         </Overlay> */}
                     </React.Fragment>
                 )}
-                {console.log("props.auth: ", props.isAuth)}
+                {console.log("props.auth: ", isAuth)}
 
-                {props.isAuth ? (
-                    ""
+                {isAuth ? (
+                    <Button onClick={handleLogout} className="btn btn-danger">
+                        Logout
+                    </Button>
                 ) : (
                     <Button
                         className="nav-btn"
