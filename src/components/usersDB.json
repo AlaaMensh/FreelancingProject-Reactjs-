@@ -1,0 +1,1627 @@
+{
+        "user" : {  
+                "state":{
+                   "userName": "",
+                   "Password": "",
+                   "Email": ""  
+           },
+              "columnsTable" : {
+
+                       "userName": {
+                               "name": "User Name",
+                               "selector": "userName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "Email": {
+                               "name": "Email",
+                               "selector": "Email",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "actions" :{
+                               "name" :"actions",
+                               "selector" : "actions",
+                               "sortable":false,
+                               "center" : true,
+                               "width":"300px"
+                       }
+              },
+              "modalUpdateForms": {
+                       "userName" :{
+                               "type": "text",
+                               "name" : "userName"
+                       },
+                       "Email" :{
+                               "type": "text",
+                               "name" : "Email"
+                       }           
+              },
+              "modalAdditionForms": {
+                       "Email" : {
+                               "type":"email",
+                               "name" :"Email"
+                       },
+                       "userName" : {
+                               "type":"text",
+                               "name" :"userName"
+                       },
+                       "Password" : {
+                               "type":"password",
+                               "name" :"Password"
+                       }
+
+              },
+              "title":"All Doctors",
+              "description":"simple blah blah this the page and what it dose you know stuff..",
+              "addUser" :"http://localhost:8080/doctor/addDoctor",
+              "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
+              "updateUser":"http://localhost:3000/doctor/updateDoctor",
+              "getAll":"http://localhost:8080/doctor/getAll"
+              
+           },
+        "doctor" : {  
+                 "state":{
+                    "firstName":"",
+                    "secondName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+                },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Doctors",
+               "description":"simple blah blah this the page and what it dose you know stuff..",
+               "addUser" :"http://localhost:8080/doctor/addDoctor",
+               "deleteUser" : "http://localhost:8080/doctor/deleteDoctor",
+               "updateUser":"http://localhost:8080/doctor/updateDoctor",
+               "getAll":"http://localhost:8080/doctor/getDoctor"
+               
+
+            },
+        "nurse" : {  
+                "state":{
+                    "firstName":"",
+                    "secondName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Nurses",   
+               "description":"You can see All Nurses here..",
+               "addUser" :"https://mvb1.herokuapp.com/nurse/addNurse",
+               "deleteUser" : "http://localhost:8080/nurse/deleteNurse",
+               "updateUser":"http://localhost:8080/nurse/updateNurse",
+               "getAll":"http://localhost:8080/nurse/getNurse"
+               
+            },
+        "pathologist" : {  
+                 "state":{
+                    "firstName":"",
+                    "secondName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+                },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Pathologists",
+               "description":"You can see All Pathologists here...",
+               "addUser" :"https://mvb1.herokuapp.com/patho/addPathology",
+               "deleteUser" : "http://localhost:8080/patho/deletePathology",
+               "updateUser":"http://localhost:8080/patho/updatePathology",
+               "getAll":"http://localhost:8080/patho/getPathology"
+            },
+        "radiogist" : {  
+                 "state":{
+                    "firstName":"",
+                    "secondName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All radiogists",
+               "description":"You can see all Radiogists here..",
+               "addUser" :"https://mvb1.herokuapp.com/radiology/addRadiology",
+               "deleteUser" : "http://localhost:8080/radiology/deleteradiology",
+               "updateUser":"http://localhost:8080/radiology/updateradiology",
+               "getAll":"http://localhost:8080/radiology/getRadiology"
+               
+
+            },
+        "chemist" : {  
+                 "state":{
+                    "firstName":"",
+                    "secondName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+                },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "second Name",
+                                "selector": "secondName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Chemists",
+               "description":"You can see all Chemists here...",
+               "addUser" :"https://mvb1.herokuapp.com/chemist/addChemist",
+               "deleteUser" : "http://localhost:8080/chemist/deleteChemist",
+               "updateUser":"http://localhost:8080/chemist/updateChemist",
+               "getAll":"http://localhost:8080/chemist/getChemist"
+               
+
+            },
+        "assistant" : {  
+                 "state":{
+                    "firstName":"",
+                    "secondName":"",
+                    "lastName": "", 
+                    "Date": "",
+                    "degree" : "",
+                    "userName": "",
+                    "Password": "",
+                    "Email": "",
+                    "phone" : "",
+                    "address": ""
+                    
+            },
+               "columnsTable" : {
+                        "firstName": {
+                                "name": "First Name",
+                                "selector": "firstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "secondName": {
+                                "name": "Second Name",
+                                "selector": "secondName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "lastName": {
+                                "name": "Last Name",
+                                "selector": "lastName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "Date",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "degree" :{
+                                "name" :"Degree",
+                                "selector" : "degree",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+
+
+                        "phone" :{
+                                "name" :"Phone",
+                                "selector" : "phone",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "Address" :{
+                                "name" :"Address",
+                                "selector" : "address",
+                                "sortable":true,
+                                "center" : true,
+                                "hide":true
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "modalUpdateForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        }
+
+               },
+               "modalAdditionForms": {
+                        "firstName" :{
+                                "type": "text",
+                                "name" : "firstName"
+                        },
+                        "secondName" :{
+                                "type": "text",
+                                "name" : "secondName"
+                        },
+                        "lastName" :{
+                                "type": "text",
+                                "name" : "lastName"
+                        },
+                        "Date" :{
+                                "type": "date",
+                                "name" : "Date"
+                        },
+                        "degree" :{
+                                "type": "text",
+                                "name" : "degree"
+                        },                
+                        "phone" : {
+                                "type":"text",
+                                "name" :"phone"
+                        },
+                        "address" : {
+                                "type":"text",
+                                "name" :"address"
+                        },
+                        "Email" : {
+                                "type":"email",
+                                "name" :"Email"
+                        },
+                        "userName" : {
+                                "type":"text",
+                                "name" :"userName"
+                        },
+                        "Password" : {
+                                "type":"password",
+                                "name" :"Password"
+                        }
+
+               },
+               "title":"All Assistant",
+               "description":"You can see All Assistants here..",
+               "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
+               "deleteUser" : "http://localhost:8080/assistant/deleteAssistant",
+               "updateUser":"http://localhost:8080/assistant/updateAssistant",
+               "getAll":"http://localhost:8080/assistant/getAssistant"
+               
+
+            },
+
+
+        "labFD" : { 
+                "state":{
+                      "userName":"",
+                      "password": "",
+                      "Email": "",
+                      "phone" : "",
+                      "address": "",
+                      "establishment": "",
+                      "contactPerson" : "",
+                      "labId":""
+                     
+                      
+          },
+             "columnsTable" : {
+                      "address": {
+                              "name": "address",
+                              "selector": "address",
+                              "sortable": true,
+                              "center" : true
+                      },
+                      "establishment": {
+                              "name": "establishment",
+                              "selector": "establishment",
+                              "sortable": true,
+                              "center" : true
+                      },
+                      "contactPerson": {
+                              "name": "contactPerson",
+                              "selector": "contactPerson",
+                              "sortable": true,
+                              "center" : true
+                      },
+                      "phone" :{
+                              "name" :"phone",
+                              "selector" : "phone",
+                              "sortable":true,
+                              "center" : true,
+                              "hide":true
+                      },
+                      "actions" :{
+                              "name" :"actions",
+                              "selector" : "actions",
+                              "sortable":false,
+                              "center" : true,
+                              "width":"300px"
+                      }
+             },
+             "modalAdditionForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "password" : {
+                              "type":"password",
+                              "name" :"password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      },
+                      "labId" : {
+                              "type":"select",
+                              "name" :"labId"
+                      }
+                      
+              },
+              "modalUpdateForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "password" : {
+                              "type":"password",
+                              "name" :"password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      }
+
+             },
+             "title":"All Lab FrontDisks",
+             "description":"You can see All Lab FrontDists here..",
+             "addUser" :"https://mvb1.herokuapp.com/frontdisk/addLabFrontDisk",
+             "deleteUser" : "http://localhost:8080/frontdisk/deletelabFD",
+             "updateUser":"http://localhost:8080/frontdisk/updatelabFD",
+             "getAll":"http://localhost:8080/frontdisk/getlabFD",
+             "getAllDataFD" :"https://mvb1.herokuapp.com/lab/getAll",
+             "getLabIdInSession":"" 
+             
+
+          },
+          "radioFD" : { 
+                "state":{
+                      "userName":"",
+                      "Password": "",
+                      "Email": "",
+                      "phone" : "",
+                      "address": "",
+                      "establishment": "",
+                      "contactPerson" : "",
+                      "radioId":""   
+                      
+          },
+          "columnsTable" : {
+                "address": {
+                        "name": "address",
+                        "selector": "address",
+                        "sortable": true,
+                        "center" : true
+                },
+                "establishment": {
+                        "name": "establishment",
+                        "selector": "establishment",
+                        "sortable": true,
+                        "center" : true
+                },
+                "contactPerson": {
+                        "name": "contactPerson",
+                        "selector": "contactPerson",
+                        "sortable": true,
+                        "center" : true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true,
+                        "center" : true,
+                        "hide":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+         },
+             "modalAdditionForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "Password" : {
+                              "type":"password",
+                              "name" :"Password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      },
+                      "radioId" : {
+                              "type":"select",
+                              "name" :"radioId"
+                      }
+                      
+              },
+              "modalUpdateForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "Password" : {
+                              "type":"password",
+                              "name" :"Password"
+                      },
+
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      }
+
+             },
+             "title":"All Radios FrontDisks",
+             "description":"You can see here all Radios FrontDisks..",
+             "addUser" :"http://localhost:8080/frontdisk/addradioFrontDisk",
+             "deleteUser" : "http://localhost:8080/frontdisk/deleteradioFD",
+             "updateUser":"http://localhost:8080/frontdisk/updateradioFD",
+             "getAll":"http://localhost:8080/frontdisk/getradioFD",
+             "getAllDataFD" : "https://mvb1.herokuapp.com/radio/getAll",
+             "getLabIdInSession":"" 
+             
+
+          },
+          "pathologyFD" : { 
+                "state":{
+                      "userName":"",
+                      "password": "",
+                      "Email": "",
+                      "phone" : "",
+                      "address": "",
+                      "establishment": "",
+                      "contactPerson" : "",
+                      "pathoId":""
+                     
+                      
+          },
+        "columnsTable" : {
+                "address": {
+                        "name": "address",
+                        "selector": "address",
+                        "sortable": true,
+                        "center" : true
+                },
+                "establishment": {
+                        "name": "establishment",
+                        "selector": "establishment",
+                        "sortable": true,
+                        "center" : true
+                },
+                "contactPerson": {
+                        "name": "contactPerson",
+                        "selector": "contactPerson",
+                        "sortable": true,
+                        "center" : true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true,
+                        "center" : true,
+                        "hide":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+                },
+             "modalAdditionForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "password" : {
+                              "type":"password",
+                              "name" :"password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      },
+                      "pathoId" : {
+                              "type":"select",
+                              "name" :"pathoId"
+                      }
+                      
+              },
+              "modalUpdateForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "password" : {
+                              "type":"password",
+                              "name" :"password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      }
+
+             },
+             "title":"All pathology FrontDisks",
+             "description":"You can see all Pathology FrontDisks..",
+             "addUser" :"https://mvb1.herokuapp.com/frontdisk/addpathoFrontDisk",
+             "deleteUser" : "http://localhost:8080/frontdisk/deletepathobFD",
+             "updateUser":"http://localhost:8080/frontdisk/updatepathoFD",
+             "getAll":"http://localhost:8080/frontdisk/getpathoFD",
+             "getAllDataFD" :"https://mvb1.herokuapp.com/patho/getAll",
+             "getLabIdInSession":"" 
+             
+
+          },
+          "doctorFD" : { 
+                "state":{
+                      "userName":"",
+                      "Password": "",
+                      "Email": "",
+                      "phone" : "",
+                      "address": "",
+                      "establishment": "",
+                      "contactPerson" : "",
+                      "drId":""
+                     
+                      
+          },
+          "columnsTable" : {
+                "address": {
+                        "name": "address",
+                        "selector": "address",
+                        "sortable": true,
+                        "center" : true
+                },
+                "establishment": {
+                        "name": "establishment",
+                        "selector": "establishment",
+                        "sortable": true,
+                        "center" : true
+                },
+                "contactPerson": {
+                        "name": "contactPerson",
+                        "selector": "contactPerson",
+                        "sortable": true,
+                        "center" : true
+                },
+                "phone" :{
+                        "name" :"phone",
+                        "selector" : "phone",
+                        "sortable":true,
+                        "center" : true,
+                        "hide":true
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+         },
+             "modalAdditionForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "Password" : {
+                              "type":"password",
+                              "name" :"Password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      },
+                      "drId" : {
+                              "type":"select",
+                              "name" :"drId"
+                      }
+                      
+              },
+              "modalUpdateForms": {
+                      "establishment" :{
+                              "type": "text",
+                              "name" : "establishment"
+                      },
+                      "contactPerson" :{
+                              "type": "text",
+                              "name" : "contactPerson"
+                      },
+                      "userName" : {
+                              "type":"text",
+                              "name" :"userName"
+                      },
+                      
+                      "Password" : {
+                              "type":"password",
+                              "name" :"Password"
+                      },
+                      "Email" : {
+                              "type":"email",
+                              "name" :"Email"
+                      },
+                      "phone" : {
+                              "type":"text",
+                              "name" :"phone"
+                      },
+                      "address" : {
+                              "type":"text",
+                              "name" :"address"
+                      }
+
+             },
+             "title":"All Lab FrontDisks",
+             "description":"simple blah blah this the page and what it dose you know stuff..",
+             "addUser" :"http://localhost:8080/frontdisk/addDoctorFD",
+             "deleteUser" : "",
+             "updateUser":"",
+             "getAll":"",
+             "getAllDataFD" :"https://mvb1.herokuapp.com/doctor/getDoctor",
+             "getLabIdInSession":"" 
+             
+
+          },
+          "pharmacist" : {  
+                "state":{
+                   "firstName":"",
+                   "secondName":"",
+                   "lastName": "", 
+                   "Date": "",
+                   "degree" : "",
+                   "userName": "",
+                   "Password": "",
+                   "Email": "",
+                   "phone" : "",
+                   "address": ""
+                   
+           },
+              "columnsTable" : {
+                       "firstName": {
+                               "name": "First Name",
+                               "selector": "firstName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "secondName": {
+                               "name": "Second Name",
+                               "selector": "secondName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "lastName": {
+                               "name": "Last Name",
+                               "selector": "lastName",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "Date": {
+                               "name": "Date",
+                               "selector": "Date",
+                               "sortable": true,
+                               "center" : true
+                       },
+                       "degree" :{
+                               "name" :"Degree",
+                               "selector" : "degree",
+                               "sortable":true,
+                               "center" : true,
+                               "hide":true
+                       },
+
+
+                       "phone" :{
+                               "name" :"Phone",
+                               "selector" : "phone",
+                               "sortable":true,
+                               "center" : true,
+                               "hide":true
+                       },
+                       "Address" :{
+                               "name" :"Address",
+                               "selector" : "address",
+                               "sortable":true,
+                               "center" : true,
+                               "hide":true
+                       },
+                       "actions" :{
+                               "name" :"actions",
+                               "selector" : "actions",
+                               "sortable":false,
+                               "center" : true,
+                               "width":"300px"
+                       }
+              },
+              "modalUpdateForms": {
+                       "firstName" :{
+                               "type": "text",
+                               "name" : "firstName"
+                       },
+                       "secondName" :{
+                               "type": "text",
+                               "name" : "secondName"
+                       },
+                       "lastName" :{
+                               "type": "text",
+                               "name" : "lastName"
+                       },
+                       "Date" :{
+                               "type": "date",
+                               "name" : "Date"
+                       },
+                       "degree" :{
+                               "type": "text",
+                               "name" : "degree"
+                       },                
+                       "phone" : {
+                               "type":"text",
+                               "name" :"phone"
+                       },
+                       "address" : {
+                               "type":"text",
+                               "name" :"address"
+                       }
+
+              },
+              "modalAdditionForms": {
+                       "firstName" :{
+                               "type": "text",
+                               "name" : "firstName"
+                       },
+                       "secondName" :{
+                               "type": "text",
+                               "name" : "secondName"
+                       },
+                       "lastName" :{
+                               "type": "text",
+                               "name" : "lastName"
+                       },
+                       "Date" :{
+                               "type": "date",
+                               "name" : "Date"
+                       },
+                       "degree" :{
+                               "type": "text",
+                               "name" : "degree"
+                       },                
+                       "phone" : {
+                               "type":"text",
+                               "name" :"phone"
+                       },
+                       "address" : {
+                               "type":"text",
+                               "name" :"address"
+                       },
+                       "Email" : {
+                               "type":"email",
+                               "name" :"Email"
+                       },
+                       "userName" : {
+                               "type":"text",
+                               "name" :"userName"
+                       },
+                       "Password" : {
+                               "type":"password",
+                               "name" :"Password"
+                       }
+
+              },
+              "title":"All Pharmacists",
+              "description":"You can see All Pharmacists here...",
+              "addUser" :"https://mvb1.herokuapp.com/assistant/addAssistant",
+              "deleteUser" : "http://localhost:8080/assistant/deleteAssistant",
+              "updateUser":"http://localhost:8080/assistant/updateAssistant",
+              "getAll":"http://localhost:8080/assistant/getAssistant"
+              
+
+           }
+
+    
+            
+            
+    
+}

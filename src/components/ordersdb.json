@@ -1,0 +1,453 @@
+{
+    "lab" : 
+            {   "state":{
+                    "date":"",
+                    "comments":"",
+                    "status":"",
+                    "result":""
+                    
+            },
+               "columnsTable" : {
+
+                        "comments": {
+                                "name": "Comments",
+                                "selector": "comments",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "ptname": {
+                                "name": "Patient Name",
+                                "selector": "PtFirstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "phone": {
+                                "name": "Phone",
+                                "selector": "phone",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "result" :{
+                                "name" :"Result",
+                                "selector" : "result",
+                                "sortable":true,
+                                "center" : true
+                               
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+               },
+               "columnsTableForPatientAcceptOrders":{
+                "drname": {
+                        "name": "Doctor Name",
+                        "selector": "OrderingFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "ptname": {
+                        "name": "Patient Name",
+                        "selector": "PtFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
+                 "comments": {
+                         "name": "Comments",
+                         "selector": "comments",
+                         "sortable": true,
+                         "center" : true
+                 },
+                 "actions" :{
+                         "name" :"actions",
+                         "selector" : "actions",
+                         "sortable":false,
+                         "center" : true,
+                         "width":"300px"
+                 }
+               },
+               "columnsTableForPatientOrders": {
+                 "Date": {
+                         "name": "createdAt",
+                         "selector": "createdAt",
+                         "sortable": true,
+                         "center" : true
+                 },
+                 "comments": {
+                         "name": "Comments",
+                         "selector": "comments",
+                         "sortable": true,
+                         "center" : true
+                 
+                 },
+                 "result" :{
+                        "name": "result",
+                        "selector": "result",
+                        "sortable": true,
+                        "center" : true
+                 },
+                 
+
+                 "actions" :{
+                         "name" :"actions",
+                         "selector" : "actions",
+                         "sortable":false,
+                         "center" : true,
+                         "width":"300px"
+                 }
+        },
+               "modalForms": {
+                        "date" :{
+                                "type": "date",
+                                "name" : "date"
+                        },
+                        "comments" : {
+                                "type":"text",
+                                "name" :"comments"
+                        }
+                        
+
+               },
+               "uploadResultForm" :{
+                "result" :{
+                        "type": "file",
+                        "name" : "result"
+                }
+               },
+               "AdditionObject":{
+                "date": "",
+                "comments": "",
+                "ptId": "",
+                "drId": "",
+                "labId" : "" 
+               },
+               "AcceptObject":{
+                       "id":"",
+                       "labFDId":""
+               },
+               "titleForPatientOrders":"All Patients Orders",
+               "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
+               "title":"All Lab Orders",
+               "description":"From here you can see and upload Results for all accepted orders",
+               "addOrder" :"http://localhost:8080/order/addlabOrder",
+               "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
+               "updateOrder":"http://localhost:8080/allergy/updateAllergy",
+               "getAll":"http://localhost:8080/lab/getAll",
+               "acceptOrder":"http://localhost:8080/order/acceptOrder",
+               "getNotAcceptedOrders" :"http://localhost:8080/order/getlabOrderByPtCode",
+               "getAllAcceptedOrders" :"",
+               "getAllOrdersByPtID" : "http://localhost:8080/order/getlabOrderByPtId",
+               "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab",
+               "getAllResultsById" : "http://localhost:8080/order/getResultsbyLab",
+               "getAllDoctorOrders":"http://localhost:8080/order/getlabOrderbyDrid",
+               "uploadResult" :"http://localhost:8080/order/labs/updateResult"
+            },
+    "pathology" : {
+          "state":{
+                "Date":"",
+                "comments":"",
+                "status":"",
+                "result":""
+                
+        },
+        "columnsTableForPatientAcceptOrders":{
+                "comments": {
+                        "name": "Comments",
+                        "selector": "comments",
+                        "sortable": true,
+                        "center" : true
+                },
+                "result" :{
+                        "name" :"Result",
+                        "selector" : "result",
+                        "sortable":true,
+                        "center" : true    
+                },
+                "actions" :{
+                        "name" :"actions",
+                        "selector" : "actions",
+                        "sortable":false,
+                        "center" : true,
+                        "width":"300px"
+                }
+              },
+           "columnsTable" : {
+                   "firstname": {
+                           "name": "First Name",
+                           "selector": "firstname",
+                           "sortable": true,
+                           "center" : true
+                   },
+                   "lastname": {
+                           "name": "Last Name",
+                           "selector": "lastname",
+                           "sortable": true,
+                           "center" : true
+                   },
+                    "Date": {
+                            "name": "Date",
+                            "selector": "Date",
+                            "sortable": true,
+                            "center" : true
+                    },
+                    "comments": {
+                            "name": "Comments",
+                            "selector": "comments",
+                            "sortable": true,
+                            "center" : true
+                    },
+                    "phone": {
+                            "name": "Phone",
+                            "selector": "phone",
+                            "sortable": true,
+                            "center" : true
+                    },
+                    "result" :{
+                            "name" :"Result",
+                            "selector" : "result",
+                            "sortable":true,
+                            "center" : true
+                           
+                    },
+                    "actions" :{
+                            "name" :"actions",
+                            "selector" : "actions",
+                            "sortable":false,
+                            "center" : true,
+                            "width":"300px"
+                    }
+           },
+           "columnsTableForPatientOrders": {
+                "Date": {
+                        "name": "Date",
+                        "selector": "createdAt",
+                        "sortable": true,
+                        "center" : true
+                },
+             "comments": {
+                     "name": "Comments",
+                     "selector": "comments",
+                     "sortable": true,
+                     "center" : true
+             
+             },
+             "result" :{
+                    "name": "result",
+                    "selector": "result",
+                    "sortable": true,
+                    "center" : true
+             },
+             
+
+             "actions" :{
+                     "name" :"actions",
+                     "selector" : "actions",
+                     "sortable":false,
+                     "center" : true,
+                     "width":"300px"
+             }
+    }           ,
+           "modalForms": {
+                    "Date" :{
+                            "type": "date",
+                            "name" : "Date"
+                    },
+                    "comments" : {
+                            "type":"text",
+                            "name" :"comments"
+                    }
+
+           },
+           "uploadResultForm" :{
+            "result" :{
+                    "type": "file",
+                    "name" : "result"
+            }
+           },
+           "AdditionObject":{
+            "Date": "",
+            "comments": "",
+            "ptId": "",
+            "drId": "",
+            "pathoId" : "" 
+           },
+           "AcceptObject":{
+                   "id":"",
+                   "pathoFDId":""
+           },
+               "titleForPatientOrders":"All Patients Orders",
+               "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
+               "title":"All Pathology Orders",
+               "description":"From here you can see and upload Results for all accepted orders",
+               "addOrder" :"http://localhost:8080/order/addpathoOrder",
+               "deleteOrder" : "https://mvb1.herokuapp.com/order/deletepathoOrder",
+               "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
+               "getAll":"https://mvb1.herokuapp.com/allergy/getAllergy",
+               "acceptOrder":"http://localhost:8080/order/acceptOrderforPatho",
+               "getNotAcceptedOrders" :"https://mvb1.herokuapp.com/order/getpathoOrderPtCode",
+               "getAllAcceptedOrders" :"",
+               "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getpathoOrderByPtId",
+               "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getpathoOrderbyLab",
+               "getAllResultsById" : "http://localhost:8080/order/getResultsbyPatho",
+               "getAllDoctorOrders":"http://localhost:8080/order/getpathoOrderbyDrid",
+               "uploadResult" :"http://localhost:8080/order/pathelogys/updateResult"
+            },
+            "radio" : {
+                "state":{
+                      "Date":"",
+                      "comments":"",
+                      "status":"",
+                      "result":""
+                      
+                }, 
+                 "columnsTable" : {
+                         "firstname": {
+                                 "name": "First Name",
+                                 "selector": "firstname",
+                                 "sortable": true,
+                                 "center" : true
+                         },
+                         "secondname": {
+                                 "name": "Second Name",
+                                 "selector": "secondname",
+                                 "sortable": true,
+                                 "center" : true
+                         },
+                          "Date": {
+                                  "name": "Date",
+                                  "selector": "Date",
+                                  "sortable": true,
+                                  "center" : true
+                          },
+                          "comments": {
+                                  "name": "Comments",
+                                  "selector": "comments",
+                                  "sortable": true,
+                                  "center" : true
+                          },
+                          "phone": {
+                                  "name": "Phone",
+                                  "selector": "phone",
+                                  "sortable": true,
+                                  "center" : true
+                          },
+                          "result" :{
+                                  "name" :"Result",
+                                  "selector" : "result",
+                                  "sortable":true,
+                                  "center" : true
+                                 
+                          },
+                          "actions" :{
+                                  "name" :"actions",
+                                  "selector" : "actions",
+                                  "sortable":false,
+                                  "center" : true,
+                                  "width":"300px"
+                          }
+                 },
+                 "columnsTableForPatientAcceptOrders":{
+                        "comments": {
+                                "name": "Comments",
+                                "selector": "comments",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "result" :{
+                                "name" :"Result",
+                                "selector" : "result",
+                                "sortable":true,
+                                "center" : true
+                               
+                        },
+                        "actions" :{
+                                "name" :"actions",
+                                "selector" : "actions",
+                                "sortable":false,
+                                "center" : true,
+                                "width":"300px"
+                        }
+                      },
+                 "columnsTableForPatientOrders": {
+                        "Date": {
+                                "name": "Date",
+                                "selector": "createdAt",
+                                "sortable": true,
+                                "center" : true
+                        },
+                   "comments": {
+                           "name": "Comments",
+                           "selector": "comments",
+                           "sortable": true,
+                           "center" : true
+                   
+                   },
+                   "result" :{
+                          "name": "result",
+                          "selector": "result",
+                          "sortable": true,
+                          "center" : true
+                   },
+                   
+      
+                   "actions" :{
+                           "name" :"actions",
+                           "selector" : "actions",
+                           "sortable":false,
+                           "center" : true,
+                           "width":"300px"
+                   }
+          }           ,
+                 "modalForms": {
+                          "Date" :{
+                                  "type": "date",
+                                  "name" : "Date"
+                          },
+                          "comments" : {
+                                  "type":"text",
+                                  "name" :"comments"
+                          }
+      
+                 },
+                 "uploadResultForm" :{
+                  "result" :{
+                          "type": "file",
+                          "name" : "result"
+                  }
+                 },
+                 "AdditionObject":{
+                  "Date": "",
+                  "comments": "",
+                  "ptId": "",
+                  "drId": "",
+                  "radioId" : "" 
+                 },
+                 "AcceptObject":{
+                         "id":"",
+                         "pathoFDId":""
+                 },
+                     "titleForPatientOrders":"All Patients Orders",
+                     "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
+                     "title":"All Pathology Orders",
+                     "description":"From here you can see and upload Results for all accepted orders",
+                     "addOrder" :"http://localhost:8080/order/addradioOrder",
+                     "deleteOrder" : "https://mvb1.herokuapp.com/order/deleteRadioOrder",
+                     "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
+                     "getAll":"https://mvb1.herokuapp.com/allergy/getAllergy",
+                     "acceptOrder":"https://mvb1.herokuapp.com/order/acceptOrderforRadio",
+                     "getNotAcceptedOrders" :"https://mvb1.herokuapp.com/order/getRadioOrderPtCode",
+                     "getAllAcceptedOrders" :"",
+                     "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getradioOrderByPtId",
+                     "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getRadioOrderbyLab",
+                      "getAllResultsById" : "http://localhost:8080/order/getResultsbyRadio",
+                     "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getradioOrderbyDrid",
+                     "uploadResult" :"http://localhost:8080/order/radios/updateResult"
+                  }
+    
+            
+            
+    
+}
