@@ -21,11 +21,10 @@ import SessionCode from "../sessionCode";
 import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
 import ChoicePageForDoctor from "../OrdersForDoctor/choice";
 import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
-import AllResults from './../orderGeneration/AllResults';
+import AllResults from "./../orderGeneration/AllResults";
 
 const PublicDashBoard = ({ match }) => {
   const history = useHistory();
-
 
   const [role, setRole] = useState("");
   const firstFunctionRow = [
@@ -34,23 +33,27 @@ const PublicDashBoard = ({ match }) => {
       text: "Appointement",
       discription: "View and manage your appointments.",
       color: "green",
+      icon: "https://cdn0.iconfinder.com/data/icons/football-filled-line-3/32/football_-32-512.png",
       role: ["8"],
     }, //doctor
     {
       text: "Patient Registration",
       discription: "Add new client details using our wizard.",
       role: ["8", "6"],
+      icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/report-clipboard-medical-checklist-healthcare-512.png",
       color: "red",
     }, //doctor and our GP
     {
       text: "EMR",
       discription: " Manage your electronic medical records",
+      icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/news-feed-mobile-report-virus-128.png",
       color: "light-blue",
       role: ["8"],
     }, // doctor
     {
       text: "Nursing",
       discription: "Nurse patient assessment form.",
+      icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/stethoscope-doctor-health-medical-healthcare-512.png",
       role: ["8", "7"],
       color: "purple",
     }, // nurse and doctor
@@ -59,47 +62,54 @@ const PublicDashBoard = ({ match }) => {
     {
       text: "Lab",
       discription: "Laboratory Information System",
+      icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/microscope-virus-lap-test-research-512.png",
       role: ["3", "8"],
     }, // lab FD
     {
       text: "Radiology",
       discription: "Radiology Information System",
+      icon: "https://cdn3.iconfinder.com/data/icons/medical-technology-1/64/MRI_Scan-Medical-technology-scan-healthcare-512.png",
       role: ["4", "8"],
     }, // radio
     {
       text: "Pathology",
+      icon: "https://cdn4.iconfinder.com/data/icons/coronavirus-24/468/28-microscope-512.png",
       discription: "Pathology information system",
       role: ["5", "8"],
     }, // pathology
     {
       text: "ERX",
+      icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/drug-medicine-pill-tablet-capsule-512.png",
       discription: "Electronic procreption  system",
       role: ["13", "8"],
     }, //doctor or pharmacist
-    { text: "System Admin", role: ["admin"] },
-    { text: "Document Manegment", role: ["", ""] },
+    {
+      text: "System Admin",
+      icon: "https://cdn0.iconfinder.com/data/icons/web-development-color/64/admin-login-username-password-512.png",
+      role: ["admin"],
+    },
+    {
+      text: "Document Manegment",
+      icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/handbook-book-medicine-medical-education-512.png",
+      role: ["", ""],
+    },
   ];
   const renderBodyForSessionCode = (value, role) => {
     return (
       <Card
-      className={
-        (value.color ? value.color : " shadow") + " dashboard-card"
-      }
-      style={{
-        cursor: value.role.includes(role) ? "pointer" : "not-allowed",
-      }}
-      onClick={() => {
-        
-      }}
-    >
-
-      <Card.Body>
-        <Card.Title>{value.text}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
-          {value.discription ? value.discription : ""}
-        </Card.Subtitle>
-      </Card.Body>
-    </Card>
+        className={(value.color ? value.color : " shadow") + " dashboard-card"}
+        style={{
+          cursor: value.role.includes(role) ? "pointer" : "not-allowed",
+        }}
+        onClick={() => {}}
+      >
+        <Card.Body>
+          <Card.Title>{value.text}</Card.Title>
+          <Card.Subtitle className="mb-2 text-muted">
+            {value.discription ? value.discription : ""}
+          </Card.Subtitle>
+        </Card.Body>
+      </Card>
       // <Card
       //   className="bg-light"
       //   style={{
@@ -118,7 +128,6 @@ const PublicDashBoard = ({ match }) => {
     );
   };
 
-
   useEffect(() => {
     // set role with localStorage and check if logged in user is patient or not
     var localStorageRole = parseInt(localStorage.getItem("role"));
@@ -136,10 +145,7 @@ const PublicDashBoard = ({ match }) => {
     var role = localStorage.getItem("role"); // to check  the card's authontication by this
     return arr.map((value, index) => {
       // Map cards Contents
-      if (
-        value.text === "ERX" &&
-        parseInt(role) === 13
-      ) {
+      if (value.text === "ERX" && parseInt(role) === 13) {
         return (
           <SessionCode
             buttonValue="get patient Orders"
@@ -150,63 +156,62 @@ const PublicDashBoard = ({ match }) => {
         );
       } else {
         return (
-          <Col xs={10} md={4} lg={3} className="my-4 ">
-            <Card
-              className={
-                (value.color ? value.color : " shadow") + " dashboard-card"
+          <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 "
+            style={{
+              cursor: value.role.includes(role) ? "pointer" : "not-allowed",
+            }}
+            onClick={() => {
+              if (value.role.includes(role) && value.text === "Appointement") {
+                history.push(match.path + "/appoint");
+              } else if (
+                value.role.includes(role) &&
+                value.text == "Patient Registration"
+              ) {
+                history.push(match.path + "/ptRegistration");
+              } else if (value.text == "Nursing" && value.role.includes(role)) {
+                history.push(match.path + "/patientsOnVisit");
+              } else if (value.text == "Lab" && parseInt(role) === 3) {
+                // for LabFD Choices
+                history.push(match.path + `/choice/${"lab"}`);
+              } else if (value.text === "Lab" && parseInt(role) === 8) {
+                // For Doctors Choices
+                history.push(match.path + `/choiceForDoctor/${"lab"}`);
+              } else if (value.text === "Pathology" && parseInt(role) === 5) {
+                // for pathologyFD Choices
+                history.push(match.path + `/pathologyChoice/${"pathology"}`);
+              } else if (value.text === "Pathology" && parseInt(role) === 8) {
+                // For Doctors Choices
+                history.push(match.path + `/choiceForDoctor/${"pathology"}`);
+              } else if (value.text == "Radiology" && parseInt(role) === 4) {
+                // for RadioFD Choices
+                history.push(match.path + `/radioChoice/${"radio"}`);
+              } else if (value.text === "Radiology" && parseInt(role) === 8) {
+                // For Doctors Choices
+                history.push(match.path + `/choiceForDoctor/${"radio"}`);
+              } else if (value.text == "EMR" && value.role.includes(role)) {
+                history.push(match.path + `/EMR`);
+              } else if (value.text == "ERX" && value.role.includes(role)) {
+                history.push(match.path + `/pharmacyModule`);
               }
-              style={{
-                cursor: value.role.includes(role) ? "pointer" : "not-allowed",
-              }}
-              onClick={() => {
-                if (
-                  value.role.includes(role) &&
-                  value.text === "Appointement"
-                ) {
-                  history.push(match.path + "/appoint");
-                } else if (
-                  value.role.includes(role) &&
-                  value.text == "Patient Registration"
-                ) {
-                  history.push(match.path + "/ptRegistration");
-                } else if (
-                  value.text == "Nursing" &&
-                  value.role.includes(role)
-                ) {
-                  history.push(match.path + "/patientsOnVisit");
-                } else if (value.text == "Lab" && parseInt(role) === 3) {
-                  // for LabFD Choices
-                  history.push(match.path + `/choice/${"lab"}`);
-                } else if (value.text === "Lab" && parseInt(role) === 8) {
-                  // For Doctors Choices
-                  history.push(match.path + `/choiceForDoctor/${"lab"}`);
-                } else if (value.text === "Pathology" && parseInt(role) === 5) {
-                  // for pathologyFD Choices
-                  history.push(match.path + `/pathologyChoice/${"pathology"}`);
-                } else if (value.text === "Pathology" && parseInt(role) === 8) {
-                  // For Doctors Choices
-                  history.push(match.path + `/choiceForDoctor/${"pathology"}`);
-                } else if (value.text == "Radiology" && parseInt(role) === 4) {
-                  // for RadioFD Choices
-                  history.push(match.path + `/radioChoice/${"radio"}`);
-                } else if (value.text === "Radiology" && parseInt(role) === 8) {
-                  // For Doctors Choices
-                  history.push(match.path + `/choiceForDoctor/${"radio"}`);
-                } else if (value.text == "EMR" && value.role.includes(role)) {
-                  history.push(match.path + `/EMR`);
-                } else if (value.text == "ERX" && value.role.includes(role)) {
-                  history.push(match.path + `/pharmacyModule`);
-                }
-              }}
-            >
+            }}
+          >
+            <div class="icon-box">
+              <div class="icon">
+                <img
+                  src={value.icon ? value.icon : ""}
+                  style={{ size: "60px", height: "60px" }}
+                />
+              </div>
+              <h1>
+                <a>{value.text}</a>
+              </h1>
 
-              <Card.Body>
-                <Card.Title>{value.text}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {value.discription ? value.discription : ""}
-                </Card.Subtitle>
-              </Card.Body>
-            </Card>
+              <p> {value.discription ? value.discription : ""} </p>
+            </div>
           </Col>
         );
       }
@@ -226,11 +231,8 @@ const PublicDashBoard = ({ match }) => {
           </div>
           <div className="row mt-1 justify-content-center">
             {renderMainCards(firstFunctionRow)}
+            {renderMainCards(secondFunctionRow)}
           </div>
-          <div className="row mt-5">
-            <h5 className="dashboard-section-title">Services</h5>
-          </div>
-          <div className="row mt-1">{renderMainCards(secondFunctionRow)}</div>
         </Route>
 
         <Route exact path={match.path + "/appoint"} component={Appointement} />
@@ -313,7 +315,7 @@ const PublicDashBoard = ({ match }) => {
         <Route
           exact
           path={match.path + "/choice/:type/acceptOrders/:code"}
-          component={ AcceptOrders }
+          component={AcceptOrders}
         />
         <Route
           exact
@@ -333,7 +335,7 @@ const PublicDashBoard = ({ match }) => {
           path={match.path + "/choice/:type/allLabOrders"}
           component={AllOrders}
         />
-          <Route
+        <Route
           key={13}
           exact
           path={match.path + "/choice/:type/allResults"}
@@ -416,12 +418,18 @@ const PublicDashBoard = ({ match }) => {
         />
         <Route
           exact
-          path={match.path + "/EMR/Futureappointements/future/visit/prescription/:visitId"}
+          path={
+            match.path +
+            "/EMR/Futureappointements/future/visit/prescription/:visitId"
+          }
           component={Prescription}
         />
         <Route
           exact
-          path={match.path + "/EMR/currentAppointements/current/visit/prescription/:visitId"}
+          path={
+            match.path +
+            "/EMR/currentAppointements/current/visit/prescription/:visitId"
+          }
           component={Prescription}
         />
         <Route
