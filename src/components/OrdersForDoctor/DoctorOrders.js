@@ -325,7 +325,7 @@ class AllOrdersForDoctor extends Component {
               'pathologys'
               :
               'radios'
-            }/${this.state.resultToShow}`} title="W3Schools Free Online Web Tutorials"></iframe>
+            }/${this.state.fileResult}`} title="W3Schools Free Online Web Tutorials"></iframe>
       </div>
     )
   }

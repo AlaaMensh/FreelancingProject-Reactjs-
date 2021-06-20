@@ -86,8 +86,8 @@ export default function Visit({ match }) {
   const [DD, setDD] = useState();
   const [notes, setNotes] = useState();
 
-  const [procedures, setProcedures] = useState();
-  const [surgeries, setSurgeries] = useState();
+  const [procedures, setProcedures] = useState([]);
+  const [surgeries, setSurgeries] = useState([]);
   const [interventions, setInterventions] = useState();
   const [interventionDate, setInterventionDate] = useState("");
   const [surgeryDate, setSurgeryDate] = useState("");
@@ -119,7 +119,7 @@ export default function Visit({ match }) {
 
     var details = {
       // ************this object will be Sent to BackEnd to add a Visit
-      ptId: location.state || match.params.id ,
+      ptId: location.state||match.params.id,
       drId: localStorage.getItem("userId"),
       chiefComplains: chiefComplains,
       diagnosis: diagnosis,
@@ -144,7 +144,7 @@ export default function Visit({ match }) {
     formBody = formBody.join("&");
     console.log("formBody:  ", formBody);
 
-    fetch("https://mvb1.herokuapp.com/visit/addVisit", {
+    fetch("http://localhost:8080/visit/addVisit", {
       // ***********endpoint For Add Visit Change it with the new url
       method: "POST",
       headers: {
@@ -157,7 +157,7 @@ export default function Visit({ match }) {
           console.log("my Data:   ", data);
           history.push({
             pathname : `${match.url}/prescription/${data.id}`,
-            state : location.state
+            state : location.state||match.params.id
           }); //****After making Visit you should redirect to Prescription */
         });
       })
@@ -271,7 +271,7 @@ export default function Visit({ match }) {
             getNotes={getNotes}
             getDD={getDD}
             obj={obj}
-            ptId={location.state}
+            ptId={location.state||match.params.id}
           />
         );
       case 1:
@@ -286,19 +286,17 @@ export default function Visit({ match }) {
             getRadioOrders={getRadioOrders}
             getLabOrdersHome={getLabOrdersHome}
             obj={objStep3}
-            ptId={location.state}
+            ptId={location.state||match.params.id}
           />
         );
       case 2:
         return (
           <Procedures
-            getProcedures={getProcedures}
             getSurgeries={getSurgeries}
-            getInterventions={getInterventions}
-            getInterventionsDate={getInterventionsDate}
-            getSurgeryDate={getSurgeryDate}
-            obj={objStep2}
-            ptId={location.state}
+            obj={surgeries}
+            procedures={procedures}
+            getProcedures={getProcedures}
+            ptId={location.state||match.params.id}
           />
         );
 

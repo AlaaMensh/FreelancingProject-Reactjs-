@@ -13,9 +13,6 @@ import Table from './Table';
 import Template from './Template';
 // import StepperForms from './Stepper';
 
-
-
-
 function getSteps() {
   return ['Choose Template', 'Review Drugs','Print Prescription'];
 }
@@ -61,6 +58,10 @@ export default function Prescription({match,patient_id,finish_method})
     location.state
     :
     patient_id
+    ?
+    patient_id
+    :
+    match.params.id
     )
   //#endregion
   const classes = useStyles();

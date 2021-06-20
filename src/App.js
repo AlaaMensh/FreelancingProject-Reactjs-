@@ -3,26 +3,26 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  useHistory,
+  useHistory
 } from "react-router-dom";
 import "./App.scss";
+import AdminDashboard from "./components/admin/AdminDashboard";
 import ClinicalDashBoard from "./components/ClinicalDashBoard/clinicalDashBoard";
+import ErrorHandeling from "./components/ErrorHandling/errorHandeling";
+import ChangePassword from "./components/Forms/changePassword";
+import ForgotPasswordCode from "./components/Forms/ForgotPasswordCode";
+import ForgotPasswordForm from "./components/Forms/ForgotPasswordForm";
 import Login from "./components/Forms/login";
 import SignupList1 from "./components/Forms/signUp/signUp";
 import NavBar from "./components/NavBar/navBar";
-import AddOrderForm from "./components/orderGeneration/addOrderForm";
+import { default as AddOrderForm, default as AllOrders } from "./components/orderGeneration/addOrderForm";
+import ptRegistration from "./components/patientRegistration/ptRegistration";
 import Profile from "./components/Profile/Profile";
 import PublicDashBoard from "./components/publicDashBoard/publicDashBoard";
 import TypesGenerator from "./components/typesGenerator/typesGenerator";
 import UserCrud from "./components/userCrud/userCrud";
 import ProtecteRoute from "./guards/ProtectedRoute";
 import Appointement from "./pages/appointements";
-import ChangePassword from "./components/Forms/changePassword";
-import ForgotPasswordForm from "./components/Forms/ForgotPasswordForm";
-import ForgotPasswordCode from "./components/Forms/ForgotPasswordCode";
-import ErrorHandeling from "./components/ErrorHandling/errorHandeling";
-import ptRegistration from "./components/patientRegistration/ptRegistration";
-import AllOrders from "./components/orderGeneration/addOrderForm";
 import UserWelcomePage from "./pages/newAppointments";
 
 function App() {
@@ -102,8 +102,9 @@ function App() {
 
         <Route exact path="/AllOrders" component={AllOrders}></Route>
 
-        <Route exact path="/welcomePage" component={UserWelcomePage}></Route>
-        {/* <Route exact path={`${this.props.}`} component={UserWelcomePage}></Route> */}
+
+        <Route exact path={"/adminDashboard"} component={AdminDashboard} />
+        <Route exact path="/welcomePage" component={UserWelcomePage}></Route>        {/* <Route exact path={`${this.props.}`} component={UserWelcomePage}></Route> */}
         {/* <Route  path="/profile" component={Profile}></Route> */}
         {/* <Route exact path="**" component={Error}></Route> */}
       </Switch>

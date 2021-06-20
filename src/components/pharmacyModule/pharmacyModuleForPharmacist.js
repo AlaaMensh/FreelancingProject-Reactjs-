@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import pharmacyModule from "../pharmacyModuleDB.json";
-import DataTableComp from "../typesGenerator/dataTable";
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import pharmacyModule from "../pharmacyModuleDB.json";
+import DataTableComp from "../typesGenerator/dataTable";
 import ModalForView from './modalForView';
 
 const data = {
@@ -104,7 +103,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
             columns:[],
             drugs_columns:[{
               "name" :"Genric Name",
-              "selector" : "genricName",
+              "selector" : "name",
               "sortable":true
             },
             {

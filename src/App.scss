@@ -116,7 +116,7 @@ body {
     }
   }
 }
-.btn-style{
+.btn-style {
   background-color: transparent !important;
   border: 1px solid #c7c1c1;
   color: black !important;
@@ -124,26 +124,88 @@ body {
   padding: 0.2em 2em;
   box-shadow: 1px 1px 9px #c7c1c1;
   cursor: pointer;
-  &:hover{
+  &:hover {
     background-color: rgb(231, 186, 186) !important;
     color: black !important;
-    
+
     padding: 0.2em 2em;
   }
-
 }
 
-
-.actions-btn-style{
+.actions-btn-style {
   background-color: transparent !important;
   border: 1px solid #c7c1c1;
   color: black !important;
   padding: 0.7em 2em;
   box-shadow: 1px 1px 9px #c7c1c1;
   border-radius: 1em;
-  &:hover{
+  &:hover {
     background-color: rgb(231, 186, 186) !important;
     color: black !important;
   }
 }
 
+.icon-box {
+  // width: 350px;
+  // height: 300px;
+  padding: 60px 30px;
+  transition: all ease-in-out 0.3s;
+  background: #fefefe;
+  box-shadow: 0px 5px 90px 0px rgba(110, 123, 131, 0.1);
+  border-radius: 18px;
+  border-bottom: 5px solid #fff;
+}
+
+.icon-box .icon {
+  width: 100px;
+  height: 90px;
+  background: #009961;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: ease-in-out 0.3s;
+  color: #fff;
+}
+
+.icon-box .icon i {
+  font-size: 28px;
+}
+
+.icon-box h4 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.icon-box h2 a {
+  color: #282828;
+  transition: ease-in-out 0.3s;
+}
+.icon-box h1 a {
+  font-family: "Impact";
+  font-size: 30px;
+  color: #282828;
+  transition: ease-in-out 0.3s;
+}
+
+.icon-box p {
+  color: #007bff;
+  line-height: 24px;
+  font-size: 24px;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+.icon-box:hover {
+  transform: translateY(-10px);
+  border-color: #009961;
+}
+
+.icon-box:hover h2 a {
+  color: #009961;
+}
+.icon-box:hover h1 a {
+  color: #009961;
+}

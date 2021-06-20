@@ -16,13 +16,12 @@ import AddOrderForm from "../orderGeneration/addOrderForm";
 import AllOrders from "../orderGeneration/allOrders";
 import Prescription from "../Prescription/Prescription";
 import Visit from "../Visit/visit";
+import FamilyHistory from "./familyHistory";
 import Medication from './Medication';
 import MyPrescriptions from './MyPrescriptions';
+import ClinicalOrders from "./orders";
 import PatientAppointement from "./patientAppointements";
-import PatientProblems from "./problems";
 import UserInfo from "./userInfo";
-import FamilyHistory from "./familyHistory";
-import ClinicalOrders from "./orders"
 
 
 function TabPanel(props) {
@@ -104,7 +103,7 @@ const ClinicalDashBoard = ({ match }) => {
   });
 
   return (
-    <div className="container mt-5">
+    <div className="container mt-5" style={{marginBottom:40}}>
 
       <div className="row">
 
@@ -113,6 +112,7 @@ const ClinicalDashBoard = ({ match }) => {
             {/* Bootstrap SideBar */}
             <nav id="sidebar">
               <div className="sidebar-header"></div>
+              <div className="container">
 
               <ListGroup style={{position:'fixed'}}>
               <Link
@@ -202,6 +202,8 @@ const ClinicalDashBoard = ({ match }) => {
                 </ListGroup.Item>
 
               </ListGroup>
+              </div>
+            
             </nav>
           </div>
         </div>
@@ -388,6 +390,7 @@ const ClinicalDashBoard = ({ match }) => {
           </div>
         </div>
       </div>
+    <div className="row"></div>
     </div>
   );
 };
