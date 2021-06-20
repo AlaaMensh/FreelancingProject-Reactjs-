@@ -19,6 +19,7 @@ import "./Navbar.css";
 import PharmacyModuleForDoctor from "../pharmacyModule/pharmacyModuleForDoctor";
 import SessionCode from "../sessionCode";
 import PharmacyModuleForPharmacist from "../pharmacyModule/pharmacyModuleForPharmacist";
+import AdminDashboard from "../admin/AdminDashboard";
 import ChoicePageForDoctor from "../OrdersForDoctor/choice";
 import AllOrdersForDoctor from "../OrdersForDoctor/DoctorOrders";
 import AllResults from "./../orderGeneration/AllResults";
@@ -155,6 +156,10 @@ const PublicDashBoard = ({ match }) => {
           />
         );
       } else {
+        if (value.text == "System Admin" && parseInt(role) !== 8) {
+          return;
+        }
+
         return (
           <Col
             xs={10}
@@ -196,6 +201,8 @@ const PublicDashBoard = ({ match }) => {
                 history.push(match.path + `/EMR`);
               } else if (value.text == "ERX" && value.role.includes(role)) {
                 history.push(match.path + `/pharmacyModule`);
+              } else if (value.text == "System Admin") {
+                history.push(`/adminDashboard`);
               }
             }}
           >
