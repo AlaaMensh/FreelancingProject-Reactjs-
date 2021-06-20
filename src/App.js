@@ -24,6 +24,7 @@ import ErrorHandeling from "./components/ErrorHandling/errorHandeling";
 import ptRegistration from "./components/patientRegistration/ptRegistration";
 import AllOrders from "./components/orderGeneration/addOrderForm";
 import UserWelcomePage from "./pages/newAppointments";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(localStorage.getItem("role"));
@@ -102,6 +103,7 @@ function App() {
 
         <Route exact path="/AllOrders" component={AllOrders}></Route>
 
+        <Route exact path={"/adminDashboard"} component={AdminDashboard} />
         <Route exact path="/welcomePage" component={UserWelcomePage}></Route>
         {/* <Route exact path={`${this.props.}`} component={UserWelcomePage}></Route> */}
         {/* <Route  path="/profile" component={Profile}></Route> */}
