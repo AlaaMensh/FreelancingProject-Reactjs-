@@ -39,34 +39,34 @@ class FamilyHistory extends Component {
       // for Adding actions Buttons to DataTable
       if (p === "actions") {
         clinicalDB[type].columnsTable[p]["cell"] = (row) => {
-          return (
-            <div className="row">
-              <div className="col-auto">
-                <button
-                  className="btn btn-primary"
-                  onClick={async () => {
-                    // console.log("rooooow : " , row)
-                    // console.log("id:  " , row)
-                    await this.setUpdatedObj(row.id);
-                    this.setState({ formType: "edit" });
-                    this.handleopenModal();
-                  }}
-                >
-                  Update
-                </button>
-              </div>
-              <div className="col-auto">
-                <button
-                  className="btn btn-danger"
-                  onClick={() => {
-                    this.handleDelete(row.id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          );
+          // return (
+            // <div className="row">
+            //   <div className="col-auto">
+            //     <button
+            //       className="btn btn-primary"
+            //       onClick={async () => {
+            //         // console.log("rooooow : " , row)
+            //         // console.log("id:  " , row)
+            //         await this.setUpdatedObj(row.id);
+            //         this.setState({ formType: "edit" });
+            //         this.handleopenModal();
+            //       }}
+            //     >
+            //       Update
+            //     </button>
+            //   </div>
+            //   <div className="col-auto">
+            //     <button
+            //       className="btn btn-danger"
+            //       onClick={() => {
+            //         this.handleDelete(row.id);
+            //       }}
+            //     >
+            //       Delete
+            //     </button>
+            //   </div>
+            // </div>
+          // );
         };
         temp.push(clinicalDB[type].columnsTable[p]);
       } else {
@@ -105,6 +105,7 @@ class FamilyHistory extends Component {
 
   async componentDidMount() {
     var type = this.props.type;
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!, " ,this.props.id)
     this.setState({ type });
     // put the options Inputs in options which got from jsonFile
     if(type === "familyHistory" || type === "surgeries" || type === "onGoingProblems" || type === "activeMedication"){
@@ -132,7 +133,7 @@ class FamilyHistory extends Component {
   handleopenModal = () => {
     this.setState({ openModal: true });
   };
-  // to set the Updated Object to get the old Value from this
+  // to set the Updated Object to get the old Value from thisa
   setUpdatedObj = (id) => {
     var obj = this.state.data.find((row) => row.id === id);
     this.setState({ typeObj: obj });
@@ -221,8 +222,8 @@ class FamilyHistory extends Component {
     for (var p in clinicalDB[this.state.type].state) {
       details[p] = this.state[p];
     }
+    details["ptId"] = this.props.id;
     console.log("details on Adding : ", details);
-
     var formBody = [];
     for (var property in details) {
       var encodedKey = encodeURIComponent(property);
@@ -231,7 +232,7 @@ class FamilyHistory extends Component {
     }
     formBody = formBody.join("&");
 
-    await fetch(`${clinicalDB[this.state.type].addUser}`, {
+    await fetch(`${clinicalDB[this.state.type].adding}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",

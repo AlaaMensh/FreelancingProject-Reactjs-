@@ -36,16 +36,16 @@
        },
                "title":"All patients On Active Visit",
                "description":"From here you can see All patients on Active visits",
-               "getAll":"https://mvb1.herokuapp.com/nurse/getByDate"
+               "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate"
 
         },
      "nurseVitals" :{
          "state":{
             "time":"",
             "data":"",
-            "temp":"",
+            "temperature":"",
             "pulse":"",
-            "OXSat":"",
+            "oxygenSaturation":"",
             "systolic ":"",
             "diastolic" :"",
             "bloodPressure":"",
@@ -58,15 +58,15 @@
                 "selector": "time",
                 "sortable": true
         },
-        "temp" :{
-                "name" :"Temp",
-                "selector" : "temp",
+        "temperature" :{
+                "name" :"Temperature",
+                "selector" : "temperature",
                 "sortable":true,
                 "center" : true
         },
 
         "pulse" :{
-                "name" :"pulse",
+                "name" :"Pulse",
                 "selector" : "pulse",
                 "sortable":true,
                 "center" : true
@@ -79,14 +79,14 @@
                 "width": "200px"
         },
         
-        "OXSat" :{
-                "name" :"OXSat",
-                "selector" : "OXSat",
+        "oxygenSaturation" :{
+                "name" :"OxygenSaturation",
+                "selector" : "oxygenSaturation",
                 "sortable":true
         },
         "bloodGlucose" :{
-                "name" :"bloodGlucose",
-                "selector" : "bloodGlucose",
+                "name" :"Blood Glucose Level",
+                "selector" : "bloodGlucoseLevel",
                 "sortable":true,
                 "center" : true
         },
@@ -99,9 +99,9 @@
         }
          },
          "modalAdditionForm": {
-            "temp" :{
+            "temperature" :{
                     "type": "number",
-                    "name" : "temp"
+                    "name" : "temperature"
             },
             "pulse" : {
                     "type":"number",
@@ -119,9 +119,9 @@
                     "type":"number",
                     "name" :"bloodGlucose"
             },
-            "OXSat" : {
+            "oxygenSaturation" : {
                     "type":"number",
-                    "name" :"OXSat"
+                    "name" :"oxygenSaturation"
             },
             "takenBy" : {
                     "type":"autoComplete",

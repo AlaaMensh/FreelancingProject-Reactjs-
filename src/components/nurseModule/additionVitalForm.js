@@ -229,7 +229,7 @@ class AdditionVital extends Component {
                   min={30}
                   max={50}
                   step={0.01}
-                  name="temp"
+                  name="temperature"
                   placeholder={"Temprature"}
                   onChange={(e) => {
                     this.props.handleChange(e);
@@ -246,7 +246,7 @@ class AdditionVital extends Component {
 
                     <Form.Control
                       type={"number"}
-                      name="OXSat"
+                      name="oxygenSaturation"
                       placeholder={" "}
                       onChange={(e) => {
                         this.props.handleChange(e);
@@ -314,7 +314,7 @@ class AdditionVital extends Component {
                 <Form.Label>Blood Glucose level </Form.Label>
                 <Form.Control
                   type={"number"}
-                  name="bloodGlucose"
+                  name="bloodGlucoseLevel"
                   placeholder={"Blood Glucose level "}
                   onChange={(e) => {
                     this.props.handleChange(e);

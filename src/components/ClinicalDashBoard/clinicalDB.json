@@ -24,14 +24,7 @@
         "selector": "type",
         "sortable": true,
         "center": true
-      },
-      "actions" :{
-        "name" :"actions",
-        "selector" : "actions",
-        "sortable":false,
-        "center" : true,
-        "width":"300px"
-}
+      }
     },
     "modalAdditionForms": {
       "notes": {
@@ -100,9 +93,15 @@
         "placeHolder": "Choose the Disease Type"
       },
       "relation": {
-        "type": "text",
+        "type": "select",
         "name": "relation",
-        "label": "Relation"
+        "label": "Relation",
+        "options":[
+          {"value":"parent", "text" : "parent"},
+          {"value":"remote Family", "text" : "remote Family"},
+          {"value":"sibling", "text" : "sibling"}
+        ]
+        ,"placeHolder":"Choose Relation"
       }
     },
     "columnsTable": {
@@ -122,7 +121,8 @@
     "title":"All Family History for the Patient",
     "description":"You will see here all Family History to this Patient....",
     "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
-    "getAll":"https://mvb1.herokuapp.com/visit/pt_familyHistories"
+    "getAll":"https://mvb1.herokuapp.com/visit/pt_familyHistories",
+    "adding":""
   },
   "surgeries": {
     "state": {
@@ -137,9 +137,14 @@
         "placeHolder": "Choose the Surgeries Type"
       },
       "relation": {
-        "type": "text",
+        "type": "select",
         "name": "abbreviation",
-        "label": "Abbreviation"
+        "label": "Abbreviation",
+        "options":[
+          {"value":"parent", "text" : "parent"},
+          {"value":"remote Family", "text" : "remote Family"},
+          {"value":"sibling", "text" : "sibling"}
+        ]
       }
     },
     "columnsTable": {

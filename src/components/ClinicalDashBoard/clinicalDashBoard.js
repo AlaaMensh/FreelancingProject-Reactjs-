@@ -185,6 +185,14 @@ const ClinicalDashBoard = ({ match }) => {
                     Medication
                   </Link>
                 </ListGroup.Item>
+                <ListGroup.Item style={arr[arr.length-1]=="familyHistory"?styles.active:styles.inactive}>
+                  <Link 
+                  to={match.url + `/familyHistory`}
+                  style={arr[arr.length-1]=="familyHistory"?styles.active_link:styles.inactive_link}
+                  >
+                    Family History
+                  </Link>
+                </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="MyPrescriptions"?styles.active:styles.inactive}>
                   <Link
                   style={arr[arr.length-1]=="MyPrescriptions"?styles.active_link:styles.inactive_link}
@@ -192,14 +200,7 @@ const ClinicalDashBoard = ({ match }) => {
                     Prescription
                   </Link>
                 </ListGroup.Item>
-                <ListGroup.Item style={arr[arr.length-1]=="MyPrescriptions"?styles.active:styles.inactive}>
-                  <Link 
-                  to={match.url + `/familyHistory`}
-                  style={arr[arr.length-1]=="MyPrescriptions"?styles.active_link:styles.inactive_link}
-                  >
-                    Family History
-                  </Link>
-                </ListGroup.Item>
+
               </ListGroup>
             </nav>
           </div>
@@ -253,18 +254,17 @@ const ClinicalDashBoard = ({ match }) => {
                   <Tab label="OnGoing Problems" {...a11yProps(1)} />
                   <Tab label="surgeries Problems" {...a11yProps(2)} />
                   <Tab label="Interventions Problems" {...a11yProps(3)} />
-                  <Tab label="activeMedication Problems" {...a11yProps(4)} />
-                  <Tab label="lab Problems" {...a11yProps(5)} />
-                  <Tab label="radio Problems" {...a11yProps(6)} />
-                  <Tab label="pathology Problems" {...a11yProps(7)} />
+                  <Tab label="lab Problems" {...a11yProps(4)} />
+                  <Tab label="radio Problems" {...a11yProps(5)} />
+                  <Tab label="pathology Problems" {...a11yProps(6)} />
                 </Tabs>
 
               </AppBar>
               <TabPanel value={value} index={0}>
-              <PatientProblems type={"allergy"} id={match.params.id}  addButtonFlag = {false}/>
+              <FamilyHistory type={"allergy"} id={match.params.id}  addButtonFlag = {false}/>
               </TabPanel>
               <TabPanel value={value} index={1}>
-              <PatientProblems type={"onGoingProblems"} id={match.params.id}  addButtonFlag = {false}/>
+              <FamilyHistory type={"onGoingProblems"} id={match.params.id}  addButtonFlag = {false}/>
               </TabPanel>
               <TabPanel value={value} index={2}>
               <FamilyHistory type={"surgeries"} id={match.params.id} addButtonFlag = {false}/>
@@ -286,14 +286,17 @@ const ClinicalDashBoard = ({ match }) => {
               exact
               key={4}
               path={match.path + "/patientAllergyproblems/:type"}
-              component={PatientProblems}
-            />
+              
+            >
+               <FamilyHistory type={"allergy"} id={match.params.id}  addButtonFlag = {false}/>
+              </Route>
             <Route
               exact
               key={5}
               path={match.path + "/patientOnGoingproblems/:type"}
-              component={PatientProblems}
-            />
+            >
+               <FamilyHistory type={"onGoingProblems"} id={match.params.id}  addButtonFlag = {false}/>
+              </Route>
             <Route
               exact
               path={match.path + "/patientAppointement"}
@@ -374,12 +377,12 @@ const ClinicalDashBoard = ({ match }) => {
               path={match.path + "/profile"}
               component={Prescription}
             />
-            < Route
+            <Route
               exact
               key={15}
               path={match.path + "/familyHistory"}
             >
-              <FamilyHistory type={"familyHistory"} addButtonFlag = {true} />
+              <FamilyHistory type={"familyHistory"} id={match.params.id} addButtonFlag = {true} />
             </Route>
           </Switch>
           </div>

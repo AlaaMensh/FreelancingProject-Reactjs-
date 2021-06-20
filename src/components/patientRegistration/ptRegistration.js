@@ -349,7 +349,7 @@ export default function HorizontalLabelPositionBelowStepper() {
                   Save
                 </Button>
               </div>
-              <Button onClick={handleReset}>Reset</Button>
+              {/* <Button onClick={handleReset}>Reset</Button> */}
             </div>
           ) : (
             <div>

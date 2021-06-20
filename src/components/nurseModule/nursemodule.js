@@ -28,16 +28,16 @@ class NurseVisit extends Component {
           }
     }
     loadSelectInputData = async(type) => {
-      var temp = [];
+      var temperature = [];
       await axios.get(`${nurseModule[type].getAllData}` ,{
       } ).then(async resp => {
         console.log("resp : " ,resp)
         console.log("AllData: " , resp.data);
         this.setState({options : resp.data});
         
-      temp =  resp.data;
+      temperature =  resp.data;
       })
-      return temp
+      return temperature
     }
     async componentDidMount(){
       var type = "nurseVitals";
@@ -76,7 +76,7 @@ class NurseVisit extends Component {
       }
     }
     handleDataTableColumns = (type) =>{
-      var temp = [];
+      var temperature = [];
       for(var p in nurseModule[type].columnsTable ){ // for Adding actions Buttons to DataTable
         if(p === "actions"){
           nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
@@ -84,6 +84,7 @@ class NurseVisit extends Component {
             <div className="col-auto">
               <button  className="btn btn-danger"
                 onClick={async () => {  
+                  console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@: ,", row.id)
                   this.handleDelete(row.id);
                   }}>Delete</button>
             </div>
@@ -91,7 +92,7 @@ class NurseVisit extends Component {
           </div>
           )
           }
-          temp.push(nurseModule[type].columnsTable[p])
+          temperature.push(nurseModule[type].columnsTable[p])
         }
         else if(p === "time"){
           nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
@@ -104,7 +105,7 @@ class NurseVisit extends Component {
           </div>
           )
           }
-          temp.push(nurseModule[type].columnsTable[p])
+          temperature.push(nurseModule[type].columnsTable[p])
         }
         else if(p === "systolic"){
           nurseModule[type].columnsTable[p]["cell"] =  (row) =>{ return(
@@ -120,18 +121,18 @@ class NurseVisit extends Component {
           </div>
           )
           }
-          temp.push(nurseModule[type].columnsTable[p])
+          temperature.push(nurseModule[type].columnsTable[p])
         }
         else{
   
-          temp.push(nurseModule[type].columnsTable[p])
+          temperature.push(nurseModule[type].columnsTable[p])
         }
       }
-      this.setState({columns : temp})
-      temp = []
+      this.setState({columns : temperature})
+      temperature = []
     }
     handleFormModuleInput = (type , optionsList) =>{
-      var temp = [];
+      var temperature = [];
 
     
       for(var p in nurseModule[type].modalAdditionForm ){ // for Adding actions Buttons to DataTable
@@ -146,10 +147,10 @@ class NurseVisit extends Component {
           this.setState({options : temp2})
           temp2=[]
         }
-        temp.push(nurseModule[type].modalAdditionForm[p]);
+        temperature.push(nurseModule[type].modalAdditionForm[p]);
   
       }
-      this.setState({ModalAddtionInputs : temp})
+      this.setState({ModalAddtionInputs : temperature})
     }
     handleDelete =(id) =>{
       var details = {
@@ -186,21 +187,21 @@ class NurseVisit extends Component {
             id:0,
             date:this.getDate(),
             time :time,
-            temp:"",
+            temperature:"",
             pulse:"" , 
             // bloodPressure: "",
             systolic : "" ,
             diastolic:"",
-            OXSat:"" ,
+            oxygenSaturation:"" ,
             takenBy:localStorage.getItem("userId"),
-            bloodGlucose :""
+            bloodGlucoseLevel :""
         }
         var joined = this.state.timeDate.concat(obj2);
         this.setState({ timeDate: joined });
     }
  
     sorting =()=>{
-      var Temp = []
+      var temperature = []
       this.state.timeDate.map((time, index)=>{
         
         if(time.id == 0 )
@@ -210,14 +211,14 @@ class NurseVisit extends Component {
               id : 0,
               date : time.date,
               time : time.time,
-              temp : time.temp,
+              temperature : time.temperature,
               pulse : time.pulse, 
               // bloodPressure:time.systolic +"/"+time.diastolic,
               systolic  : time.systolic  ,
               diastolic : time.diastolic ,
-              OXSat : time.OXSat,
+              oxygenSaturation : time.oxygenSaturation,
               takenBy:localStorage.getItem("userId"),
-              bloodGlucose : time.bloodGlucose
+              bloodGlucoseLevel : time.bloodGlucoseLevel
          }
           }
         if(time.id == -1 )
@@ -227,14 +228,14 @@ class NurseVisit extends Component {
               id : 1,
               date : time.date,
               time : time.time,
-              temp : time.temp,
+              temperature : time.temperature,
               pulse : time.pulse, 
               // bloodPressure: time.systolic + "/"+ time.diastolic,
               systolic  : time.systolic  ,
               diastolic : time.diastolic ,
-              OXSat : time.OXSat,
+              oxygenSaturation : time.oxygenSaturation,
               takenBy:localStorage.getItem("userId"),
-              bloodGlucose:time.bloodGlucose
+              bloodGlucoseLevel:time.bloodGlucoseLevel
          }
           }
          if(time.id >= 1){
@@ -243,20 +244,20 @@ class NurseVisit extends Component {
                 id : index+2,
                 date : time.date,
                 time : time.time,
-                temp : time.temp,
+                temperature : time.temperature,
                 pulse : time.pulse, 
                 // bloodPressure :  time.systolic +"/" + time.diastolic,
                 systolic  : time.systolic  ,
                 diastolic : time.diastolic ,
-                OXSat : time.OXSat,
+                oxygenSaturation : time.oxygenSaturation,
                 takenBy:localStorage.getItem("userId"),
-                bloodGlucose:time.bloodGlucose 
+                bloodGlucoseLevel:time.bloodGlucoseLevel 
            }         
          }
          time = obj
-         Temp.push(time)
+         temperature.push(time)
       })
-      this.setState({timeDate : Temp})
+      this.setState({timeDate : temperature})
     }
     getTime = () =>{
       var d = new Date();
@@ -292,13 +293,13 @@ class NurseVisit extends Component {
                 id:0,
                 date:this.getDate(),
                 time : time,
-                temp:"",
+                temperature:"",
                 pulse:"" , 
                 // bloodPressure:"",
                 systolic :"",
                 diastolic :"",
                 respiratoryRate: "" ,
-                OXSat:"" ,
+                oxygenSaturation:"" ,
                 height:"" , 
                 weight:"" ,
                 BMI :"" ,
@@ -329,9 +330,9 @@ class NurseVisit extends Component {
             // systolic :this.state.systolic ,
             // diastolic :this.state.diastolic,
             pulse: this.state.pulse,
-            temperature:this.state.temp,
-            oxygenSaturation: this.state.OXSat,
-            bloodGlucoseLevel:this.state.bloodGlucose,
+            temperature:this.state.temperature,
+            oxygenSaturation: this.state.oxygenSaturation,
+            bloodGlucoseLevel:this.state.bloodGlucoseLevel,
             nurseId:localStorage.getItem("userId"),
             ptId:this.state.pId,
             bloodPressure : this.state.systolic + "/" +this.state.diastolic 
@@ -367,17 +368,17 @@ class NurseVisit extends Component {
             id:-1,
             date: this.getDate(),
             time: this.getTime(),
-            temp:this.state.temp,
+            temperature:this.state.temperature,
             pulse: this.state.pulse,
             systolic : this.state.systolic ,
             diastolic: this.state.diastolic,
-            OXSat: this.state.OXSat,
+            oxygenSaturation: this.state.oxygenSaturation,
             takenBy:this.state.takenBy,
-            bloodGlucose:this.state.bloodGlucose,
+            bloodGlucoseLevel:this.state.bloodGlucoseLevel,
             // bloodPressure : this.state.systolic +"/"+ this.state.diastolic
             }: item
           );
-          // console.log("obj: " , obj);
+          console.log("Items!!!!!!!!: " , items);
           this.setState({timeDate : items});
           await this.func2()
           await this.sorting();

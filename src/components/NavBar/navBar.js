@@ -129,7 +129,7 @@ const NavBar = (props) => {
                     <NavDropdown
                     title="Radiology Front Disk Functions"
                     id="basic-nav-dropdown"
-                >
+                    >
                     <NavDropdown.Item href="/publicDashBoard">
                         DashBoard
                     </NavDropdown.Item>
@@ -172,6 +172,21 @@ const NavBar = (props) => {
                 </NavDropdown>
                 )
             }
+            default : {
+                return (
+                 
+                        <NavDropdown
+                        title="Pharmacist Functions"
+                        id="basic-nav-dropdown"
+                    >
+                        <NavDropdown.Item href="/publicDashBoard">
+                            DashBoard
+                        </NavDropdown.Item>
+                        
+                    </NavDropdown>
+                    
+                )
+            }
             
         }
 
@@ -185,10 +200,12 @@ const NavBar = (props) => {
                     {/* *************check here on role on every Choice in the DropDown *************/}
                     {props.isAuth && (
                         <>
-                        {handleUserDropDownMenu(localStorage.getItem("role"))}
-                         </>
-                    )}
+                            {handleUserDropDownMenu(localStorage.getItem("role"))}
+                        </>
+                    )
+                    }
                 </Nav>
+
                 {props.isAuth && (
                     <React.Fragment>
                         <Nav.Link
@@ -217,7 +234,7 @@ const NavBar = (props) => {
 
                             </div>
                         </Nav.Link>
-                        {/* <Overlay
+                        <Overlay
                             show={showProfile}
                             target={target}
                             placement="bottom"
@@ -283,11 +300,28 @@ const NavBar = (props) => {
                                     </div>
                                 </Popover.Content>
                             </Popover>
-                        </Overlay> */}
+                        </Overlay>
                     </React.Fragment>
                 )}
                 {console.log("props.auth: ", props.isAuth)}
-
+                {/* {props.isAuth ? (
+              <Button variant="contained"  onClick= {()=>{
+                localStorage.removeItem("userId");
+                localStorage.removeItem("role");
+                localStorage.removeItem("labId");
+                history.push("/login")
+              }}>
+              LogOut
+            </Button>
+            ):(
+              <Button variant="contained"  onClick= {()=>{
+                // setlogged(true);
+                history.push("/login");
+              }}>
+              LogIn
+            </Button>
+            )
+          } */}
                 {props.isAuth ? (
                     ""
                 ) : (
