@@ -41,31 +41,60 @@ const MyPrescriptions = ({match}) =>{
         await MyPrescriptions()
       },[])
 
-     const MyPrescriptions = ()=>{
-        axios.post("http://localhost:8080/visit/myPrescriptions",{
-            ptId : ptId
-        }).then(res=>{
-            if(res.data && res.data.length > 0)
-            {
-                res.data.map(r=>{
-                    let d = new Date(r.PDate)
-                    r.PDate = d.getDate()+
-                        "/"+(d.getMonth()+1)+
-                        "/"+d.getFullYear()
-                    r.drugs.map(row=>{
-                        d= new Date(row.date)
-                        row.date =  d.getDate()+
-                        "/"+(d.getMonth()+1)+
-                        "/"+d.getFullYear()
-                    })    
-                })
-                setData([...res.data])
-                setRows([...res.data])
-            }
-        }).catch(err=>{
-            alert(err)
-        })
-     } 
+      const MyPrescriptions = ()=>{
+        if(ptId){
+       axios.post("http://localhost:8080/visit/myPrescriptions",{
+           ptId : ptId
+       }).then(res=>{
+           if(res.data && res.data.length > 0)
+           {
+               res.data.map(r=>{
+                   let d = new Date(r.PDate)
+                   r.PDate = d.getDate()+
+                       "/"+(d.getMonth()+1)+
+                       "/"+d.getFullYear()
+                   r.drugs.map(row=>{
+                       d= new Date(row.date)
+                       row.date =  d.getDate()+
+                       "/"+(d.getMonth()+1)+
+                       "/"+d.getFullYear()
+                   })    
+               })
+               setData([...res.data])
+               setRows([...res.data])
+           }
+       }).catch(err=>{
+           alert(err)
+       })
+   }
+   else{
+
+       axios.post("http://localhost:8080/visit/myPrescriptionsByDoctor",{
+           drId : localStorage.getItem('userId')
+       }).then(res=>{
+           if(res.data && res.data.length > 0)
+           {
+               res.data.map(r=>{
+                   let d = new Date(r.PDate)
+                   r.PDate = d.getDate()+
+                       "/"+(d.getMonth()+1)+
+                       "/"+d.getFullYear()
+                   r.drugs.map(row=>{
+                       d= new Date(row.date)
+                       row.date =  d.getDate()+
+                       "/"+(d.getMonth()+1)+
+                       "/"+d.getFullYear()
+                   })    
+               })
+               setData([...res.data])
+               setRows([...res.data])
+           }
+       }).catch(err=>{
+           alert(err)
+       })
+   }
+
+} 
 
     const SelectRow = (row)=>{
         let index = rows.findIndex(r=>r.id == row.id)
@@ -119,11 +148,16 @@ const MyPrescriptions = ({match}) =>{
             }}
             />
         </div>
+        {
+        ptId
+        &&
+        
         <div style={{ position:'relative',margin:'auto',textAlign:"center",zIndex:999}}>
                 <Fab color="primary"  aria-label="add" onClick={()=>handleOpen()} >
                     <AddIcon  />
                 </Fab> 
             </div>
+        }
         </>
     )
 }
