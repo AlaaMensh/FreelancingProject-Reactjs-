@@ -156,7 +156,7 @@ const PublicDashBoard = ({ match }) => {
           />
         );
       } else {
-        if (value.text == "System Admin" && value.role.includes(role) !== 8) {
+        if (value.text == "System Admin" && parseInt(role) !== 8) {
           return;
         }
 
