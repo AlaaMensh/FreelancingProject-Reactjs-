@@ -162,7 +162,7 @@ class AllOrdersForDoctor extends Component {
       Form.append("orderId" , this.state.typeObj["id"])
       
 
-      await fetch(`http://localhost:8080/visit/updateOrder`, {
+      await fetch(`https://mvb1.herokuapp.com/visit/updateOrder`, {
         method: 'POST',
         body: Form
       }).then((resp)=>{
@@ -315,7 +315,7 @@ class AllOrdersForDoctor extends Component {
   renderingModalBody = ()=>{
     return (
       <div className="wrap">
-                  <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
+                  <iframe style={{height:"100%" , width:"100%"}} src={`https://mvb1.herokuapp.com/${
               this.state.type=="lab"
               ?
               'labs'

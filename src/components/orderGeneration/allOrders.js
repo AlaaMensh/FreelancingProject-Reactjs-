@@ -4,13 +4,12 @@ import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import FormGenerator from "../Forms/formGenerationNew";
+import ModalGenerator from "../ModalGeneration/modalGeneration";
 import orderType from "../ordersdb.json";
 import ModalForView from "../pharmacyModule/modalForView";
 import DataTableComp from '../typesGenerator/dataTable';
-import ModalComp from "../typesGenerator/modalGenerator";
 import "./order.css";
-import FormGenerator from "../Forms/formGenerationNew";
-import ModalGenerator from "../ModalGeneration/modalGeneration"
 
 
 var object  = {}
@@ -182,7 +181,7 @@ class AllOrders extends Component {
       Form.append("orderId" , this.state.typeObj["id"])
       
       console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-      // await fetch(`http://localhost:8080/visit/updateOrder`, {
+      // await fetch(`https://mvb1.herokuapp.com/visit/updateOrder`, {
       await fetch(`${orderType[this.state.type].uploadResult}`, {
         method: 'POST',
         body: Form
@@ -272,7 +271,7 @@ class AllOrders extends Component {
             orderType[type][object][p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
-                {/* <a  href= {`http://localhost:8080/${this.state.type}s/${row.result}`}> */}
+                {/* <a  href= {`https://mvb1.herokuapp.com/${this.state.type}s/${row.result}`}> */}
                 
                 
                 <button  className="btn btn-primary"
@@ -284,7 +283,7 @@ class AllOrders extends Component {
                       this.getTypeByID(row.id);
                       this.handleopenModal();
                       this.setState({resultToShow: row.result});
-                    //  this.props.history.push(`http://localhost:8080/${this.state.type}/${row.result}`)
+                    //  this.props.history.push(`https://mvb1.herokuapp.com/${this.state.type}/${row.result}`)
                       this.setState({resultStatus : "show"})
                     }}>
                       Show Result
@@ -335,7 +334,7 @@ class AllOrders extends Component {
     renderModalBody = ()=>{
       return (
         <div className="wrap">
-                    <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/${
+                    <iframe style={{height:"100%" , width:"100%"}} src={`https://mvb1.herokuapp.com/${
               this.state.type=="lab"
               ?
               'labs'

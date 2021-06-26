@@ -54,10 +54,10 @@
               },
               "title":"All Doctors",
               "description":"simple blah blah this the page and what it dose you know stuff..",
-              "addUser" :"http://localhost:8080/doctor/addDoctor",
+              "addUser" :"https://mvb1.herokuapp.com/doctor/addDoctor",
               "deleteUser" : "http://localhost:3000/doctor/deleteDoctor",
               "updateUser":"http://localhost:3000/doctor/updateDoctor",
-              "getAll":"http://localhost:8080/doctor/getAll"
+              "getAll":"https://mvb1.herokuapp.com/doctor/getAll"
               
            },
         "doctor" : {  
@@ -350,8 +350,8 @@
                "title":"All Nurses",   
                "description":"You can see All Nurses here..",
                "addUser" :"https://mvb1.herokuapp.com/nurse/addNurse",
-               "deleteUser" : "http://localhost:8080/nurse/deleteNurse",
-               "updateUser":"http://localhost:8080/nurse/updateNurse",
+               "deleteUser" : "https://mvb1.herokuapp.com/nurse/deleteNurse",
+               "updateUser":"https://mvb1.herokuapp.com/nurse/updateNurse",
                "getAll":"https://mvb1.herokuapp.com/nurse/getNurse",
                "getAllDataFD" :"https://mvb1.herokuapp.com/doctor/getDoctor"
                
@@ -470,7 +470,7 @@
                "description":"You can see All Pathologists here...",
                "addUser" :"https://mvb1.herokuapp.com/patho/addPathology",
                "deleteUser" : "https://mvb1.herokuapp.com/patho/deletePathology",
-               "updateUser":"http://localhost:8080/patho/updatePathology",
+               "updateUser":"https://mvb1.herokuapp.com/patho/updatePathology",
                "getAll":"https://mvb1.herokuapp.com/patho/getPathology",
                "getAllDataFD" :"https://mvb1.herokuapp.com/frontdisk/getpathoFD"
             },
@@ -1349,7 +1349,7 @@
               "description":"You can see All Pharmacists here...",
               "addUser" :"https://mvb1.herokuapp.com/pharmacist/addPharmacist",
               "deleteUser" : "https://mvb1.herokuapp.com/pharmacist/deletePharmacist",
-              "updateUser":"http://localhost:8080/pharmacist/updatePharmacist",
+              "updateUser":"https://mvb1.herokuapp.com/pharmacist/updatePharmacist",
               "getAll":"https://mvb1.herokuapp.com/pharmacist/getPharmacist"
               
 

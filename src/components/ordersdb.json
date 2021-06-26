@@ -132,17 +132,17 @@
                "title":"All Lab Orders",
                "description":"From here you can see and upload Results for all accepted orders",
                "addOrder" :"https://mvb1.herokuapp.com/order/addlabOrder",
-               "deleteOrder" : "http://localhost:8080/order/deletelabOrder",
-               "updateOrder":"http://localhost:8080/allergy/updateAllergy",
-               "getAll":"http://localhost:8080/lab/getAll",
-               "acceptOrder":"http://localhost:8080/order/acceptOrder",
-               "getNotAcceptedOrders" :"http://localhost:8080/order/getlabOrderByPtCode",
+               "deleteOrder" : "https://mvb1.herokuapp.com/order/deletelabOrder",
+               "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
+               "getAll":"https://mvb1.herokuapp.com/lab/getAll",
+               "acceptOrder":"https://mvb1.herokuapp.com/order/acceptOrder",
+               "getNotAcceptedOrders" :"https://mvb1.herokuapp.com/order/getlabOrderByPtCode",
                "getAllAcceptedOrders" :"",
-               "getAllOrdersByPtID" : "http://localhost:8080/order/getlabOrderByPtId",
-               "getAllOrdersByLabId" : "http://localhost:8080/order/getlabOrderbyLab",
-               "getAllResultsById" : "http://localhost:8080/order/getResultsbyLab",
-               "getAllDoctorOrders":"http://localhost:8080/order/getlabOrderbyDrid",
-               "uploadResult" :"http://localhost:8080/order/labs/updateResult"
+               "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getlabOrderByPtId",
+               "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getlabOrderbyLab",
+               "getAllResultsById" : "https://mvb1.herokuapp.com/order/getResultsbyLab",
+               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getlabOrderbyDrid",
+               "uploadResult" :"https://mvb1.herokuapp.com/order/labs/updateResult"
             },
     "pathology" : {
           "state":{
@@ -281,18 +281,18 @@
                "descriptionForPatientOrders":"You Can Accept patient Orders from here...",
                "title":"All Pathology Orders",
                "description":"From here you can see and upload Results for all accepted orders",
-               "addOrder" :"http://localhost:8080/order/addpathoOrder",
+               "addOrder" :"https://mvb1.herokuapp.com/order/addpathoOrder",
                "deleteOrder" : "https://mvb1.herokuapp.com/order/deletepathoOrder",
                "updateOrder":"https://mvb1.herokuapp.com/allergy/updateAllergy",
                "getAll":"https://mvb1.herokuapp.com/allergy/getAllergy",
-               "acceptOrder":"http://localhost:8080/order/acceptOrderforPatho",
+               "acceptOrder":"https://mvb1.herokuapp.com/order/acceptOrderforPatho",
                "getNotAcceptedOrders" :"https://mvb1.herokuapp.com/order/getpathoOrderPtCode",
                "getAllAcceptedOrders" :"",
                "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getpathoOrderByPtId",
                "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getpathoOrderbyLab",
-               "getAllResultsById" : "http://localhost:8080/order/getResultsbyPatho",
-               "getAllDoctorOrders":"http://localhost:8080/order/getpathoOrderbyDrid",
-               "uploadResult" :"http://localhost:8080/order/pathelogys/updateResult"
+               "getAllResultsById" : "https://mvb1.herokuapp.com/order/getResultsbyPatho",
+               "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getpathoOrderbyDrid",
+               "uploadResult" :"https://mvb1.herokuapp.com/order/pathelogys/updateResult"
             },
             "radio" : {
                 "state":{
@@ -441,9 +441,9 @@
                      "getAllAcceptedOrders" :"",
                      "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getradioOrderByPtId",
                      "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getRadioOrderbyLab",
-                      "getAllResultsById" : "http://localhost:8080/order/getResultsbyRadio",
+                      "getAllResultsById" : "https://mvb1.herokuapp.com/order/getResultsbyRadio",
                      "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getradioOrderbyDrid",
-                     "uploadResult" :"http://localhost:8080/order/radios/updateResult"
+                     "uploadResult" :"https://mvb1.herokuapp.com/order/radios/updateResult"
                   }
     
             

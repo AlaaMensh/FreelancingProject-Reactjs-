@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FormGenerator from "../Forms/formGeneration";
 import inputs from "../ordersdb.json";
 
-
+const base_url = "https://mvb1.herokuapp.com"
 
 
 class AddOrderForm extends Component {
@@ -43,7 +43,7 @@ class AddOrderForm extends Component {
 
     if(this.state.type == "lab")
     {
-      await axios.get("http://localhost:8080/lab/getAll").then(res=>{
+      await axios.get(base_url+"/lab/getAll").then(res=>{
         res.data.map(row=>{
           options.push({
             "value" : row.id,
@@ -64,7 +64,7 @@ class AddOrderForm extends Component {
 
     }else if(this.state.type == "radio")
     {
-      await axios.get("http://localhost:8080/radio/getAll").then(res=>{
+      await axios.get(base_url+"/radio/getAll").then(res=>{
         res.data.map(row=>{
           options.push({
             "value" : row.id,
@@ -86,7 +86,7 @@ class AddOrderForm extends Component {
     }
     else
     {
-      await axios.get("http://localhost:8080/patho/getAll").then(res=>{
+      await axios.get(base_url+"/patho/getAll").then(res=>{
         res.data.map(row=>{
           options.push({
             "value" : row.id,

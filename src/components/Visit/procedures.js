@@ -121,7 +121,7 @@ const updateRows = (newValue)=>{
     },
   ];
   const loadAllSurgeries = ()=>{
-    axios.get("http://localhost:8080/surgery/getAll").then(res=>{
+    axios.get("https://mvb1.herokuapp.com/surgery/getAll").then(res=>{
         setSurgys(res.data)
     }).catch(err=>{
       alert(err)

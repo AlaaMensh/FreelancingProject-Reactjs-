@@ -1,9 +1,9 @@
 import axios from 'axios';
-
+const base_url="https://mvb1.herokuapp.com"
 
 export const AddPrescriptionToDB = (data)=>{
     return new Promise((resolve,reject)=>{
-        axios.post('http://localhost:8080/visit/addPrescription',data)
+        axios.post(base_url+'/visit/addPrescription',data)
         .then(res=>{
               resolve(res.data.insertId)
           }).catch(err=>{
@@ -14,7 +14,7 @@ export const AddPrescriptionToDB = (data)=>{
 
 export const loadDrugs = ()=>{
     return new Promise((resolve,reject)=>{
-        axios.get('http://localhost:8080/drug/getAll').then(res=>{
+        axios.get(base_url+'/drug/getAll').then(res=>{
                 resolve(res.data)
             })
             .catch(err=>{
@@ -25,7 +25,7 @@ export const loadDrugs = ()=>{
 
 export const loadMYDrugs = ()=>{
     return new Promise((resolve,reject)=>{
-        axios.get('http://localhost:8080/visit/mydrugs').then(res=>{
+        axios.get(base_url+'/visit/mydrugs').then(res=>{
                 resolve(res.data)
             })
             .catch(err=>{
@@ -36,7 +36,7 @@ export const loadMYDrugs = ()=>{
 
 export const UnActiveDrug = (id)=>{
     return new Promise((resolve,reject)=>{
-        axios.post('http://localhost:8080/visit/unactive_drug',{
+        axios.post(base_url+'/visit/unactive_drug',{
             id : id
         }).then(res=>{
             resolve(res.data)
@@ -48,7 +48,7 @@ export const UnActiveDrug = (id)=>{
 
 export const AddPrescriptionDrug = (data)=>{
     return new Promise((resolve,reject)=>{
-        axios.post('http://localhost:8080/visit/addPrescription_Drugs_single',data).then(res=>{
+        axios.post(base_url+'/visit/addPrescription_Drugs_single',data).then(res=>{
             resolve(res.data.insertId)
 
           }).catch(err=>{

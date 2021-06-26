@@ -34,6 +34,7 @@ const MyPrescriptions = ({match}) =>{
     const [drug_rows,setDrugRows] = useState([])
     const [open, setOpen] = React.useState(false);
     const [drugModal, setDrugModal] = React.useState(false);
+    const base_url = "https://mvb1.herokuapp.com"
 
     const ptId = match.params.id  
 
@@ -43,7 +44,7 @@ const MyPrescriptions = ({match}) =>{
 
       const MyPrescriptions = ()=>{
         if(ptId){
-       axios.post("http://localhost:8080/visit/myPrescriptions",{
+       axios.post(base_url+"/visit/myPrescriptions",{
            ptId : ptId
        }).then(res=>{
            if(res.data && res.data.length > 0)
@@ -69,7 +70,7 @@ const MyPrescriptions = ({match}) =>{
    }
    else{
 
-       axios.post("http://localhost:8080/visit/myPrescriptionsByDoctor",{
+       axios.post(base_url+"/visit/myPrescriptionsByDoctor",{
            drId : localStorage.getItem('userId')
        }).then(res=>{
            if(res.data && res.data.length > 0)

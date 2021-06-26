@@ -1,18 +1,17 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import { Form, Col, Row, Button } from "react-bootstrap";
+import Stepper from "@material-ui/core/Stepper";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { useState } from "react";
-import Info from "./importatntInfo";
+import React, { useState } from "react";
+import { Button, Col, Row } from "react-bootstrap";
 import AllergyStep from "./allergyStep";
 import FamilyHistoryStep from "./familyHistoryStep";
-import SurgeriesStep from "./surgeriesStep";
-import InterventionsStep from "./otherInterventionsStep";
+import Info from "./importatntInfo";
 import OnGoingProblemStep from "./onGoingProblemStep";
+import InterventionsStep from "./otherInterventionsStep";
 import "./patientRegistration.css";
+import SurgeriesStep from "./surgeriesStep";
 // import ListStep from "./listStep"; // Put it if you solve the one component Problem
 
 const useStyles = makeStyles((theme) => ({
@@ -147,7 +146,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     formBody = formBody.join("&");
     console.log("formBody:  ", formBody);
 
-    fetch("http://localhost:8080/pt/addPT", {
+    fetch("https://mvb1.herokuapp.com/pt/addPT", {
       //** this will add patient */
       method: "POST",
       headers: {

@@ -1,17 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import  { Component } from 'react';
-import DataTableComp from '../typesGenerator/dataTable';
-import orderType from "../ordersdb.json";
-import ModalComp from "../typesGenerator/modalGenerator";
+import axios from 'axios';
+import React, { Component } from 'react';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import axios from 'axios';
-import Button from 'react-bootstrap/Button';
-import { Document, Page } from 'react-pdf';
-import ModalForView from "../pharmacyModule/modalForView";
 import FormGenerator from "../Forms/formGenerationNew";
 import ModalGenerator from "../ModalGeneration/modalGeneration";
+import orderType from "../ordersdb.json";
+import ModalForView from "../pharmacyModule/modalForView";
+import DataTableComp from '../typesGenerator/dataTable';
 
 var object  = {}
 
@@ -143,7 +139,7 @@ class ClinicalOrders extends Component {
       Form.append("orderId" , this.state.typeObj["id"])
       
       console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-      // await fetch(`http://localhost:8080/visit/updateOrder`, {
+      // await fetch(`https://mvb1.herokuapp.com/visit/updateOrder`, {
       await fetch(`${orderType[this.state.type].uploadResult}`, {
         method: 'POST',
         body: Form
@@ -188,7 +184,7 @@ class ClinicalOrders extends Component {
                       this.getTypeByID(row.id);
                       this.handleopenModal();
                       this.setState({resultToShow: row.result});
-                    //  this.props.history.push(`http://localhost:8080/${this.state.type}/${row.result}`)
+                    //  this.props.history.push(`https://mvb1.herokuapp.com/${this.state.type}/${row.result}`)
                       this.setState({resultStatus : "show"})
                     }}>
                       Show Result
@@ -238,7 +234,7 @@ class ClinicalOrders extends Component {
     renderModalBody = ()=>{
       return (
         <div className="wrap" style={{height:"100%"}}>
-          <iframe style={{height:"100%" , width:"100%"}} src={`http://localhost:8080/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
+          <iframe style={{height:"100%" , width:"100%"}} src={`https://mvb1.herokuapp.com/labs/1622566485366-adada.pdf`} title="W3Schools Free Online Web Tutorials"></iframe>
 
         </div>
       )

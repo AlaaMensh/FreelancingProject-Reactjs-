@@ -1,15 +1,13 @@
 
-import React from 'react';
-
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
 import { makeStyles } from '@material-ui/core/styles';
-import  { useState , useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 // import "./form.css";
+import { useHistory, useLocation } from "react-router-dom";
 
-import { useHistory ,useLocation } from "react-router-dom";
+
+
 
 const useStyles = makeStyles((theme) => ({
   marginTopp:{
@@ -78,7 +76,7 @@ const ForgotPasswordCode = ()=>{
         }
         formBody = formBody.join("&");
         
-        await fetch('http://localhost:8080/autho/getCode', {
+        await fetch('https://mvb1.herokuapp.com/autho/getCode', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
