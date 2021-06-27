@@ -229,6 +229,8 @@
         "addAppointement" : "https://mvb1.herokuapp.com/appointment/addAppoinment",
         "updateAppointements" :"https://mvb1.herokuapp.com/appointment/updateAppointment",
         "deleteAppointements" :"https://mvb1.herokuapp.com/appointment/deleteAppointment",
-        "getAllappointementsForDoctor":"https://mvb1.herokuapp.com/appointment/getAppoinmentbyDrId"
+        "getAllappointementsForDoctor":"https://mvb1.herokuapp.com/appointment/getAppoinmentbyDrId",
+        "getAllappointements":"https://mvb1.herokuapp.com/appointment/getAppointment"
+
     }
 }

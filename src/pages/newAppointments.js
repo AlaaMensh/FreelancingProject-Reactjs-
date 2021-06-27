@@ -305,7 +305,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:8080/appointment/getAppointment`, {
+    await fetch(appointements[type].getAllappointements, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'

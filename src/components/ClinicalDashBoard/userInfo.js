@@ -1,5 +1,5 @@
-import React, { Component } from "react";
 import axios from "axios";
+import React, { Component } from "react";
 import { Jumbotron } from "react-bootstrap";
 class UserInfo extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class UserInfo extends Component {
     }
     formBody = formBody.join("&");
     await axios
-      .post(`http://localhost:8080/pt/findPt`, formBody)
+      .post(`https://mvb1.herokuapp.com/pt/findPt`, formBody)
       .then(async (resp) => {
         // return resp.data;
         await this.setState({ user: resp.data[0] });

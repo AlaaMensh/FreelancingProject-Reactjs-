@@ -1,14 +1,9 @@
-import React from "react";
-import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import { useState } from "react";
-import { Card, Row, Col, Form } from "react-bootstrap";
-// import "./form.css";
-import { useEffect } from "react";
+import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import React, { useEffect, useState } from "react";
+import { Col, Form, Row } from "react-bootstrap";
 // import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -129,6 +124,7 @@ export default function ChiefComplains({
                 id="tags-standard"
                 options={deseases}
                 getOptionLabel={(option) => option.name}
+                filterSelectedOptions
                 renderInput={(params) => (
                   <TextField
                     {...params}

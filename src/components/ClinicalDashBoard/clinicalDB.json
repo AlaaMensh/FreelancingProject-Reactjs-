@@ -41,7 +41,7 @@
     },
     "title": "All Allergy Problems",
     "description": "You can see all Allergy broblems for this patient...",
-    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getAllergyById",
+    "getAllergyProblemsForPatient": "https://mvb1.herokuapp.com/pt/getAllergyById",
     "getAll" :"https://mvb1.herokuapp.com/visit/pt_allergies"
 
   },
@@ -76,7 +76,7 @@
     },
     "title": "All OnGoingProblems Problems",
     "description": "You can see all OnGoingProblems broblems for this patient...",
-    "getAllergyProblemsForPatient": "http://localhost:8080/pt/getProblemsById",
+    "getAllergyProblemsForPatient": "https://mvb1.herokuapp.com/pt/getProblemsById",
     "getAll" :"https://mvb1.herokuapp.com/visit/onGoingProblem",
     "getAllDiseases" :"https://mvb1.herokuapp.com/disease/getAll"
   },

@@ -342,6 +342,7 @@ class Investgation extends Component {
                 <Autocomplete
                   multiple
                   id="tags-outlined"
+                  
                   options={this.state.labs}
                   getOptionLabel={(option) => option.name}
                   defaultValue={

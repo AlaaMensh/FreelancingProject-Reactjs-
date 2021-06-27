@@ -1,20 +1,49 @@
 import React, { Component } from "react";
-import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-
+import Row from "react-bootstrap/Row";
 // this file will genrate the basic form groups to be loaded into a <form> element.
 
 class FormGenerator extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            error:false,
+            data:[],
+            errors:[]
+        };
+    }
+    componentDidMount()
+    {
+        this.props.ModalInputs.map((input)=>{
+            this.state.data.push({
+                name:input.name,
+                value:null
+            })
+        })
+        console.log("data start")
+
+        console.log(this.state.data)
+        console.log("data end")
+
     }
 
     render() {
         return (
             <Form>
+                {
+                this.state.error
+                 &&(
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        {this.state.errors.map(row=>(
+                            <li>Please Fill {row.name}</li>
+                        ))}
+                    </ul>
+                </div>
+                 )
+                }
                 <Col sm={12}>
                     <Row>
                         <Col sm={12}>
@@ -38,6 +67,12 @@ class FormGenerator extends Component {
                                                         : ""
                                                 }
                                                 onChange={(e) => {
+                                                    let index = this.state.data.findIndex(row=>row.name==input.name)
+                                                    if(index != -1)
+                                                    {
+                                                        this.state.data[index].value = e.target.value
+                                                        this.setState({data:[...this.state.data]})
+                                                    }
                                                     this.props.handleChange(e);
                                                 }}
                                             />
@@ -54,9 +89,14 @@ class FormGenerator extends Component {
                                                     name={input.name}
                                                     onChange={(e) => {
                                                         console.log("e: ", e);
-                                                        this.props.handleChange(
-                                                            e
-                                                        );
+                                                        let index = this.state.data.findIndex(row=>row.name==input.name)
+                                                        if(index != -1)
+                                                        {
+                                                            this.state.data[index].value = e.target.value
+                                                            this.setState({data:[...this.state.data]})
+                                                        }
+                                                        this.props.handleChange(e);
+
                                                     }}
                                                     custom
                                                 >
@@ -112,6 +152,12 @@ class FormGenerator extends Component {
                                 variant="primary"
                                 value={this.props.buttonTitle || "Add "}
                                 onClick={() => {
+                                    let arr = this.state.data.filter(row=>row.value == null)
+                                    if(arr.length > 0)
+                                    {
+                                        this.setState({error:true,errors:arr})
+                                        return;
+                                    }
                                     this.props.handleSubmit();
                                 }}
                             >
