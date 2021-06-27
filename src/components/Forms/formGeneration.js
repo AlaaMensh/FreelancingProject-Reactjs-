@@ -35,10 +35,10 @@ class FormGenerator extends Component {
                 {
                 this.state.error
                  &&(
-                <div class="alert alert-danger" role="alert">
-                    <ul>
+                <div className="alert alert-danger" role="alert">
+                    <ul className="list">
                         {this.state.errors.map(row=>(
-                            <li>Please Fill {row.name}</li>
+                            <li className="text-danger">Please Fill {row.name}</li>
                         ))}
                     </ul>
                 </div>
