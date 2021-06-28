@@ -1,12 +1,19 @@
-import { Modal } from 'react-bootstrap'
 import React, { Component } from 'react';
+import { Modal } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import FormModal from "./formModal"
+import FormModal from "./formModal";
 
 class ModalComp extends Component {
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = {
+            data:[],
+            error:false,
+            errors:[]
+          }
+    }
+    setData=(data)=>{
+        this.setState({data:[...data]})
     }
     componentDidMount(){
         // console.log("////////////////%%%%%%%%%%%%%%%%%%%%%%////////////")
@@ -34,12 +41,24 @@ class ModalComp extends Component {
                 <Modal.Title>{this.props.formType} Form</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                {
+                this.state.error
+                 &&(
+                <div className="alert alert-danger" role="alert">
+                    <ul className="list">
+                        {this.state.errors.map(row=>(
+                            <li className="text-danger">Please Fill {row.name}</li>
+                        ))}
+                    </ul>
+                </div>
+                 )
+                }
                     {/* {console.log("hhhhhhheeeree   ",this.props.ModalInputs)} */}
                     <FormModal ModalInputs = {this.props.ModalInputs} 
                           updatedTypeObj = {this.props.updatedTypeObj}
                           handleChange = {this.props.handleChange}
                           formType={this.props.formType}
-                        
+                          setData={this.setData}  
                     />
                    
                 </Modal.Body>
@@ -53,6 +72,12 @@ class ModalComp extends Component {
                         ):
                         (
                             <Button variant="primary"  value={this.props.value || "Add"} onClick={()=>{
+                                let arr = this.state.data.filter(row=>row.value == null)
+                                if(arr.length > 0)
+                                {
+                                    this.setState({error:true,errors:arr})
+                                    return;
+                                }
                                 this.props.handleAdding()
                             }} >Add</Button>
                         )

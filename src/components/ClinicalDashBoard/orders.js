@@ -7,8 +7,8 @@ import FormGenerator from "../Forms/formGenerationNew";
 import ModalGenerator from "../ModalGeneration/modalGeneration";
 import orderType from "../ordersdb.json";
 import ModalForView from "../pharmacyModule/modalForView";
+import Spinner from '../shared/Spinner';
 import DataTableComp from '../typesGenerator/dataTable';
-
 var object  = {}
 
 class ClinicalOrders extends Component {
@@ -28,7 +28,8 @@ class ClinicalOrders extends Component {
       pageNumber:1,
       fileResult:"" ,
       resultStatus : "",
-      resultToShow:""
+      resultToShow:"",
+      loading:false
           }
         }
       async componentDidMount(){
@@ -75,6 +76,8 @@ class ClinicalOrders extends Component {
     };
 
     getData = async (flag ,type) => {
+      this.setState({loading:true})
+
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
       var details = {
@@ -91,11 +94,13 @@ class ClinicalOrders extends Component {
        formBody = formBody.join("&");
        axios.post(`${endPoint}`,details).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
-        this.setState({orderlabList: result.data});
+        this.setState({orderlabList: result.data,loading:false});
 
         })
         .catch(err=>{
             console.log(err)
+           this.setState({loading:false})
+
         })
 
       
@@ -112,6 +117,7 @@ class ClinicalOrders extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
+      this.setState({loading:true})
       
       fetch(`${orderType[this.state.type].deleteOrder}`, {
         method: 'DELETE',
@@ -121,8 +127,12 @@ class ClinicalOrders extends Component {
         body: formBody
       }).then(()=>{
         console.log("it is deleted");
+       this.setState({loading:false})
+
       }).catch(()=>{
         console.log("errror")
+       this.setState({loading:false})
+
       })
       this.setState({
         orderlabList: this.state.orderlabList.filter(row => row.id !== id)
@@ -139,6 +149,8 @@ class ClinicalOrders extends Component {
       Form.append("orderId" , this.state.typeObj["id"])
       
       console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+      this.setState({loading:true})
+
       // await fetch(`https://mvb1.herokuapp.com/visit/updateOrder`, {
       await fetch(`${orderType[this.state.type].uploadResult}`, {
         method: 'POST',
@@ -146,12 +158,16 @@ class ClinicalOrders extends Component {
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
+          this.setState({loading:false})
+
           console.log("dataaaaaaaaa: " , data)
-           //** */ if you want to delete the record with uploaded Result
+           //** */ if you wan       asggggggggvfvfvfvfvfvfvfvfvfvfvfvfvfvfasbbbbbtb tbob delete the record with uploaded Result
           // var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
-          // this.setState({orderlabList : temp});
+          // this.setState({orderlabLi st : temp});
         })
       }).catch(()=>{
+        this.setState({loading:false})
+
         console.log("error On Server")
       })
 
@@ -339,6 +355,8 @@ class ClinicalOrders extends Component {
         
   return (
     <div className="">
+        <Spinner loading={this.state.loading}/>
+
         {this.rendering()}
     </div>
  

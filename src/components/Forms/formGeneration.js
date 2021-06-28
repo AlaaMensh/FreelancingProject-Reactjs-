@@ -4,6 +4,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 // this file will genrate the basic form groups to be loaded into a <form> element.
+import Spinner from '../shared/Spinner';
 
 class FormGenerator extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class FormGenerator extends Component {
         this.state = {
             error:false,
             data:[],
-            errors:[]
+            errors:[],
+            loading:false
         };
     }
     componentDidMount()
@@ -31,6 +33,8 @@ class FormGenerator extends Component {
 
     render() {
         return (
+            <>
+            <Spinner loading={this.state.loading}/>
             <Form>
                 {
                 this.state.error
@@ -158,7 +162,10 @@ class FormGenerator extends Component {
                                         this.setState({error:true,errors:arr})
                                         return;
                                     }
+                                    this.setState({loading:true})
                                     this.props.handleSubmit();
+                                    this.setState({loading:false})
+
                                 }}
                             >
                                 {this.props.buttonTitle || "Add "}
@@ -172,6 +179,7 @@ class FormGenerator extends Component {
                     </Row>
                 </Col>
             </Form>
+            </>
         );
     }
 }

@@ -8,8 +8,11 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import appointements from '../components/appointements.json';
 import SessionCode from "../components/sessionCode";
+import Spinner from '../components/shared/Spinner';
 import DataTableComp from "../components/typesGenerator/dataTable";
 import ModalComp from "../components/typesGenerator/modalGenerator";
+
+
 
 class Appointements extends Component {
   constructor(props) {
@@ -28,8 +31,8 @@ class Appointements extends Component {
       past :[], // for past appointements
       future:[], // for Future appointements
       doctorOrPatientAppointemnt : true ,//--> if(true) ==> this for Patient appointements , false -->
-      date : "" // for Date Picker value
- 
+      date : "", // for Date Picker value
+      loading : false
      }
   }
 
@@ -187,7 +190,7 @@ class Appointements extends Component {
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-
+        this.setState({loading:true})
           console.log("formBody: ",formBody)
           await fetch(`${appointements[this.state.type].updateAppointements}`, {
             method: 'PUT',
@@ -197,8 +200,12 @@ class Appointements extends Component {
             body: formBody
           }).then(()=>{
             console.log("it is inserted");
+            this.setState({loading:true})
+
           }).catch(()=>{
             console.log("errror")
+            this.setState({loading:false})
+
           })
              this.getData(this.state.type)
   }
@@ -214,6 +221,7 @@ class Appointements extends Component {
       formBody.push(encodedKey + "=" + encodedValue);
     }
     // formBody = formBody.join("&");
+    this.setState({loading:true})
     
     fetch(`${appointements[this.state.type].deleteAppointements}`, {
       method: 'DELETE',
@@ -223,8 +231,12 @@ class Appointements extends Component {
       body: formBody
     }).then(()=>{
       console.log("it is deleted");
+      this.setState({loading:false})
+
     }).catch(()=>{
       console.log("errror")
+      this.setState({loading:false})
+
     })
 
     this.setState({
@@ -255,6 +267,7 @@ class Appointements extends Component {
     }
     formBody = formBody.join("&");
     console.log("formgingggg:     " , appointements[this.state.type].addAppointement)
+    this.setState({loading:true})
     
 await fetch(`${appointements[this.state.type].addAppointement}`, {
       method: 'POST',
@@ -264,6 +277,8 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       body: formBody
     }).then((resp)=>{
       console.log("resp.type: "  , typeof(resp))
+      this.setState({loading:false})
+
       resp.json().then((data)=>{
         console.log("nooooooooooooooooo" , data)
       if(data.message === "date is not empty"){
@@ -278,6 +293,8 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       }
       })
     }).catch(()=>{
+      this.setState({loading:false})
+
       console.log("errror")
     })
     this.getData(this.state.type);
@@ -305,6 +322,8 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
+    this.setState({loading:true})
+
     await fetch(appointements[type].getAllappointements, {
       method: 'POST',
       headers: {
@@ -315,10 +334,12 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     .then(
       data => {
         console.log("data: " , data)
-        this.setState({data : data})
+        this.setState({data : data,loading:false})
       }
     )
     .catch((e)=>{
+      this.setState({loading:false})
+
       console.log("errror" ,e)
     })
 
@@ -482,6 +503,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
  
     return (
       <>
+        <Spinner loading={this.state.loading}/>
         {this.renderingForDoctorAppointements()}
       </ >
     );

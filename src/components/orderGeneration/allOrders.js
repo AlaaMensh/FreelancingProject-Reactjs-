@@ -8,9 +8,9 @@ import FormGenerator from "../Forms/formGenerationNew";
 import ModalGenerator from "../ModalGeneration/modalGeneration";
 import orderType from "../ordersdb.json";
 import ModalForView from "../pharmacyModule/modalForView";
+import Spinner from '../shared/Spinner';
 import DataTableComp from '../typesGenerator/dataTable';
 import "./order.css";
-
 
 var object  = {}
 
@@ -31,7 +31,8 @@ class AllOrders extends Component {
       pageNumber:1,
       fileResult:"" ,
       resultStatus : "",
-      resultToShow:""
+      resultToShow:"",
+      loading:false
           }
         }
       async componentDidMount(){
@@ -96,6 +97,8 @@ class AllOrders extends Component {
     };
 
     getData = async (flag ,type) => {
+      this.setState({loading:true})
+
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
       if(!flag){ // for PatientID and only Accepted Order
@@ -132,11 +135,15 @@ class AllOrders extends Component {
        }
        formBody = formBody.join("&");
        axios.post(`${endPoint}`,details).then(result=>{
+        this.setState({loading:false})
+
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
 
         })
         .catch(err=>{
+          this.setState({loading:false})
+
             console.log(err)
         })
 
@@ -144,6 +151,8 @@ class AllOrders extends Component {
     }
  
     handleDelete= async(id)=>{
+      this.setState({loading:true})
+
       console.log("iiiiiiiiiid"  ,id)
       var details = {
         id:id
@@ -162,8 +171,12 @@ class AllOrders extends Component {
         },
         body: formBody
       }).then(()=>{
+        this.setState({loading:false})
+
         console.log("it is deleted");
       }).catch(()=>{
+        this.setState({loading:false})
+
         console.log("errror")
       })
       this.setState({
@@ -175,7 +188,7 @@ class AllOrders extends Component {
 
   
     handleUpdate = async ()=>{  // Upload files Using updateOrder function
-
+      this.setState({loading:true})
       var Form = new FormData();
       Form.append("result" ,this.state.result )
       Form.append("orderId" , this.state.typeObj["id"])
@@ -188,12 +201,16 @@ class AllOrders extends Component {
       }).then((resp)=>{
         console.log("Getting: " , resp);
         resp.json().then((data)=>{
+           this.setState({loading:false})
+
           console.log("dataaaaaaaaa: " , data)
            //** */ if you want to delete the record with uploaded Result
           // var temp = this.state.orderlabList.filter(row => row.id != this.state.typeObj["id"]);
           // this.setState({orderlabList : temp});
         })
       }).catch(()=>{
+        this.setState({loading:false})
+
         console.log("error On Server")
       })
 
@@ -467,6 +484,8 @@ class AllOrders extends Component {
         
   return (
     <div className="">
+        <Spinner loading={this.state.loading}/>
+
         {this.rendering()}
     </div>
  
