@@ -13,6 +13,7 @@ import React from 'react';
 import MyModal from '../Prescription/modal';
 import Form from '../Prescription/PrescriptionForm';
 import { loadMYDrugs, UnActiveDrug } from '../Prescription/request';
+import Spinner from '../shared/Spinner';
 
 
 
@@ -64,6 +65,7 @@ export default function ScrollableTabsButtonAuto({match}) {
   const [active_rows,setActiveRows] = React.useState([])
   const [un_active_rows,setUnActiveRows] = React.useState([])
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const ptId = match.params.id  
   const inactive_columns = [
     { field: 'id', headerName: 'ID', hide:true },
@@ -149,6 +151,7 @@ export default function ScrollableTabsButtonAuto({match}) {
   }
 
   const MYDrugs = ()=>{
+    setLoading(true)
     loadMYDrugs().then(data=>{
         data.map(row=>{
             let index =  rows.findIndex(r=>r.id == row.id)
@@ -173,10 +176,13 @@ export default function ScrollableTabsButtonAuto({match}) {
     }).catch(err=>{
         alert(err)
     })
+    setLoading(false)
   
   }
 
   const unActiveRow=(id)=>{
+    setLoading(true)
+
     let index = rows.findIndex(r=>r.id == id)
     rows[index].status = 'inactive'
     UnActiveDrug(id).then(res=>{
@@ -202,10 +208,13 @@ export default function ScrollableTabsButtonAuto({match}) {
         })
       }
     setActiveRows([...active_rows])
+    setLoading(false)
+
   }
 
   return (
     <div className={classes.root}>
+      <Spinner loading={loading}/>
         <MyModal open={open} handleClose={handleClose}>
          <Form ptId={ptId} PID={0} add_row={add_row}/>
       </MyModal>

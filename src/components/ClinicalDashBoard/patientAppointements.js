@@ -11,9 +11,9 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import appointements from '../appointements.json';
 import SessionCode from "../sessionCode";
+import Spinner from '../shared/Spinner';
 import DataTableComp from "../typesGenerator/dataTable";
 import ModalComp from "../typesGenerator/modalGenerator";
-
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -53,6 +53,7 @@ class UserCrud extends Component {
     this.state = { 
       columns:[] ,
       openModal:false,
+      loading:false,
       ModalInputs : [] ,
       data:[],
       temp:[],
@@ -165,6 +166,7 @@ class UserCrud extends Component {
   }
 
   handleUpdate = async()=>{
+    this.setState({loading:true})
 console.log("objjjject : " , this.state.typeObj)
     var details = {}
 
@@ -199,10 +201,14 @@ console.log("objjjject : " , this.state.typeObj)
           }).catch(()=>{
             console.log("errror")
           })
+          this.setState({loading:false})
              this.getData(this.state.type)
+
   }
 
   handleDelete= async(id)=>{
+    this.setState({loading:true})
+
     var details = {
       id:id
     }
@@ -227,11 +233,13 @@ console.log("objjjject : " , this.state.typeObj)
     })
 
     this.setState({
-      data: this.state.data.filter(row => row.id !== id)
+      data: this.state.data.filter(row => row.id !== id),
+      loading:false
      })
       
   }
   handleAdding = async()=>{
+    this.setState({loading:true})
    
     var details = {}
     for(var p in appointements[this.state.type].addDetails ){ // for Addition Form Inputs
@@ -266,9 +274,12 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
     }).catch(()=>{
       console.log("errror")
     })
+    this.setState({loading:false})
+
     this.getData(this.state.type);
   }
   getData = async(type)=>{
+    this.setState({loading:true})
 
     await axios.post(`${appointements[type].getAllAppointements}`,{
        ptId:this.props.match.params.id,
@@ -302,6 +313,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
       console.log("resp.data: " , resp.data);
     
     })
+    this.setState({loading:false})
     
   }
   checkRole = () =>{
@@ -462,6 +474,7 @@ await fetch(`${appointements[this.state.type].addAppointement}`, {
  
     return (
       <>
+      <Spinner loading={this.state.loading}/>
         {this.renderingForPatientAppointements()}
       </ >
     );

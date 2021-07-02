@@ -5,6 +5,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import MyModal from '../Prescription/modal';
 import Prescription from '../Prescription/Prescription';
+import Spinner from '../shared/Spinner';
 import MyDialog from './MyDialog';
 const PColumns = [
     { field: 'id', headerName: 'ID', hide:true },
@@ -33,6 +34,7 @@ const MyPrescriptions = ({match}) =>{
     const [data,setData] = useState([])
     const [drug_rows,setDrugRows] = useState([])
     const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     const [drugModal, setDrugModal] = React.useState(false);
     const base_url = "https://mvb1.herokuapp.com"
 
@@ -43,6 +45,7 @@ const MyPrescriptions = ({match}) =>{
       },[])
 
       const MyPrescriptions = ()=>{
+          setLoading(true)
         if(ptId){
        axios.post(base_url+"/visit/myPrescriptions",{
            ptId : ptId
@@ -67,6 +70,7 @@ const MyPrescriptions = ({match}) =>{
        }).catch(err=>{
            alert(err)
        })
+
    }
    else{
 
@@ -94,6 +98,7 @@ const MyPrescriptions = ({match}) =>{
            alert(err)
        })
    }
+          setLoading(false)
 
 } 
 
@@ -131,6 +136,7 @@ const MyPrescriptions = ({match}) =>{
 
     return (
         <>
+        <Spinner loading={loading}/>
         <MyDialog open={open} handleClose={handleClose}>
             <Prescription match={match} patient_id={ptId} finish_method={JobFinish}/>
         </MyDialog>
