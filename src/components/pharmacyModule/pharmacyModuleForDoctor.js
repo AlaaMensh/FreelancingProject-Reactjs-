@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import pharmacyModule from "../pharmacyModuleDB.json";
-import DataTableComp from "../typesGenerator/dataTable";
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import pharmacyModule from "../pharmacyModuleDB.json";
+import Spinner from '../shared/Spinner';
+import DataTableComp from "../typesGenerator/dataTable";
 import ModalForView from './modalForView';
 
 const data = {
@@ -101,6 +101,7 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
         super(props);
         this.state = { 
             type:"",
+            loading:false,
             columns:[],
             drugs_columns:[{
               "name" :"Genric Name",
@@ -217,7 +218,7 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
           formBody.push(encodedKey + "=" + encodedValue);
         }
         formBody = formBody.join("&");
-      
+        this.setState({loading:true})
         
       fetch(`${pharmacyModule["pharmacyModule"].getLastTenPrescription}/${localStorage.getItem("userId")}`, {
           method: 'GET',
@@ -230,12 +231,14 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
             console.log("All Incomming Data;  " , data)
             this.setState({ 
               prescriptions: data.prescriptions ,
-              drugsList : data.drugs
-    
+              drugsList : data.drugs,
+              loading:false
             })
       
           })
         }).catch(()=>{
+        this.setState({loading:false})
+
           console.log("errror")
         })
     }
@@ -296,8 +299,7 @@ class PharmacyModuleForDoctor extends Component { // this Component to View All 
         return (     
          
         <Container fluid>
-              {console.log("presCriptions : " , this.state.prescriptions)}
-              {console.log("Columns : " , this.state.columns)}
+            <Spinner loading={this.state.loading}/>
             <Row className= "py-3">
                 <Col>
                     <h3>All Doctor Prescriptions</h3>

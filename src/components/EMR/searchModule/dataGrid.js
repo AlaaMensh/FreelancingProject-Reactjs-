@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import  { Component } from 'react';
-import { useFormik,Formik } from 'formik';
-import * as Yup from 'yup';
-import DataTableComp from "../../typesGenerator/dataTable";
-import Button from 'react-bootstrap/Button';
-import emrFile from "../emrDB.json";
+import React, { Component } from 'react';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import DataTableComp from "../../typesGenerator/dataTable";
+import emrFile from "../emrDB.json";
 
 
 
@@ -56,7 +52,7 @@ class DataGridTable extends Component {
             <div className="col-auto">
               <button  className="btn btn-info"
                 onClick={async () => {  
-                  this.props.history.push(`/ClinicalDashBoard/${row.ptId}`);
+                  this.props.history.push(`/ClinicalDashBoard/${row.id}`);
                   // this.handleDelete(row.id);
 
                   }}>Go to ClinicalDashBoard</button>

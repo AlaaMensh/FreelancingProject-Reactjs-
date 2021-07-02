@@ -16,7 +16,7 @@
         },
             "lastName": {
                 "name": "lastName",
-                "selector": "LastName",
+                "selector": "lastName",
                 "sortable": true
         },
             "phone": {
@@ -45,6 +45,6 @@
         },
         "title" :"All Doctor Patients",
         "description" : "you will see here all your Patients",
-        "getAllDoctorPatients" :"http://localhost:8080/visit/getallPt"
+        "getAllDoctorPatients" :"https://mvb1.herokuapp.com/visit/getallPt"
     }
 }

@@ -1,16 +1,15 @@
+import axios from "axios";
 import React, { Component } from 'react';
-import "./nursemodule.css";
-import nurseModule from "../nurseDB.json";
-import DataTableComp from "../typesGenerator/dataTable";
-import ModalComp from "../typesGenerator/modalGenerator";
+import Button from 'react-bootstrap/Button';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import nurseModule from "../nurseDB.json";
+import Spinner from '../shared/Spinner';
+import DataTableComp from "../typesGenerator/dataTable";
 import ModalGenerator from './../ModalGeneration/modalGeneration';
 import AdditionVital from './additionVitalForm';
-import axios from "axios";
-
+import "./nursemodule.css";
 
 
 
@@ -20,6 +19,7 @@ class NurseVisit extends Component {
         this.state = {
             timeDate:[],
             openModal:false ,
+            loading:false ,
             pId:"",
             columns:[],
             ModalAddtionInputs :[],
@@ -153,6 +153,7 @@ class NurseVisit extends Component {
       this.setState({ModalAddtionInputs : temperature})
     }
     handleDelete =(id) =>{
+      this.setState({loading:true})
       var details = {
         id:id
       }
@@ -176,7 +177,8 @@ class NurseVisit extends Component {
         console.log("errror")
       })
       this.setState({
-        timeDate: this.state.timeDate.filter(row => row.id !== id)
+        timeDate: this.state.timeDate.filter(row => row.id !== id),
+        loading:false
        })
     }
 
@@ -265,6 +267,8 @@ class NurseVisit extends Component {
       return (time);
     }
     getLastVisits = async(type)=>{
+      this.setState({loading:true})
+
       var details = {
         ptId : this.props.match.params.id
       }
@@ -322,8 +326,12 @@ class NurseVisit extends Component {
           }).catch(()=>{
             console.log("errror")
           })
+      this.setState({loading:false})
+
     }
     handleAddition = async()=>{
+      this.setState({loading:true})
+
           var details = {
             date: this.getDate(),
             time: this.getTime(),
@@ -383,6 +391,7 @@ class NurseVisit extends Component {
           await this.func2()
           await this.sorting();
           // await this.sortAfterAdding();
+          this.setState({loading:false})
 
     }
 
@@ -442,8 +451,8 @@ class NurseVisit extends Component {
    
         return (
     <div className="container" style={{ height: 400, width: '100%' }}>
-      {console.log("hereeeee : ",this.state.columns)}
-      {console.log("state : ",this.state)}
+            <Spinner loading={this.state.loading}/>
+
           {this.rendering()}
        {/* <Fab color="primary" aria-label="add"  onClick = {()=>{
                           this.handleopenModal()

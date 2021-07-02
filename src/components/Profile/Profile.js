@@ -7,9 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import axios from 'axios';
 import React, { useEffect } from 'react';
+import Spinner from '../shared/Spinner';
 import ChangePassword from './CPassword';
 import './profile.css';
-
 const useStyles = makeStyles((theme) => ({
     root: {
       '& > *': {
@@ -40,6 +40,7 @@ export default function Profile(props)
     const[user,setUser] = React.useState(null)
     const[img,setImg] = React.useState(null)
     const [open, setOpen] = React.useState(false);
+    const [loading, setLoading] = React.useState(false);
     //get the logged in user id
     var userId = localStorage.getItem("userId");
 
@@ -61,13 +62,17 @@ export default function Profile(props)
         }
         data.append('image',file)
         data.append('userId',userId)
+        setLoading(true)
         
-        // axios.post('http://localhost:3000/authenticate/update_phote',data).then(result=>{
-             axios.post('http://localhost:8080/profile/photo',data).then(result=>{
+        // axios.post('https://mvb1.herokuapp.com/authenticate/update_phote',data).then(result=>{
+             axios.post('https://mvb1.herokuapp.com/profile/photo',data).then(result=>{
+                 setLoading(false)
              console.log(result.data)
-            setImg("http://localhost:3000/images/"+result.data)
+            setImg("https://mvb1.herokuapp.com/images/"+result.data)
         })
         .catch(err=>{
+            setLoading(false)
+
             console.log(err)
         })
     }
@@ -78,15 +83,20 @@ export default function Profile(props)
 
     //function to retrieve the user data with userId
     const getUser = ()=>{
-        // axios.get('http://localhost:3000/profile/user/'+userId).then(result=>{
+        // axios.get('https://mvb1.herokuapp.com/profile/user/'+userId).then(result=>{
+            setLoading(true)
 
-        axios.get('http://localhost:3000/authenticate/update_phote/user/'+userId).then(result=>{
+        axios.get('https://mvb1.herokuapp.com/authenticate/update_phote/user/'+userId).then(result=>{
             console.log("result :   ",result)
             setUser(result.data)
-            setImg("http://localhost:3000/images/"+result.data.image)
+            setLoading(false)
+
+            setImg("https://mvb1.herokuapp.com/images/"+result.data.image)
             console.log(img)
         })
         .catch(err=>{
+            setLoading(false)
+
             console.log(err)
         })
     }
@@ -105,6 +115,8 @@ export default function Profile(props)
 
     return (
         <div>
+        <Spinner loading={loading}/>
+
         <Grid style={{position:'absolute',marginTop:25}} container spacing={3}>
             {/* Box Start */}
         <div className="main-box">

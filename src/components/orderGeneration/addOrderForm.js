@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import FormGenerator from "../Forms/formGeneration";
 import inputs from "../ordersdb.json";
+import Spinner from '../shared/Spinner';
 
 const base_url = "https://mvb1.herokuapp.com"
 
@@ -15,8 +16,8 @@ class AddOrderForm extends Component {
       drId:"",
       ptId:"",
       drFdId:"",
-      labId:""
-
+      labId:"",
+      loading:false
      }
   }
   async componentDidMount(){
@@ -40,6 +41,7 @@ class AddOrderForm extends Component {
 
     console.log("options")
     console.log(options)
+    await this.setState({loading:true});
 
     if(this.state.type == "lab")
     {
@@ -108,7 +110,7 @@ class AddOrderForm extends Component {
     }
 
 
-    this.setState({formInputs : temp});
+    this.setState({formInputs : temp,loading:false});
 
     var newState = this.state;
     for(var property in inputs[type].state ){
@@ -172,6 +174,8 @@ class AddOrderForm extends Component {
   //   },
   //   body: formBody
   // })
+   this.setState({loading:true});
+
   axios.post(`${inputs[this.state.type].addOrder}`, details)
   .then((resp)=>{
 
@@ -191,6 +195,7 @@ class AddOrderForm extends Component {
   })
   
 
+  this.setState({loading:false});
 
   
   }
@@ -199,7 +204,7 @@ class AddOrderForm extends Component {
     return (  
       <div>
         {console.log("formInputs : " , this.state.formInputs)}
-        
+        <Spinner loading={this.state.loading}/>
       {
         this.state.formInputs && this.state.formInputs.length > 0 && (
           <FormGenerator  ModalInputs = {this.state.formInputs}

@@ -1,25 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
-import Button from '@material-ui/core/Button';
-import  { Component } from 'react';
-import Modal from '@material-ui/core/Modal';
+import DateFnsUtils from '@date-io/date-fns';
 import Avatar from '@material-ui/core/Avatar';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import Modal from '@material-ui/core/Modal';
+import { withStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { DataGrid } from '@material-ui/data-grid';
+import AddIcon from '@material-ui/icons/Add';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import EditIcon from '@material-ui/icons/Edit';
-import Fab from '@material-ui/core/Fab'
-import { withStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
-import DateFnsUtils from '@date-io/date-fns';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  
-} from '@material-ui/pickers';  
+  KeyboardDatePicker, MuiPickersUtilsProvider
+} from '@material-ui/pickers';
+import React, { Component } from 'react';
+import Spinner from '../components/shared/Spinner';
 import "./appointments.css";
+
 
 
 
@@ -84,6 +83,7 @@ class Appointement extends Component {
       endDime:"",
       flag:true, 
       check:"",
+      loading:false
           }
         }
       async componentDidMount(){
@@ -117,8 +117,9 @@ class Appointement extends Component {
           formBody.push(encodedKey + "=" + encodedValue);
         }
         formBody = formBody.join("&");
+        this.setState({loading:true})
         
-        fetch(`http://localhost:3000/appointment/getById`, {
+        fetch(`https://mvb1.herokuapp.com/appointment/getById`, {
           method: 'POST',
           headers: {  
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -129,11 +130,14 @@ class Appointement extends Component {
           resp.json().then((data)=>{
             console.log("ddddddddddddddddd;  " , data[0])
             this.setState({
-              TypeObj:data[0]
+              TypeObj:data[0],
+              loading:false
             })
             // object = data
           })
         }).catch(()=>{
+        this.setState({loading:false})
+
           console.log("errror")
         })
 
@@ -165,7 +169,9 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-    await fetch(`http://localhost:8080/appointment/getByDate`, {
+    this.setState({loading:true})
+
+    await fetch(`https://mvb1.herokuapp.com/appointment/getByDate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -174,10 +180,12 @@ class Appointement extends Component {
     }) .then(response => response.json())
     .then(
       data => {
-        this.setState({appointements : data})
+        this.setState({appointements : data,loading:false})
       }
     )
     .catch((e)=>{
+     this.setState({loading:false})
+
       console.log("errror" ,e)
     })
     }
@@ -201,7 +209,9 @@ class Appointement extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
-      fetch("http://localhost:8080/appointment/deleteAppointment", {
+    this.setState({loading:true})
+
+      fetch("https://mvb1.herokuapp.com/appointment/deleteAppointment", {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -212,6 +222,7 @@ class Appointement extends Component {
       }).catch(()=>{
         console.log("errror")
       })
+      this.setState({loading:false})
   
 
          
@@ -317,8 +328,10 @@ class Appointement extends Component {
       formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
+    this.setState({loading:true})
+
     console.log("formBodu : " , formBody)
-     fetch(`http://localhost:8080/appointment/updateAppointment`, {
+     fetch(`https://mvb1.herokuapp.com/appointment/updateAppointment`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -327,11 +340,15 @@ class Appointement extends Component {
     }) .then(response => response.json())
     .then(
       data => {
+      this.setState({loading:false})
+
         console.log("dataaaaaaaaaaaaaaa: " , data)
         // this.setState({appointements : data})
       }
     )
     .catch((e)=>{
+      this.setState({loading:false})
+
       console.log("errror" ,e)
     })
     }
@@ -372,8 +389,9 @@ class Appointement extends Component {
         }
         formBody = formBody.join("&");
         console.log("formBody:  " , formBody)
+        this.setState({loading:true})
   
-        fetch('http://localhost:3000/session/addSession', {
+        fetch('https://mvb1.herokuapp.com/session/addSession', {
           method: 'POST',
            headers: {
              'Content-Type': 'application/json'
@@ -381,11 +399,15 @@ class Appointement extends Component {
           body: JSON.stringify(details)
         }).then((resp)=>{
           resp.json().then((data)=>{
+      this.setState({loading:false})
+
             // if(data == true){
             //   history.push("/")
             // }
           })
         }).catch(()=>{
+      this.setState({loading:false})
+
           console.log("errror")
         })
       }
@@ -514,7 +536,7 @@ class Appointement extends Component {
     }
     formBody = formBody.join("&");
     console.log("formBodu : " , formBody)
-     fetch(`http://localhost:8080/appointment/addAppoinment`, {
+     fetch(`https://mvb1.herokuapp.com/appointment/addAppoinment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -532,7 +554,7 @@ class Appointement extends Component {
     })
 
       // console.log("type: ", obj);
-      // axios.post(`http://localhost:3000/appointment/addApointment`, obj )
+      // axios.post(`https://mvb1.herokuapp.com/appointment/addApointment`, obj )
       // .then(res => {
       //   console.log(res);
       //   console.log(res.data);
@@ -546,6 +568,8 @@ class Appointement extends Component {
         
   return (
     <div className ="container">
+        <Spinner loading={this.state.loading}/>
+
         {this.rendering()}
 
 <Modal

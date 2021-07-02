@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import  { Component } from 'react';
-import nurseModule from "../nurseDB.json";
-import DataTableComp from "../typesGenerator/dataTable";
+import React, { Component } from 'react';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
+import nurseModule from "../nurseDB.json";
+import Spinner from '../shared/Spinner';
+import DataTableComp from "../typesGenerator/dataTable";
 
 
 class PatientsOnVisit extends Component {
@@ -14,12 +13,14 @@ class PatientsOnVisit extends Component {
     
     this.state = { 
       typeId:0,
+      loading:false,
       patientsOnVisit:[],
       columns:[]
           }
         }
 
     getData = async()=>{
+      this.setState({loading:true})
     var type = "patientsOnVisit"
       var details = {
         date:new Date()
@@ -49,6 +50,7 @@ class PatientsOnVisit extends Component {
        }).catch(()=>{
          console.log("error Getting Here")
        })
+       this.setState({loading:false})
       
     }
   
@@ -96,6 +98,7 @@ class PatientsOnVisit extends Component {
     rendering = () =>{
         return(
           <Container>
+            <Spinner loading={this.state.loading}/>
           <Row className= "py-3">
               <Col>
                   {

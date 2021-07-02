@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import pharmacyModule from "../pharmacyModuleDB.json";
+import Spinner from '../shared/Spinner';
 import DataTableComp from "../typesGenerator/dataTable";
 import ModalForView from './modalForView';
 
@@ -23,6 +24,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
         super(props);
         this.state = { 
             type:"",
+            loading:false,
             columns:[],
             drugs_columns:[{
               "name" :"Genric Name",
@@ -149,7 +151,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
         formBody.push(encodedKey + "=" + encodedValue);
     }
     formBody = formBody.join("&");
-    
+    this.setState({loading:true})
         ///*********** */ change it with patient Code
         console.log("endPoint: " , pharmacyModule["pharmacyModule"].getPatientPrescription)
     fetch(`${pharmacyModule["pharmacyModule"].getPatientPrescription}/${this.props.location.state}`, { 
@@ -170,6 +172,7 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
     }).catch(()=>{
         console.log("errror")
     })
+    this.setState({loading:false})
     
     }
 
@@ -283,8 +286,8 @@ class PharmacyModuleForPharmacist extends Component { // this Component to View 
         return (     
          
         <Container fluid>
-              {console.log("presCriptions : " , this.state.prescriptions)}
-              {console.log("Columns : " , this.state.columns)}
+            <Spinner loading={this.state.loading}/>
+
             <Row className= "py-3">
                 <Col>
                     <h3>All patient Drugs</h3>

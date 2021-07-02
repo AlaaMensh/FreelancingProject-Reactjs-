@@ -8,8 +8,9 @@ import { Document, Page } from 'react-pdf';
 import "../orderGeneration/order.css";
 import orderType from "../ordersdb.json";
 import ModalForView from "../pharmacyModule/modalForView";
-import DataTableComp from '../typesGenerator/dataTable';
 // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+import Spinner from '../shared/Spinner';
+import DataTableComp from '../typesGenerator/dataTable';
 
 var object  = {}
 
@@ -20,6 +21,7 @@ class AllOrdersForDoctor extends Component {
     this.state = { 
       orderlabList : [],
       orderType : 0,
+      loading : false,
       type:"",
       flagCompoenentType : true, // for patientID ==> false //***OR***//  for LabID ==>true
       modalUploadResultInputs :[],
@@ -112,6 +114,7 @@ class AllOrdersForDoctor extends Component {
        }
        formBody = formBody.join("&");
        console.log("endPointttttttt: " , orderType[type].getAllDoctorOrders)
+       this.setState({loading:true})
        axios.post(`${orderType[type].getAllDoctorOrders}`,formBody).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
@@ -121,6 +124,7 @@ class AllOrdersForDoctor extends Component {
             console.log(err)
         })
 
+        this.setState({loading:false})
       
     }
  
@@ -135,6 +139,7 @@ class AllOrdersForDoctor extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
+      this.setState({loading:true})
       
       fetch(`${orderType[this.state.type].deleteOrder}`, {
         method: 'DELETE',
@@ -148,7 +153,8 @@ class AllOrdersForDoctor extends Component {
         console.log("errror")
       })
       this.setState({
-        orderlabList: this.state.orderlabList.filter(row => row.id !== id)
+        orderlabList: this.state.orderlabList.filter(row => row.id !== id),
+        loading:false
        })
         
     }
@@ -160,6 +166,7 @@ class AllOrdersForDoctor extends Component {
       var Form = new FormData();
       Form.append("result" ,this.state.result )
       Form.append("orderId" , this.state.typeObj["id"])
+      this.setState({loading:true})
       
 
       await fetch(`https://mvb1.herokuapp.com/visit/updateOrder`, {
@@ -175,6 +182,7 @@ class AllOrdersForDoctor extends Component {
         console.log("errror")
       })
 
+      this.setState({loading:false})
          
     }
 
@@ -428,6 +436,7 @@ class AllOrdersForDoctor extends Component {
         
   return (
     <div className="">
+        <Spinner loading={this.state.loading}/>
         {this.rendering()}
     </div>
  

@@ -6,12 +6,13 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+// import StepperForms from './Stepper';
+import Spinner from '../shared/Spinner';
 import PDF from './PDF';
 import Form from './PrescriptionForm';
 import { AddPrescriptionToDB } from './request';
 import Table from './Table';
 import Template from './Template';
-// import StepperForms from './Stepper';
 
 function getSteps() {
   return ['Choose Template', 'Review Drugs','Print Prescription'];
@@ -70,6 +71,8 @@ export default function Prescription({match,patient_id,finish_method})
   const [footer, setFooter] = React.useState(null);
   const [notes, setNotes] = React.useState(null);
   const [PID, setPID] = React.useState(null);
+  const [loading, setLoading] = React.useState(false);
+
   const [prescription_rows, setPrescription_Rows] = React.useState([]);
   const steps = getSteps();
   const childRef = React.useRef();
@@ -126,10 +129,15 @@ export default function Prescription({match,patient_id,finish_method})
       :
       0
     }
+    setLoading(true)
     AddPrescriptionToDB(data).then(id=>{
+    setLoading(false)
+
       setPID(id)
     })
     .catch(err=>{
+    setLoading(false)
+
       console.log(err)
     })
 
@@ -164,6 +172,7 @@ export default function Prescription({match,patient_id,finish_method})
   };
     return(
       <div className={classes.root}>
+        <Spinner loading={loading}/>
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>

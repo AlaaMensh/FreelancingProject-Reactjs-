@@ -5,6 +5,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React, { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
+// import ListStep from "./listStep"; // Put it if you solve the one component Problem
+import Spinner from '../shared/Spinner';
 import AllergyStep from "./allergyStep";
 import FamilyHistoryStep from "./familyHistoryStep";
 import Info from "./importatntInfo";
@@ -12,8 +14,6 @@ import OnGoingProblemStep from "./onGoingProblemStep";
 import InterventionsStep from "./otherInterventionsStep";
 import "./patientRegistration.css";
 import SurgeriesStep from "./surgeriesStep";
-// import ListStep from "./listStep"; // Put it if you solve the one component Problem
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -93,6 +93,7 @@ export default function HorizontalLabelPositionBelowStepper() {
   const [interventionsList, setinterventionsList] = useState([]);
   const [onGoingProblemList, setonGoingProblemList] = useState([]);
   const [gender, setGender] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
     console.log(
@@ -145,7 +146,7 @@ export default function HorizontalLabelPositionBelowStepper() {
     }
     formBody = formBody.join("&");
     console.log("formBody:  ", formBody);
-
+    setLoading(true)
     fetch("https://mvb1.herokuapp.com/pt/addPT", {
       //** this will add patient */
       method: "POST",
@@ -165,6 +166,8 @@ export default function HorizontalLabelPositionBelowStepper() {
       .catch(() => {
         console.log("errror");
       });
+    setLoading(false)
+
   };
   // these function to get the value from Children in this parent to handleSubmit here
   const getFirstName = (name) => {
@@ -328,6 +331,7 @@ export default function HorizontalLabelPositionBelowStepper() {
 
   return (
     <div className="container hero-container">
+      <Spinner loading={loading}/>
       <Row>
         <Col sm={9}>
           {activeStep === steps.length - 1 ? (

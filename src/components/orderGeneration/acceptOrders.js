@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import orderType from "../ordersdb.json";
+import Spinner from '../shared/Spinner';
 import DataTableComp from "../typesGenerator/dataTable";
 
 
@@ -11,6 +12,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         super(props);
         this.state = { 
             type:"",
+            loading:false,
             columns:[],
             allNotAcceptedOrders:[] // this will be viewed in DataTable Component
          }
@@ -104,7 +106,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         }
         formBody = formBody.join("&");
           console.log("endPoint : " , orderType[type].getNotAcceptedOrders);
-         
+         this.setState({loading:true})
       fetch(`${orderType[type].getNotAcceptedOrders}`, {
           method: 'POST',
           headers: {
@@ -124,6 +126,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         }).catch(()=>{
           console.log("errror")
         })
+        this.setState({loading:false})
 
         
       }
@@ -198,7 +201,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         return (     
          
 <Container fluid>
-
+            <Spinner loading={this.state.loading}/>
             <Row className= "py-3">
                 <Col>
                     <h3>All Not Accepted Orders for this patient</h3>

@@ -7,6 +7,7 @@ import Typography from "@material-ui/core/Typography";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useHistory, useLocation } from "react-router-dom";
+import Spinner from '../shared/Spinner';
 import ChiefComplains from "./chiefComplains";
 import Investgation from "./investgation";
 import Procedures from "./procedures";
@@ -104,7 +105,7 @@ export default function Visit({ match }) {
   const [labOrdersHome, setLabOrdersHome] = useState([]);
   const [pathologyOrdersHome, setPathologyOrdersHome] = useState([]);
   const [radioOrdersHome, setRadioOrdersHome] = useState([]);
-
+  const [loading,setLoading] = useState(false)
   useEffect(() => {
     console.log("this.props", location);
     var code = location.state;
@@ -143,7 +144,7 @@ export default function Visit({ match }) {
     }
     formBody = formBody.join("&");
     console.log("formBody:  ", formBody);
-
+    setLoading(true)
     fetch("https://mvb1.herokuapp.com/visit/addVisit", {
       // ***********endpoint For Add Visit Change it with the new url
       method: "POST",
@@ -154,6 +155,8 @@ export default function Visit({ match }) {
     })
       .then((resp) => {
         resp.json().then((data) => {
+          setLoading(false)
+
           console.log("my Data:   ", data);
           history.push({
             pathname : `${match.url}/prescription/${data.id}`,
@@ -162,6 +165,8 @@ export default function Visit({ match }) {
         });
       })
       .catch(() => {
+        setLoading(false)
+
         console.log("errror");
       });
     // history.push(`${match.url}/prescription/1`);
@@ -324,6 +329,8 @@ export default function Visit({ match }) {
 
   return (
     <div className="container">
+        <Spinner loading={loading}/>
+
       <div className={classes.root}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
