@@ -1,17 +1,36 @@
+import { TextField } from '@material-ui/core';
+import { Autocomplete } from '@material-ui/lab';
 import React, { Component } from "react";
-import Row from "react-bootstrap/Row";
+import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import { Autocomplete } from '@material-ui/lab';
-import { Input, TextField } from '@material-ui/core';
+import Row from "react-bootstrap/Row";
 
 // this file will genrate the basic form groups to be loaded into a <form> element.
 
 class FormGenerator extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      error:false,
+      data:[],
+      errors:[],
+      loading:false
+  };
+  }
+  componentDidMount()
+  {
+      this.props.ModalInputs.map((input)=>{
+          this.state.data.push({
+              name:input.name,
+              value:null
+          })
+      })
+      console.log("data start")
+
+      console.log(this.state.data)
+      console.log("data end")
+
   }
   // change Form Button with update and add or upload
   renderFormButton = () => {
@@ -23,11 +42,17 @@ class FormGenerator extends Component {
             block
             variant="primary"
             onClick={() => {
-              this.props.handleAdding();
-              if(this.props.hideModal){
-                this.props.hideModal();
-              } 
-            }}
+              let arr = this.state.data.filter(row=>row.value == null)
+              if(arr.length > 0)
+              {
+                  this.setState({error:true,errors:arr})
+                  return;
+              }
+              this.setState({loading:true})
+              this.props.handleSubmit();
+              this.setState({loading:false})
+
+          }}
           >
             Add
           </Button>
@@ -75,9 +100,14 @@ class FormGenerator extends Component {
             as="select"
             name={input.name}
             onChange={(e) => {
-              console.log("e: ", e);
+              let index = this.state.data.findIndex(row=>row.name==input.name)
+              if(index != -1)
+              {
+                  this.state.data[index].value = e.target.value
+                  this.setState({data:[...this.state.data]})
+              }
               this.props.handleChange(e);
-            }}
+          }}
             custom
           >
             <option>{input.placeHolder}</option>
@@ -207,8 +237,14 @@ class FormGenerator extends Component {
                 : input.placeHolder || ""
             }
             onChange={(e) => {
+              let index = this.state.data.findIndex(row=>row.name==input.name)
+              if(index != -1)
+              {
+                  this.state.data[index].value = e.target.value
+                  this.setState({data:[...this.state.data]})
+              }
               this.props.handleChange(e);
-            }}
+          }}
           />
         </Form.Group>
         )
@@ -219,6 +255,18 @@ class FormGenerator extends Component {
   render() {
     return (
       <Form>
+                        {
+                this.state.error
+                 &&(
+                <div className="alert alert-danger" role="alert">
+                    <ul className="list">
+                        {this.state.errors.map(row=>(
+                            <li className="text-danger">Please Fill {row.name}</li>
+                        ))}
+                    </ul>
+                </div>
+                 )
+                }
         <Col sm={12}>
           <Row>
             <Col sm={12}>
