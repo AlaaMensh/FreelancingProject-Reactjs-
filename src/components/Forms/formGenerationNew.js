@@ -49,7 +49,10 @@ class FormGenerator extends Component {
                   return;
               }
               this.setState({loading:true})
-              this.props.handleSubmit();
+              this.props.handleAdding();
+              if(this.props.hideModal){
+                this.props.hideModal();
+              } 
               this.setState({loading:false})
 
           }}
@@ -192,6 +195,12 @@ class FormGenerator extends Component {
                 newValue : newValue ,
                 input : input.name
               }
+              let index = this.state.data.findIndex(row=>row.name==input.name)
+              if(index != -1)
+              {
+                  this.state.data[index].value = newValue
+                  this.setState({data:[...this.state.data]})
+              }
               this.props.handleChange(e)
             }}
             getOptionLabel={(option) => option.text}
@@ -209,6 +218,12 @@ class FormGenerator extends Component {
                 text : "autoComplete",
                 newValue : newValue ,
                 input : input.name
+              }
+              let index = this.state.data.findIndex(row=>row.name==input.name)
+              if(index != -1)
+              {
+                  this.state.data[index].value = newValue
+                  this.setState({data:[...this.state.data]})
               }
               this.props.handleChange(e)
             }}
