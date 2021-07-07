@@ -16,12 +16,14 @@ import AddOrderForm from "../orderGeneration/addOrderForm";
 import AllOrders from "../orderGeneration/allOrders";
 import Prescription from "../Prescription/Prescription";
 import Visit from "../Visit/visit";
+import DiagnoseScreen from './Diagnoses';
 import FamilyHistory from "./familyHistory";
 import Medication from './Medication';
 import MyPrescriptions from './MyPrescriptions';
 import ClinicalOrders from "./orders";
 import PatientAppointement from "./patientAppointements";
 import UserInfo from "./userInfo";
+import VisitScreen from './Visits';
 
 
 function TabPanel(props) {
@@ -110,11 +112,16 @@ const ClinicalDashBoard = ({ match }) => {
         <div className="col-4 col-md-4 col-lg-3 ">
           <div class="wrapper">
             {/* Bootstrap SideBar */}
-            <nav id="sidebar">
+            <nav id="sidebar" >
               <div className="sidebar-header"></div>
               <div className="container">
 
-              <ListGroup style={{position:'fixed'}}>
+              <ListGroup style={{
+                position: 'fixed',
+                background: '#ffffff',
+                top:'60px',
+                boxShadow: '0 8px 6px -6px #333'
+              }}>
               <Link
                   className="btn btn-success"
                   to={match.url + `/patientAppointement/visit`}>
@@ -134,12 +141,12 @@ const ClinicalDashBoard = ({ match }) => {
                     </Link>
                   )}
                 </ListGroup.Item>
-                <ListGroup.Item style={arr[arr.length-1]=="patientAppointement"?styles.active:styles.inactive}>
+                {/* <ListGroup.Item style={arr[arr.length-1]=="patientAppointement"?styles.active:styles.inactive}>
                   <Link style={arr[arr.length-1]=="patientAppointement"?styles.active_link:styles.inactive_link}
                    to={match.url + `/patientAppointement`}>
                     Patient Appointement
                   </Link>
-                </ListGroup.Item>
+                </ListGroup.Item> */}
                 <ListGroup.Item style={arr[arr.length-1]=="onGoingProblems"?styles.active:styles.inactive}>
                   <Link
                   style={arr[arr.length-1]=="onGoingProblems"?styles.active_link:styles.inactive_link}
@@ -147,7 +154,7 @@ const ClinicalDashBoard = ({ match }) => {
                       match.url + `/patientOnGoingProblems/${"onGoingProblems"}`
                     }
                   >
-                    On Going Problems
+                     Problems
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="allergy"?styles.active:styles.inactive}>
@@ -155,6 +162,13 @@ const ClinicalDashBoard = ({ match }) => {
                   style={arr[arr.length-1]=="allergy"?styles.active_link:styles.inactive_link}
                   to={match.url + `/patientAllergyproblems/${"allergy"}`}>
                     Allergy Problems
+                  </Link>
+                </ListGroup.Item>
+                <ListGroup.Item style={arr[arr.length-1]=="visits"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="visits"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/${"visits"}`}>
+                    Visists
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="lab"||arr[arr.length-2]=="lab"?styles.active:styles.inactive}>
@@ -296,8 +310,10 @@ const ClinicalDashBoard = ({ match }) => {
               exact
               key={5}
               path={match.path + "/patientOnGoingproblems/:type"}
+              component={DiagnoseScreen}
+
             >
-               <FamilyHistory type={"onGoingProblems"} id={match.params.id}  addButtonFlag = {false}/>
+               {/* <FamilyHistory type={"onGoingProblems"} id={match.params.id}  addButtonFlag = {false}/> */}
               </Route>
             <Route
               exact
@@ -355,6 +371,12 @@ const ClinicalDashBoard = ({ match }) => {
               key={99}
               path={match.path + "/Medication"}
               component={Medication}
+            />
+            <Route
+              exact
+              key={100}
+              path={match.path + "/visits"}
+              component={VisitScreen}
             />
             <Route
               exact

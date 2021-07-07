@@ -14,9 +14,21 @@
                                 "sortable": true,
                                 "center" : true
                         },
+                        "Date": {
+                                "name": "Date",
+                                "selector": "createdAt",
+                                "sortable": true,
+                                "center" : true
+                        },
                         "ptname": {
                                 "name": "Patient Name",
                                 "selector": "PtFirstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "labName": {
+                                "name": "Lab Name",
+                                "selector": "labName",
                                 "sortable": true,
                                 "center" : true
                         },
@@ -25,13 +37,6 @@
                                 "selector": "phone",
                                 "sortable": true,
                                 "center" : true
-                        },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
-                                "center" : true
-                               
                         },
                         "actions" :{
                                 "name" :"actions",
@@ -48,9 +53,21 @@
                         "sortable": true,
                         "center" : true
                 },
+                "Date": {
+                        "name": "Date",
+                        "selector": "createdAt",
+                        "sortable": true,
+                        "center" : true
+                },
                 "ptname": {
                         "name": "Patient Name",
                         "selector": "PtFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "labName": {
+                        "name": "Lab Name",
+                        "selector": "labName",
                         "sortable": true,
                         "center" : true
                 },
@@ -70,7 +87,7 @@
                },
                "columnsTableForPatientOrders": {
                  "Date": {
-                         "name": "createdAt",
+                         "name": "Date",
                          "selector": "createdAt",
                          "sortable": true,
                          "center" : true
@@ -82,14 +99,13 @@
                          "center" : true
                  
                  },
-                 "result" :{
-                        "name": "result",
-                        "selector": "result",
+                 "labName": {
+                        "name": "Lab Name",
+                        "selector": "labName",
                         "sortable": true,
                         "center" : true
-                 },
+                },
                  
-
                  "actions" :{
                          "name" :"actions",
                          "selector" : "actions",
@@ -159,11 +175,17 @@
                         "sortable": true,
                         "center" : true
                 },
-                "result" :{
-                        "name" :"Result",
-                        "selector" : "result",
-                        "sortable":true,
-                        "center" : true    
+                "ptname": {
+                        "name": "Patient Name",
+                        "selector": "PtFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "pathoName": {
+                        "name": "pathology Name",
+                        "selector": "pathoName",
+                        "sortable": true,
+                        "center" : true
                 },
                 "actions" :{
                         "name" :"actions",
@@ -174,21 +196,21 @@
                 }
               },
            "columnsTable" : {
-                   "firstname": {
-                           "name": "First Name",
-                           "selector": "firstname",
-                           "sortable": true,
-                           "center" : true
-                   },
-                   "lastname": {
-                           "name": "Last Name",
-                           "selector": "lastname",
-                           "sortable": true,
-                           "center" : true
-                   },
+                "ptname": {
+                        "name": "Patient Name",
+                        "selector": "PtFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
+                   "pathoName": {
+                        "name": "pathology Name",
+                        "selector": "pathoName",
+                        "sortable": true,
+                        "center" : true
+                },
                     "Date": {
                             "name": "Date",
-                            "selector": "Date",
+                            "selector": "createdAt",
                             "sortable": true,
                             "center" : true
                     },
@@ -203,13 +225,6 @@
                             "selector": "phone",
                             "sortable": true,
                             "center" : true
-                    },
-                    "result" :{
-                            "name" :"Result",
-                            "selector" : "result",
-                            "sortable":true,
-                            "center" : true
-                           
                     },
                     "actions" :{
                             "name" :"actions",
@@ -233,14 +248,12 @@
                      "center" : true
              
              },
-             "result" :{
-                    "name": "result",
-                    "selector": "result",
-                    "sortable": true,
-                    "center" : true
-             },
-             
-
+             "pathoName": {
+                "name": "pathology Name",
+                "selector": "pathoName",
+                "sortable": true,
+                "center" : true
+        },
              "actions" :{
                      "name" :"actions",
                      "selector" : "actions",
@@ -303,21 +316,21 @@
                       
                 }, 
                  "columnsTable" : {
-                         "firstname": {
-                                 "name": "First Name",
-                                 "selector": "firstname",
-                                 "sortable": true,
-                                 "center" : true
-                         },
-                         "secondname": {
-                                 "name": "Second Name",
-                                 "selector": "secondname",
-                                 "sortable": true,
-                                 "center" : true
-                         },
+                        "ptname": {
+                                "name": "Patient Name",
+                                "selector": "PtFirstName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                         "radioName": {
+                                "name": "Radio Name",
+                                "selector": "radioName",
+                                "sortable": true,
+                                "center" : true
+                        },
                           "Date": {
                                   "name": "Date",
-                                  "selector": "Date",
+                                  "selector": "createdAt",
                                   "sortable": true,
                                   "center" : true
                           },
@@ -332,13 +345,6 @@
                                   "selector": "phone",
                                   "sortable": true,
                                   "center" : true
-                          },
-                          "result" :{
-                                  "name" :"Result",
-                                  "selector" : "result",
-                                  "sortable":true,
-                                  "center" : true
-                                 
                           },
                           "actions" :{
                                   "name" :"actions",
@@ -355,12 +361,11 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "result" :{
-                                "name" :"Result",
-                                "selector" : "result",
-                                "sortable":true,
+                        "radioName": {
+                                "name": "Radio Name",
+                                "selector": "radioName",
+                                "sortable": true,
                                 "center" : true
-                               
                         },
                         "actions" :{
                                 "name" :"actions",
@@ -384,14 +389,12 @@
                            "center" : true
                    
                    },
-                   "result" :{
-                          "name": "result",
-                          "selector": "result",
-                          "sortable": true,
-                          "center" : true
-                   },
-                   
-      
+                   "radioName": {
+                        "name": "Radio Name",
+                        "selector": "radioName",
+                        "sortable": true,
+                        "center" : true
+                },
                    "actions" :{
                            "name" :"actions",
                            "selector" : "actions",

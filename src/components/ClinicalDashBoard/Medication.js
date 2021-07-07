@@ -207,8 +207,14 @@ export default function ScrollableTabsButtonAuto({match}) {
             "/"+date.getFullYear()
         })
       }
-    setActiveRows([...active_rows])
-    setLoading(false)
+      console.log("active_rows")
+
+      console.log(data)
+      setActiveRows([...active_rows])
+      console.log(active_rows)
+      console.log("active_rows")
+
+    handleClose()
 
   }
 
