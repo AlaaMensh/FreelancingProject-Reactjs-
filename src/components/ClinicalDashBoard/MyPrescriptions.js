@@ -1,30 +1,27 @@
 import Fab from '@material-ui/core/Fab';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import MyModal from '../Prescription/modal';
 import Prescription from '../Prescription/Prescription';
 import Spinner from '../shared/Spinner';
+import DataTableComp from "../typesGenerator/dataTable";
 import MyDialog from './MyDialog';
+
 const PColumns = [
-    { field: 'id', headerName: 'ID', hide:true },
-    { field: 'PNotes', headerName: 'Notes', width:500},
-    { field: 'PDate', headerName: 'Date',width:150},
+    { selector: 'PNotes', name: 'Notes'},
+    { selector: 'PDate', name: 'Date'},
   
   ];
 
 const PDColumns = [
-    { field: 'id', headerName: 'ID', hide:true },
-    { field: 'drug', headerName: 'drug', width:150},
-    { field: 'notes', headerName: 'notes',width:150},
-    { field: 'date', headerName: 'date',width:150},
-    { field: 'Quantity', headerName: 'Quantity',type:'number',width:150},
+    { selector: 'drug', name: 'drug'},
+    { selector: 'notes', name: 'notes'},
+    { selector: 'date', name: 'date'},
+    { selector: 'Quantity', name: 'Quantity'},
     {
-      field: 'Duration',
-      headerName: 'Duration',
-      type: 'number',
-      width:150
+        selector: 'Duration',
+        name: 'Duration'
     },
   ];
 
@@ -141,19 +138,21 @@ const MyPrescriptions = ({match}) =>{
             <Prescription match={match} patient_id={ptId} finish_method={JobFinish}/>
         </MyDialog>
         <MyModal open={drugModal} handleClose={handleDrugClose}>
-        <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-            <DataGrid rows={drug_rows} columns={PDColumns} pageSize={5} checkboxSelection  components={{
-                Toolbar: GridToolbar,
-            }}
-            />
-        </div>
+        <DataTableComp  data = {drug_rows}
+                    columns = {PDColumns}
+                    title= ""
+                />
         </MyModal>
         <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-
-            <DataGrid id={Math.random()}  onRowDoubleClick={(row)=>SelectRow(row)} rows={rows} columns={PColumns} pageSize={5}  components={{
+        <DataTableComp  data = {rows}
+                    columns = {PColumns}
+                    title= ""
+                    handleRowDoubleClicked={(row)=>SelectRow(row)}
+                />
+            {/* <DataGrid id={Math.random()}  onRowDoubleClick={(row)=>SelectRow(row)} rows={rows} columns={PColumns} pageSize={5}  components={{
                 Toolbar: GridToolbar,
             }}
-            />
+            /> */}
         </div>
         {
         ptId

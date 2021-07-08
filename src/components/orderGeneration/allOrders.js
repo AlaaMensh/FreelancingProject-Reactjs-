@@ -225,6 +225,7 @@ class AllOrders extends Component {
     // and this object from OrdersDB.json
     
     handleTableColumnsForAllAcceptedOrders = (type , object) => { 
+      console.log(type,object)
       console.log("object : " , orderType[type][object])
       var temp = []
       if(object === "columnsTable"){
@@ -262,7 +263,9 @@ class AllOrders extends Component {
           else if(p === "drname")
           {
             orderType[type].columnsTable[p]["cell"] =  (row) =>{
-            return ( <span>{row.OrderingDrFirstName + " " + row.tOrderingDrLastName}</span> )
+            alert(row.firstName)
+
+            return ( <span>{row.firstName + " " + row.lastName}</span> )
             }
             temp.push(orderType[type].columnsTable[p])
 
@@ -321,6 +324,16 @@ class AllOrders extends Component {
             )
             }
             temp.push(orderType[type][object][p])
+          }
+          else if(p === "drname")
+          {
+            orderType[type][object][p]["cell"] =  (row) =>{
+
+            return ( <span>{row.firstName + " " + row.lastName}</span> )
+            }
+            temp.push(orderType[type][object][p])
+
+
           }
           else{
     

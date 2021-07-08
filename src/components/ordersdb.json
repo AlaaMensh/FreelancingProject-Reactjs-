@@ -26,6 +26,7 @@
                                 "sortable": true,
                                 "center" : true
                         },
+
                         "labName": {
                                 "name": "Lab Name",
                                 "selector": "labName",
@@ -47,9 +48,9 @@
                         }
                },
                "columnsTableForPatientAcceptOrders":{
-                "drname": {
-                        "name": "Doctor Name",
-                        "selector": "OrderingFirstName",
+                "drname":{
+                        "name": "Ordering Doctor",
+                        "selector": "drname",
                         "sortable": true,
                         "center" : true
                 },
@@ -92,6 +93,12 @@
                          "sortable": true,
                          "center" : true
                  },
+                 "drname":{
+                        "name": "Ordering Doctor",
+                        "selector": "drname",
+                        "sortable": true,
+                        "center" : true
+                },
                  "comments": {
                          "name": "Comments",
                          "selector": "comments",
@@ -181,6 +188,12 @@
                         "sortable": true,
                         "center" : true
                 },
+                "drname":{
+                        "name": "Ordering Doctor",
+                        "selector": "drname",
+                        "sortable": true,
+                        "center" : true
+                },
                 "pathoName": {
                         "name": "pathology Name",
                         "selector": "pathoName",
@@ -248,6 +261,12 @@
                      "center" : true
              
              },
+             "drname":{
+                "name": "Ordering Doctor",
+                "selector": "drname",
+                "sortable": true,
+                "center" : true
+                },
              "pathoName": {
                 "name": "pathology Name",
                 "selector": "pathoName",
@@ -361,6 +380,12 @@
                                 "sortable": true,
                                 "center" : true
                         },
+                        "drname":{
+                                "name": "Ordering Doctor",
+                                "selector": "drname",
+                                "sortable": true,
+                                "center" : true
+                        },
                         "radioName": {
                                 "name": "Radio Name",
                                 "selector": "radioName",
@@ -389,6 +414,12 @@
                            "center" : true
                    
                    },
+                   "drname":{
+                        "name": "Ordering Doctor",
+                        "selector": "drname",
+                        "sortable": true,
+                        "center" : true
+                },
                    "radioName": {
                         "name": "Radio Name",
                         "selector": "radioName",

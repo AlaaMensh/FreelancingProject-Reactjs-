@@ -20,6 +20,7 @@ class DataTableComp extends Component {
           <div>
             {console.log("the data"+tableData)}
              <DataTable
+              onRowDoubleClicked={(row)=>this.props.handleRowDoubleClicked(row)}
                title={` ${this.props.title}`}
                columns={this.props.columns}
                data={this.props.data}

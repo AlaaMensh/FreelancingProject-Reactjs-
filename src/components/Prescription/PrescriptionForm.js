@@ -46,13 +46,13 @@ const AddToDB = (row)=>{
     ptId : ptId,
     drId : localStorage.getItem('userId')
   }
-  AddPrescriptionDrug(data).then(id=>{
+  AddPrescriptionDrug(data).then(result=>{
     add_row({
       drugName:t[1],
       Quantity:row.quantity,
       Duration:row.duration,
       notes : row.notes,
-      id : id
+      id : result.insertId
     })
   }).catch(err=>{
     console.log(err)

@@ -1,19 +1,19 @@
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import { makeStyles } from '@material-ui/core/styles';
 import Tab from '@material-ui/core/Tab';
 import Tabs from '@material-ui/core/Tabs';
 import Typography from '@material-ui/core/Typography';
-import { DataGrid, GridToolbar } from '@material-ui/data-grid';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Button } from 'react-bootstrap';
 import MyModal from '../Prescription/modal';
 import Form from '../Prescription/PrescriptionForm';
 import { loadMYDrugs, UnActiveDrug } from '../Prescription/request';
 import Spinner from '../shared/Spinner';
+import DataTableComp from "../typesGenerator/dataTable";
 
 
 
@@ -68,49 +68,39 @@ export default function ScrollableTabsButtonAuto({match}) {
   const [loading, setLoading] = React.useState(false);
   const ptId = match.params.id  
   const inactive_columns = [
-    { field: 'id', headerName: 'ID', hide:true },
-    { field: 'drugName', headerName: 'Drug', width:150},
-    { field: 'Quantity', headerName: 'Quantity',type:'number',width:150},
+    { selector: 'drugName', name: 'Drug'},
+    { selector: 'Quantity', name: 'Quantity'},
     {
-      field: 'Duration',
-      headerName: 'Duration',
-      type: 'number',
-      width:150
+      selector: 'Duration',
+      name: 'Duration'
     },
     {
-        field: 'createdAt',
-        headerName: 'Date',
-        width:150
+      selector: 'createdAt',
+      name: 'Date',
       },
 
   
   ];
 
   const active_columns = [
-    { field: 'id', headerName: 'ID', hide:true },
-    { field: 'drugName', headerName: 'Drug', width:150},
-    { field: 'Quantity', headerName: 'Quantity',type:'number',width:150},
+    { selector: 'drugName', name: 'Drug'},
+    { selector: 'Quantity', name: 'Frequency'},
     {
-      field: 'Duration',
-      headerName: 'Duration',
-      type: 'number',
-      width:150
+      selector: 'Duration',
+      name: 'Duration'
     },
     {
-        field: 'createdAt',
-        headerName: 'Date',
-        width:150
+      selector: 'createdAt',
+      name: 'Date',
       },
       {
-        field: 'inActive',
-        headerName: 'Active',
-        renderCell: (params) => (
+        selector: 'inActive',
+        name: 'Active',
+        cell: (row) => (
           <strong>
             <Button
-              onClick={()=>unActiveRow(params.row.id)}
-              variant="contained"
-              color="danger"
-              size="small"
+              onClick={()=>unActiveRow(row.id)}
+              variant="danger"
               style={{ marginLeft: 16 }}
             >
               UnActive
@@ -192,6 +182,7 @@ export default function ScrollableTabsButtonAuto({match}) {
     }).catch(err=>{
       alert(err)
     })
+    setLoading(false)
 
   }
 
@@ -242,20 +233,17 @@ export default function ScrollableTabsButtonAuto({match}) {
       <div style={{position:'relative'}}>
 
       <TabPanel value={value} index={0}>
-      <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-      <DataGrid rows={active_rows} columns={active_columns} pageSize={5}  components={{
-            Toolbar: GridToolbar,
-        }}
-        />
-        </div>
+      <DataTableComp  data = {active_rows}
+                    columns = {active_columns}
+                    title= ""
+                />
       </TabPanel>
       <TabPanel value={value} index={1}>
-      <div style={{position:'relative', height: 400, width: '100%',backgroundColor:'#fff' }}>
-      <DataGrid rows={un_active_rows} columns={inactive_columns} pageSize={5}  components={{
-            Toolbar: GridToolbar,
-        }}
-        />
-        </div>
+      <DataTableComp  data = {un_active_rows}
+                    columns = {inactive_columns}
+                    title= ""
+                />
+
       </TabPanel>
       </div>
       <div style={{ position:'relative',margin:'auto',textAlign:"center",zIndex:999}}>

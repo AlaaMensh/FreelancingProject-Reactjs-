@@ -30,7 +30,7 @@ const VisitScreen = ({match})=>{
     useEffect(()=>{
         if(!match.params.id)
             return
-        axios.post(`http://localhost:8080/visit/getPatientVisits`,{
+        axios.post(`https://mvb1.herokuapp.com/visit/getPatientVisits`,{
             ptId : match.params.id,
             type : 'patient'
         }).then(res=>{
