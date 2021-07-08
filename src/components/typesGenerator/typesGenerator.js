@@ -153,7 +153,7 @@ class TypesGenerator extends Component {
   };
 
   async componentDidMount() {
-    var typeName = "surgeries";
+    var typeName = this.props.match.params.type;
     this.setState({ typeName });
 
     var temp = [];

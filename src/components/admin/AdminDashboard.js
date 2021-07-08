@@ -48,7 +48,72 @@ function AdminDashboard(props) {
       path: "/userCrud/chemist",
       icon: "",
     },
+    {
+      name: "Lab front Disks",
+      discription: "Manage Labs Front Disks",
+      path: "/userCrud/labFD",
+      icon: "",
+    },
+    {
+      name: "pharmacist",
+      discription: "Manage pharmacists",
+      path: "/userCrud/pharmacist",
+      icon: "",
+    },
+    {
+      name: "assistant",
+      discription: "Manage Assistants",
+      path: "/userCrud/assistant",
+      icon: "",
+    },
+
   ];
+  const entityTypes = [
+    {
+      name: "disease",
+      discription: "Manage disease types",
+      path: "/typesGenerator/disease",
+      icon: "",
+    },
+    {
+      name: "Surgeries",
+      discription: "Manage Surgeries types",
+      path: "/typesGenerator/Surgeries",
+      icon: "",
+    },
+    {
+      name: "lab",
+      discription: "Manage labs types",
+      path: "/typesGenerator/lab",
+      icon: "",
+    },
+    {
+      name: "pathology",
+      discription: "Manage pathologies types",
+      path: "/typesGenerator/pathology",
+      icon: "",
+    },
+    {
+      name: "radiology",
+      discription: "Manage radiologies types",
+      path: "/typesGenerator/radiology",
+      icon: "",
+    },
+    {
+      name: "drug",
+      discription: "Manage drugs types",
+      path: "/typesGenerator/drug",
+      icon: "",
+    },
+    {
+      name: "allergy",
+      discription: "Manage allergy types",
+      path: "/typesGenerator/allergy",
+      icon: "",
+    },
+
+  ]
+
   const history = useHistory();
   return (
     <div className="container dashboard-container">
@@ -76,6 +141,36 @@ function AdminDashboard(props) {
                 </h1>
 
                 <p> {userType.discription ? userType.discription : ""} </p>
+              </div>
+            </Col>
+          );
+        })}
+      </div>
+      {/* here is the types part of the admin panel */}
+      <div class="row">
+        {entityTypes.map((entityTypes) => {
+          return (
+            <Col
+              xs={10}
+              md={4}
+              lg={4}
+              onClick={() => {
+                history.push(entityTypes.path);
+              }}
+              style={{ marginBottom: "40px", cursor: "pointer" }}
+            >
+              <div class="icon-box">
+                {/*                <div class="icon">
+                  <img
+                    src={entityTypes.icon ? entityTypes.icon : ""}
+                    style={{ size: "60px", height: "60px" }}
+                  />
+                </div>*/}
+                <h1>
+                  <a>{entityTypes.name}</a>
+                </h1>
+
+                <p> {entityTypes.discription ? entityTypes.discription : ""} </p>
               </div>
             </Col>
           );

@@ -426,7 +426,7 @@
                         "firstName" :{
                                 "type": "text",
                                 "name" : "firstName",
-                                "label" : "Last Name"
+                                "label" : "first Name"
                         },
                         "secondName" :{
                                 "type": "text",
