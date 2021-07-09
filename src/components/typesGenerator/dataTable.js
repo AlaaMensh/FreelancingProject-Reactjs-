@@ -19,14 +19,28 @@ class DataTableComp extends Component {
         return ( 
           <div>
             {console.log("the data"+tableData)}
-             <DataTable
-              onRowDoubleClicked={(row)=>this.props.handleRowDoubleClicked(row)}
-               title={` ${this.props.title}`}
-               columns={this.props.columns}
-               data={this.props.data}
-               pagination
-              
-             />
+            {
+              this.props.handleRowDoubleClicked ? (
+                <DataTable
+                onRowDoubleClicked={(row)=>this.props.handleRowDoubleClicked(row)}
+                 title={` ${this.props.title}`}
+                 columns={this.props.columns}
+                 data={this.props.data}
+                 pagination
+                
+               />
+              )
+              :
+              (
+                <DataTable
+                 title={` ${this.props.title}`}
+                 columns={this.props.columns}
+                 data={this.props.data}
+                 pagination
+                
+               />
+              )
+            }
            </div>
          );
     }

@@ -14,7 +14,7 @@ export const AddPrescriptionToDB = (data)=>{
 
 export const loadDrugs = ()=>{
     return new Promise((resolve,reject)=>{
-        axios.get('http://localhost:8080/drug/getAll').then(res=>{
+        axios.get(base_url+'/drug/getAll').then(res=>{
                 resolve(res.data)
             })
             .catch(err=>{
@@ -48,7 +48,7 @@ export const UnActiveDrug = (id)=>{
 
 export const AddPrescriptionDrug = (data)=>{
     return new Promise((resolve,reject)=>{
-        axios.post('http://localhost:8080/visit/addPrescription_Drugs_single',data).then(res=>{
+        axios.post(base_url+'/visit/addPrescription_Drugs_single',data).then(res=>{
             resolve(res.data.insertId)
 
           }).catch(err=>{

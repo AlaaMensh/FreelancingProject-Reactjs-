@@ -156,7 +156,7 @@ export default function ScrollableTabsButtonAuto({match}) {
                     createdAt : date.getDate()+
                     "/"+(date.getMonth()+1)+
                     "/"+date.getFullYear(),
-                    status : CheckStatus(row) && row.active == 1?"active":"inactive",
+                    status : CheckStatus(row) && row.active === 1?"active":"inactive",
                 })
             }
         })
@@ -177,8 +177,8 @@ export default function ScrollableTabsButtonAuto({match}) {
     rows[index].status = 'inactive'
     UnActiveDrug(id).then(res=>{
       setRows([...rows])
-      setActiveRows(rows.filter(r=>r.status == "active"))
-      setUnActiveRows(rows.filter(r=>r.status == "inactive"))
+      setActiveRows(rows.filter(r=>r.status === "active"))
+      setUnActiveRows(rows.filter(r=>r.status === "inactive"))
     }).catch(err=>{
       alert(err)
     })

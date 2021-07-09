@@ -8,29 +8,8 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
+import Spinner from '../shared/Loader';
 import DataTableComp from "../typesGenerator/dataTable";
-
-const columns = [
-    {
-        name : "diagnosis",
-        selector : "diagnosis"
-    },
-    {
-        name : "Treating Doctor",
-        selector : "firstName,lastName",
-        cell : row => <span>{row.firstName + " " + row.lastName}</span>
-    },
-    {
-        name : "Date of Creation",
-        selector : "createdAt"
-    },
-    {
-        name : "actions",
-        selector : "actions",
-        cell : row => (<Button value={row.id} type={row.diagnoseResolved} variant='primary'>{row.diagnoseResolved?'Un Resolve':'Resolve'} </Button>),
-
-    },
-]
 
 
 function TabPanel(props) {
@@ -78,35 +57,104 @@ const DiagnoseScreen = ({match})=>{
     const [resolved,setResolved] = useState([])
     const [unresolved,setUnResolved] = useState([])
     const [value, setValue] = React.useState(0);
-
+    const [loading, setLoading] = React.useState(false);
+    const base_url = "https://mvb1.herokuapp.com"
     const handleChange = (event, newValue) => {
         setValue(newValue);
       };
+      const columns_unresolved = [
+        {
+            name : "diagnosis",
+            selector : "diagnosis"
+        },
+        {
+            name : "Treating Doctor",
+            selector : "firstName,lastName",
+            cell : row => <span>{row.firstName + " " + row.lastName}</span>
+        },
+        {
+            name : "Date of Creation",
+            selector : "createdAt"
+        },
+        {
+            name : "actions",
+            selector : "actions",
+            cell : row => (<Button onClick={(e)=>ResolveDiagnose(row.id)} variant='primary'>Resolve </Button>),
+    
+        },
+    ]
+    
+    const columns_resolved = [
+      {
+          name : "diagnosis",
+          selector : "diagnosis"
+      },
+      {
+          name : "Treating Doctor",
+          selector : "firstName,lastName",
+          cell : row => <span>{row.firstName + " " + row.lastName}</span>
+      },
+      {
+          name : "Date of Creation",
+          selector : "createdAt"
+      }
+    ]
+    
+    const ResolveDiagnose = (id)=>{
+      setLoading(true)
+      axios.post(`${base_url}/visit/ResolveDiagnoses`,{
+        id
+      }).then(async(res)=>{
+          await getUnResolved();
+          await getResolved();
+      }).catch(err=>{
+        alert(err)
+      })
+      setLoading(false)
+
+    }
+
+    const getUnResolved =  ()=>{
+      setLoading(true)
+      axios.post(`${base_url}/visit/getUnResolvedDiagnoses`,{
+          ptId : match.params.id,
+          type : 'patient'
+      }).then(res=>{
+          setUnResolved(res.data)
+      }).catch(err=>{
+          alert(err)
+      })
+      setLoading(false)
+
+    }
+    const getResolved = ()=>{
+      setLoading(true)
+
+      axios.post(`${base_url}/visit/getResolvedDiagnoses`,{
+        ptId : match.params.id,
+          type : 'patient'
+      }).then(res=>{
+          setResolved(res.data)
+      }).catch(err=>{
+          alert(err)
+      })
+      setLoading(false)
+
+    }
 
     useEffect(()=>{
         if(!match.params.id)
             return
-        axios.post(`http://localhost:8080/visit/getUnResolvedDiagnoses`,{
-            ptId : match.params.id,
-            type : 'patient'
-        }).then(res=>{
-            setUnResolved(res.data)
-        }).catch(err=>{
-            alert(err)
-        })
+        getUnResolved();
+        getResolved();
 
-        axios.post(`http://localhost:8080/visit/getResolvedDiagnoses`,{
-            ptId : match.params.id,
-            type : 'patient'
-        }).then(res=>{
-            setResolved(res.data)
-        }).catch(err=>{
-            alert(err)
-        })
+
     },[match])
 
     return(
         <div className='container'>
+        {loading && <Spinner/>}
+
         <AppBar position="static" color="default">
             <Tabs
             value={value}
@@ -124,13 +172,13 @@ const DiagnoseScreen = ({match})=>{
         <div style={{position:'relative'}}>
         <TabPanel value={value} index={0}>
             <DataTableComp  data = {unresolved}
-                    columns = {columns}
+                    columns = {columns_unresolved}
                     title= ""
                 />
         </TabPanel>
         <TabPanel value={value} index={1}>
             <DataTableComp  data = {resolved}
-                  columns = {columns}
+                  columns = {columns_resolved}
                   title= ""
             />
         </TabPanel>
