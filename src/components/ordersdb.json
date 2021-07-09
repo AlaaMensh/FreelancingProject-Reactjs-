@@ -26,7 +26,12 @@
                                 "sortable": true,
                                 "center" : true
                         },
-
+                        "drname":{
+                                "name": "Ordering Doctor",
+                                "selector": "drname",
+                                "sortable": true,
+                                "center" : true
+                        },
                         "labName": {
                                 "name": "Lab Name",
                                 "selector": "labName",
