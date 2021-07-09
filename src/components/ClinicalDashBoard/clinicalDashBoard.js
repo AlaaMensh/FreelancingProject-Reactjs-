@@ -125,7 +125,7 @@ const ClinicalDashBoard = ({ match }) => {
               <Link
                   className="btn btn-success"
                   to={match.url + `/patientAppointement/visit`}>
-                    Make New Visit
+                    New Visit
               </Link>
                 <ListGroup.Item style={arr[1] && arr[arr.length-1]=="clinicalDashBoard"?styles.active:styles.inactive}>
                   {parseInt(localStorage.getItem("role")) === 8 ? (
@@ -154,7 +154,7 @@ const ClinicalDashBoard = ({ match }) => {
                       match.url + `/patientOnGoingProblems/${"onGoingProblems"}`
                     }
                   >
-                     Problems
+                     On Going Problems
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="allergy"?styles.active:styles.inactive}>
@@ -168,7 +168,7 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="visits"?styles.active_link:styles.inactive_link}
                   to={match.url + `/${"visits"}`}>
-                    Visists
+                    Visits
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="lab"||arr[arr.length-2]=="lab"?styles.active:styles.inactive}>
@@ -189,14 +189,14 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="radio"||arr[arr.length-2]=="radio"?styles.active_link:styles.inactive_link}
                   to={match.url + `/allRadioOrders/${"radio"}`}>
-                    radio Orders
+                    radiology Orders
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="Medication"?styles.active:styles.inactive}>
                   <Link
                   style={arr[arr.length-1]=="Medication"?styles.active_link:styles.inactive_link}
                   to={match.url + `/Medication`}>
-                    Medication
+                    Medications
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="familyHistory"?styles.active:styles.inactive}>
