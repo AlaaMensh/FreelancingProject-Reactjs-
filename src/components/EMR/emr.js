@@ -2,19 +2,24 @@ import React, { Component } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Card, Button, Container } from "react-bootstrap";
+import "./Navbar.css";
 
 class EMR extends Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+
+
   render() {
     return (
       <Container>
         <Row className="mt-5 justify-content-center">
-          <Col sm={6} md={4}>
-            <Card
-              className={" dashboard-card light-blue"}
+          <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 "
               style={{ cursor: "pointer" }}
               onClick={() => {
                 this.props.history.push(
@@ -24,18 +29,27 @@ class EMR extends Component {
                 );
               }}
             >
-              <Card.Body>
-                <Card.Title>Your Patients</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  View all patients you are curruntly treating.
-                </Card.Subtitle>
-              </Card.Body>
-            </Card>
+ <div class="icon-box">
+              <div class="icon">
+                <img
+                  src={"https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/report-clipboard-medical-checklist-healthcare-512.png"}
+                  style={{ size: "60px", height: "60px" }}
+                />
+              </div>
+              <h1>
+                <a>Your Patients</a>
+              </h1>
+
+              <p> View all patients you are curruntly treating. </p>
+            </div>
+
+          
           </Col>
-          <Col md={4} className="mt-3 mt-md-0">
-            <Card
-              className={" dashboard-card shadow"}
-              style={{ cursor: "pointer" }}
+          <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 "
               onClick={() => {
                 this.props.history.push(
                   `${
@@ -44,17 +58,26 @@ class EMR extends Component {
                 );
               }}
             >
-              <Card.Body>
-                <Card.Title>Future Appointements</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Get all your Future appointements details.
-                </Card.Subtitle>
-              </Card.Body>
-            </Card>
+
+<div class="icon-box">
+              <div class="icon">
+                <img
+                  src={"https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/news-feed-mobile-report-virus-128.png"}
+                  style={{ size: "60px", height: "60px" }}
+                />
+              </div>
+              <h1>
+                <a>Future Appointements</a>
+              </h1>
+
+              <p>   Get all your Future appointements details. </p>
+            </div>
           </Col>
-          <Col md={4} className="mt-3 mt-md-0">
-            <Card
-              className={" dashboard-card green"}
+          <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 "
               style={{ cursor: "pointer" }}
               onClick={() => {
                 this.props.history.push(
@@ -64,13 +87,19 @@ class EMR extends Component {
                 );
               }}
             >
-              <Card.Body>
-                <Card.Title>Current Appointements</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Get all your current appointements details.
-                </Card.Subtitle>
-              </Card.Body>
-            </Card>
+              <div class="icon-box">
+            <div class="icon">
+              <img
+                src={"https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/handbook-book-medicine-medical-education-512.png"}
+                style={{ size: "60px", height: "60px" }}
+              />
+            </div>
+            <h1>
+              <a>Current Appointements</a>
+            </h1>
+
+            <p>   Get all your current appointements details.</p>
+          </div>
           </Col>
         </Row>
       </Container>
