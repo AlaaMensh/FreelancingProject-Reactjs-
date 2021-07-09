@@ -161,7 +161,7 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="allergy"?styles.active_link:styles.inactive_link}
                   to={match.url + `/patientAllergyproblems/${"allergy"}`}>
-                    Allergy Problems
+                    Allergies
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="visits"?styles.active:styles.inactive}>
