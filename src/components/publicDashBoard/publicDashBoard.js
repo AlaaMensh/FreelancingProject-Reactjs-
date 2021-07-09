@@ -63,7 +63,7 @@ const PublicDashBoard = ({ match }) => {
       text: "Lab",
       discription: "Laboratory Information System",
       icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/microscope-virus-lap-test-research-512.png",
-      role: ["3", "8"],
+      role: ["3", "8","16"],
     }, // lab FD
     {
       text: "Radiology",
