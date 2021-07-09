@@ -39,8 +39,8 @@
         "label": "Reaction"
       }
     },
-    "title": "All Allergy Problems",
-    "description": "You can see all Allergy broblems for this patient...",
+    "title": "All Allergies",
+    "description": "You can see all Allergies for this patient...",
     "getAllergyProblemsForPatient": "https://mvb1.herokuapp.com/pt/getAllergyById",
     "getAll" :"https://mvb1.herokuapp.com/visit/pt_allergies"
 
@@ -74,7 +74,7 @@
         "label": "Date"
       }
     },
-    "title": "All OnGoingProblems Problems",
+    "title": "All OnGoingProblems ",
     "description": "You can see all OnGoingProblems broblems for this patient...",
     "getAllergyProblemsForPatient": "https://mvb1.herokuapp.com/pt/getProblemsById",
     "getAll" :"https://mvb1.herokuapp.com/visit/onGoingProblem",
@@ -118,7 +118,7 @@
         "center": true
       }
     },
-    "title":"All Family History for the Patient",
+    "title":"Family History",
     "description":"You will see here all Family History to this Patient....",
     "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
     "getAll":"https://mvb1.herokuapp.com/visit/pt_familyHistories",
@@ -161,7 +161,7 @@
         "center": true
       }
     },
-    "title":"All Surgeries for the Patient",
+    "title":"All Surgeries for this Patient",
     "description":"You will see here all Surgeries to this Patient....",
     "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
     "getAll":"https://mvb1.herokuapp.com/visit/pt_surgery_histories"
@@ -198,8 +198,8 @@
         "center": true
       }
     },
-    "title":"All Interventions for the Patient",
-    "description":"You will see here all Interventions to this Patient....",
+    "title":"All Interventions for this Patient",
+    "description":"You will see here all Interventions.",
     "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll",
     "getAll":"https://mvb1.herokuapp.com/visit/pt_interventions"
   },
@@ -223,8 +223,8 @@
         "center": true
       }
     },
-    "title":"All Active Medication for the Patient",
-    "description":"You will see here all Active Medications to this Patient....",
+    "title":"All Active Medication for this Patient",
+    "description":"You will see here all Active Medications to this Patient.",
     "getAllDiseases": "https://mvb1.herokuapp.com/disease/getAll"
   }
 }

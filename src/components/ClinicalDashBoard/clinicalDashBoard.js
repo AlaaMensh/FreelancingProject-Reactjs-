@@ -211,7 +211,7 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="MyPrescriptions"?styles.active_link:styles.inactive_link}
                   to={match.url + `/MyPrescriptions`}>
-                    Prescription
+                    prescriptions
                   </Link>
                 </ListGroup.Item>
 
@@ -266,13 +266,13 @@ const ClinicalDashBoard = ({ match }) => {
                   scrollButtons="auto"
                   aria-label="scrollable auto tabs example"
                 >
-                  <Tab label="Allergy Problems" {...a11yProps(0)} />
+                  <Tab label="Allergies" {...a11yProps(0)} />
                   <Tab label="OnGoing Problems" {...a11yProps(1)} />
-                  <Tab label="surgeries Problems" {...a11yProps(2)} />
-                  <Tab label="Interventions Problems" {...a11yProps(3)} />
-                  <Tab label="lab Problems" {...a11yProps(4)} />
-                  <Tab label="radio Problems" {...a11yProps(5)} />
-                  <Tab label="pathology Problems" {...a11yProps(6)} />
+                  <Tab label="surgeries " {...a11yProps(2)} />
+                  <Tab label="Interventions " {...a11yProps(3)} />
+                  <Tab label="labs" {...a11yProps(4)} />
+                  <Tab label="radiology" {...a11yProps(5)} />
+                  <Tab label="pathology " {...a11yProps(6)} />
                 </Tabs>
 
               </AppBar>
