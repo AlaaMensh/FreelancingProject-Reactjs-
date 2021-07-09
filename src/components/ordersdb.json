@@ -70,7 +70,7 @@
                         "center" : true
                 },
                 "labName": {
-                        "name": "Lab Name",
+                        "name": "investigation",
                         "selector": "labName",
                         "sortable": true,
                         "center" : true
@@ -110,7 +110,7 @@
                  
                  },
                  "labName": {
-                        "name": "Lab Name",
+                        "name": "investigation",
                         "selector": "labName",
                         "sortable": true,
                         "center" : true
@@ -345,7 +345,7 @@
                                 "center" : true
                         },
                          "radioName": {
-                                "name": "Radio Name",
+                                "name": "requested imaging ",
                                 "selector": "radioName",
                                 "sortable": true,
                                 "center" : true
@@ -390,7 +390,7 @@
                                 "center" : true
                         },
                         "radioName": {
-                                "name": "Radio Name",
+                                "name": "requested imaging",
                                 "selector": "radioName",
                                 "sortable": true,
                                 "center" : true
@@ -424,7 +424,7 @@
                         "center" : true
                 },
                    "radioName": {
-                        "name": "Radio Name",
+                        "name": "requested imaging ",
                         "selector": "radioName",
                         "sortable": true,
                         "center" : true
