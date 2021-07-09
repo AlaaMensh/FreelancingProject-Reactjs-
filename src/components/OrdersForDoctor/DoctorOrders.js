@@ -140,7 +140,7 @@ class AllOrdersForDoctor extends Component {
         formBody.push(encodedKey + "=" + encodedValue);
       }
       this.setState({loading:true})
-      
+      console.log(`${orderType[this.state.type].deleteOrder}`)
       fetch(`${orderType[this.state.type].deleteOrder}`, {
         method: 'DELETE',
         headers: {
