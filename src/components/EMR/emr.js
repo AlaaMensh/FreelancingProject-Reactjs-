@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Row from "react-bootstrap/Row";
+import { Container } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import { Card, Button, Container } from "react-bootstrap";
+import Row from "react-bootstrap/Row";
 import "./Navbar.css";
 
 class EMR extends Component {

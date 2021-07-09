@@ -263,9 +263,8 @@ class AllOrders extends Component {
           else if(p === "drname")
           {
             orderType[type].columnsTable[p]["cell"] =  (row) =>{
-            alert(row.firstName)
 
-            return ( <span>{row.firstName + " " + row.lastName}</span> )
+            return ( <span>{row.OrderingDrFirstName + " " + row.tOrderingDrLastName}</span> )
             }
             temp.push(orderType[type].columnsTable[p])
 
