@@ -307,7 +307,7 @@ const [ dropDownFunctions , setdropDownFunctions] = useState(["Dr.DahshBoard"
             </li>
             <li>
             <Link to={match.path+`/patientAllergyproblems/${"allergy"}`} >
-                        Allergy Problems
+                        Allergies
             </Link>
             </li>
             <li>
