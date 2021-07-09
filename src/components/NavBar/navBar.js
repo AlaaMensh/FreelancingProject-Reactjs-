@@ -172,7 +172,7 @@ const NavBar = (props) => {
                 </NavDropdown>
                 )
             }
-            case 0 :{
+            case 30 :{
                 return (
                     <NavDropdown
                     title="admin functions"
