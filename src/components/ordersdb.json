@@ -8,6 +8,18 @@
                     
             },
                "columnsTable" : {
+                "ptname": {
+                        "name": "Patient Name",
+                        "selector": "PtFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "labName": {
+                        "name": "investigation",
+                        "selector": "labName",
+                        "sortable": true,
+                        "center" : true},
+
                         "comments": {
                                 "name": "Comments",
                                 "selector": "comments",
@@ -20,19 +32,10 @@
                                 "sortable": true,
                                 "center" : true
                         },
-                        "ptname": {
-                                "name": "Patient Name",
-                                "selector": "PtFirstName",
-                                "sortable": true,
-                                "center" : true
-                        },
-
-                        "labName": {
-                                "name": "Lab Name",
-                                "selector": "labName",
-                                "sortable": true,
-                                "center" : true
-                        },
+                       
+                        
+                       
+                        
                         "phone": {
                                 "name": "Phone",
                                 "selector": "phone",
