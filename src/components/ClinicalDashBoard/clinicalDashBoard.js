@@ -125,7 +125,7 @@ const ClinicalDashBoard = ({ match }) => {
               <Link
                   className="btn btn-success"
                   to={match.url + `/patientAppointement/visit`}>
-                    Make New Visit
+                    New Visit
               </Link>
                 <ListGroup.Item style={arr[1] && arr[arr.length-1]=="clinicalDashBoard"?styles.active:styles.inactive}>
                   {parseInt(localStorage.getItem("role")) === 8 ? (
@@ -154,7 +154,7 @@ const ClinicalDashBoard = ({ match }) => {
                       match.url + `/patientOnGoingProblems/${"onGoingProblems"}`
                     }
                   >
-                     Problems
+                     On Going Problems
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="allergy"?styles.active:styles.inactive}>
@@ -168,7 +168,7 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="visits"?styles.active_link:styles.inactive_link}
                   to={match.url + `/${"visits"}`}>
-                    Visists
+                    Visits
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="lab"||arr[arr.length-2]=="lab"?styles.active:styles.inactive}>
@@ -189,14 +189,14 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="radio"||arr[arr.length-2]=="radio"?styles.active_link:styles.inactive_link}
                   to={match.url + `/allRadioOrders/${"radio"}`}>
-                    radio Orders
+                    radiology Orders
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="Medication"?styles.active:styles.inactive}>
                   <Link
                   style={arr[arr.length-1]=="Medication"?styles.active_link:styles.inactive_link}
                   to={match.url + `/Medication`}>
-                    Medication
+                    Medications
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="familyHistory"?styles.active:styles.inactive}>
@@ -211,7 +211,7 @@ const ClinicalDashBoard = ({ match }) => {
                   <Link
                   style={arr[arr.length-1]=="MyPrescriptions"?styles.active_link:styles.inactive_link}
                   to={match.url + `/MyPrescriptions`}>
-                    Prescription
+                    prescriptions
                   </Link>
                 </ListGroup.Item>
 
@@ -266,13 +266,13 @@ const ClinicalDashBoard = ({ match }) => {
                   scrollButtons="auto"
                   aria-label="scrollable auto tabs example"
                 >
-                  <Tab label="Allergy Problems" {...a11yProps(0)} />
+                  <Tab label="Allergies" {...a11yProps(0)} />
                   <Tab label="OnGoing Problems" {...a11yProps(1)} />
-                  <Tab label="surgeries Problems" {...a11yProps(2)} />
-                  <Tab label="Interventions Problems" {...a11yProps(3)} />
-                  <Tab label="lab Problems" {...a11yProps(4)} />
-                  <Tab label="radio Problems" {...a11yProps(5)} />
-                  <Tab label="pathology Problems" {...a11yProps(6)} />
+                  <Tab label="surgeries " {...a11yProps(2)} />
+                  <Tab label="Interventions " {...a11yProps(3)} />
+                  <Tab label="labs" {...a11yProps(4)} />
+                  <Tab label="radiology" {...a11yProps(5)} />
+                  <Tab label="pathology " {...a11yProps(6)} />
                 </Tabs>
 
               </AppBar>

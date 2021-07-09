@@ -78,7 +78,7 @@ function AdminDashboard(props) {
     {
       name: "Surgeries",
       discription: "Manage Surgeries types",
-      path: "/typesGenerator/Surgeries",
+      path: "/typesGenerator/surgeries",
       icon: "",
     },
     {
