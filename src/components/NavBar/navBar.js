@@ -172,6 +172,19 @@ const NavBar = (props) => {
                 </NavDropdown>
                 )
             }
+            case 30 :{
+                return (
+                    <NavDropdown
+                    title="admin functions"
+                    id="basic-nav-dropdown"
+                >
+                    <NavDropdown.Item href="/adminDashBoard">
+                       admin DashBoard
+                    </NavDropdown.Item>
+                 
+                </NavDropdown>
+                )
+            }
             default : {
                 return (
                  

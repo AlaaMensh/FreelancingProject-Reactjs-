@@ -133,7 +133,7 @@ const DashBoardComp = ({match}) => {
     {text: "Rediology information system" , role :"doctor"},
     {text: "Path information system " , role :"doctor"},
     {text: "Electronic proception ERX" , role :"doctor"},
-    {text: "Document Manegment" , role :"doctor"},
+    {text: "Document management" , role :"doctor"},
     {text: "System Admin" , role :"doctor"},
     // {text: "New Doctor Appointement" , role :"doctor"},
 ]

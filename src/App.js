@@ -53,7 +53,7 @@ function App() {
     <Router>
       <NavBar isAuth={loggedIn} logout={logout} />
       <Switch>
-        <Route exact path="/typesGenerator" component={TypesGenerator}></Route>
+        <Route exact path="/typesGenerator/:type" component={TypesGenerator}></Route>
         <Route exact path="/addOrderForm" component={AddOrderForm}></Route>
         <Route exact path="/AddOrderForm" component={AddOrderForm}></Route>
         <Route exact path="/Appointement" component={Appointement}></Route>
