@@ -140,7 +140,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         console.log("uuuuuuuuuuuuuuuu: " ,orderType[type].columnsTableForPatientAcceptOrders  )
         for(var p in orderType[type].columnsTableForPatientAcceptOrders ){
           if(p === "actions"){
-            orderType[type].columnsTable[p]["cell"] =  (row) =>{ return(
+            orderType[type].columnsTableForPatientAcceptOrders[p]["cell"] =  (row) =>{ return(
             <div className = "row">
               <div className="col-auto">
                 <button  className="btn btn-primary"
@@ -154,25 +154,25 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
             </div>
             )
             }
-            temp.push(orderType[type].columnsTable[p])
+            temp.push(orderType[type].columnsTableForPatientAcceptOrders[p])
           }else if(p === "drname")
           {
-            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            orderType[type].columnsTableForPatientAcceptOrders[p]["cell"] =  (row) =>{
             return ( <span>{row.OrderingFirstName + " " + row.OrderinglastName}</span> )
             }
-            temp.push(orderType[type].columnsTable[p])
+            temp.push(orderType[type].columnsTableForPatientAcceptOrders[p])
 
           }
           else if(p === "ptname")
           {
-            orderType[type].columnsTable[p]["cell"] =  (row) =>{
+            orderType[type].columnsTableForPatientAcceptOrders[p]["cell"] =  (row) =>{
             return ( <span>{row.PtFirstName + " " + row.PtlastName}</span> )
             }
-            temp.push(orderType[type].columnsTable[p])
+            temp.push(orderType[type].columnsTableForPatientAcceptOrders[p])
 
           }
           else{
-            temp.push(orderType[type].columnsTable[p])
+            temp.push(orderType[type].columnsTableForPatientAcceptOrders[p])
           }
         }
         console.log("temp :" + temp)
