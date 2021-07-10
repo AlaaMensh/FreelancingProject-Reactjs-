@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import Card from 'react-bootstrap/Card';
 import SessionCode from "../sessionCode";
+import { Card, Col } from "react-bootstrap";
+
 class ChoicePage extends Component {
     constructor(props) {
         super(props);
@@ -8,73 +9,108 @@ class ChoicePage extends Component {
     }
     renderBody = ()=>{
         return (
-            <Card style={{ width: '18rem', height:"15em" ,  }} className="bg-dark">
-            <Card.Img variant="top" src={window.location.origin + '/images/img1.svg'} />
-            <Card.Body className="text-secodary mt-2 mx-auto">
-                <Card.Text>
-                    Enter the code to get patient Orders
-                </Card.Text>
-            </Card.Body>
-            </Card>
+            <div>
+
+            <div class="icon-box">
+              <div class="icon">
+                <img
+                  src={"https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/handbook-book-medicine-medical-education-512.png"}
+                  style={{ size: "60px", height: "60px" }}
+                />
+              </div>
+              <h1>
+                <a>Enter the code</a>
+              </h1>
+
+              <p>  Enter the code to get patient Orders </p>
+            </div>
+          </div>
         )
     }
     render() { 
         return (  
-           
-                <div className="row mt-5 justify-content-center align-items-center">
-                    <div className="col-10 col-md-4">
-                            <Card style={{ width: '18rem',height:"15em" }} className="bg-light text-secondary" 
-                            onClick={()=>{
-                                console.log("history: " , this.props);
-                                if(this.props.match.params.type === "lab"){
-                                    this.props.history.push(`${this.props.location.pathname}/allLabOrders`)
-                                }
-                                else if(this.props.match.params.type === "pathology"){
-                                    console.log("yes");
-                                    this.props.history.push(`${this.props.location.pathname}/allPathologyOrders`)
-                                }
-                                else if(this.props.match.params.type === "radio"){
-                                    console.log("yes");
-                                    this.props.history.push(`${this.props.location.pathname}/allRadioChoice`)
-                                }
-                            }}>
-                                <Card.Img variant="top" style={{cursor:"pointer"}} src={window.location.origin + '/images/img1.svg'} />
-                                <Card.Body className="text-secondary mt-2 mx-auto">
-                                <Card.Text className="text-secondary">
-                                  Get all Accepted orders
-                                </Card.Text>
-                                </Card.Body>
-                                </Card>
+           <div>
+               <div className="row">
+            <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 "
+            onClick={()=>{
+                console.log("history: " , this.props);
+                if(this.props.match.params.type === "lab"){
+                    this.props.history.push(`${this.props.location.pathname}/allLabOrders`)
+                }
+                else if(this.props.match.params.type === "pathology"){
+                    console.log("yes");
+                    this.props.history.push(`${this.props.location.pathname}/allPathologyOrders`)
+                }
+                else if(this.props.match.params.type === "radio"){
+                    console.log("yes");
+                    this.props.history.push(`${this.props.location.pathname}/allRadioChoice`)
+                }
+            }}>
+            <div class="icon-box">
+              <div class="icon">
+                <img
+                  src={"https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/report-clipboard-medical-checklist-healthcare-512.png"}
+                  style={{ size: "60px", height: "60px" }}
+                />
+              </div>
+              <h1>
+                <a>Accepted Orders</a>
+              </h1>
 
-                    </div>
-                        {/* results start */}
+              <p>   Get all Accepted orders
+ </p>
+            </div>
+          </Col>
 
-                    <div className="col-10 col-md-4 mt-5 mt-md-0">
-                        <Card
-                        onClick={()=>{
-                            this.props.history.push(`${this.props.location.pathname}/allResults`)
+          <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 " 
+            onClick={()=>{
+                            this.props.history.push(`${this.props.location.pathname}/allResults`)}}>
+            <div class="icon-box">
+              <div class="icon">
+                <img
+                  src={"https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/news-feed-mobile-report-virus-128.png"}
+                  style={{ size: "60px", height: "60px" }}
+                />
+              </div>
+              <h1>
+                <a>All Results</a>
+              </h1>
 
-                        }}>
-                            <Card.Img variant="top" style={{cursor:"pointer"}} src={window.location.origin + '/images/img1.svg'} />
-                            <Card.Body className="text-secondary mt-2 mx-auto">
-                            <Card.Text className="text-secondary">
-                                  Get all Results
-                            </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </div>
-                        {/* results end */}
-
-                    <div className="col-10 col-md-4 mt-5 mt-md-0">
+              <p>  Get all Results that has been submited </p>
+            </div>
+          </Col>
+          <Col
+            xs={10}
+            md={4}
+            lg={4}
+            className="my-4 " >
                                     <SessionCode buttonValue = "get patient Orders"
                                         fromComponent={"choice"} 
                                         orderType={this.props.match.params.type}
                                         history = {this.props.history}
                                         body={this.renderBody()}/>
                           
-                    </div>
-                </div>
+                    </Col>
+          </div>
 
+                <div className="row mt-5 justify-content-center align-items-center">
+                   
+                        {/* results start */}
+
+                    
+                        {/* results end */}
+
+                   
+                </div>
+                </div>
            
         );
     }
