@@ -351,6 +351,16 @@ const PublicDashBoard = ({ match }) => {
           exact
           path={match.path + "/choice/:type/allResults"}
           component={AllResults}
+
+          
+        />
+                  <Route
+          key={13}
+          exact
+          path={match.path + "/radioChoice/:type/allResults"}
+          component={AllResults}
+
+          
         />
         <Route
           key={13}
