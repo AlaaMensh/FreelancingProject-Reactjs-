@@ -1,46 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { DataGrid } from '@material-ui/data-grid';
-import Button from '@material-ui/core/Button';
-import axios from 'axios';
-import DeleteIcon from '@material-ui/icons/Delete';
-import  { Component } from 'react';
-import Modal from '@material-ui/core/Modal';
-import Avatar from '@material-ui/core/Avatar';
-// import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import InputLabel from '@material-ui/core/InputLabel';
-// import  { useState } from 'react';
-import { ListItemAvatar, NativeSelect } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
-import AddBoxIcon from '@material-ui/icons/AddBox';
-import EditIcon from '@material-ui/icons/Edit';
-// import AddIcon from '@material-ui/icons/AddIcon';
-import Fab from '@material-ui/core/Fab'
 import { withStyles } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
-// import "./types.css";
-import { useFormik,Formik } from 'formik';
-import * as Yup from 'yup';
-import SearchForm from "./searchForm";
-import DataGridTable from "./dataGrid"
-// import EditIcon from '@material-ui/icons/Edit';
-import emrFile from "../emrDB.json";
-import DataTableComp from "../../typesGenerator/dataTable";
+import React, { Component } from 'react';
 // import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Spinner from '../../shared/Spinner';
+// import EditIcon from '@material-ui/icons/Edit';
+import emrFile from "../emrDB.json";
+import DataGridTable from "./dataGrid";
+import SearchForm from "./searchForm";
 
 
 
@@ -104,6 +71,7 @@ class Search extends Component {
       searchWord:"",
       list :[]  ,
       openModal1:false,
+      loading:false,
       result :"",
       id:"",
       filtered : []
@@ -114,7 +82,7 @@ class Search extends Component {
 
     getData = async()=>{
       var type = "Search";
-
+      await this.setState({loading:true})
       var details = {
         drId:localStorage.getItem("userId")
       }
@@ -141,6 +109,7 @@ class Search extends Component {
         console.log("errror")
       })
 
+      await this.setState({loading:false})
      
       
     }
@@ -205,6 +174,8 @@ class Search extends Component {
         
   return (
     <div className="hero">
+            <Spinner loading={this.state.loading}/>
+
         {this.rendering()}
        
 

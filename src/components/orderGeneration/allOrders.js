@@ -26,7 +26,7 @@ class AllOrders extends Component {
       modalUploadResultInputs :[],
       openModal:false,
       typeObj:{},
-      formType:"uploadResult",
+      formType:"upload",
       numPages:null,
       pageNumber:1,
       fileResult:"" ,
@@ -97,7 +97,7 @@ class AllOrders extends Component {
     };
 
     getData = async (flag ,type) => {
-      this.setState({loading:true})
+     await this.setState({loading:true})
 
       var endPoint = "";
       console.log("orderType: " , type , ".............. " ,orderType[type])
@@ -134,7 +134,7 @@ class AllOrders extends Component {
          formBody.push(encodedKey + "=" + encodedValue);
        }
        formBody = formBody.join("&");
-       axios.post(`${endPoint}`,details).then(result=>{
+      await axios.post(`${endPoint}`,details).then(result=>{
         this.setState({loading:false})
 
         console.log("dataaaaaaaa:  ",result.data)
@@ -151,7 +151,7 @@ class AllOrders extends Component {
     }
  
     handleDelete= async(id)=>{
-      this.setState({loading:true})
+     await this.setState({loading:true})
 
       console.log("iiiiiiiiiid"  ,id)
       var details = {
@@ -164,7 +164,7 @@ class AllOrders extends Component {
         formBody.push(encodedKey + "=" + encodedValue);
       }
       
-      fetch(`${orderType[this.state.type].deleteOrder}`, {
+     await fetch(`${orderType[this.state.type].deleteOrder}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -188,7 +188,7 @@ class AllOrders extends Component {
 
   
     handleUpdate = async ()=>{  // Upload files Using updateOrder function
-      this.setState({loading:true})
+     await this.setState({loading:true})
       var Form = new FormData();
       Form.append("result" ,this.state.result )
       Form.append("orderId" , this.state.typeObj["id"])
@@ -244,6 +244,20 @@ class AllOrders extends Component {
                       this.setState({resultStatus : "upload"})
                     }}>
                       Upload Result
+                      </button>
+                      <button  className="btn btn-primary"
+                hidden={!row.result  ? true : false}
+                  onClick={() => {  
+                    console.log("rooooow : " , row)
+                      console.log("id:  " , row)
+                      this.setState({fileResult : row.result})
+                      this.getTypeByID(row.id);
+                      this.handleopenModal();
+                      this.setState({resultToShow: row.result});
+                    //  this.props.history.push(`https://mvb1.herokuapp.com/${this.state.type}/${row.result}`)
+                      this.setState({resultStatus : "show"})
+                    }}>
+                      Show Result
                       </button>
                 <button className="ml-2 btn btn-danger"
                     onClick = {() => {  

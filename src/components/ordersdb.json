@@ -123,10 +123,6 @@
                  }
         },
                "modalForms": {
-                        "date" :{
-                                "type": "date",
-                                "name" : "date"
-                        },
                         "comments" : {
                                 "type":"text",
                                 "name" :"comments"
@@ -141,7 +137,6 @@
                 }
                },
                "AdditionObject":{
-                "date": "",
                 "comments": "",
                 "ptId": "",
                 "drId": "",
@@ -283,10 +278,6 @@
              }
     }           ,
            "modalForms": {
-                    "Date" :{
-                            "type": "date",
-                            "name" : "Date"
-                    },
                     "comments" : {
                             "type":"text",
                             "name" :"comments"
@@ -300,7 +291,6 @@
             }
            },
            "AdditionObject":{
-            "Date": "",
             "comments": "",
             "ptId": "",
             "drId": "",
@@ -436,10 +426,6 @@
                    }
           }           ,
                  "modalForms": {
-                          "Date" :{
-                                  "type": "date",
-                                  "name" : "Date"
-                          },
                           "comments" : {
                                   "type":"text",
                                   "name" :"comments"
@@ -453,7 +439,6 @@
                   }
                  },
                  "AdditionObject":{
-                  "Date": "",
                   "comments": "",
                   "ptId": "",
                   "drId": "",

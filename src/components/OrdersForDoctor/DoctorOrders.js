@@ -114,8 +114,8 @@ class AllOrdersForDoctor extends Component {
        }
        formBody = formBody.join("&");
        console.log("endPointttttttt: " , orderType[type].getAllDoctorOrders)
-       this.setState({loading:true})
-       axios.post(`${orderType[type].getAllDoctorOrders}`,formBody).then(result=>{
+      await this.setState({loading:true})
+      await axios.post(`${orderType[type].getAllDoctorOrders}`,formBody).then(result=>{
         console.log("dataaaaaaaa:  ",result.data)
         this.setState({orderlabList: result.data});
 
@@ -124,7 +124,7 @@ class AllOrdersForDoctor extends Component {
             console.log(err)
         })
 
-        this.setState({loading:false})
+       await this.setState({loading:false})
       
     }
  
@@ -139,9 +139,9 @@ class AllOrdersForDoctor extends Component {
         var encodedValue = encodeURIComponent(details[property]);
         formBody.push(encodedKey + "=" + encodedValue);
       }
-      this.setState({loading:true})
+    await  this.setState({loading:true})
       
-      fetch(`${orderType[this.state.type].deleteOrder}`, {
+    await  fetch(`${orderType[this.state.type].deleteOrder}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -152,7 +152,7 @@ class AllOrdersForDoctor extends Component {
       }).catch(()=>{
         console.log("errror")
       })
-      this.setState({
+    await  this.setState({
         orderlabList: this.state.orderlabList.filter(row => row.id !== id),
         loading:false
        })

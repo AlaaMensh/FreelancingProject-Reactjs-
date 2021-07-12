@@ -106,8 +106,8 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         }
         formBody = formBody.join("&");
           console.log("endPoint : " , orderType[type].getNotAcceptedOrders);
-         this.setState({loading:true})
-      fetch(`${orderType[type].getNotAcceptedOrders}`, {
+        await this.setState({loading:true})
+      await fetch(`${orderType[type].getNotAcceptedOrders}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -126,7 +126,7 @@ class AcceptOrders extends Component { // this Component to View All The Not Acc
         }).catch(()=>{
           console.log("errror")
         })
-        this.setState({loading:false})
+        await this.setState({loading:false})
 
         
       }
