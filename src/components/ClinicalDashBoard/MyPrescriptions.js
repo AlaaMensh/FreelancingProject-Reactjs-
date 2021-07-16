@@ -41,10 +41,10 @@ const MyPrescriptions = ({match}) =>{
         await MyPrescriptions()
       },[])
 
-      const MyPrescriptions = ()=>{
-          setLoading(true)
+      const MyPrescriptions = async()=>{
+        await setLoading(true)
         if(ptId){
-       axios.post(base_url+"/visit/myPrescriptions",{
+       await axios.post(base_url+"/visit/myPrescriptions",{
            ptId : ptId
        }).then(res=>{
            if(res.data && res.data.length > 0)
@@ -71,7 +71,7 @@ const MyPrescriptions = ({match}) =>{
    }
    else{
 
-       axios.post(base_url+"/visit/myPrescriptionsByDoctor",{
+     await axios.post(base_url+"/visit/myPrescriptionsByDoctor",{
            drId : localStorage.getItem('userId')
        }).then(res=>{
            if(res.data && res.data.length > 0)
@@ -95,7 +95,7 @@ const MyPrescriptions = ({match}) =>{
            alert(err)
        })
    }
-          setLoading(false)
+   await  setLoading(false)
 
 } 
 

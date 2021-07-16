@@ -1,5 +1,10 @@
 {
   "allergy": {
+    "state":{
+      "status":"",
+      "added_type":"",
+      "allergy":""
+    },
     "columnsTable": {
       "date": {
         "name": "Date",
@@ -27,22 +32,24 @@
       }
     },
     "modalAdditionForms": {
-      "notes": {
+      "status": {
         "type": "text",
-        "name": "notes",
-        "label": "Notes",
-        "placeHolder": "Choose the Surgeries Type"
+        "name": "status",
+        "label": "status",
+        "placeHolder": "Status"
       },
-      "reaction": {
+      "added_type": {
         "type": "text",
-        "name": "reaction",
-        "label": "Reaction"
+        "name": "added_type",
+        "label": "type"
       }
     },
     "title": "All Allergies",
     "description": "You can see all Allergies for this patient...",
     "getAllergyProblemsForPatient": "https://mvb1.herokuapp.com/pt/getAllergyById",
-    "getAll" :"https://mvb1.herokuapp.com/visit/pt_allergies"
+    "getAll" :"https://mvb1.herokuapp.com/visit/pt_allergies",
+    "getAllergies" :"https://mvb1.herokuapp.com/allergy/getAllergy",
+    "adding" :"http://localhost:8080/allergy/addAllergy"
 
   },
 

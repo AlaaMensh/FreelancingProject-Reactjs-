@@ -115,7 +115,7 @@ export default function ScrollableTabsButtonAuto({match}) {
 
   React.useEffect(async()=>{
     await MYDrugs()
-  },[])
+  },[match])
 
       //handle Modal Open
       const handleOpen = () => {
@@ -140,9 +140,9 @@ export default function ScrollableTabsButtonAuto({match}) {
      return false
   }
 
-  const MYDrugs = ()=>{
-    setLoading(true)
-    loadMYDrugs().then(data=>{
+  const MYDrugs = async()=>{
+    await setLoading(true)
+    await loadMYDrugs().then(data=>{
         data.map(row=>{
             let index =  rows.findIndex(r=>r.id == row.id)
             if(index == -1)
@@ -160,9 +160,9 @@ export default function ScrollableTabsButtonAuto({match}) {
                 })
             }
         })
-        setRows([...rows])
-        setActiveRows(rows.filter(r=>r.status == "active"))
-        setUnActiveRows(rows.filter(r=>r.status == "inactive"))
+         setRows([...rows])
+         setActiveRows(rows.filter(r=>r.status == "active"))
+         setUnActiveRows(rows.filter(r=>r.status == "inactive"))
     }).catch(err=>{
         alert(err)
     })
@@ -170,10 +170,16 @@ export default function ScrollableTabsButtonAuto({match}) {
   
   }
 
-  const unActiveRow=(id)=>{
-    setLoading(true)
+  const unActiveRow=async(id)=>{
 
-    let index = rows.findIndex(r=>r.id == id)
+    let index = rows.findIndex(r=>r.id === id)
+    console.log(id,index);
+    if(index === -1){
+      alert("not exist")
+      return;
+    }
+    await setLoading(true)
+
     rows[index].status = 'inactive'
     UnActiveDrug(id).then(res=>{
       setRows([...rows])
@@ -182,17 +188,19 @@ export default function ScrollableTabsButtonAuto({match}) {
     }).catch(err=>{
       alert(err)
     })
-    setLoading(false)
+    await setLoading(false)
 
   }
 
-  const add_row = (data)=>{
+  const add_row = async(data)=>{
+    setLoading(true)
       let date = new Date()
-      let index =  active_rows.findIndex(r=>r.id == data.id)
+      let index =  rows.findIndex(r=>r.id == data.id)
       if(index == -1)
       {
-        active_rows.push({
+        await rows.push({
             ...data,
+            status:'active',
             createdAt : date.getDate()+
             "/"+(date.getMonth()+1)+
             "/"+date.getFullYear()
@@ -201,9 +209,12 @@ export default function ScrollableTabsButtonAuto({match}) {
       console.log("active_rows")
 
       console.log(data)
-      setActiveRows([...active_rows])
+      await setRows([...rows])
+      await setActiveRows(rows.filter(r=>r.status === "active"))
+      await setUnActiveRows(rows.filter(r=>r.status === "inactive"))
       console.log(active_rows)
       console.log("active_rows")
+      setLoading(false)
 
     handleClose()
 

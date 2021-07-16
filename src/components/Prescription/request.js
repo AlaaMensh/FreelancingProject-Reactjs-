@@ -49,7 +49,7 @@ export const UnActiveDrug = (id)=>{
 export const AddPrescriptionDrug = (data)=>{
     return new Promise((resolve,reject)=>{
         axios.post(base_url+'/visit/addPrescription_Drugs_single',data).then(res=>{
-            resolve(res.data.insertId)
+            resolve(res.data)
 
           }).catch(err=>{
             reject(err)

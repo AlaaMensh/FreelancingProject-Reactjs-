@@ -222,6 +222,15 @@ class ClinicalOrders extends Component {
             }
             temp.push(orderType[type][object][p])
           }
+          else if(p === "drname")
+          {
+            orderType[type][object][p]["cell"] =  (row) =>{
+
+            return ( <span>{row.firstName + " " + row.lastName}</span> )
+            }
+            temp.push(orderType[type][object][p])
+
+          }
           else{
             temp.push(orderType[type][object][p])
           }

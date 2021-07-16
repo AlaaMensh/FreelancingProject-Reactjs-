@@ -17,6 +17,8 @@ class AddOrderForm extends Component {
       ptId:"",
       drFdId:"",
       labId:"",
+      pathoId:"",
+      radioId:"",
       loading:false
      }
   }

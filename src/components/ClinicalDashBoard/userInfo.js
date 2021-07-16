@@ -1,18 +1,24 @@
 import axios from "axios";
 import React, { Component } from "react";
 import { Jumbotron } from "react-bootstrap";
+import Spinner from '../shared/Spinner';
+
 class UserInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
       pId: 1,
       user: {},
+      loading : false
     };
   }
   async componentDidMount() {
     console.log("id: ", this.props.id);
     //  await this.setState({pId : this.props.id});
+    await this.setState({loading:true})
     await this.getUserObj();
+    await this.setState({loading:false})
+
   }
   getUserObj = async () => {
     console.log("idddd: ", this.state.pId);
@@ -109,7 +115,11 @@ class UserInfo extends Component {
     this.rendering();
   }
   render() {
-    return <div>{this.rendering()}</div>;
+    return <div>
+      <Spinner loading={this.state.loading}/>
+
+        {this.rendering()}
+      </div>;
   }
 }
 

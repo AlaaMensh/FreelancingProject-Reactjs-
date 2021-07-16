@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
+import Spinner from '../shared/Spinner';
 import DataTableComp from "../typesGenerator/dataTable";
 
 const columns = [
@@ -26,8 +27,10 @@ const columns = [
 
 const VisitScreen = ({match})=>{
     const [data,setData] = useState([])
+    const [loading,setLoading] = useState(false)
 
     useEffect(()=>{
+        setLoading(true)
         if(!match.params.id)
             return
         axios.post(`https://mvb1.herokuapp.com/visit/getPatientVisits`,{
@@ -38,11 +41,15 @@ const VisitScreen = ({match})=>{
         }).catch(err=>{
             alert(err)
         })
+        setLoading(false)
+
     },[match])
 
     
     return(
         <Container>
+      <Spinner loading={loading}/>
+
                 <DataTableComp  data = {data}
                   columns = {columns}
                   title= ""

@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import clinicalDB from "./clinicalDB.json";
-import ModalComp from "../typesGenerator/modalGenerator";
 import axios from "axios";
-import DataTableComp from "../typesGenerator/dataTable";
+import React, { Component } from "react";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import FormGenerator from "../Forms/formGenerationNew";
+import Spinner from '../shared/Spinner';
+import DataTableComp from "../typesGenerator/dataTable";
 import ModalGenerator from "./../ModalGeneration/modalGeneration";
+import clinicalDB from "./clinicalDB.json";
 
 const optionsInput = [
   { id: 1, name: "alaa" },
@@ -20,9 +20,13 @@ class FamilyHistory extends Component {
     this.state = {
       columns: [],
       openModal: false,
+      loading : false,
       ModalAddtionInputs: [],
       ModalUpdateInputs: [],
       data: [],
+      status : '',
+      added_type : '',
+      allergy : '',
       temp: [],
       typeObj: {},
       type: "",
@@ -39,34 +43,7 @@ class FamilyHistory extends Component {
       // for Adding actions Buttons to DataTable
       if (p === "actions") {
         clinicalDB[type].columnsTable[p]["cell"] = (row) => {
-          // return (
-            // <div className="row">
-            //   <div className="col-auto">
-            //     <button
-            //       className="btn btn-primary"
-            //       onClick={async () => {
-            //         // console.log("rooooow : " , row)
-            //         // console.log("id:  " , row)
-            //         await this.setUpdatedObj(row.id);
-            //         this.setState({ formType: "edit" });
-            //         this.handleopenModal();
-            //       }}
-            //     >
-            //       Update
-            //     </button>
-            //   </div>
-            //   <div className="col-auto">
-            //     <button
-            //       className="btn btn-danger"
-            //       onClick={() => {
-            //         this.handleDelete(row.id);
-            //       }}
-            //     >
-            //       Delete
-            //     </button>
-            //   </div>
-            // </div>
-          // );
+         
         };
         temp.push(clinicalDB[type].columnsTable[p]);
       } else {
@@ -113,6 +90,9 @@ class FamilyHistory extends Component {
       this.handleFormInputs(type, optionsList);
     }else{
       this.handleFormInputs(type, []);
+    }
+    if(type === 'allergy'){
+      await this.getAllAlergies()
     }
     await this.handleDataTable(type);
 
@@ -182,7 +162,7 @@ class FamilyHistory extends Component {
       var encodedValue = encodeURIComponent(details[property]);
       formBody.push(encodedKey + "=" + encodedValue);
     }
-
+    await this.setState({loading:true})
     fetch(`${clinicalDB[this.state.type].deleteUser}`, {
       method: "DELETE",
       headers: {
@@ -198,6 +178,7 @@ class FamilyHistory extends Component {
       });
 
     this.setState({
+      loading:false,
       data: this.state.data.filter((row) => row.id !== id),
     });
   };
@@ -215,6 +196,32 @@ class FamilyHistory extends Component {
       });
     return temp;
   };
+  getAllAlergies = async() => {
+    let type = this.props.type
+    let temp = [];
+    for(var p in clinicalDB[type].modalAdditionForms ){
+      temp.push(clinicalDB[type].modalAdditionForms[p])
+    } 
+    try {
+      const {data} = await axios.get(`${clinicalDB[type].getAllergies}`)
+      let options = []
+      data.map(row=>{
+        options.push({
+          text : row.name,
+          value : row.name
+        })
+      })
+      temp.push({
+        type : 'select',
+        name : 'allergy',
+        label : 'Allergy',
+        options : options
+      })
+      await this.setState({ModalAddtionInputs:[...temp]})
+    } catch (error) {
+      alert(error)
+    }
+  }
 
   handleAdding = async () => { // **** Change the EndPoint with the New One
     var details = {};
@@ -222,6 +229,8 @@ class FamilyHistory extends Component {
     for (var p in clinicalDB[this.state.type].state) {
       details[p] = this.state[p];
     }
+    await this.setState({loading:true})
+
     details["ptId"] = this.props.id;
     console.log("details on Adding : ", details);
     var formBody = [];
@@ -247,9 +256,14 @@ class FamilyHistory extends Component {
       .catch(() => {
         console.log("errror");
       });
+    await this.setState({loading:false})
+
     this.getData(this.state.type);
   };
   getData = async (type) => {
+
+    await this.setState({loading:true})
+
     console.log("UserEndpoint: ", clinicalDB[type].getAll , this.props.id);
     await axios.post(`${clinicalDB[type].getAll}` , {
       ptId: this.props.id
@@ -260,6 +274,8 @@ class FamilyHistory extends Component {
       });
       console.log("All Incoming Data in GetData Funciton : ", resp.data);
     });
+    await this.setState({loading:false})
+
   };
 
   handleChange = (evt) => {
@@ -295,19 +311,11 @@ componentWillUnmount(){
 
     return (
       <Container>
+        <Spinner loading={this.state.loading}/>
+
         {console.log("modalAdditionInputs : " , this.state.ModalAddtionInputs)}
-        <Row className="py-3">
-          <Col>
-            {clinicalDB && this.state.type && (
-              <>
-                <h3>{clinicalDB[this.state.type].title}</h3>
-                <div>{clinicalDB[this.state.type].description}</div>
-              </>
-            )}
-          </Col>
-        </Row>
-              {
-                this.props.addButtonFlag && (
+
+
                   <Row className="py-3">
                   <Col sm={10}></Col>
                   <Col sm={2}>
@@ -322,8 +330,7 @@ componentWillUnmount(){
                     </Button>{" "}
                   </Col>
                 </Row>
-                 )
-              } 
+
         <Row className = "py-3">
           <Col sm={12} className="py-3">
             <DataTableComp

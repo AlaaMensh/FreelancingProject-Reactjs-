@@ -8,8 +8,9 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import Spinner from '../shared/Loader';
+import Spinner from '../shared/Spinner';
 import DataTableComp from "../typesGenerator/dataTable";
+
 
 
 function TabPanel(props) {
@@ -114,9 +115,9 @@ const DiagnoseScreen = ({match})=>{
 
     }
 
-    const getUnResolved =  ()=>{
-      setLoading(true)
-      axios.post(`${base_url}/visit/getUnResolvedDiagnoses`,{
+    const getUnResolved =  async()=>{
+      await setLoading(true)
+      await axios.post(`${base_url}/visit/getUnResolvedDiagnoses`,{
           ptId : match.params.id,
           type : 'patient'
       }).then(res=>{
@@ -124,13 +125,13 @@ const DiagnoseScreen = ({match})=>{
       }).catch(err=>{
           alert(err)
       })
-      setLoading(false)
+      await setLoading(false)
 
     }
-    const getResolved = ()=>{
-      setLoading(true)
+    const getResolved = async()=>{
+     await setLoading(true)
 
-      axios.post(`${base_url}/visit/getResolvedDiagnoses`,{
+     await axios.post(`${base_url}/visit/getResolvedDiagnoses`,{
         ptId : match.params.id,
           type : 'patient'
       }).then(res=>{
@@ -138,7 +139,7 @@ const DiagnoseScreen = ({match})=>{
       }).catch(err=>{
           alert(err)
       })
-      setLoading(false)
+      await setLoading(false)
 
     }
 
@@ -153,8 +154,9 @@ const DiagnoseScreen = ({match})=>{
 
     return(
         <div className='container'>
-        {loading && <Spinner/>}
+              <Spinner loading={loading}/>
 
+        
         <AppBar position="static" color="default">
             <Tabs
             value={value}

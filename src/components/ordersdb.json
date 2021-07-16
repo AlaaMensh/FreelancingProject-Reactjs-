@@ -461,10 +461,10 @@
                      "getAllAcceptedOrders" :"",
                      "getAllOrdersByPtID" : "https://mvb1.herokuapp.com/order/getradioOrderByPtId",
                      "getAllOrdersByLabId" : "https://mvb1.herokuapp.com/order/getRadioOrderbyLab",
-                      "getAllResultsById" : "https://mvb1.herokuapp.com/order/getResultsbyRadio",
+                     "getAllResultsById" : "https://mvb1.herokuapp.com/order/getResultsbyRadio",
                      "getAllDoctorOrders":"https://mvb1.herokuapp.com/order/getradioOrderbyDrid",
                      "uploadResult" :"https://mvb1.herokuapp.com/order/radios/updateResult"
-                  }
+        }
     
             
             
