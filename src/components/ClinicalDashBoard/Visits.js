@@ -29,11 +29,11 @@ const VisitScreen = ({match})=>{
     const [data,setData] = useState([])
     const [loading,setLoading] = useState(false)
 
-    useEffect(()=>{
-        setLoading(true)
+    useEffect(async()=>{
+        await setLoading(true)
         if(!match.params.id)
             return
-        axios.post(`https://mvb1.herokuapp.com/visit/getPatientVisits`,{
+        await axios.post(`https://mvb1.herokuapp.com/visit/getPatientVisits`,{
             ptId : match.params.id,
             type : 'patient'
         }).then(res=>{
@@ -41,7 +41,7 @@ const VisitScreen = ({match})=>{
         }).catch(err=>{
             alert(err)
         })
-        setLoading(false)
+        await setLoading(false)
 
     },[match])
 

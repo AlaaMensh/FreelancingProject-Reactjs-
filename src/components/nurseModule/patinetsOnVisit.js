@@ -76,7 +76,14 @@ class PatientsOnVisit extends Component {
               <button  className="btn btn-info"
                 onClick={async () => {  
                   console.log("rooooow : " , row)
-                  this.props.history.push(`${this.props.location.pathname}/nurseVisit/${row.ptId}`)
+                  let path = this.props.location.pathname.split('/')
+                  if(path[path.length-1]==='vitals'){
+                  this.props.history.push(`${this.props.location.pathname}/nurseVisit`)
+
+                  }else{
+                    this.props.history.push(`${this.props.location.pathname}/nurseVisit/${row.ptId}`)
+
+                  }
                   }}>Fill Vitals</button>
             </div>
           

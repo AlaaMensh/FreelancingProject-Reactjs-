@@ -134,7 +134,7 @@
         "getAll":"https://mvb1.herokuapp.com/session/getSessionByDate",
         "getPatientLastVisits":"https://mvb1.herokuapp.com/nurse/getByPtId",
         "deleteVital" : "https://mvb1.herokuapp.com/nurse/deleteRecorder",
-        "addVital" :"https://mvb1.herokuapp.com/nurse/addRecord",
+        "addVital" :"http://localhost:8080/nurse/addRecord",
         "getAllData" :"https://mvb1.herokuapp.com/nurse/getNurse"
 
      }

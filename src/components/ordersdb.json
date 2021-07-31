@@ -8,32 +8,32 @@
                     
             },
                "columnsTable" : {
+                "ptname": {
+                        "name": "Patient Name",
+                        "selector": "PtFirstName",
+                        "sortable": true,
+                        "center" : true
+                },
 
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
+                "labName": {
+                        "name": "investigation",
+                        "selector": "labName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "lab":{
+                        "name": "lab",
+                        "selector": "organization",
+                        "sortable": true,
+                        "center" : true
+                },
                         "Date": {
                                 "name": "Date",
                                 "selector": "createdAt",
                                 "sortable": true,
                                 "center" : true
                         },
-                        "ptname": {
-                                "name": "Patient Name",
-                                "selector": "PtFirstName",
-                                "sortable": true,
-                                "center" : true
-                        },
 
-                        "labName": {
-                                "name": "Lab Name",
-                                "selector": "labName",
-                                "sortable": true,
-                                "center" : true
-                        },
                         "phone": {
                                 "name": "Phone",
                                 "selector": "phone",
@@ -55,12 +55,6 @@
                         "sortable": true,
                         "center" : true
                 },
-                "Date": {
-                        "name": "Date",
-                        "selector": "createdAt",
-                        "sortable": true,
-                        "center" : true
-                },
                 "ptname": {
                         "name": "Patient Name",
                         "selector": "PtFirstName",
@@ -73,12 +67,13 @@
                         "sortable": true,
                         "center" : true
                 },
-                 "comments": {
-                         "name": "Comments",
-                         "selector": "comments",
-                         "sortable": true,
-                         "center" : true
-                 },
+                "Date": {
+                        "name": "Date",
+                        "selector": "createdAt",
+                        "sortable": true,
+                        "center" : true
+                },
+
                  "actions" :{
                          "name" :"actions",
                          "selector" : "actions",
@@ -88,31 +83,31 @@
                  }
                },
                "columnsTableForPatientOrders": {
-                 "Date": {
-                         "name": "Date",
-                         "selector": "createdAt",
-                         "sortable": true,
-                         "center" : true
-                 },
-                 "drname":{
+                "drname":{
                         "name": "Ordering Doctor",
                         "selector": "drname",
                         "sortable": true,
                         "center" : true
                 },
-                 "comments": {
-                         "name": "Comments",
-                         "selector": "comments",
-                         "sortable": true,
-                         "center" : true
-                 
-                 },
+                "lab":{
+                        "name": "lab",
+                        "selector": "organization",
+                        "sortable": true,
+                        "center" : true
+                },
                  "labName": {
                         "name": "investigation",
                         "selector": "labName",
                         "sortable": true,
                         "center" : true
                 },
+                 "Date": {
+                         "name": "Date",
+                         "selector": "createdAt",
+                         "sortable": true,
+                         "center" : true
+                 },
+
                  
                  "actions" :{
                          "name" :"actions",
@@ -172,12 +167,6 @@
                 
         },
         "columnsTableForPatientAcceptOrders":{
-                "comments": {
-                        "name": "Comments",
-                        "selector": "comments",
-                        "sortable": true,
-                        "center" : true
-                },
                 "ptname": {
                         "name": "Patient Name",
                         "selector": "PtFirstName",
@@ -191,7 +180,7 @@
                         "center" : true
                 },
                 "pathoName": {
-                        "name": "pathology Name",
+                        "name": "investigation",
                         "selector": "pathoName",
                         "sortable": true,
                         "center" : true
@@ -212,20 +201,20 @@
                         "center" : true
                 },
                    "pathoName": {
-                        "name": "pathology Name",
+                        "name": "investigation",
                         "selector": "pathoName",
+                        "sortable": true,
+                        "center" : true
+                },
+                "pathelogy":{
+                        "name": "pathelogy",
+                        "selector": "organization",
                         "sortable": true,
                         "center" : true
                 },
                     "Date": {
                             "name": "Date",
                             "selector": "createdAt",
-                            "sortable": true,
-                            "center" : true
-                    },
-                    "comments": {
-                            "name": "Comments",
-                            "selector": "comments",
                             "sortable": true,
                             "center" : true
                     },
@@ -244,31 +233,30 @@
                     }
            },
            "columnsTableForPatientOrders": {
+                "drname":{
+                        "name": "Ordering Doctor",
+                        "selector": "drname",
+                        "sortable": true,
+                        "center" : true
+                        },
+                "pathelogy":{
+                        "name": "pathelogy",
+                        "selector": "organization",
+                        "sortable": true,
+                        "center" : true
+                },
+                     "pathoName": {
+                        "name": "investigation",
+                        "selector": "pathoName",
+                        "sortable": true,
+                        "center" : true
+                },
                 "Date": {
                         "name": "Date",
                         "selector": "createdAt",
                         "sortable": true,
                         "center" : true
                 },
-             "comments": {
-                     "name": "Comments",
-                     "selector": "comments",
-                     "sortable": true,
-                     "center" : true
-             
-             },
-             "drname":{
-                "name": "Ordering Doctor",
-                "selector": "drname",
-                "sortable": true,
-                "center" : true
-                },
-             "pathoName": {
-                "name": "pathology Name",
-                "selector": "pathoName",
-                "sortable": true,
-                "center" : true
-        },
              "actions" :{
                      "name" :"actions",
                      "selector" : "actions",
@@ -333,20 +321,20 @@
                                 "center" : true
                         },
                          "radioName": {
-                                "name": "requested imaging ",
+                                "name": "investigation",
                                 "selector": "radioName",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "radio":{
+                                "name": "radio",
+                                "selector": "organization",
                                 "sortable": true,
                                 "center" : true
                         },
                           "Date": {
                                   "name": "Date",
                                   "selector": "createdAt",
-                                  "sortable": true,
-                                  "center" : true
-                          },
-                          "comments": {
-                                  "name": "Comments",
-                                  "selector": "comments",
                                   "sortable": true,
                                   "center" : true
                           },
@@ -365,20 +353,15 @@
                           }
                  },
                  "columnsTableForPatientAcceptOrders":{
-                        "comments": {
-                                "name": "Comments",
-                                "selector": "comments",
-                                "sortable": true,
-                                "center" : true
-                        },
                         "drname":{
                                 "name": "Ordering Doctor",
                                 "selector": "drname",
                                 "sortable": true,
                                 "center" : true
                         },
+
                         "radioName": {
-                                "name": "requested imaging",
+                                "name": "investigation",
                                 "selector": "radioName",
                                 "sortable": true,
                                 "center" : true
@@ -392,31 +375,31 @@
                         }
                       },
                  "columnsTableForPatientOrders": {
+                        "drname":{
+                                "name": "Ordering Doctor",
+                                "selector": "drname",
+                                "sortable": true,
+                                "center" : true
+                        },
+                        "radio":{
+                                "name": "Radio",
+                                "selector": "organization",
+                                "sortable": true,
+                                "center" : true
+                        },
+                           "radioName": {
+                                "name": "investigation",
+                                "selector": "radioName",
+                                "sortable": true,
+                                "center" : true
+                        },
                         "Date": {
                                 "name": "Date",
                                 "selector": "createdAt",
                                 "sortable": true,
                                 "center" : true
                         },
-                   "comments": {
-                           "name": "Comments",
-                           "selector": "comments",
-                           "sortable": true,
-                           "center" : true
-                   
-                   },
-                   "drname":{
-                        "name": "Ordering Doctor",
-                        "selector": "drname",
-                        "sortable": true,
-                        "center" : true
-                },
-                   "radioName": {
-                        "name": "requested imaging ",
-                        "selector": "radioName",
-                        "sortable": true,
-                        "center" : true
-                },
+
                    "actions" :{
                            "name" :"actions",
                            "selector" : "actions",

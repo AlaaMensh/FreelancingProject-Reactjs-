@@ -12,6 +12,8 @@ import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import { Link, Route, Switch, useHistory, useLocation } from "react-router-dom";
+import VitalsScreen from '../nurseModule/nursemodule';
+import NurseScreen from '../nurseModule/patinetsOnVisit';
 import AddOrderForm from "../orderGeneration/addOrderForm";
 import AllOrders from "../orderGeneration/allOrders";
 import Prescription from "../Prescription/Prescription";
@@ -22,9 +24,9 @@ import Medication from './Medication';
 import MyPrescriptions from './MyPrescriptions';
 import ClinicalOrders from "./orders";
 import PatientAppointement from "./patientAppointements";
+import SurgeriesScreen from './Surgeries';
 import UserInfo from "./userInfo";
 import VisitScreen from './Visits';
-
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -127,20 +129,6 @@ const ClinicalDashBoard = ({ match }) => {
                   to={match.url + `/patientAppointement/visit`}>
                     New Visit
               </Link>
-                <ListGroup.Item style={arr[1] && arr[arr.length-1]=="clinicalDashBoard"?styles.active:styles.inactive}>
-                  {parseInt(localStorage.getItem("role")) === 8 ? (
-                    <Link
-                      to={match.url + `/clinicalDashBoard`}
-                      style={arr[1] && arr[arr.length-1]=="clinicalDashBoard"?styles.active_link:styles.inactive_link}
-                    >
-                      Clinical DashBoard
-                    </Link>
-                  ) : (
-                    <Link to="#" style={{ cursor: "not-allowed" }}>
-                      Clinical DashBoard
-                    </Link>
-                  )}
-                </ListGroup.Item>
                 {/* <ListGroup.Item style={arr[arr.length-1]=="patientAppointement"?styles.active:styles.inactive}>
                   <Link style={arr[arr.length-1]=="patientAppointement"?styles.active_link:styles.inactive_link}
                    to={match.url + `/patientAppointement`}>
@@ -169,6 +157,20 @@ const ClinicalDashBoard = ({ match }) => {
                   style={arr[arr.length-1]=="visits"?styles.active_link:styles.inactive_link}
                   to={match.url + `/${"visits"}`}>
                     Visits
+                  </Link>
+                </ListGroup.Item>
+                <ListGroup.Item style={arr[arr.length-1]=="surgeries"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="surgeries"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/${"surgeries"}`}>
+                    Surgeries
+                  </Link>
+                </ListGroup.Item>
+                <ListGroup.Item style={arr[arr.length-1]=="vitals"?styles.active:styles.inactive}>
+                  <Link
+                  style={arr[arr.length-1]=="vitals"?styles.active_link:styles.inactive_link}
+                  to={match.url + `/${"vitals"}`}>
+                    Vitals
                   </Link>
                 </ListGroup.Item>
                 <ListGroup.Item style={arr[arr.length-1]=="lab"||arr[arr.length-2]=="lab"?styles.active:styles.inactive}>
@@ -377,6 +379,24 @@ const ClinicalDashBoard = ({ match }) => {
               key={100}
               path={match.path + "/visits"}
               component={VisitScreen}
+            />
+            <Route
+              exact
+              key={100}
+              path={match.path + "/surgeries"}
+              component={SurgeriesScreen}
+            />
+            <Route
+              exact
+              key={100}
+              path={match.path + "/vitals"}
+              component={NurseScreen}
+            />
+            <Route
+              exact
+              key={100}
+              path={match.path + "/vitals/nurseVisit"}
+              component={VitalsScreen}
             />
             <Route
               exact

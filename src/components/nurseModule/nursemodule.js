@@ -362,12 +362,14 @@ class NurseVisit extends Component {
               'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
             },
             body: formBody
-          }).then((resp)=>{
+          }).then(async(resp)=>{
             console.log("Getting: " , resp);
             resp.json().then((data)=>{
               console.log("ddddddddddddddddd;  " , data[0])
         
             })
+            await this.getLastVisits("nurseVitals");
+
           }).catch(()=>{
             console.log("errror")
           })
