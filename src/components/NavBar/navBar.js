@@ -46,7 +46,7 @@ const NavBar = (props) => {
                         buttonValue="Make Visit" fromComponent="navBarVisits" history= {history}/>
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/ptRegistration">
-                            Patient Registration
+                            Patient Verfication
                         </NavDropdown.Item>
                         <NavDropdown.Item href="/publicDashBoard/choiceForDoctor/lab">
                              Doctor Lab Orders

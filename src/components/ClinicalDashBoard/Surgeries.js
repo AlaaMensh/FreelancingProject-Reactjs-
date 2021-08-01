@@ -11,7 +11,7 @@ import Spinner from '../shared/Spinner';
 import DataTableComp from "../typesGenerator/dataTable";
 
 var g = null
-const base_url = "https://mvb1.herokuapp.com/"
+const base_url = "https://mvb1.herokuapp.com"
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -110,7 +110,7 @@ const SurgeriesScreen = ({match})=>{
         await setLoading(true)
         if(!match.params.id)
             return
-         await loadData();
+          loadData();
          await setLoading(false)
 
     },[match])

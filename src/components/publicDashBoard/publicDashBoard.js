@@ -37,7 +37,7 @@ const PublicDashBoard = ({ match }) => {
       role: ["8"],
     }, //doctor
     {
-      text: "Patient Registration",
+      text: "Patient Verification",
       discription: "Add new client details using our wizard.",
       role: ["8", "6"],
       icon: "https://cdn2.iconfinder.com/data/icons/coronavirus-10/512/report-clipboard-medical-checklist-healthcare-512.png",

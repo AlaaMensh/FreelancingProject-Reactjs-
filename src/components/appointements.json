@@ -31,12 +31,6 @@
                      "sortable": true,
                      "center" : true
              },
-             "reason": {
-                     "name": "Reason",
-                     "selector": "reason",
-                     "sortable": true,
-                     "center" : true
-             },
              "actions" :{
                      "name" :"actions",
                      "selector" : "actions",
@@ -152,12 +146,6 @@
                         "date": {
                                 "name": "Date",
                                 "selector": "date",
-                                "sortable": true,
-                                "center" : true
-                        },
-                        "reason": {
-                                "name": "Reason",
-                                "selector": "reason",
                                 "sortable": true,
                                 "center" : true
                         },

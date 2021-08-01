@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import React, { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
+import { useHistory, useLocation } from "react-router-dom";
 // import ListStep from "./listStep"; // Put it if you solve the one component Problem
 import Spinner from '../shared/Spinner';
 import AllergyStep from "./allergyStep";
@@ -77,7 +78,7 @@ function getSteps() {
   ];
 }
 
-export default function HorizontalLabelPositionBelowStepper() {
+export default function HorizontalLabelPositionBelowStepper({match}) {
   const [firstName, setFirstName] = useState();
   const [secondName, setSecondName] = useState();
   const [lastName, setLastName] = useState();
@@ -94,6 +95,7 @@ export default function HorizontalLabelPositionBelowStepper() {
   const [onGoingProblemList, setonGoingProblemList] = useState([]);
   const [gender, setGender] = useState("");
   const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const handleSubmit = () => {
     console.log(
@@ -156,11 +158,9 @@ export default function HorizontalLabelPositionBelowStepper() {
       body: JSON.stringify(details),
     })
       .then((resp) => {
-        resp.text().then((data) => {
-          console.log("Message: ", data);
-          if (data === "done") {
-            alert("added sucssessfully....");
-          }
+        resp.json().then((data) => {
+            
+            history.push(`/ClinicalDashBoard/${data.insertId}`)
         });
       })
       .catch(() => {
